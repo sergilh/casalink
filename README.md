@@ -16,6 +16,15 @@
 - **Gestión de Propiedades**: Los propietarios pueden publicar y gestionar sus propiedades, actualizar disponibilidad y comunicarse con potenciales inquilinos.
 - **Contratos Digitales**: Facilitamos la creación y firma de contratos de alquiler de manera digital, asegurando un proceso rápido y seguro.
 
+
+## Objetivos del Proyecto
+
+- Crear e implementar una **base de datos MySQL**.
+- Construir una **API** con Express.js y conectar la API a la base de datos.
+- Creación de un **Front End** moderno que se adapte a cualquier dispositivo que incluye conceptos claves de usabilidad.
+- Respetar buenas prácticas de desarrollo y utilizar un sistema de control de versiones.
+- Calidad durante el desarrollo y ejecutar un plan de pruebas.
+
 ## Tecnologías Utilizadas
 
 - **Frontend**: React.js
@@ -27,12 +36,26 @@
 
 ## Estructura del Proyecto
 - ```/db```: Definición de la base de datos MySQL.
-- ```/server```: Contiene el código del backend desarrollado con Node.js y Express.
-- ```/client```: Contiene el código del frontend desarrollado con React.
   - ```/seeders:``` (Opcional) Contiene datos de prueba para la base de datos.
+
+- ```/server```: Contiene el código del backend desarrollado con Node.js y Express.
+
+- ```/client```: Contiene el código del frontend desarrollado con React.
   - ```/routes:``` Define las rutas de la API.
   - ```/controllers:``` Contiene la lógica de negocio para manejar las solicitudes.
   - ```/middleware:``` Incluye middleware para autenticación y manejo de errores.
+
+## Equipo de Desarrollo (Grupo B - JSB41RT)
+
+| Nombre   | GitHub                                             |
+|----------|----------------------------------------------------|
+| David    | [@Dav993](https://github.com/Dav993)               |
+| Javi     | [@JaviScavuzzo](https://github.com/JaviScavuzzo)   |
+| Johnatan | [@johnatanmoran](https://github.com/johnatanmoran) |
+| Russel   | [@Ken-Russel](https://github.com/Ken-Russel)       |
+| Sergi    | [@sergilh](https://github.com/sergilh)             |
+
+***
 
 ## Licencia
 Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para más detalles.
