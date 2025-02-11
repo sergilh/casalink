@@ -1,0 +1,74 @@
+Table users {
+    id                    binary(16) [primary key]
+    name                  varchar(100)
+    lastName              varchar(100)
+    legalId               varchar(20)
+    email                 varchar(150) [unique, not null]
+    password              varchar(255)
+    phone	              varchar(20)
+    role		          enum('tenant', 'owner', 'admin', 'superadmin') [default: 'tenant']
+    isEmailVerified	  	  boolean [default: false]
+    isDocsVerified        boolean [default: false]
+    createdAt             timestamp [default: now()]
+    updatedAt             timestamp [default: now()]
+}
+
+Table properties {
+    id                    binary(16) [primary key]
+    ownerId               binary(16) [not null, ref: > users.id]
+    adTitle               varchar(255) [not null]
+    desc                  text [not null]
+    formattedAddress      varchar(255) [not null]
+    addressLocality       varchar(255)
+    addressStreetName     varchar(255)
+    addressNumber         varchar(10)
+    addressFloorNumber    varchar(10)
+    hasEnergyCertificate  boolean [default: false]
+    zipCode               varchar(5) [not null]
+    location              point [not null]
+    squareMeters          smallint
+    bedrooms              tinyint [not null]
+    bathrooms             tinyint [not null]
+    price                 decimal(10,2) [not null]
+    status                enum('available', 'rented', 'pending') [default: 'pending']
+    createdAt             timestamp [default: now()]
+    updatedAt             timestamp [default: now()]
+}
+
+Table rentals {
+    id         binary(16) [primary key]
+    tenantId   binary(16) [not null, ref: > users.id]
+    propertyId binary(16) [not null, ref: > properties.id]
+    startDate  timestamp [not null]
+    endDate    timestamp [null]
+    status     enum('pending', 'rented', 'rejected', 'canceled') [not null]
+    createdAt  timestamp [default: now()]
+    updatedAt  timestamp [default: now()]
+}
+
+Table reviews {
+    id         binary(16) [primary key]
+    reviewerId binary(16) [not null, ref: > users.id]
+    reviewedId binary(16) [not null, ref: > users.id]
+    rentalId   binary(16) [not null, ref: > rentals.id]
+    rating     tinyint [not null]
+    comment    text
+    createdAt  timestamp [default: now()]
+}
+
+Table images {
+    id         binary(16) [primary key]
+    propertyId binary(16) [not null, ref: > properties.id]
+    imageUrl   varchar(255) [not null]
+    sortIndex  tinyint [default: 1]
+    createdAt  timestamp [default: now()]
+    updatedAt  timestamp [default: now()]
+}
+
+Table favs {
+    id         binary(16) [primary key]
+    userId     binary(16) [not null, ref: > users.id]
+    propertyId binary(16) [not null, ref: > properties.id]
+    createdAt  timestamp [default: now()]
+    unique(userId, propertyId)
+}
