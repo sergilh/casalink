@@ -27,6 +27,16 @@ app.get('/', async (req, res) => {
     }
 });
 
+//Middleware de gestión de errores
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(err.httpStatus || 500).send({
+        status: 'error',
+        message: err.message,
+    });
+});
+
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
