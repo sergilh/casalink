@@ -6,4 +6,7 @@ node_modules/
 .env.local
 
 .DS_Store
+# Archivos basura de macOS
+Icon?
+Icon^M
 
