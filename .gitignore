@@ -5,6 +5,7 @@ node_modules/
 .env
 .env.local
 
+#Archivo oculto de macOS crea automáticaente
 .DS_Store
 # Archivos basura de macOS
 Icon?
