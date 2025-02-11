@@ -1,18 +1,6 @@
 # Dependency directories
-node_modules/
+node_modules
 
 # dotenv environment variable files
 .env
 .env.local
-
-# VSCode extensions
-.vscode-test
-
-# VS Code Preferences
-.vscode
-
-# Design files
-design/
-
-# Misc files
-varios/
