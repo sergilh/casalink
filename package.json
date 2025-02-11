@@ -1,0 +1,20 @@
+{
+  "name": "casalink",
+  "version": "1.0.0",
+  "description": "<header style=\"text-align: center; background-color: #111; color: #eee; padding: 2rem;\">",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.7",
+    "mysql2": "^3.12.0"
+  }
+}
