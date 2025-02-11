@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import cors from 'cors';
 
 import express from 'express';
 import getPool from './src/db/getPool.js';
@@ -7,6 +8,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+
+app.use(cors());
 
 // Ruta de ejemplo para comprobar la conexión a la base de datos.
 app.get('/', async (req, res) => {
@@ -38,5 +41,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
+    console.log(`Servidor corriendo en el puerto http://localhost:${PORT}`);
 });
