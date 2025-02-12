@@ -1,7 +1,7 @@
 const notFoundMiddleware = (req, res) => {
     res.status(404).json({
         status: 'error',
-        message: 'Ruta no encontrada',
+        message: 'No se ha encontrado la ruta',
     });
 };
 
