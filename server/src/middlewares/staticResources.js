@@ -1,10 +1,10 @@
 // middleware/notFoundMiddleware.js
 
-const notFoundMiddleware = (req, res) => {
+const staticResourcesMiddleware = (req, res) => {
     res.status(404).json({
         status: 'error',
         message: 'Ruta no encontrada',
     });
 };
 
-module.exports = notFoundMiddleware;
+module.exports = staticResourcesMiddleware;
