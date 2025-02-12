@@ -12,7 +12,7 @@ node_modules
 Icon?
 Icon^M
 
-# VS Code Preferences
+# VS Code Preferences +
 .vscode-test
 .vscode
 
