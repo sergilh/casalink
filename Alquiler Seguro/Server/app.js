@@ -3,13 +3,21 @@ import cors from 'cors';
 
 import express from 'express';
 import getPool from './src/db/getPool.js';
+import jsonMiddleware from './src/middlewares/jsonMiddleware.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
+app.use(jsonMiddleware);
 
 app.use(cors());
+
+// 📌 Ruta de prueba para verificar que el middleware funciona
+app.post('/api/test', (req, res) => {
+    console.log(req.body);
+
+    res.json({ message: 'Datos recibidos correctamente', data: req.body });
+});
 
 // Ruta de ejemplo para comprobar la conexión a la base de datos.
 app.get('/', async (req, res) => {
