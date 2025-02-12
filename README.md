@@ -4,20 +4,14 @@
 
 </header>
 
-# Alquiler Seguro
+# 🏠 CasaLink
 
-**Alquiler Seguro** es una plataforma web desarrollada como proyecto final del bootcamp de Hack A Boss 2025, diseñada para facilitar la búsqueda y gestión de alquileres. La aplicación conecta a inquilinos y propietarios, proporcionando un sistema de valoraciones basado en experiencias anteriores para garantizar transparencia y confianza en el proceso de alquiler.
+![Logo CasaLink](./docs/media/casalink_notion_cover.jpg)
 
-## Características Principales
-
-- **Búsqueda de Alquileres**: Los usuarios pueden buscar propiedades disponibles para alquilar, filtrando por ubicación, precio, tamaño y otras características.
-- **Perfiles de Usuario**: Tanto inquilinos como propietarios tienen perfiles que incluyen historiales de alquiler y valoraciones basadas en experiencias anteriores.
-- **Sistema de Valoraciones**: Los usuarios pueden valorar y dejar reseñas sobre sus experiencias con propiedades y propietarios/inquilinos, ayudando a otros a tomar decisiones informadas.
-- **Gestión de Propiedades**: Los propietarios pueden publicar y gestionar sus propiedades, actualizar disponibilidad y comunicarse con potenciales inquilinos.
-- **Contratos Digitales**: Facilitamos la creación y firma de contratos de alquiler de manera digital, asegurando un proceso rápido y seguro.
+**CasaLink** es una plataforma web de busqueda de **Alquiler Seguro** desarrollada como proyecto final del bootcamp de Hack A Boss 2025, diseñada para facilitar la búsqueda y gestión de alquileres. La aplicación conecta a inquilinos y propietarios, proporcionando un sistema de valoraciones basado en experiencias anteriores para garantizar transparencia y confianza en el proceso de alquiler.
 
 
-## Objetivos del Proyecto
+## 🎯 Objetivos del Proyecto
 
 - Crear e implementar una **base de datos MySQL**.
 - Construir una **API** con Express.js y conectar la API a la base de datos.
@@ -25,7 +19,9 @@
 - Respetar buenas prácticas de desarrollo y utilizar un sistema de control de versiones.
 - Calidad durante el desarrollo y ejecutar un plan de pruebas.
 
-## Tecnologías Utilizadas
+## 🚀 Tecnologías Utilizadas
+
+**CasaLink** está desarrollado con las siguientes tecnologías:
 
 - **Frontend**: React.js
 - **Backend**: Node.js, Express.js
@@ -34,18 +30,69 @@
 - **Estilos**: CSS3
 - **Otras Herramientas**: Git, GitHub, Postman
 
-## Estructura del Proyecto
-- ```/db```: Definición de la base de datos MySQL.
-  - ```/seeders:``` (Opcional) Contiene datos de prueba para la base de datos.
+## 📌 Funcionalidades Clave
 
-- ```/server```: Contiene el código del backend desarrollado con Node.js y Express.
+### ✅ Registro y Autenticación
+- Registro de usuarios (inquilinos y propietarios)
+- Inicio de sesión con JWT
+- Verificación de identidad mediante documentación
 
-- ```/client```: Contiene el código del frontend desarrollado con React.
-  - ```/routes:``` Define las rutas de la API.
-  - ```/controllers:``` Contiene la lógica de negocio para manejar las solicitudes.
-  - ```/middleware:``` Incluye middleware para autenticación y manejo de errores.
+### 🏠 Gestión de Propiedades
+- Publicación de anuncios de alquiler
+- Modificación y eliminación de propiedades
+- Gestión del estado de las propiedades (disponible, alquilado, pendiente)
 
-## Equipo de Desarrollo (Grupo B - JSB41RT)
+### 📜 Contratos y Seguridad
+- Creación y almacenamiento de contratos de alquiler
+- Descarga de contratos en formato PDF
+- Historial de contratos anteriores
+
+### ⭐ Reseñas y Valoraciones
+- Evaluaciones de inquilinos y propietarios
+- Sistema de calificación basado en experiencias reales
+
+### 🔔 Notificaciones
+- Alertas sobre solicitudes de visita
+- Confirmaciones y rechazos de alquiler
+- Recordatorios de contratos y pagos
+
+## 📂 Estructura del Proyecto
+
+```
+CasaLink/
+├── client/        # Código del cliente (React.js)
+├── database/      # Scripts de la base de datos
+├── docs/          # Documentación
+├── server/        # Código del servidor (Node.js, Express)
+├── LICENSE        # Licencia
+├── README.md      # Este archivo
+```
+
+## 🛠 Instalación y Configuración
+
+### 1️⃣ Clonar el repositorio
+```sh
+git clone https://github.com/johnatanmoran/CasaLink.git
+cd CasaLink
+```
+
+### 2️⃣ Configurar el backend
+```sh
+cd server
+cp .env.example .env  # Configurar variables de entorno
+npm install
+npm run dbinit
+npm run dev
+```
+
+### 3️⃣ Configurar el frontend
+```sh
+cd client
+npm install
+npm start
+```
+
+## 👾Equipo de Desarrollo (Grupo B - JSB41RT)
 
 | Nombre   | GitHub                                             |
 |----------|----------------------------------------------------|
@@ -57,5 +104,7 @@
 
 ***
 
-## Licencia
-Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para más detalles.
+## 📄 Licencia
+Este proyecto está bajo la licencia MIT. Puedes ver más detalles en el archivo LICENSE.
+
+_"Donde inquilinos y propietarios se encuentran."_

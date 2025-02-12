@@ -1,0 +1,165 @@
+// Base de datos para CasaLink
+// Formato DBML para https://dbdiagram.io/
+// https://dbdiagram.io/d/casalinkdb-67ab3ca3263d6cf9a0c2f070
+
+Enum "roles_name_enum" {
+  "tenant"
+  "owner"
+  "admin"
+  "superadmin"
+}
+
+Enum "properties_status_enum" {
+  "available"
+  "rented"
+  "pending"
+}
+
+Enum "rentalContracts_status_enum" {
+  "pending"
+  "approved"
+  "rejected"
+  "ongoing"
+  "canceled"
+}
+
+Enum "notifications_type_enum" {
+  "visit_request"
+  "visit_accepted"
+  "visit_rejected"
+  "property_approved"
+  "property_rejected"
+  "review_received"
+}
+
+Table "roles" {
+  "id" BINARY(16) [pk]
+  "name" roles_name_enum [unique, not null]
+}
+
+Table "users" {
+  "id" BINARY(16) [pk]
+  "name" VARCHAR(100)
+  "lastName" VARCHAR(100)
+  "legalId" VARCHAR(20)
+  "email" VARCHAR(150) [unique, not null]
+  "password" VARCHAR(255)
+  "phone" VARCHAR(255)
+  "avatarUrl" VARCHAR(255)
+  "isEmailVerified" BOOLEAN [default: FALSE]
+  "isDocsVerified" BOOLEAN [default: FALSE]
+  "createdAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+  "updatedAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+}
+
+Table "userRoles" {
+  "id" BINARY(16) [pk]
+  "userId" BINARY(16) [not null]
+  "roleId" BINARY(16) [not null]
+  "createdAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+
+  Indexes {
+    (userId, roleId) [unique]
+  }
+}
+
+Table "properties" {
+  "id" BINARY(16) [pk]
+  "ownerId" BINARY(16) [not null]
+  "adTitle" VARCHAR(255) [not null]
+  "description" TEXT [not null]
+  "formattedAddress" VARCHAR(255) [not null]
+  "addressLocality" VARCHAR(255)
+  "addressStreetName" VARCHAR(255)
+  "addressNumber" VARCHAR(10)
+  "addressFloorNumber" VARCHAR(10)
+  "hasEnergyCertificate" BOOLEAN [default: FALSE]
+  "zipCode" VARCHAR(5) [not null]
+  "location" POINT [not null]
+  "squareMeters" SMALLINT
+  "bedrooms" TINYINT [not null]
+  "bathrooms" TINYINT [not null]
+  "price" DECIMAL(10,2) [not null]
+  "status" properties_status_enum [default: 'pending']
+  "createdAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+  "updatedAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+}
+
+Table "rentalContracts" {
+  "id" BINARY(16) [pk]
+  "tenantId" BINARY(16) [not null]
+  "propertyId" BINARY(16) [not null]
+  "startDate" TIMESTAMP [not null]
+  "endDate" TIMESTAMP
+  "status" rentalContracts_status_enum [not null]
+  "createdAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+  "updatedAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+  "pdfUrl" VARCHAR(255)
+}
+
+Table "reviews" {
+  "id" BINARY(16) [pk]
+  "reviewerId" BINARY(16) [not null]
+  "reviewedId" BINARY(16) [not null]
+  "rentalId" BINARY(16) [not null]
+  "rating" TINYINT [not null]
+  "comment" TEXT
+  "createdAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+}
+
+Table "images" {
+  "id" BINARY(16) [pk]
+  "propertyId" BINARY(16) [not null]
+  "imageUrl" VARCHAR(255) [not null]
+  "sortIndex" TINYINT [default: 1]
+  "createdAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+  "updatedAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+}
+
+Table "favs" {
+  "id" BINARY(16) [pk]
+  "userId" BINARY(16) [not null]
+  "propertyId" BINARY(16) [not null]
+  "createdAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+
+  Indexes {
+    (userId, propertyId) [unique]
+  }
+}
+
+Table "notifications" {
+  "id" BINARY(16) [pk]
+  "userId" BINARY(16) [not null]
+  "propertyId" BINARY(16) [not null]
+  "message" TEXT [not null]
+  "type" notifications_type_enum [not null]
+  "isRead" BOOLEAN [default: FALSE]
+  "createdAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+  "readAt" TIMESTAMP
+}
+
+Ref:"users"."id" < "userRoles"."userId"
+
+Ref:"roles"."id" < "userRoles"."roleId"
+
+Ref:"users"."id" < "properties"."ownerId"
+
+Ref:"users"."id" < "rentalContracts"."tenantId"
+
+Ref:"properties"."id" < "rentalContracts"."propertyId"
+
+Ref:"users"."id" < "reviews"."reviewerId"
+
+Ref:"users"."id" < "reviews"."reviewedId"
+
+Ref:"rentalContracts"."id" < "reviews"."rentalId"
+
+Ref:"properties"."id" < "images"."propertyId"
+
+Ref:"users"."id" < "favs"."userId"
+
+Ref:"properties"."id" < "favs"."propertyId"
+
+Ref:"users"."id" < "notifications"."userId"
+
+Ref:"properties"."id" < "notifications"."propertyId"

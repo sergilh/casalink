@@ -7,7 +7,17 @@ node_modules
 
 #Archivo oculto de macOS crea automáticaente
 .DS_Store
+
 # Archivos basura de macOS
 Icon?
 Icon^M
 
+# VS Code Preferences
+.vscode-test
+.vscode
+
+# Design files
+design/
+
+# Misc files
+varios/
