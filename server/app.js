@@ -5,7 +5,7 @@ import express from 'express';
 import getPool from './src/db/getPool.js';
 import jsonMiddleware from './src/middlewares/jsonMiddleware.js';
 
-import usersRoutes from './src/routes/usersRoutes.js';
+import usersRoutes from './src/routes/user/usersRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;

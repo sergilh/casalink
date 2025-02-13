@@ -1,10 +1,10 @@
-import { getAllUsers } from '../models/userModel.js';
+import userModel from '../../models/user/userModel.js';
 
-const getUsers = async (req, res) => {
+const usersController = async (req, res) => {
     try {
         const { username, email, role } = req.query; // Tomamos los filtros desde la URL
 
-        const users = await getAllUsers({ username, email, role });
+        const users = await userModel({ username, email, role });
 
         res.status(200).json({
             message: 'Lista de usuarios obtenida correctamente',
@@ -18,5 +18,4 @@ const getUsers = async (req, res) => {
     }
 };
 
-export { getUsers };
-
+export default usersController;

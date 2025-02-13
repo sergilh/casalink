@@ -1,6 +1,6 @@
-import getPool from '../db/getPool.js';
+import getPool from '../../db/getPool.js';
 
-const getAllUsers = async ({ username = '', email = '', role = '' }) => {
+const userModel = async ({ username = '', email = '', role = '' }) => {
     const pool = await getPool();
 
     let query = `SELECT id, username, email, role FROM users WHERE username LIKE ? AND email LIKE ? AND role LIKE ?`;
@@ -12,4 +12,4 @@ const getAllUsers = async ({ username = '', email = '', role = '' }) => {
     return users;
 };
 
-export { getAllUsers };
+export default userModel;
