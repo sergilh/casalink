@@ -2,11 +2,18 @@
 // Formato DBML para https://dbdiagram.io/
 // https://dbdiagram.io/d/casalinkdb-67ab3ca3263d6cf9a0c2f070
 
-Enum "roles_name_enum" {
-  "tenant"
-  "owner"
+Enum "users_role_enum" {
+  "user"
   "admin"
   "superadmin"
+}
+
+Enum "properties_propertyType_enum" {
+  "apartamento"
+  "casa"
+  "piso"
+  "duplex"
+  "otro"
 }
 
 Enum "properties_status_enum" {
@@ -15,7 +22,7 @@ Enum "properties_status_enum" {
   "pending"
 }
 
-Enum "rentalContracts_status_enum" {
+Enum "contracts_status_enum" {
   "pending"
   "approved"
   "rejected"
@@ -24,56 +31,52 @@ Enum "rentalContracts_status_enum" {
 }
 
 Enum "notifications_type_enum" {
-  "visit_request"
-  "visit_accepted"
-  "visit_rejected"
-  "property_approved"
-  "property_rejected"
-  "review_received"
+  "visit"
+  "property"
+  "review"
+  "contract"
 }
 
-Table "roles" {
-  "id" BINARY(16) [pk]
-  "name" roles_name_enum [unique, not null]
+Enum "notifications_status_enum" {
+  "approved"
+  "requested"
+  "rejected"
+  "canceled"
+  "finished"
 }
 
 Table "users" {
-  "id" BINARY(16) [pk]
+  "id" INT [pk, not null, increment]
   "name" VARCHAR(100)
   "lastName" VARCHAR(100)
-  "legalId" VARCHAR(20)
-  "email" VARCHAR(150) [unique, not null]
+  "legalId" VARCHAR(20) [unique, not null]
+  "email" VARCHAR(100) [unique, not null]
   "password" VARCHAR(255)
   "phone" VARCHAR(255)
   "avatarUrl" VARCHAR(255)
+  "role" users_role_enum [default: 'user']
+  "recoveryCode" VARCHAR(100) [default: NULL]
   "isEmailVerified" BOOLEAN [default: FALSE]
   "isDocsVerified" BOOLEAN [default: FALSE]
   "createdAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
   "updatedAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
-}
-
-Table "userRoles" {
-  "id" BINARY(16) [pk]
-  "userId" BINARY(16) [not null]
-  "roleId" BINARY(16) [not null]
-  "createdAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
 
   Indexes {
-    (userId, roleId) [unique]
+    (email, legalId, role) [name: "usersIdx"]
   }
 }
 
 Table "properties" {
-  "id" BINARY(16) [pk]
-  "ownerId" BINARY(16) [not null]
-  "adTitle" VARCHAR(255) [not null]
+  "id" INT [pk, not null, increment]
+  "ownerId" INT [not null]
+  "propertyTitle" VARCHAR(255) [not null]
+  "propertyType" properties_propertyType_enum [not null]
   "description" TEXT [not null]
-  "formattedAddress" VARCHAR(255) [not null]
   "addressLocality" VARCHAR(255)
-  "addressStreetName" VARCHAR(255)
+  "addressStreet" VARCHAR(255)
   "addressNumber" VARCHAR(10)
-  "addressFloorNumber" VARCHAR(10)
-  "hasEnergyCertificate" BOOLEAN [default: FALSE]
+  "addressFloor" VARCHAR(10)
+  "hasEnergyCert" BOOLEAN [default: false]
   "zipCode" VARCHAR(5) [not null]
   "location" POINT [not null]
   "squareMeters" SMALLINT
@@ -83,76 +86,96 @@ Table "properties" {
   "status" properties_status_enum [default: 'pending']
   "createdAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
   "updatedAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+
+  Indexes {
+    (addressLocality, zipCode, price, status) [name: "propertiesIdx"]
+  }
 }
 
-Table "rentalContracts" {
-  "id" BINARY(16) [pk]
-  "tenantId" BINARY(16) [not null]
-  "propertyId" BINARY(16) [not null]
+Table "contracts" {
+  "id" INT [pk, not null, increment]
+  "tenantId" INT
+  "propertyId" INT
   "startDate" TIMESTAMP [not null]
-  "endDate" TIMESTAMP
-  "status" rentalContracts_status_enum [not null]
+  "endDate" TIMESTAMP [default: NULL]
+  "pdfUrl" VARCHAR(255) [default: NULL]
+  "status" contracts_status_enum [not null]
   "createdAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
   "updatedAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
-  "pdfUrl" VARCHAR(255)
+
+  Indexes {
+    (tenantId, propertyId, startDate, endDate, status) [name: "contractsIdx2"]
+  }
 }
 
 Table "reviews" {
-  "id" BINARY(16) [pk]
-  "reviewerId" BINARY(16) [not null]
-  "reviewedId" BINARY(16) [not null]
-  "rentalId" BINARY(16) [not null]
+  "id" INT [pk, not null, increment]
+  "reviewerId" INT
+  "reviewedId" INT
+  "contracId" INT
   "rating" TINYINT [not null]
   "comment" TEXT
   "createdAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+  "removedAt" TIMESTAMP [default: NULL]
+
+  Indexes {
+    (reviewerId, reviewedId, contracId, rating) [name: "reviewsIdx"]
+  }
 }
 
 Table "images" {
-  "id" BINARY(16) [pk]
-  "propertyId" BINARY(16) [not null]
+  "id" INT [pk, not null, increment]
+  "propertyId" INT
   "imageUrl" VARCHAR(255) [not null]
-  "sortIndex" TINYINT [default: 1]
+  "sortIndex" TINYINT
   "createdAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
   "updatedAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+  "removedAt" TIMESTAMP [default: NULL]
+
+  Indexes {
+    sortIndex [name: "imagesIdx"]
+  }
 }
 
 Table "favs" {
-  "id" BINARY(16) [pk]
-  "userId" BINARY(16) [not null]
-  "propertyId" BINARY(16) [not null]
+  "id" INT [pk, not null, increment]
+  "userId" INT
+  "propertyId" INT
   "createdAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+  "removedAt" TIMESTAMP [default: NULL]
 
   Indexes {
-    (userId, propertyId) [unique]
+    (userId, propertyId) [unique, name: "favsIdx"]
   }
 }
 
 Table "notifications" {
-  "id" BINARY(16) [pk]
-  "userId" BINARY(16) [not null]
-  "propertyId" BINARY(16) [not null]
+  "id" INT [pk, not null, increment]
+  "userId" INT
+  "propertyId" INT
   "message" TEXT [not null]
   "type" notifications_type_enum [not null]
-  "isRead" BOOLEAN [default: FALSE]
+  "status" notifications_status_enum [not null]
+  "isRead" BOOLEAN [default: false]
   "createdAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
-  "readAt" TIMESTAMP
+  "readAt" TIMESTAMP [default: NULL]
+
+  Indexes {
+    (userId, propertyId, type, status) [name: "notificationsIdx"]
+  }
 }
 
-Ref:"users"."id" < "userRoles"."userId"
+Ref:"users"."id" < "properties"."ownerId" [delete: cascade]
 
-Ref:"roles"."id" < "userRoles"."roleId"
+Ref:"users"."id" < "contracts"."tenantId" [delete: cascade]
 
-Ref:"users"."id" < "properties"."ownerId"
+Ref:"properties"."id" < "contracts"."propertyId" [delete: cascade]
 
-Ref:"users"."id" < "rentalContracts"."tenantId"
+Ref:"users"."id" < "reviews"."reviewerId" [delete: cascade]
 
-Ref:"properties"."id" < "rentalContracts"."propertyId"
+Ref:"users"."id" < "reviews"."reviewedId" [delete: cascade]
 
-Ref:"users"."id" < "reviews"."reviewerId"
-
-Ref:"users"."id" < "reviews"."reviewedId"
-
-Ref:"rentalContracts"."id" < "reviews"."rentalId"
+Ref:"contracts"."id" < "reviews"."contracId" [delete: cascade]
 
 Ref:"properties"."id" < "images"."propertyId"
 

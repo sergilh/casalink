@@ -6,141 +6,146 @@ Estructura de la base de datos de CasaLink, una plataforma para la búsqueda y g
 
 ## Esquema de la Base de Datos
 
-### Tabla `roles`
-Define los roles que pueden tener los usuarios dentro de la plataforma.
+# 📘 Estructura de la Base de Datos - CasaLink
 
-| Campo  | Tipo | Restricciones |
-|--------|------|--------------|
-| id     | BINARY(16) | PRIMARY KEY |
-| name   | ENUM('tenant', 'owner', 'admin', 'superadmin') | UNIQUE, NOT NULL |
+Este documento describe la estructura de la base de datos de **CasaLink**, especificando las tablas, sus campos y las relaciones entre ellas.
 
 ---
 
-### Tabla `users`
-Almacena la información de los usuarios registrados en la plataforma.
+## 📂 Tablas y Estructura
 
-| Campo           | Tipo          | Restricciones |
-|----------------|--------------|--------------|
-| id            | BINARY(16)    | PRIMARY KEY  |
-| name          | VARCHAR(100)  |  |
-| lastName      | VARCHAR(100)  |  |
-| legalId       | VARCHAR(20)   |  |
-| email         | VARCHAR(150)  | UNIQUE, NOT NULL |
-| password      | VARCHAR(255)  |  |
-| phone         | VARCHAR(255)  |  |
-| avatarUrl     | VARCHAR(255)  |  |
-| isEmailVerified | BOOLEAN | DEFAULT FALSE |
-| isDocsVerified | BOOLEAN | DEFAULT FALSE |
-| createdAt     | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP |
-| updatedAt     | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP |
+### 📜 Tabla: `users`
 
----
+| Campo           | Tipo         | Detalles                                         |
+| --------------- | ------------ | ------------------------------------------------ |
+| id 🔑           | INTEGER      | AUTOINCREMENT                                    |
+| name            | VARCHAR(100) | Nombre del usuario                               |
+| lastName        | VARCHAR(100) | Apellido del usuario                             |
+| legalId         | VARCHAR(20)  | DNI, NIE, Pasaporte, etc.                        |
+| email           | VARCHAR(100) | Único, NOT NULL                                  |
+| password        | VARCHAR(255) | Hash de la contraseña                            |
+| phone           | VARCHAR(255) | Teléfono de contacto                             |
+| avatarUrl       | VARCHAR(255) | URL de la imagen de perfil                       |
+| role            | ENUM         | Valores: user, admin, superadmin (default: user) |
+| recoveryCode    | VARCHAR(100) | Código de recuperación (NULL por defecto)        |
+| isEmailVerified | BOOLEAN      | FALSE por defecto                                |
+| isDocsVerified  | BOOLEAN      | FALSE por defecto                                |
+| createdAt       | TIMESTAMP    | CURRENT_TIMESTAMP por defecto                    |
+| updatedAt       | TIMESTAMP    | CURRENT_TIMESTAMP por defecto                    |
 
-### Tabla `userRoles`
-Relaciona a los usuarios con sus roles.
-
-| Campo    | Tipo       | Restricciones |
-|----------|-----------|--------------|
-| id       | BINARY(16) | PRIMARY KEY  |
-| userId   | BINARY(16) | FOREIGN KEY -> users(id) |
-| roleId   | BINARY(16) | FOREIGN KEY -> roles(id) |
-| createdAt | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP |
+📇 **Índices:** `(email, legalId, role)`
 
 ---
 
-### Tabla `properties`
-Almacena la información de las propiedades en alquiler.
+### 🏠 Tabla: `properties`
 
-| Campo               | Tipo       | Restricciones |
-|---------------------|-----------|--------------|
-| id                 | BINARY(16) | PRIMARY KEY  |
-| ownerId            | BINARY(16) | FOREIGN KEY -> users(id) |
-| adTitle            | VARCHAR(255) | NOT NULL |
-| description        | TEXT       | NOT NULL |
-| formattedAddress   | VARCHAR(255) | NOT NULL |
-| zipCode            | VARCHAR(5) | NOT NULL |
-| location           | POINT      | NOT NULL |
-| squareMeters       | SMALLINT   |  |
-| bedrooms           | TINYINT    | NOT NULL |
-| bathrooms          | TINYINT    | NOT NULL |
-| price              | DECIMAL(10,2) | NOT NULL |
-| status             | ENUM('available', 'rented', 'pending') | DEFAULT 'pending' |
-| createdAt          | TIMESTAMP  | DEFAULT CURRENT_TIMESTAMP |
-| updatedAt          | TIMESTAMP  | DEFAULT CURRENT_TIMESTAMP |
+| Campo           | Tipo          | Detalles                                               |
+| --------------- | ------------- | ------------------------------------------------------ |
+| id 🔑           | INTEGER       | AUTOINCREMENT                                          |
+| ownerId 🔗      | INTEGER       | users(id)                                              |
+| propertyTitle   | VARCHAR(255)  | NOT NULL                                               |
+| propertyType    | ENUM          | Valores: apartmento, casa, piso, duplex, otro          |
+| description     | TEXT          | NOT NULL                                               |
+| addressLocality | VARCHAR(255)  | Localidad                                              |
+| addressStreet   | VARCHAR(255)  | Calle                                                  |
+| addressNumber   | VARCHAR(10)   | Número                                                 |
+| addressFloor    | VARCHAR(10)   | Piso                                                   |
+| hasEnergyCert   | BOOLEAN       | FALSE por defecto                                      |
+| zipCode         | VARCHAR(5)    | NOT NULL                                               |
+| location        | POINT         | Ubicación geográfica                                   |
+| squareMeters    | SMALLINT      | Metros cuadrados                                       |
+| bedrooms        | TINYINT       | Número de habitaciones                                 |
+| bathrooms       | TINYINT       | Número de baños                                        |
+| price           | DECIMAL(10,2) | Precio                                                 |
+| status          | ENUM          | Valores: available, rented, pending (default: pending) |
+| createdAt       | TIMESTAMP     | CURRENT_TIMESTAMP por defecto                          |
+| updatedAt       | TIMESTAMP     | CURRENT_TIMESTAMP por defecto                          |
 
----
-
-### Tabla `rentalContracts`
-Registra los contratos de alquiler entre inquilinos y propietarios.
-
-| Campo      | Tipo       | Restricciones |
-|-----------|-----------|--------------|
-| id        | BINARY(16) | PRIMARY KEY  |
-| tenantId  | BINARY(16) | FOREIGN KEY -> users(id) |
-| propertyId | BINARY(16) | FOREIGN KEY -> properties(id) |
-| startDate | TIMESTAMP  | NOT NULL |
-| endDate   | TIMESTAMP  |  |
-| status    | ENUM('pending', 'approved', 'rejected', 'ongoing', 'canceled') | NOT NULL |
-| pdfUrl    | VARCHAR(255) |  |
-| createdAt | TIMESTAMP  | DEFAULT CURRENT_TIMESTAMP |
-| updatedAt | TIMESTAMP  | DEFAULT CURRENT_TIMESTAMP |
+📇 **Índices:** `(addressLocality, zipCode, price, status)`
 
 ---
 
-### Tabla `reviews`
-Almacena las reseñas realizadas por los usuarios.
+### 📄 Tabla: `contracts`
 
-| Campo      | Tipo       | Restricciones |
-|-----------|-----------|--------------|
-| id        | BINARY(16) | PRIMARY KEY  |
-| reviewerId | BINARY(16) | FOREIGN KEY -> users(id) |
-| reviewedId | BINARY(16) | FOREIGN KEY -> users(id) |
-| rentalId  | BINARY(16) | FOREIGN KEY -> rentalContracts(id) |
-| rating    | TINYINT    | NOT NULL |
-| comment   | TEXT      |  |
-| createdAt | TIMESTAMP  | DEFAULT CURRENT_TIMESTAMP |
+| Campo         | Tipo         | Detalles                                       |
+| ------------- | ------------ | ---------------------------------------------- |
+| id 🔑         | INTEGER      | AUTOINCREMENT                                  |
+| tenantId 🔗   | INTEGER      | users(id)                                      |
+| propertyId 🔗 | INTEGER      | properties(id)                                 |
+| startDate     | TIMESTAMP    | Fecha de inicio                                |
+| endDate       | TIMESTAMP    | Fecha de finalización (NULL por defecto)       |
+| pdfUrl        | VARCHAR(255) | URL del contrato en PDF (NULL por defecto)     |
+| status        | ENUM         | pending, approved, rejected, ongoing, canceled |
+| createdAt     | TIMESTAMP    | CURRENT_TIMESTAMP por defecto                  |
+| updatedAt     | TIMESTAMP    | CURRENT_TIMESTAMP por defecto                  |
 
----
-
-### Tabla `images`
-Guarda las imágenes de las propiedades.
-
-| Campo      | Tipo       | Restricciones |
-|-----------|-----------|--------------|
-| id        | BINARY(16) | PRIMARY KEY  |
-| propertyId | BINARY(16) | FOREIGN KEY -> properties(id) |
-| imageUrl  | VARCHAR(255) | NOT NULL |
-| sortIndex | TINYINT   | DEFAULT 1 |
-| createdAt | TIMESTAMP  | DEFAULT CURRENT_TIMESTAMP |
-| updatedAt | TIMESTAMP  | DEFAULT CURRENT_TIMESTAMP |
+📇 **Índices:** `(tenantId, propertyId, startDate, endDate, status)`
 
 ---
 
-### Tabla `favs`
-Permite a los usuarios marcar propiedades como favoritas.
+### ⭐ Tabla: `reviews`
 
-| Campo      | Tipo       | Restricciones |
-|-----------|-----------|--------------|
-| id        | BINARY(16) | PRIMARY KEY  |
-| userId    | BINARY(16) | FOREIGN KEY -> users(id) |
-| propertyId | BINARY(16) | FOREIGN KEY -> properties(id) |
-| createdAt | TIMESTAMP  | DEFAULT CURRENT_TIMESTAMP |
-| UNIQUE(userId, propertyId) |
+| Campo         | Tipo      | Detalles                      |
+| ------------- | --------- | ----------------------------- |
+| id 🔑         | INTEGER   | AUTOINCREMENT                 |
+| reviewerId 🔗 | INTEGER   | users(id)                     |
+| reviewedId 🔗 | INTEGER   | users(id)                     |
+| contractId 🔗 | INTEGER   | contracts(id)                 |
+| rating        | TINYINT   | Puntuación (1-5)              |
+| comment       | TEXT      | Comentario                    |
+| createdAt     | TIMESTAMP | CURRENT_TIMESTAMP por defecto |
+| removedAt     | TIMESTAMP | NULL por defecto              |
+
+📇 **Índices:** `(reviewerId, reviewedId, contractId, rating)`
+
+---
+
+### 🖼️ Tabla: `images`
+
+| Campo         | Tipo         | Detalles                      |
+| ------------- | ------------ | ----------------------------- |
+| id 🔑         | INTEGER      | AUTOINCREMENT                 |
+| propertyId 🔗 | INTEGER      | properties(id)                |
+| imageUrl      | VARCHAR(255) | NOT NULL                      |
+| sortIndex     | TINYINT      | Orden de la imagen            |
+| createdAt     | TIMESTAMP    | CURRENT_TIMESTAMP por defecto |
+| updatedAt     | TIMESTAMP    | CURRENT_TIMESTAMP por defecto |
+| removedAt     | TIMESTAMP    | NULL por defecto              |
+
+📇 **Índices:** `sortIndex`
 
 ---
 
-### Tabla `notifications`
-Almacena las notificaciones enviadas a los usuarios.
+### ❤️ Tabla: `favs`
 
-| Campo      | Tipo       | Restricciones |
-|-----------|-----------|--------------|
-| id        | BINARY(16) | PRIMARY KEY  |
-| userId    | BINARY(16) | FOREIGN KEY -> users(id) |
-| propertyId | BINARY(16) | FOREIGN KEY -> properties(id) |
-| message   | TEXT      | NOT NULL |
-| type      | ENUM('visit_request', 'visit_accepted', 'visit_rejected', 'property_approved', 'property_rejected', 'review_received') | NOT NULL |
-| isRead    | BOOLEAN   | DEFAULT FALSE |
-| createdAt | TIMESTAMP  | DEFAULT CURRENT_TIMESTAMP |
-| readAt    | TIMESTAMP  |  |
+| Campo         | Tipo      | Detalles                      |
+| ------------- | --------- | ----------------------------- |
+| id 🔑         | INTEGER   | AUTOINCREMENT                 |
+| userId 🔗     | INTEGER   | users(id)                     |
+| propertyId 🔗 | INTEGER   | properties(id)                |
+| createdAt     | TIMESTAMP | CURRENT_TIMESTAMP por defecto |
+| removedAt     | TIMESTAMP | NULL por defecto              |
+
+📇 **Índices:** `(userId, propertyId) UNIQUE`
 
 ---
+
+### 🔔 Tabla: `notifications`
+
+| Campo         | Tipo      | Detalles                                          |
+| ------------- | --------- | ------------------------------------------------- |
+| id 🔑         | INTEGER   | AUTOINCREMENT                                     |
+| userId 🔗     | INTEGER   | users(id)                                         |
+| propertyId 🔗 | INTEGER   | properties(id)                                    |
+| message       | TEXT      | NOT NULL                                          |
+| type          | ENUM      | visit, property, review, contract                 |
+| status        | ENUM      | approved, requested, rejected, canceled, finished |
+| isRead        | BOOLEAN   | FALSE por defecto                                 |
+| createdAt     | TIMESTAMP | CURRENT_TIMESTAMP por defecto                     |
+| readAt        | TIMESTAMP | NULL por defecto                                  |
+
+📇 **Índices:** `(userId, propertyId, type, status)`
+
+---
+
+📌 **Nota:** Se han aplicado restricciones y claves foráneas con cascada para asegurar la integridad de los datos.
