@@ -5,8 +5,12 @@ import express from 'express';
 import getPool from './src/db/getPool.js';
 import jsonMiddleware from './src/middlewares/jsonMiddleware.js';
 
+import usersRoutes from './src/routes/usersRoutes.js';
+
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use('/api', usersRoutes); // Rutas de usuarios
 
 app.use(jsonMiddleware);
 
