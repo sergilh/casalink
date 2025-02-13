@@ -43,6 +43,24 @@ app.get('/', async (req, res) => {
     }
 });
 
+const notFoundMiddleware = require('./middleware/notFoundMiddleware');
+
+// Rutas aquí...
+
+// Middleware para rutas no encontradas
+app.use(notFoundMiddleware);
+
+// Middleware de gestión de errores
+app.use((err, req, res) => {
+    console.error(err.stack);
+    res.status(500).json({
+        status: 'error',
+        message: 'Error interno del servidor',
+    });
+});
+
+module.exports = app;
+
 //Middleware de gestión de errores
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
