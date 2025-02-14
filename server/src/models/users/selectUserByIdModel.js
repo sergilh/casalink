@@ -19,7 +19,7 @@ const selectUserByIdModel = async (userId) => {
                 createdAt
             FROM users WHERE id = ?
         `,
-        [userId]
+        n[userId]
     );
 
     if (users.length < 1) {
