@@ -10,13 +10,12 @@ const selectUserByIdModel = async (userId) => {
         `
             SELECT
                 id,
-                username,
-                firstName,
+                name,
                 lastName,
-                birthDate,
+                legalId,
                 email,
-                avatar,
-                role,
+                phone,
+                avatarUrl,
                 createdAt
             FROM users WHERE id = ?
         `,
