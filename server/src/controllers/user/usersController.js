@@ -1,11 +1,12 @@
-import { getAllUsers } from '../models/userModel.js';
+import userModel from '../../models/user/userModel.js';
 
-const getUsers = async (req, res) => {
+const usersController = async (req, res) => {
     try {
         const { username, email, role } = req.query; // Tomamos los filtros desde la URL
 
-        const users = await getAllUsers({ username, email, role });
+        const users = await userModel({ username, email, role });
 
+        // TODO error al peticionar TypeError: res.status is not a function
         res.status(200).json({
             message: 'Lista de usuarios obtenida correctamente',
             users,
@@ -18,5 +19,4 @@ const getUsers = async (req, res) => {
     }
 };
 
-export { getUsers };
-
+export default usersController;
