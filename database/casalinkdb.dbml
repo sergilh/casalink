@@ -18,6 +18,7 @@ Enum "properties_propertyType_enum" {
 
 Enum "properties_status_enum" {
   "available"
+  'unavailable'
   "rented"
   "pending"
 }
@@ -27,6 +28,7 @@ Enum "contracts_status_enum" {
   "approved"
   "rejected"
   "ongoing"
+  "finished"
   "canceled"
 }
 
@@ -38,11 +40,9 @@ Enum "notifications_type_enum" {
 }
 
 Enum "notifications_status_enum" {
-  "approved"
   "requested"
-  "rejected"
-  "canceled"
-  "finished"
+  "approved"
+  "rejecte"
 }
 
 Table "users" {

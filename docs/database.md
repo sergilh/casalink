@@ -39,27 +39,27 @@ Este documento describe la estructura de la base de datos de **CasaLink**, espec
 
 ### 🏠 Tabla: `properties`
 
-| Campo           | Tipo          | Detalles                                               |
-| --------------- | ------------- | ------------------------------------------------------ |
-| id 🔑           | INTEGER       | AUTOINCREMENT                                          |
-| ownerId 🔗      | INTEGER       | users(id)                                              |
-| propertyTitle   | VARCHAR(255)  | NOT NULL                                               |
-| propertyType    | ENUM          | Valores: apartmento, casa, piso, duplex, otro          |
-| description     | TEXT          | NOT NULL                                               |
-| addressLocality | VARCHAR(255)  | Localidad                                              |
-| addressStreet   | VARCHAR(255)  | Calle                                                  |
-| addressNumber   | VARCHAR(10)   | Número                                                 |
-| addressFloor    | VARCHAR(10)   | Piso                                                   |
-| hasEnergyCert   | BOOLEAN       | FALSE por defecto                                      |
-| zipCode         | VARCHAR(5)    | NOT NULL                                               |
-| location        | POINT         | Ubicación geográfica                                   |
-| squareMeters    | SMALLINT      | Metros cuadrados                                       |
-| bedrooms        | TINYINT       | Número de habitaciones                                 |
-| bathrooms       | TINYINT       | Número de baños                                        |
-| price           | DECIMAL(10,2) | Precio                                                 |
-| status          | ENUM          | Valores: available, rented, pending (default: pending) |
-| createdAt       | TIMESTAMP     | CURRENT_TIMESTAMP por defecto                          |
-| updatedAt       | TIMESTAMP     | CURRENT_TIMESTAMP por defecto                          |
+| Campo           | Tipo          | Detalles                                                            |
+| --------------- | ------------- | ------------------------------------------------------------------- |
+| id 🔑           | INTEGER       | AUTOINCREMENT                                                       |
+| ownerId 🔗      | INTEGER       | users(id)                                                           |
+| propertyTitle   | VARCHAR(255)  | NOT NULL                                                            |
+| propertyType    | ENUM          | Valores: apartmento, casa, piso, duplex, otro                       |
+| description     | TEXT          | NOT NULL                                                            |
+| addressLocality | VARCHAR(255)  | Localidad                                                           |
+| addressStreet   | VARCHAR(255)  | Calle                                                               |
+| addressNumber   | VARCHAR(10)   | Número                                                              |
+| addressFloor    | VARCHAR(10)   | Piso                                                                |
+| hasEnergyCert   | BOOLEAN       | FALSE por defecto                                                   |
+| zipCode         | VARCHAR(5)    | NOT NULL                                                            |
+| location        | POINT         | Ubicación geográfica                                                |
+| squareMeters    | SMALLINT      | Metros cuadrados                                                    |
+| bedrooms        | TINYINT       | Número de habitaciones                                              |
+| bathrooms       | TINYINT       | Número de baños                                                     |
+| price           | DECIMAL(10,2) | Precio                                                              |
+| status          | ENUM          | Valores: available, unavailable, rented, pending (default: pending) |
+| createdAt       | TIMESTAMP     | CURRENT_TIMESTAMP por defecto                                       |
+| updatedAt       | TIMESTAMP     | CURRENT_TIMESTAMP por defecto                                       |
 
 📇 **Índices:** `(addressLocality, zipCode, price, status)`
 
@@ -67,17 +67,17 @@ Este documento describe la estructura de la base de datos de **CasaLink**, espec
 
 ### 📄 Tabla: `contracts`
 
-| Campo         | Tipo         | Detalles                                       |
-| ------------- | ------------ | ---------------------------------------------- |
-| id 🔑         | INTEGER      | AUTOINCREMENT                                  |
-| tenantId 🔗   | INTEGER      | users(id)                                      |
-| propertyId 🔗 | INTEGER      | properties(id)                                 |
-| startDate     | TIMESTAMP    | Fecha de inicio                                |
-| endDate       | TIMESTAMP    | Fecha de finalización (NULL por defecto)       |
-| pdfUrl        | VARCHAR(255) | URL del contrato en PDF (NULL por defecto)     |
-| status        | ENUM         | pending, approved, rejected, ongoing, canceled |
-| createdAt     | TIMESTAMP    | CURRENT_TIMESTAMP por defecto                  |
-| updatedAt     | TIMESTAMP    | CURRENT_TIMESTAMP por defecto                  |
+| Campo         | Tipo         | Detalles                                                |
+| ------------- | ------------ | ------------------------------------------------------- |
+| id 🔑         | INTEGER      | AUTOINCREMENT                                           |
+| tenantId 🔗   | INTEGER      | users(id)                                               |
+| propertyId 🔗 | INTEGER      | properties(id)                                          |
+| startDate     | TIMESTAMP    | Fecha de inicio                                         |
+| endDate       | TIMESTAMP    | Fecha de finalización (NULL por defecto)                |
+| pdfUrl        | VARCHAR(255) | URL del contrato en PDF (NULL por defecto)              |
+| status        | ENUM         | pending, approved, rejected, ongoing, finished,canceled |
+| createdAt     | TIMESTAMP    | CURRENT_TIMESTAMP por defecto                           |
+| updatedAt     | TIMESTAMP    | CURRENT_TIMESTAMP por defecto                           |
 
 📇 **Índices:** `(tenantId, propertyId, startDate, endDate, status)`
 
@@ -99,6 +99,9 @@ Este documento describe la estructura de la base de datos de **CasaLink**, espec
 📇 **Índices:** `(reviewerId, reviewedId, contractId, rating)`
 
 ---
+
+pending, approved, rejected, ongoing, finished,canceled
+requested, approved, rejected
 
 ### 🖼️ Tabla: `images`
 
@@ -132,17 +135,17 @@ Este documento describe la estructura de la base de datos de **CasaLink**, espec
 
 ### 🔔 Tabla: `notifications`
 
-| Campo         | Tipo      | Detalles                                          |
-| ------------- | --------- | ------------------------------------------------- |
-| id 🔑         | INTEGER   | AUTOINCREMENT                                     |
-| userId 🔗     | INTEGER   | users(id)                                         |
-| propertyId 🔗 | INTEGER   | properties(id)                                    |
-| message       | TEXT      | NOT NULL                                          |
-| type          | ENUM      | visit, property, review, contract                 |
-| status        | ENUM      | approved, requested, rejected, canceled, finished |
-| isRead        | BOOLEAN   | FALSE por defecto                                 |
-| createdAt     | TIMESTAMP | CURRENT_TIMESTAMP por defecto                     |
-| readAt        | TIMESTAMP | NULL por defecto                                  |
+| Campo         | Tipo      | Detalles                          |
+| ------------- | --------- | --------------------------------- |
+| id 🔑         | INTEGER   | AUTOINCREMENT                     |
+| userId 🔗     | INTEGER   | users(id)                         |
+| propertyId 🔗 | INTEGER   | properties(id)                    |
+| message       | TEXT      | NOT NULL                          |
+| type          | ENUM      | visit, property, review, contract |
+| status        | ENUM      | requested, approved, rejected     |
+| isRead        | BOOLEAN   | FALSE por defecto                 |
+| createdAt     | TIMESTAMP | CURRENT_TIMESTAMP por defecto     |
+| readAt        | TIMESTAMP | NULL por defecto                  |
 
 📇 **Índices:** `(userId, propertyId, type, status)`
 

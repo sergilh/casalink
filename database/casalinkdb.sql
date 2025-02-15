@@ -42,7 +42,7 @@ CREATE TABLE `properties` (
 	`bedrooms`               TINYINT NOT NULL,
 	`bathrooms`              TINYINT NOT NULL,
 	`price`                  DECIMAL(10,2) NOT NULL,
-	`status`                 ENUM ('available', 'rented', 'pending') DEFAULT 'pending',
+	`status`                 ENUM ('available','unavailable', 'rented', 'pending') DEFAULT 'pending',
 	`createdAt`              TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`updatedAt`              TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	-- Llaves foráneas
@@ -59,7 +59,7 @@ CREATE TABLE `contracts` (
 	`startDate`              TIMESTAMP NOT NULL,
 	`endDate`                TIMESTAMP  DEFAULT NULL,
 	`pdfUrl`                 VARCHAR(255)  DEFAULT NULL,
-	`status`                 ENUM ('pending', 'approved', 'rejected', 'ongoing', 'canceled') NOT NULL,
+	`status`                 ENUM ('pending', 'approved', 'rejected', 'ongoing', 'finished', 'canceled') NOT NULL,
 	`createdAt`              TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`updatedAt`              TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	-- Llaves foráneas
@@ -123,7 +123,7 @@ CREATE TABLE `notifications` (
 	`propertyId`             INT UNSIGNED,
 	`message`                TEXT NOT NULL,
 	`type`                   ENUM ('visit', 'property', 'review', 'contract') NOT NULL,
-	`status`                 ENUM ('approved', 'requested', 'rejected', 'canceled', 'finished') NOT NULL,
+	`status`                 ENUM ('requested', 'approved',  'rejected') NOT NULL,
 	`isRead`                 BOOLEAN DEFAULT false,
 	`createdAt`              TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`readAt`                 TIMESTAMP DEFAULT NULL,

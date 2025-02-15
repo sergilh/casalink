@@ -1,190 +1,192 @@
 # Wireframes de CasaLink
 
-## 1. Páginas Públicas (Usuario Anónimo)
+## 1. Páginas Públicas
 
-###  1.01 Landing Page
+### 1.1 - Landing Page
 
-- **Hero Section**:
-  - Logo + eslogan
-  - Call-to-Action (Registro/Login)
-  - Barra de búsqueda rápida (ubicación, precio, habitaciones)
-- **Propiedades Destacadas**:
-  - Grid con miniaturas (imagen, precio, ubicación, rating)
-- **Cómo Funciona**:
-  - 3 pasos ilustrados (buscar, contactar, alquilar)
-- **Testimonios**:
-  - Reseñas de usuarios verificados
-- **Footer**:
-  - Enlaces legales (Términos, Privacidad)
-  - Redes sociales
+-   **Hero Section**:
+    -   Barra de búsqueda rápida (ubicación, precio, habitaciones) [🔗](#busqueda-rapida)
+-   **Publicar Propiedad**:
+    -   Mecanica de Publicacion [🔗](#mecanica)
+    -   Botón "Publicar Propiedad"
+-   **Propiedades Destacadas**:
+    -   Grid con miniaturas (imagen, precio, ubicación, rating) [🔗](#propiedades-destacadas)
+-   **Testimonios**:
+    -   Reseñas de usuarios verificados [🔗](#testimonios)
 
-### 1.02 Resultados de Búsqueda
+### 1.2 - Resultados de Búsqueda
 
-- **Filtros Avanzados** (sidebar):
-  - Rango de precios
-  - Número de habitaciones/baños
-  - Fecha disponibilidad
-  - Certificado energético
-- **Listado de Propiedades**:
-  - Mapa interactivo (opcional)
-  - Cards con: imágenes, precio, ubicación, rating
-  - Botones "Ver Detalle" / "Añadir a Favoritos" (solo logged)
+-   **Filtros Avanzados** (sidebar):
+    -   Rango de precios
+    -   Número de habitaciones/baños
+    -   Certificado energético
+    -   Dueños con mejores valoraciones
+-   **Listado de Propiedades**:
+    -   Mapa interactivo [EXTRA]
+    -   Cards con: imágenes, precio, ubicación, rating
+    -   Botones "Ver Detalle" / "Añadir a Favoritos"
 
-### 1.03 Detalle de Propiedad
+### 1.3 - Detalle de Propiedad
 
-- **Galería de Imágenes** (carrusel + thumbnails)
-- **Información Básica**:
-  - Título, precio, ubicación exacta
-  - Características (m², habitaciones, ascensor, etc.)
-- **Descripción Larga**
-- **Perfil del Propietario**:
-  - Avatar, nombre, rating, botón "Contactar"
-- **Formulario de Solicitud de Visita** (solo logged)
-
-### 1.04 Login / Registro
-
-- **Formulario de Login**:
-  - Campos: Email, Contraseña
-  - Enlace "¿Olvidaste tu contraseña?"
-- **Formulario de Registro**:
-  - Campos: Nombre, Email, Teléfono, Contraseña
-  - Checkbox "Acepto términos y condiciones"
+-   **Galería de Imágenes** (carrusel + thumbnails)
+-   **Información Básica**:
+    -   Título, precio, ubicación exacta
+    -   Botón "Añadir a Favoritos"
+    -   Características (m², habitaciones, baños, etc.)
+-   **Descripción Larga**
+-   **Perfil del Propietario**:
+    -   Avatar, nombre, rating.
+-   **Formulario de Solicitud de Visita** (solo logged)
 
 ---
 
 ## 2. Páginas de Usuario Registrado
 
-### 2.05Dashboard General
+### 2.4 - Dashboard General
 
-- **Resumen**:
-  - Notificaciones pendientes
-  - Últimas propiedades visitadas
-  - Contratos activos
-- **Acciones Rápidas**:
-  - "Publicar Propiedad" (owner)
-  - "Ver Favoritos"
-  - "Editar Perfil"
+-   **Resumen**:
 
-### 2.06Perfil de Usuario
+    -   Numero de notificaciones pendientes y botón "Ver" (Si existen)
+    -   Estado de perfil (completo/verificado)
+    -   Contratos activos
 
-- **Sección de Edición**:
-  - Avatar uploader
-  - Campos: Nombre, teléfono, biografía
-  - Switch "Verificación de Identidad" (subir documentos)
-- **Historial**:
-  - Tabs: "Reseñas Recibidas" / "Reseñas Escritas"
-  - Gráfico de rating promedio
+-   **Acciones Rápidas**:
+    -   "Publicar Propiedad"
+    -   "Mis Propiedades" (Solo si existen)
+    -   "Ver Favoritos"
+    -   "Editar Perfil"
 
-### 2.07 Mis Propiedades (Owner)
+### 2.5 - Perfil de Usuario
 
-- **Listado de Propiedades**:
-  - Estado (pendiente/aprobado/alquilado)
-  - Acciones: Editar, Ocultar, Ver Solicitudes
-- **Formulario de Nueva Propiedad**:
-  - Paso 1: Detalles (título, descripción, precio)
-  - Paso 2: Características (habitaciones, m², extras)
-  - Paso 3: Subir imágenes + certificados
+-   **Perfil**:
 
-### 2.08 Contratos y Visitas
+    -   Avatar
+    -   Nombre Completo
 
-- **Calendario de Visitas**:
-  - Eventos por propiedad (pendientes/confirmadas)
-  - Modal de confirmación/rechazo
-- **Detalle de Contrato**:
-  - Fechas (inicio/fin)
-  - PDF descargable
-  - Botón "Dejar Reseña" (post-alquiler)
+-   **Sección de Edición**: (Solo si es su perfil)
 
-### 2.09 Notificaciones
+    -   Avatar uploader
+    -   Campos: Nombre, teléfono, biografía
+    -   Switch "Verificación de Identidad" (subir documentos)
 
-- **Lista Priorizada**:
-  - Solicitudes de visita
-  - Aprobaciones/rechazos de propiedades
-  - Recordatorios de pago
-- **Acciones**:
-  - Marcar como leído
-  - Eliminar
+-   **Reseñas**:
+    -   Gráfico de rating promedio
+    -   Tabs: "Reseñas Recibidas" / "Reseñas Escritas"
+
+### 2.6 - Mis Propiedades
+
+-   **Listado de Propiedades**:
+
+    -   Estado (pendiente, disponible, oculta, alquilada)
+    -   Acciones: Editar, Ocultar, Ver Solicitudes
+
+-   **Listado de Propiedades Favoritas**:
+    -   Lista de propiedades
+    -   Botón "Ver detalle"
+    -   Botón "Eliminar de Favoritos"
+
+### 2.7 - Contratos y Visitas
+
+-   **Visitas**:
+    -   Listado de visitas
+    -   Acciones: Aprobar / Rechazar
+-   **Contratos**:
+    -   Fechas (inicio/fin)
+    -   Acciones: Cancelar
+    -   Descargar en PDF (si existe) [EXTRA]
+    -   Botón "Dejar Reseña" (si no existe ya)
+
+### 2.8 - Mis Notificaciones
+
+-   **Lista Priorizada**:
+    -   Solicitudes de visita (Acción: Aceptar/Rechazar)
+    -   Aprobaciones/Rechazos de propiedades (Acción: Ver)
+    -   Reseña (Acción: Enviar/Reportar)
+    -   Aprobaciones/Rechazos/Cancelación/Vencimiento de contratos (Acción: Ver)
 
 ---
 
 ## 3. Páginas de Administrador
 
-### 3.10 Panel de Control Admin
+### 3.9 - Panel de Control Admin
 
-- **Métricas**:
-  - Usuarios registrados (last 30 días)
-  - Propiedades pendientes de aprobación
-- **Acciones Rápidas**:
-  - "Revisar Propiedades"
-  - "Ver Usuarios Reportados"
-
-### 3.2 Aprobación de Propiedades
-
-- **Listado de Propiedades Pendientes**:
-  - Preview de imágenes + detalles
-  - Botones "Aprobar" / "Rechazar" con motivo
-- **Historial de Decisiones**
-
----
+-   **Pendientes**:
+    -   Listado de Propiedades pendientes de aprobación (Acción: Ver)
+    -   Listado de Reseñas reportadas (Acción: Ver)
+-   **Modal**:
+    -   Comentario/Propiedad
+    -   Botones "Aprobar" / "Rechazar" con campo de motivo
 
 ## 4. Componentes Reutilizables
 
-- **Navbar**:
-  - Logo + Menú contextual (Inicio, Buscar, Dashboard)
-  - Iconos: Notificaciones, Perfil
-- **Footer**:
-  - Sección de confianza (sellos de seguridad)
-  - Enlaces rápidos (FAQ, Soporte)
-- **Modales Comunes**:
-  - Confirmación de acciones ("¿Eliminar de favoritos?")
-  - Sistema de rating (1-5 estrellas + comentario)
-- **Mapa Interactivo**:
-  - Mapa de las propiedades
-  - Botón "Ver en mapa"
-- **Lista de Propiedades**:
-  - Lista de propiedades
-  - Botón "Ver detalle"
-
----
-
-## 5. Flujos Críticos a Representar
-
-1. **Publicación de Propiedad**:
-   Propietario → Nueva Propiedad → Admin aprueba → Visible en buscador
-
-2. **Solicitud de Alquiler**:
-   Inquilino → Contactar → Propietario acepta → Firma digital → Reseña post-contrato
-
-3. **Gestión de Incidencias**:
-   Usuario → Reportar Reseña → Admin revisa → Sanción/ Eliminación
+-   **Header**{#header-section}:
+    -   Logo
+    -   Navegación (Inicio, Acerca, Buscar, Publicar) [🔗](#navbar-section)
+    -   Call-to-Action Button (Registro/Login)
+    -   Iconos: Notificaciones, Perfil, Dashboard
+-   **Mecanica de Publicacion** {#mecanica}
+    -   3 pasos ilustrados (publicar, contactar, alquilar)
+-   **Carrusel de Propiedades**{#propiedades-destacadas}
+    -   Grid con miniaturas (imagen, precio, ubicación, rating)
+-   **Testimonios**{#testimonios}
+    -   Grid con Reseñas de usuarios verificados con 5 estrellas
+-   **Footer**{#footer-section}:
+    -   Sección de confianza (sellos de seguridad)
+    -   Enlaces rápidos (FAQ, Soporte)
+    -   Enlaces legales (Términos, Privacidad)
+    -   Redes sociales [🔗](#redes-sociales)
+-   **Modal Formulario de Login**:
+    -   Campos: Email, Contraseña
+    -   Enlace "¿Olvidaste tu contraseña?"
+-   **Modal Formulario de Registro**:
+    -   Campos: Nombre, Apellido, Email, Teléfono, Contraseña
+    -   Checkbox "Acepto términos y condiciones"
+-   **Modal Formulario de Nueva Propiedad**:
+    -   Paso 1: Detalles (título, descripción, precio)
+    -   Paso 2: Características (habitaciones, m², extras)
+    -   Paso 3: Subir imágenes + certificados
+-   **Modales Comunes**:
+    -   Confirmación de acciones ("¿Eliminar de favoritos?")
+    -   Sistema de rating (1-5 estrellas + comentario)
+-   **Mapa Interactivo**:
+    -   Mapa de las propiedades
+    -   Botón "Ver en lista"
+-   **Lista de Propiedades**:
+    -   Lista de propiedades
+    -   Botón "Ver detalle"
+    -   Botón "Añadir a Favoritos" (Solo si es usuario) [EXTRA]
+-   **Redes Sociales**{#redes-sociales}
+    -   Enlaces a redes sociales
+-   **Filtros Avanzados** (sidebar) {#filtros-avanzados}
+    -   Rango de precios
+    -   Número de habitaciones/baños
+    -   Certificado energético
+    -   Dueños con mejores valoraciones
 
 ---
 
 ## 6. Tips para el Wireframe
 
 1. **Prioriza Mobile-First**: Diseña primero la versión móvil (60%+ tráfico).
-2. **Usa Placeholders Realistas**:
-   - Imágenes: 800x600px
-   - Textos: Lorem ipsum con longitud similar al real
-3. **Incluye Estados Especiales**:
-   - Búsqueda sin resultados
-   - Perfil sin reseñas
-   - Propiedad pendiente de aprobación
-4. **Herramientas Recomendadas**:
-   - **Figma**: Para diseño colaborativo + prototipado
-   - **Adobe XD**: Para interacciones avanzadas
+2. **Incluye Estados Especiales**:
+    - Búsqueda sin resultados
+    - Perfil sin reseñas
+    - Propiedad pendiente de aprobación
 
 ---
 
 ## **Ejemplo de Estructura en Figma**
+
 ```plaintext
 ├─ 🎨 Landing Page
-├─ 🔍 Search Results
-├─ 🏠 Property Detail
-├─ 👤 User Profile
-├─ 📋 Dashboard
-├─ 📝 Property Form
-└─ ⚙️ Admin Panel
+├─ 🔍 Resultados de Búsqueda
+├─ 🏠 Detalle de Propiedad
+├─ 📋 Dashboard General
+├─ 👤 Perfil de Usuario
+├─ 🏘️ Mis Propiedades
+├─ 📝 Contratos y Visitas
+├─ 📢 Mis Notificaciones
+└─ ⚙️ Panel de Control Admin
 ```
 
 ## Diagrama de Flujo de CasaLink
@@ -220,7 +222,7 @@ subgraph Área de Usuario
     review[✨ Dejar una Reseña]
     reportReview[⚠️ Reportar una Reseña]
     requestApointment[📅 Solicitar Visita]
-    verifyByAdmin{✅ 
+    verifyByAdmin{✅
     Verificacion
     de Admin}
     verifyUserRole{🔐
