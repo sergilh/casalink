@@ -1,4 +1,3 @@
-// db.js
 import mysql from 'mysql2/promise';
 
 // Desestructuramos las variables de entorno necesarias.

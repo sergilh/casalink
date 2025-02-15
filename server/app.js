@@ -1,34 +1,29 @@
 import 'dotenv/config';
 import cors from 'cors';
-
 import express from 'express';
+
 import getPool from './src/db/getPool.js';
 import jsonMiddleware from './src/middlewares/jsonMiddleware.js';
 
 import usersRoutes from './src/routes/user/usersRoutes.js';
+import requestsRoutes from './src/routes/owner/requestsRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use('/api', usersRoutes); // Rutas de usuarios
-
+// Middleware
+app.use(cors());
+app.use(express.json());
 app.use(jsonMiddleware);
 
-app.use(cors());
+// Rutas
+app.use('/api', usersRoutes); // Rutas de usuarios
+app.use('/api', requestsRoutes); // Rutas de solicitudes
 
-/*// prueba para verificar que el middleware funciona
-app.post('/api/test', (req, res) => {
-    console.log(req.body);
-
-    res.json({ message: 'Datos recibidos correctamente', data: req.body });
-});
-*/
-
-// Ruta de ejemplo para comprobar la conexión a la base de datos.
+// Ruta de prueba para verificar la conexión a la base de datos
 app.get('/', async (req, res) => {
     try {
         const pool = await getPool();
-        // Realizamos una consulta simple para obtener la hora actual desde MySQL.
         const [rows] = await pool.query('SELECT NOW() AS currentTime');
         res.json({
             message:
@@ -43,7 +38,7 @@ app.get('/', async (req, res) => {
     }
 });
 
-//Middleware de gestión de errores
+// Middleware de gestión de errores
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
     console.error(err);
@@ -53,6 +48,9 @@ app.use((err, req, res, next) => {
     });
 });
 
+// Iniciar servidor
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto http://localhost:${PORT}`);
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+
+export default app;
