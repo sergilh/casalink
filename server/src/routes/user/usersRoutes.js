@@ -8,7 +8,7 @@ const router = express.Router();
 
 // Endpoint para obtener la lista de usuarios
 //authUserMiddleware para obtener el token y verificarlo
-router.get('/users', authUserMiddleware, usersController);
+router.get('/users', usersController);
 
 //Endpoint protegido para obtener la información del usuario autenticado
 router.get('/profile', authUserMiddleware, getUserInfo);
