@@ -1,4 +1,4 @@
-import userModel from '../../models/user/userModel.js';
+import userModel from '../../models/users/userModel.js';
 
 const usersController = async (req, res) => {
     try {
@@ -6,6 +6,7 @@ const usersController = async (req, res) => {
 
         const users = await userModel({ username, email, role });
 
+        // TODO error al peticionar TypeError: res.status is not a function
         res.status(200).json({
             message: 'Lista de usuarios obtenida correctamente',
             users,
