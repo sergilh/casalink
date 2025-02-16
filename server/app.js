@@ -21,30 +21,31 @@ app.use('/api', requestsRoutes); // Rutas de solicitudes
 
 // Ruta de prueba para verificar la conexión a la base de datos
 app.get('/', async (req, res) => {
-    try {
-        const pool = await getPool();
-        const [rows] = await pool.query('SELECT NOW() AS currentTime');
-        res.json({
-            message:
-                'Servidor Express funcionando y conectado a la base de datos',
-            currentTime: rows[0].currentTime,
-        });
-    } catch (error) {
-        console.error('Error en la consulta:', error);
-        res.status(500).json({
-            error: 'Error en la consulta a la base de datos',
-        });
-    }
+	try {
+		const pool = await getPool();
+		// Realizamos una consulta simple para obtener la hora actual desde MySQL.
+		const [rows] = await pool.query('SELECT NOW() AS currentTime');
+		res.json({
+			message:
+				'Servidor Express funcionando y conectado a la base de datos',
+			currentTime: rows[0].currentTime,
+		});
+	} catch (error) {
+		console.error('Error en la consulta:', error);
+		res.status(500).json({
+			error: 'Error en la consulta a la base de datos',
+		});
+	}
 });
 
 // Middleware de gestión de errores
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-    console.error(err);
-    res.status(err.httpStatus || 500).send({
-        status: 'error',
-        message: err.message,
-    });
+	console.error(err);
+	res.status(err.httpStatus || 500).send({
+		status: 'error',
+		message: err.message,
+	});
 });
 
 // Iniciar servidor
