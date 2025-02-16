@@ -50,7 +50,7 @@ app.use((err, req, res, next) => {
 
 // Iniciar servidor
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+	console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
 
 export default app;
