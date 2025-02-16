@@ -4,39 +4,53 @@
 
 ### 1.1 - Landing Page
 
--   **Hero Section**:
-    -   Barra de búsqueda rápida (ubicación, precio, habitaciones) [🔗](#busqueda-rapida)
--   **Publicar Propiedad**:
-    -   Mecanica de Publicacion [🔗](#mecanica)
-    -   Botón "Publicar Propiedad"
--   **Propiedades Destacadas**:
-    -   Grid con miniaturas (imagen, precio, ubicación, rating) [🔗](#propiedades-destacadas)
--   **Testimonios**:
-    -   Reseñas de usuarios verificados [🔗](#testimonios)
+- **Hero Section**:
+  - Barra de búsqueda rápida (ubicación, precio, habitaciones) [🔗](#busqueda-rapida)
+- **Publicar Propiedad**:
+  - Mecanica de Publicacion [🔗](#mecanica)
+  - Botón "Publicar Propiedad"
+- **Propiedades Destacadas**:
+  - Grid con miniaturas (imagen, precio, ubicación, rating) [🔗](#propiedades-destacadas)
+- **Testimonios**:
+  - Reseñas de usuarios verificados [🔗](#testimonios)
+
+![Landing Page (Desktop)](./media/ui_d_landing_page.jpg)
+
+![Landing Page (Mobile)](./media/ui_m_landing_page.jpg)
+
+---
 
 ### 1.2 - Resultados de Búsqueda
 
--   **Filtros Avanzados** (sidebar):
-    -   Rango de precios
-    -   Número de habitaciones/baños
-    -   Certificado energético
-    -   Dueños con mejores valoraciones
--   **Listado de Propiedades**:
-    -   Mapa interactivo [EXTRA]
-    -   Cards con: imágenes, precio, ubicación, rating
-    -   Botones "Ver Detalle" / "Añadir a Favoritos"
+- **Filtros Avanzados** (sidebar):
+  - Rango de precios
+  - Número de habitaciones/baños
+  - Certificado energético
+  - Dueños con mejores valoraciones
+- **Listado de Propiedades**:
+  - Mapa interactivo [EXTRA]
+  - Cards con: imágenes, precio, ubicación, rating
+  - Botones "Ver Detalle" / "Añadir a Favoritos"
+
+![Resultados de Búsqueda (Desktop)](./media/ui_d_resultados_busqueda.jpg)
+
+![Resultados de Búsqueda (Mobile)](./media/ui_m_resultados_busqueda.jpg)
 
 ### 1.3 - Detalle de Propiedad
 
--   **Galería de Imágenes** (carrusel + thumbnails)
--   **Información Básica**:
-    -   Título, precio, ubicación exacta
-    -   Botón "Añadir a Favoritos"
-    -   Características (m², habitaciones, baños, etc.)
--   **Descripción Larga**
--   **Perfil del Propietario**:
-    -   Avatar, nombre, rating.
--   **Formulario de Solicitud de Visita** (solo logged)
+- **Galería de Imágenes** (carrusel + thumbnails)
+- **Información Básica**:
+  - Título, precio, ubicación exacta
+  - Botón "Añadir a Favoritos"
+  - Características (m², habitaciones, baños, etc.)
+- **Descripción Larga**
+- **Perfil del Propietario**:
+  - Avatar, nombre, rating.
+- **Formulario de Solicitud de Visita** (solo logged)
+
+![Detalle de Propiedad (Desktop)](./media/ui_d_detalle_propiedad.jpg)
+
+![Detalle de Propiedad (Mobile)](./media/ui_m_detalle_propiedad.jpg)
 
 ---
 
@@ -44,65 +58,98 @@
 
 ### 2.4 - Dashboard General
 
--   **Resumen**:
+- **Resumen**:
+  
+  - Numero de notificaciones pendientes y botón "Ver" (Si existen)
+  - Editar Perfil
+  - Estado de perfil (completo/verificado)
+  - 
 
-    -   Numero de notificaciones pendientes y botón "Ver" (Si existen)
-    -   Estado de perfil (completo/verificado)
-    -   Contratos activos
+- **Acciones Rápidas**:
+  
+  - "Publicar Propiedad"
+  - "Mis Propiedades"
+  - "Ver Favoritos"
+  - "Mis Contratos"
 
--   **Acciones Rápidas**:
-    -   "Publicar Propiedad"
-    -   "Mis Propiedades" (Solo si existen)
-    -   "Ver Favoritos"
-    -   "Editar Perfil"
+![Dashboard General (Desktop)](./media/ui_d_dashboard_general.jpg)
+
+![Dashboard General (Mobile)](./media/ui_m_dashboard_general.jpg)
+
+---
 
 ### 2.5 - Perfil de Usuario
 
--   **Perfil**:
+- **Perfil**:
+  
+  - Avatar
+  - Nombre Completo
 
-    -   Avatar
-    -   Nombre Completo
+- **Sección de Edición**: (Solo si es su perfil)
+  
+  - Avatar uploader
+  - Campos: Nombre, teléfono, biografía
+  - Switch "Verificación de Identidad" (subir documentos)
 
--   **Sección de Edición**: (Solo si es su perfil)
+- **Reseñas**:
+  
+  - Gráfico de rating promedio
+  - Tabs: "Reseñas Recibidas" / "Reseñas Escritas"
 
-    -   Avatar uploader
-    -   Campos: Nombre, teléfono, biografía
-    -   Switch "Verificación de Identidad" (subir documentos)
+![Perfil de Usuario (Desktop)](./media/ui_d_perfil_usuario.jpg)
 
--   **Reseñas**:
-    -   Gráfico de rating promedio
-    -   Tabs: "Reseñas Recibidas" / "Reseñas Escritas"
+![Perfil de Usuario (Mobile)](./media/ui_m_perfil_usuario.jpg)
+
+---
 
 ### 2.6 - Mis Propiedades
 
--   **Listado de Propiedades**:
+- **Listado de Propiedades**:
+  
+  - Estado (pendiente, disponible, oculta, alquilada)
+  - Acciones: Editar, Ocultar, Ver Solicitudes
 
-    -   Estado (pendiente, disponible, oculta, alquilada)
-    -   Acciones: Editar, Ocultar, Ver Solicitudes
+- **Listado de Propiedades Favoritas**:
+  
+  - Lista de propiedades
+  - Botón "Ver detalle"
+  - Botón "Eliminar de Favoritos"
 
--   **Listado de Propiedades Favoritas**:
-    -   Lista de propiedades
-    -   Botón "Ver detalle"
-    -   Botón "Eliminar de Favoritos"
+![Mis Propiedades (Desktop)](./media/ui_d_mis_propiedades.jpg)
+
+![Mis Propiedades (Mobile)](./media/ui_m_mis_propiedades.jpg)
+
+---
 
 ### 2.7 - Contratos y Visitas
 
--   **Visitas**:
-    -   Listado de visitas
-    -   Acciones: Aprobar / Rechazar
--   **Contratos**:
-    -   Fechas (inicio/fin)
-    -   Acciones: Cancelar
-    -   Descargar en PDF (si existe) [EXTRA]
-    -   Botón "Dejar Reseña" (si no existe ya)
+- **Visitas**:
+  - Listado de visitas
+  - Acciones: Aprobar / Modificar / Rechazar
+- **Contratos**:
+  - Fechas (inicio/fin)
+  - Status
+  - Acciones: Aprobar / Rechazar / zzCancelar
+  - Descargar en PDF (si existe) [EXTRA]
+  - Botón "Dejar Reseña" (si no existe ya)
+
+![Contratos y Visitas (Desktop)](./media/ui_d_contratos_visitas.jpg)
+
+![Contratos y Visitas (Mobile)](./media/ui_m_contratos_visitas.jpg)
+
+---
 
 ### 2.8 - Mis Notificaciones
 
--   **Lista Priorizada**:
-    -   Solicitudes de visita (Acción: Aceptar/Rechazar)
-    -   Aprobaciones/Rechazos de propiedades (Acción: Ver)
-    -   Reseña (Acción: Enviar/Reportar)
-    -   Aprobaciones/Rechazos/Cancelación/Vencimiento de contratos (Acción: Ver)
+- **Lista Priorizada**:
+  - Solicitudes de visita (Acción: Aceptar/Rechazar)
+  - Aprobaciones/Rechazos de propiedades (Acción: Ver)
+  - Reseña (Acción: Enviar/Reportar)
+  - Aprobaciones/Rechazos/Cancelación/Vencimiento de contratos (Acción: Ver)
+
+![Mis Notificaciones (Desktop)](./media/ui_d_mis_notifications.jpg)
+
+![Mis Notificaciones (Mobile)](./media/ui_m_mis_notifications.jpg)
 
 ---
 
@@ -110,68 +157,72 @@
 
 ### 3.9 - Panel de Control Admin
 
--   **Pendientes**:
-    -   Listado de Propiedades pendientes de aprobación (Acción: Ver)
-    -   Listado de Reseñas reportadas (Acción: Ver)
--   **Modal**:
-    -   Comentario/Propiedad
-    -   Botones "Aprobar" / "Rechazar" con campo de motivo
+- **Pendientes**:
+  - Listado de Propiedades pendientes de aprobación (Acción: Ver)
+  - Listado de Reseñas reportadas (Acción: Ver)
+- **Modal**:
+  - Comentario/Propiedad
+  - Botones "Aprobar" / "Rechazar" con campo de motivo
 
-## 4. Componentes Reutilizables
+![Panel de Control Admin (Desktop)](./media/ui_d_panel_control_admin.jpg)
 
--   **Header**{#header-section}:
-    -   Logo
-    -   Navegación (Inicio, Acerca, Buscar, Publicar) [🔗](#navbar-section)
-    -   Call-to-Action Button (Registro/Login)
-    -   Iconos: Notificaciones, Perfil, Dashboard
--   **Mecanica de Publicacion** {#mecanica}
-    -   3 pasos ilustrados (publicar, contactar, alquilar)
--   **Carrusel de Propiedades**{#propiedades-destacadas}
-    -   Grid con miniaturas (imagen, precio, ubicación, rating)
--   **Testimonios**{#testimonios}
-    -   Grid con Reseñas de usuarios verificados con 5 estrellas
--   **Footer**{#footer-section}:
-    -   Sección de confianza (sellos de seguridad)
-    -   Enlaces rápidos (FAQ, Soporte)
-    -   Enlaces legales (Términos, Privacidad)
-    -   Redes sociales [🔗](#redes-sociales)
--   **Modal Formulario de Login**:
-    -   Campos: Email, Contraseña
-    -   Enlace "¿Olvidaste tu contraseña?"
--   **Modal Formulario de Registro**:
-    -   Campos: Nombre, Apellido, Email, Teléfono, Contraseña
-    -   Checkbox "Acepto términos y condiciones"
--   **Modal Formulario de Nueva Propiedad**:
-    -   Paso 1: Detalles (título, descripción, precio)
-    -   Paso 2: Características (habitaciones, m², extras)
-    -   Paso 3: Subir imágenes + certificados
--   **Modales Comunes**:
-    -   Confirmación de acciones ("¿Eliminar de favoritos?")
-    -   Sistema de rating (1-5 estrellas + comentario)
--   **Mapa Interactivo**:
-    -   Mapa de las propiedades
-    -   Botón "Ver en lista"
--   **Lista de Propiedades**:
-    -   Lista de propiedades
-    -   Botón "Ver detalle"
-    -   Botón "Añadir a Favoritos" (Solo si es usuario) [EXTRA]
--   **Redes Sociales**{#redes-sociales}
-    -   Enlaces a redes sociales
--   **Filtros Avanzados** (sidebar) {#filtros-avanzados}
-    -   Rango de precios
-    -   Número de habitaciones/baños
-    -   Certificado energético
-    -   Dueños con mejores valoraciones
+![Panel de Control Admin (Mobile)](./media/ui_m_panel_control_admin.jpg)
 
 ---
 
-## 6. Tips para el Wireframe
+## 4. Componentes Reutilizables
 
-1. **Prioriza Mobile-First**: Diseña primero la versión móvil (60%+ tráfico).
-2. **Incluye Estados Especiales**:
-    - Búsqueda sin resultados
-    - Perfil sin reseñas
-    - Propiedad pendiente de aprobación
+- **Header**{#header-section}:
+  - Logo
+  - Navegación (Inicio, Acerca, Buscar, Publicar) [🔗](#navbar-section)
+  - Call-to-Action Button (Registro/Login)
+  - Iconos: Notificaciones, Perfil, Dashboard
+- **Mecanica de Publicacion** {#mecanica}
+  - 3 pasos ilustrados (publicar, contactar, alquilar)
+- **Carrusel de Propiedades**{#propiedades-destacadas}
+  - Grid con miniaturas (imagen, precio, ubicación, rating)
+- **Testimonios**{#testimonios}
+  - Grid con Reseñas de usuarios verificados con 5 estrellas
+- **Footer**{#footer-section}:
+  - Sección de confianza (sellos de seguridad)
+  - Enlaces rápidos (FAQ, Soporte)
+  - Enlaces legales (Términos, Privacidad)
+  - Redes sociales [🔗](#redes-sociales)
+- **Modal Formulario de Login**:
+  - Campos: Email, Contraseña
+  - Enlace "¿Olvidaste tu contraseña?"
+- **Modal Formulario de Registro**:
+  - Campos: Nombre, Apellido, Email, Teléfono, Contraseña
+  - Checkbox "Acepto términos y condiciones"
+- **Modal Formulario de Nueva Propiedad**:
+  - Paso 1: Detalles (título, descripción, precio)
+  - Paso 2: Características (habitaciones, m², extras)
+  - Paso 3: Subir imágenes + certificados
+- **Modales Comunes**:
+  - Confirmación de acciones ("¿Eliminar de favoritos?")
+  - Sistema de rating (1-5 estrellas + comentario)
+- **Mapa Interactivo**:
+  - Mapa de las propiedades
+  - Botón "Ver en lista"
+- **Lista de Propiedades**:
+  - Lista de propiedades
+  - Botón "Ver detalle"
+  - Botón "Añadir a Favoritos" (Solo si es usuario) [EXTRA]
+- **Redes Sociales**{#redes-sociales}
+  - Enlaces a redes sociales
+- **Filtros Avanzados** (sidebar) {#filtros-avanzados}
+  - Rango de precios
+  - Número de habitaciones/baños
+  - Certificado energético
+  - Dueños con mejores valoraciones
+- **Estados Especiales**:
+  - Búsqueda sin resultados
+  - Perfil sin reseñas
+  - Propiedad pendiente de aprobación
+
+![Componentes Reutilizables (Desktop)](./media/ui_d_componentes_reutilizables.jpg)
+
+![Componentes Reutilizables (Mobile)](./media/ui_m_componentes_reutilizables.jpg)
 
 ---
 

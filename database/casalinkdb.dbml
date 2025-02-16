@@ -18,7 +18,7 @@ Enum "properties_propertyType_enum" {
 
 Enum "properties_status_enum" {
   "available"
-  'unavailable'
+  "unavailable"
   "rented"
   "pending"
 }
@@ -49,11 +49,12 @@ Table "users" {
   "id" INT [pk, not null, increment]
   "name" VARCHAR(100)
   "lastName" VARCHAR(100)
-  "legalId" VARCHAR(20) [unique, not null]
+  "legalId" VARCHAR(20) [unique]
   "email" VARCHAR(100) [unique, not null]
   "password" VARCHAR(255)
   "phone" VARCHAR(255)
   "avatarUrl" VARCHAR(255)
+  "bio" TEXT
   "role" users_role_enum [default: 'user']
   "recoveryCode" VARCHAR(100) [default: NULL]
   "isEmailVerified" BOOLEAN [default: FALSE]
