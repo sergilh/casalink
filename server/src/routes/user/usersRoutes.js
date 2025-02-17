@@ -3,6 +3,7 @@ import usersController from '../../controllers/user/usersController.js';
 import usersInfoController from '../../controllers/user/usersInfoController.js';
 import authUserMiddleware from '../../middlewares/authUserMiddleware.js';
 import usersLoginController from '../../controllers/user/usersLoginController.js';
+import sendRecoverPassMailController from '../../controllers/user/sendRecoverPassMailController.js';
 
 const router = express.Router();
 
@@ -12,6 +13,8 @@ router.get('/users', usersController);
 
 //Endpoint para loguearse
 router.post('/users/login', usersLoginController);
+
+router.patch('/users/password', sendRecoverPassMailController);
 
 //Endpoint protegido para obtener la información del usuario autenticado
 router.get('/profile', authUserMiddleware, usersInfoController);
