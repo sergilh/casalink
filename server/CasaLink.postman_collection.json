@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"$2b$10$Q1HFUT5t3cR5OzMNBIDObOjIKTU5u0SMTG7EyRZq/.NfzSo.cLcsC\",\r\n    \"password\": \"UserPass123!\"\r\n}",
+					"raw": "{\r\n    \"email\": \"serkio.lh@gmail.com\",\r\n    \"password\": \"UserPass123!\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -31,6 +31,36 @@
 						"api",
 						"users",
 						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Recuperación Contraseña",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"password"
 					]
 				}
 			},
