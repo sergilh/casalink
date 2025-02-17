@@ -1,47 +1,58 @@
----
-title: CasaLink Flow Chart
----
-graph TD;
-  %% Inicio del flujo
-  A([🏠 Inicio]) --> B[Buscar Propiedades]
-  A --> C[Publicar Propiedad]
-  A --> D[Iniciar Sesión / Registrarse]
-  A --> E[Ver Perfil]
-  
-  %% Flujo de búsqueda de propiedades
-  B --> B1[Resultados de Búsqueda]
-  B1 --> B2[Ver Detalle de Propiedad]
-  B2 -->|No Registrado| D
-  B2 -->|Registrado| B3[Contactar Propietario]
-  B2 -->|Registrado| B4[Guardar en Favoritos]
-  B2 -->|Registrado| B5[Solicitar Visita]
+<header style="text-align: center; background-color: #111; color: #eee; padding: 2rem;">
 
-  %% Flujo de registro
-  D --> D1[Formulario Registro/Login]
-  D1 --> D2[Confirmación de Cuenta]
-  D2 --> B2
+![](https://cdn.prod.website-files.com/5f3108520188e7588ef687b1/620e82ff8680cd26532fff29_Logotipo%20HACK%20A%20BOSS_white%20100%20px.svg)
 
-  %% Flujo de publicación de propiedades
-  C --> C1[Formulario de Publicación]
-  C1 -->|No Registrado| D
-  C1 -->|Registrado| C2[Confirmación y Aprobación]
-  C2 --> C3[Propiedad Publicada]
+</header>
 
-  %% Flujo de perfil y gestión de propiedades
-  E -->|No Registrado| D
-  E --> E1[Panel de Usuario]
-  E1 --> E2[Mis Propiedades]
-  E1 --> E3[Mis Favoritos]
-  E1 --> E4[Mis Visitas Agendadas]
-  E1 --> E5[Mis Contratos]
+# 🏠 CasaLink - Frontend
 
-  %% Flujo de contratos
-  B5 --> F[Solicitud de Contrato]
-  F -->|Debe haber solicitado visita| B5
-  F --> F1[Revisión del Propietario]
-  F1 --> F2[Firma de Contrato]
-  F2 --> E5
+![CasaLink Interface](./docs/media/frontend-preview.jpg)
 
-  %% Flujo de gestión de notificaciones
-  E1 --> N[Notificaciones]
+**Interfaz de usuario** de la plataforma CasaLink desarrollada con React.js. Proporciona una experiencia moderna y responsive para la gestión de alquileres seguros.
 
+## 🌟 Características Principales
+- **Búsqueda Inteligente**: Filtrado avanzado por ubicación, precio y características
+- **Gestión de Perfil**: Edición de datos de usuario y verificación de identidad
+- **Sistema de Valoraciones**: Interfaz interactiva para dejar reseñas
+- **Notificaciones en Tiempo Real**: Alertas de solicitudes y actualizaciones
+- **Gestión de Favoritos**: Listado personalizado de propiedades guardadas
+
+## 🛠 Tecnologías Utilizadas
+- **Framework**: React.js
+- **Gestión de Estado**: Context API
+- **Estilos**: CSS3 + Flexbox/Grid
+- **Enrutamiento**: React Router DOM
+- **Iconos**: React Icons
+- **Mapas**: React-Leaflet
+
+## 🚀 Instalación
+```bash
+cd client
+npm install
+npm start
+```
+
+## ⚙️ Variables de Entorno
+Crear archivo `.env`:
+```env
+REACT_APP_API_URL=http://localhost:5000
+REACT_APP_MAPBOX_TOKEN=your_mapbox_token
+```
+
+## 📂 Estructura de Carpetas
+```
+client/
+├── public/
+├── src/
+│   ├── components/   # Componentes reutilizables
+│   ├── contexts/     # Gestión de estado global
+│   ├── pages/        # Vistas principales
+│   ├── services/     # Conexión con la API
+│   ├── styles/       # Hojas de estilo
+│   └── utils/        # Funciones auxiliares
+```
+
+## 🧪 Pruebas
+```bash
+npm test
+```
