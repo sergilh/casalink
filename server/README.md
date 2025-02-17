@@ -5,12 +5,13 @@
 **Servidor API REST** para CasaLink desarrollado con Node.js y Express.js. Gestiona la lógica de negocio y la conexión con la base de datos MySQL.
 
 ## 🔧 Tecnologías Clave
-- **Runtime**:	 		Node.js
-- **Framework**: 		Express.js
-- **Base de Datos**: 	MySQL + Sequelize ORM
-- **Autenticación**: 	JWT + Bcrypt
-- **Validación**: 		Express Validator
-<!-- - **Documentación**: 	Swagger UI -->
+
+- **Runtime**: Node.js
+- **Framework**: Express.js
+- **Base de Datos**: MySQL + Sequelize ORM
+- **Autenticación**: JWT + Bcrypt
+- **Validación**: Express Validator
+      <!-- - **Documentación**: 	Swagger UI -->
 
 ## 🗄️ # Endpoints de la API
 
@@ -53,9 +54,8 @@
 | PUT    | /api/admin/users/:id       | Gestionar usuarios (superadmin) [EXTRA] |
 | PATCH  | /api/admin/properties/:id/ | Aprobar propiedad (admin)               |
 
-
-
 ## 🛠 Instalación
+
 ```bash
 cd server
 npm install
@@ -65,7 +65,9 @@ npm run seed     # Semillas de datos
 ```
 
 ## ⚙️ Variables de Entorno
+
 Crear archivo `.env`:
+
 ```env
 DB_HOST=localhost
 DB_USER=root
@@ -100,18 +102,31 @@ ADMIN3_NAME
 ADMIN3_LASTNAME
 ADMIN3_PHONE
 
+## Generar clave segura para JWT-SECRET
+
+Necesario generar clave segura para cualquier funcionalidad que dependa de autenticación con token.
+Copiar clave y pegar en .env
+
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
 
 ## 📊 Modelo de Datos
+
 ![Database Schema](./docs/media/db-schema.png)
 
 ## 📄 Documentación API
+
 Acceder a la documentación completa en desarrollo:
+
 ```bash
 http://localhost:5000/api-docs
 ```
 
 ## 🧪 Pruebas
-```bash
+
+````bash
 npm test  # Pruebas unitarias
 npm run test:e2e  # Pruebas de integración
-```
+```bash
+````
