@@ -1,6 +1,6 @@
 import express from 'express';
 import usersController from '../../controllers/user/usersController.js';
-import getUserInfo from '../../controllers/user/usersInfoController.js';
+import usersInfoController from '../../controllers/user/usersInfoController.js';
 import authUserMiddleware from '../../middlewares/authUserMiddleware.js';
 import usersLoginController from '../../controllers/user/usersLoginController.js';
 
@@ -14,6 +14,6 @@ router.get('/users', usersController);
 router.post('/users/login', usersLoginController);
 
 //Endpoint protegido para obtener la información del usuario autenticado
-router.get('/profile', authUserMiddleware, getUserInfo);
+router.get('/profile', authUserMiddleware, usersInfoController);
 
 export default router;
