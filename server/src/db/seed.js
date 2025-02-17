@@ -95,7 +95,6 @@ const seedUsers = async () => {
 
 		for (const user of users) {
 			if (user.email !== '') {
-				const hashedEmail = await bcrypt.hash(user.email, 10);
 				const hashedPhone = await bcrypt.hash(user.phone, 10);
 				const hashedPassword = await bcrypt.hash(user.password, 10);
 
@@ -103,7 +102,7 @@ const seedUsers = async () => {
 				const values = [
 					user.name,
 					user.lastName,
-					hashedEmail,
+					user.email,
 					hashedPassword,
 					hashedPhone,
 					user.role,
