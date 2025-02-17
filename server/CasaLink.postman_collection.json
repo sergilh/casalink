@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "734eb141-dfec-4eb2-baf5-a9d0fd5a826d",
+		"_postman_id": "4dd66440-85b1-4842-8da0-c442c478711c",
 		"name": "CasaLink",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "40399609"
+		"_exporter_id": "40373208"
 	},
 	"item": [
 		{
@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"demo1\",\r\n    \"email\": \"demo1@mail.com\",\r\n    \"password\": \"123456\"\r\n}",
+					"raw": "{\r\n    \"email\": \"$2b$10$Q1HFUT5t3cR5OzMNBIDObOjIKTU5u0SMTG7EyRZq/.NfzSo.cLcsC\",\r\n    \"password\": \"UserPass123!\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
