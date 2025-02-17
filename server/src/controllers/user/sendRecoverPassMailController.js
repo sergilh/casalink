@@ -27,23 +27,24 @@ const sendRecoverPassMailController = async (req, res, next) => {
 		//Aquí el código ya está metido en la BBDD del usuario.
 
 		const emailSubject = 'Recuperación de contraseña - Casalink';
-		const emailText = `¡Hola [Nombre del usuario]!
+		const htmlContent = `¡Hola!
 
-            Hemos recibido una solicitud para recuperar tu contraseña. Si no realizaste esta solicitud, por favor ignora este mensaje.
+            Hemos recibido una solicitud para recuperar tu contraseña.<br> Si no realizaste esta solicitud, por favor ignora este mensaje.
 
             Para restablecer tu contraseña, por favor, haz click en el siguiente enlace:
 
-            <a href="${process.env.CLIENT_URL}/users/password/${recoveryCode}">Restablece tu contraseña aquí</a>
+            <a href="${process.env.CLIENT_URL}/users/password/${recoveryCode}">Restablece tu contraseña aquí</a><br>
 
-            Si necesitas más ayuda o tienes problemas, no dudes en ponerte en contacto con nosotros.
+            Si necesitas más ayuda o tienes problemas, no dudes en ponerte en contacto con nosotros.<br><br>
 
-            ¡Gracias por ser parte de nuestra comunidad!
+            ¡Gracias por ser parte de nuestra comunidad!<br>
 
-            Saludos,
+            Saludos,<br>
 
-            El equipo de [Nombre de tu empresa o sitio web]`;
+            El equipo de Casalink <br>
+			`;
 
-		await sendMailUtil(email, emailSubject, emailText);
+		await sendMailUtil(email, emailSubject, htmlContent);
 
 		res.send({
 			status: 'ok',
