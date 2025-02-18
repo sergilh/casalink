@@ -11,7 +11,7 @@
 - **Base de Datos**: MySQL + Sequelize ORM
 - **Autenticación**: JWT + Bcrypt
 - **Validación**: Express Validator
-      <!-- - **Documentación**: 	Swagger UI -->
+    <!-- - **Documentación**: 	Swagger UI -->
 
 ## 🗄️ # Endpoints de la API
 
@@ -109,6 +109,18 @@ Copiar clave y pegar en .env
 
 ```bash
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+
+## Configurar credenciales SMTP
+
+Configurar con un servicio SMTP con Gmail o Mailtrap(recomendado para pruebas)
+SMTP_HOST=
+SMTP_PORT=
+SMTP_USER=
+SMTP_PASS=
+
+```bash
+npm install nodemailer
 ```
 
 ## 📊 Modelo de Datos
