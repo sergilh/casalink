@@ -1,19 +1,29 @@
-{
-	"info": {
-		"_postman_id": "4dd66440-85b1-4842-8da0-c442c478711c",
+"info": {
+		"_postman_id": "7f28b2d6-19f9-4979-8284-61d2d1ed19a8",
 		"name": "CasaLink",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "40373208"
+		"_exporter_id": "40373194"
 	},
 	"item": [
 		{
-			"name": "Login de usuario",
+			"name": "Solicitud Visita",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InN1cGVyYWRtaW4iLCJpYXQiOjE3Mzk4Nzg5NDksImV4cCI6MTc0MDQ4Mzc0OX0.1WhOFS19mZcTbjzBp9u0LhYVuVvxoqjaNmsFDA2Rtj4",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"serkio.lh@gmail.com\",\r\n    \"password\": \"UserPass123!\"\r\n}",
+					"raw": "{\n  \"emailCasero\": \"visitante@email.com\",\n  \"mensaje\": \"Hola, me gustaría agendar una visita\",\n  \"usuarioSolicitante\": \"Russel Test\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -21,15 +31,85 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost/api/users/login",
+					"raw": "http://localhost:5001/api/solicitudes/request-visit",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "5001",
+					"path": [
+						"api",
+						"solicitudes",
+						"request-visit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Info Usuario",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer dd84317c-5356-4268-ba56-ae584afba83b",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5001/api/users/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
 					"path": [
 						"api",
 						"users",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Valoración 1-5",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Login de usuario",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"admin@casalink.com\",\r\n    \"password\": \"Admin123!\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5001/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
 						"login"
 					]
 				}
@@ -70,11 +150,16 @@
 			"name": "Registrar usuario",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"demo2\",\r\n    \"email\": \"info@ichikstudio.com\",\r\n    \"password\": \"123456\"\r\n}",
-					"raw": "{\r\n    \"name\": \"Juan\",\r\n    \"lastName\": \"Pérez\",\r\n    \"legalId\": \"29333443W\",\r\n    \"email\": \"j@ichikstudio.com\",\r\n    \"password\": \"123456\",\r\n    \"phone\": \"123456789\"\r\n}",
+					"raw": "{\r\n    \"username\": \"Russel\",\r\n    \"email\": \"koiclaveria@gmail.com\",\r\n    \"password\": \"1234ABCD.\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -82,12 +167,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/users/register",
+					"raw": "http://localhost:5001/api/users/register",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5000",
+					"port": "5001",
 					"path": [
 						"api",
 						"users",

@@ -8,6 +8,7 @@ import requestsRoutes from './src/routes/owner/requestsRoutes.js';
 import path from 'path';
 import process from 'process';
 import requestVisitRoutes from './src/routes/user/requestVisitRoutes.js';
+import reviewsRoutes from './src/routes/reviews/reviewsRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,6 +25,7 @@ app.use('/static', express.static(path.join(process.cwd(), 'public')));
 app.use('/api', usersRoutes); // Rutas de usuarios
 app.use('/api', requestsRoutes); // Rutas de solicitudes
 app.use('/api/solicitudes', requestVisitRoutes); // Ruta para solicitar visita
+app.use('/api/reviews', reviewsRoutes); // Rutas de valoraciones
 
 // Ruta de prueba para verificar la conexión a la base de datos
 app.get('/', async (req, res) => {
