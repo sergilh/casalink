@@ -2,8 +2,6 @@ import jwt from 'jsonwebtoken';
 
 import generateErrorUtil from '../utils/generateErrorUtil.js';
 
-console.log('JWT_SECRET:', process.env.JWT_SECRET);
-
 // Inicia el middleware.
 const authUserMiddleware = async (req, res, next) => {
 	try {
