@@ -8,19 +8,19 @@ import validateUserController from '../../controllers/user/validateUserControlle
 
 const router = express.Router();
 
-// Endpoint para obtener la lista de usuarios
-router.get('/users/:email', usersController);
+// ✅ Endpoint para obtener la lista de usuarios
+router.get('/users', usersController);
 
-//Endpoint para loguearse
+// ✅ Endpoint para loguearse
 router.post('/users/login', usersLoginController);
 
+// ✅ Endpoint para recuperar contraseña
 router.patch('/users/password', sendRecoverPassMailController);
 
-//Endpoint para verificar user
+// ✅ Endpoint para verificar usuario por email
 router.patch('/users/validate/:email', validateUserController);
 
-//Endpoint protegido para obtener la información del usuario autenticado
-//authUserMiddleware para obtener el token y verificarlo
+// ✅ Endpoint protegido para obtener la información del usuario autenticado
 router.get('/profile', authUserMiddleware, usersInfoController);
 
 export default router;

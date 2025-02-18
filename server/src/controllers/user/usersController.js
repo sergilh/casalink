@@ -2,15 +2,26 @@ import userModel from '../../models/users/userModel.js';
 
 const usersController = async (req, res) => {
 	try {
-		const { email } = req.query; // Tomamos los filtros desde la URL
+		const { email } = req.query; // Captura el email si se envía como parámetro en la URL
 
+		//  Obtenemos los usuarios desde el modelo
 		const users = await userModel({ email });
-		// TODO error al peticionar TypeError: res.status is not a function
+
+		//  Si no se encuentran usuarios, enviamos una respuesta 404
+		if (!users || users.length === 0) {
+			return res.status(404).json({
+				message: 'No se encontraron usuarios con el criterio dado',
+				users: [],
+			});
+		}
+
+		//  Si todo está bien, devolvemos los usuarios
 		res.status(200).json({
 			message: 'Lista de usuarios obtenida correctamente',
 			users,
 		});
 	} catch (error) {
+		console.error('Error en usersController:', error);
 		res.status(500).json({
 			error: 'Error al obtener la lista de usuarios',
 			details: error.message,
