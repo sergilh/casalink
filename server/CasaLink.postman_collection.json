@@ -21,7 +21,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/login",
+					"raw": "http://localhost/api/users/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -74,6 +74,7 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n    \"username\": \"demo2\",\r\n    \"email\": \"info@ichikstudio.com\",\r\n    \"password\": \"123456\"\r\n}",
+					"raw": "{\r\n    \"name\": \"Juan\",\r\n    \"lastName\": \"Pérez\",\r\n    \"legalId\": \"29333443W\",\r\n    \"email\": \"j@ichikstudio.com\",\r\n    \"password\": \"123456\",\r\n    \"phone\": \"123456789\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -81,12 +82,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/register",
+					"raw": "http://localhost:5000/api/users/register",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "5000",
 					"path": [
 						"api",
 						"users",
