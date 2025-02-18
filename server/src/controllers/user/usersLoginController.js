@@ -34,7 +34,10 @@ const usersLoginController = async (req, res, next) => {
 			role: user.role,
 		};
 
-		const token = jwt.sign(tokenInfo, process.env.SECRET, {
+		console.log('TOKEN INFO:', tokenInfo);
+		console.log('JWT_SECRET:', process.env.JWT_SECRET);
+
+		const token = jwt.sign(tokenInfo, process.env.JWT_SECRET, {
 			expiresIn: '7d',
 		});
 
