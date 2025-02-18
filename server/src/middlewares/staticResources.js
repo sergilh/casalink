@@ -1,10 +1,28 @@
-// middleware/notFoundMiddleware.js
+import express from 'express';
+import path from 'path';
 
-const staticResourcesMiddleware = (req, res) => {
-    res.status(404).json({
-        status: 'error',
-        message: 'Ruta no encontrada',
-    });
+// Middleware para servir imágenes y videos subidos
+const staticResourcesMiddleware = (app) => {
+	app.use(
+		'/images',
+		express.static(
+			path.join(process.cwd(), process.env.IMAGES_FOLDER || 'images')
+		)
+	);
+	app.use(
+		'/videos',
+		express.static(
+			path.join(process.cwd(), process.env.VIDEOS_FOLDER || 'videos')
+		)
+	);
+
+	// Middleware para manejar rutas no encontradas (404)
+	app.use((req, res) => {
+		res.status(404).json({
+			status: 'error',
+			message: 'Ruta no encontrada',
+		});
+	});
 };
 
-module.exports = staticResourcesMiddleware;
+export default staticResourcesMiddleware;
