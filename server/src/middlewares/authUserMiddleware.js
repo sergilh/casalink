@@ -1,27 +1,33 @@
 import jwt from 'jsonwebtoken';
-
 import generateErrorUtil from '../utils/generateErrorUtil.js';
 
-// Inicia el middleware.
+// Middleware para autenticar al usuario mediante JWT
 const authUserMiddleware = async (req, res, next) => {
 	try {
-		//accede a los headers
+		// Accede a los headers y obtiene el token
 		const { authorization } = req.headers;
-		//si no hay header lanza error
+
+		// Si no hay token, lanza un error
 		if (!authorization) {
-			generateErrorUtil('Falta la cabecera de autorización', 401);
+			return next(
+				generateErrorUtil('Falta la cabecera de autorización', 401)
+			);
 		}
-		//si hay header lo desencripta
+
+		// Extraer solo el token si viene con el prefijo "Bearer"
+		const token = authorization.startsWith('Bearer ')
+			? authorization.split(' ')[1] // Si viene con "Bearer ", quitarlo
+			: authorization;
+
 		try {
-			const tokenInfo = jwt.verify(authorization, process.env.SECRET);
-			//agregar el token al objero user en el objero req
-			req.user = tokenInfo;
+			// Verificar el token
+			const tokenInfo = jwt.verify(token, process.env.JWT_SECRET);
+			req.user = tokenInfo; // Guardar la información del usuario en `req.user`
 
 			next();
 		} catch (err) {
-			console.error(err);
-
-			throw new Error('Token inválido');
+			console.error('Error verificando el token:', err);
+			return next(generateErrorUtil('Token inválido', 403));
 		}
 	} catch (err) {
 		next(err);

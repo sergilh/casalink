@@ -3,13 +3,16 @@ import getPool from '../../db/getPool.js';
 // Controlador para obtener la información del usuario verificado
 const usersInfoController = async (req, res, next) => {
 	try {
-		// Extraer el ID del usuario autntificado desde el token
+		// Extraer el ID del usuario autenticado desde el token
 		const { id } = req.user;
 
+		// Obtener la conexión al pool de la base de datos
+		const pool = await getPool(); // <-- Añadir await
+
 		// Obtener los datos del usuario desde la base de datos
-		const [user] = await getPool().query(
+		const [user] = await pool.query(
 			`SELECT id, name, lastName, email, phone, avatarUrl, isEmailVerified, isDocsVerified, createdAt 
-			FROM users WHERE id = ?`,
+            FROM users WHERE id = ?`,
 			[id]
 		);
 

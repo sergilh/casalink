@@ -1,12 +1,13 @@
 import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
-
 import getPool from './src/db/getPool.js';
 import jsonMiddleware from './src/middlewares/jsonMiddleware.js';
-
 import usersRoutes from './src/routes/user/usersRoutes.js';
 import requestsRoutes from './src/routes/owner/requestsRoutes.js';
+import path from 'path';
+import process from 'process';
+import requestVisitRoutes from './src/routes/user/requestVisitRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,9 +16,14 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(jsonMiddleware);
 app.use(express.json());
+
+// Middleware para servir archivos estáticos
+app.use('/static', express.static(path.join(process.cwd(), 'public')));
+
 // Rutas
 app.use('/api', usersRoutes); // Rutas de usuarios
 app.use('/api', requestsRoutes); // Rutas de solicitudes
+app.use('/api/solicitudes', requestVisitRoutes); // Ruta para solicitar visita
 
 // Ruta de prueba para verificar la conexión a la base de datos
 app.get('/', async (req, res) => {

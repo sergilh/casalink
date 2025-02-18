@@ -13,8 +13,30 @@ const usersLoginController = async (req, res, next) => {
 		}
 
 		//const user = await selectUserByEmailModel(email);
+    
+		let isPassValid;
 
-		//let isPassValid;
+		if (user) {
+			isPassValid = await bcrypt.compare(password, user.password);
+		}
+
+		if (!isPassValid) {
+			generateErrorUtil('Credenciales inválidas', 400);
+		}
+
+		//Aquí ya tenemos claro que existe y está logueado, generamos el token
+		if (!user.isEmailVerified) {
+			generateErrorUtil('Usuario pendiente de verificación');
+		}
+
+		const tokenInfo = {
+			id: user.id,
+			role: user.role,
+		};
+
+		const token = jwt.sign(tokenInfo, process.env.JWT_SECRET, {
+			expiresIn: '7d',
+		});
 
 		res.send({
 			status: 'ok',

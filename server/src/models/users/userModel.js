@@ -1,15 +1,32 @@
 import getPool from '../../db/getPool.js';
 
-const userModel = async ({ username = '', email = '', role = '' }) => {
-    const pool = await getPool();
+const userModel = async ({ email = '' }) => {
+	const pool = await getPool(); // Obtenemos la instancia del pool de conexiones
 
-    let query = `SELECT id, username, email, role FROM users WHERE username LIKE ? AND email LIKE ? AND role LIKE ?`;
+	// ✅ Si no se proporciona email, obtenemos todos los usuarios
+	let query = `
+    SELECT 
+      u.id, 
+      u.name, 
+      u.email, 
+      r.name AS role
+    FROM users u
+    LEFT JOIN userRoles ur ON u.id = ur.userId
+    LEFT JOIN roles r ON ur.roleId = r.id
+  `;
 
-    const queryParams = [`%${username}%`, `%${email}%`, `%${role}%`];
+	const queryParams = [];
 
-    const [users] = await pool.query(query, queryParams);
+	// Si se proporciona un email, aplicamos el filtro en la consulta
+	if (email) {
+		query += ` WHERE u.email LIKE ?`;
+		queryParams.push(`%${email}%`);
+	}
 
-    return users;
+	// ✅ Ejecutamos la consulta en la base de datos
+	const [users] = await pool.query(query, queryParams);
+
+	return users;
 };
 
 export default userModel;
