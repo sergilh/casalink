@@ -85,7 +85,7 @@ CREATE TABLE `reviews` (
 	`reviewerId`             INT UNSIGNED,
 	`reviewedId`             INT UNSIGNED,
 	`contracId`              INT UNSIGNED,
-	`rating`                 TINYINT NOT NULL,
+	`rating`                 TINYINT NOT NULL CHECK (rating >= 1 AND rating <= 5),
 	`comment`                TEXT,
 	`createdAt`              TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`removedAt`              TIMESTAMP DEFAULT NULL,
