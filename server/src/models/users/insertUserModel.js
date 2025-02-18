@@ -14,13 +14,28 @@ const insertUserModel = async (
 	const pool = await getPool();
 
 	// Obtenemos la lista de usuarios con el email de usuario recibido.
-	let [users] = await pool.query(`SELECT id FROM users WHERE email = ?`, [
-		email,
-	]);
+	const [usersByEmail] = await pool.query(
+		`SELECT id FROM users WHERE email = ?`,
+		[email]
+	);
 
 	// Si existe algún usuario con ese email lanzamos un error.
-	if (users.length > 0) {
-		generateErrorUtil('Email no disponible', 409);
+	if (usersByEmail.length > 0) {
+		generateErrorUtil('Ya hay un usuario registrado con ese email', 409);
+	}
+
+	// Obtenemos la lista de usuarios con el documento de identidad recibido.
+	const [usersByLegalId] = await pool.query(
+		`SELECT id FROM users WHERE legalId = ? AND legalId IS NOT NULL`,
+		[legalId]
+	);
+
+	// Si existe algún usuario con ese email lanzamos un error.
+	if (usersByLegalId.length > 0) {
+		generateErrorUtil(
+			'Ya hay un usuario registrado con ese documento de identidad',
+			409
+		);
 	}
 
 	// Hash del email, phone y password
