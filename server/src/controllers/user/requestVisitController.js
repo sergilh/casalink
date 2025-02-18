@@ -1,5 +1,4 @@
-import sendMailUtil from '../../utils/sendMailUtil';
-
+import sendMailUtil from '../../utils/sendMailUtil.js';
 import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 const requestVisitController = async (req, res, next) => {
@@ -7,7 +6,7 @@ const requestVisitController = async (req, res, next) => {
 		const { emailCasero, mensaje, usuarioSolicitante } = req.body;
 
 		if (!emailCasero || !mensaje || !usuarioSolicitante) {
-			throw generateErrorUtil('Faltan datos requeridos', 400);
+			generateErrorUtil('Faltan datos requeridos', 400);
 		}
 
 		// Contenido del email que se enviará al casero
