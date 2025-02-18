@@ -1,6 +1,8 @@
 import generateErrorUtil from '../../utils/generateErrorUtil.js';
-//import selectUserByEmailModel from '../../models/users/selectUserByEmailModel.js';
-//import bcrypt from 'bcrypt';
+import selectUserByEmailModel from '../../models/users/selectUserByEmailModel.js';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import 'dotenv/config';
 
 const usersLoginController = async (req, res, next) => {
 	try {

@@ -1,7 +1,7 @@
 import getPool from '../../db/getPool.js';
 
 // Controlador para obtener la información del usuario verificado
-const getUserInfo = async (req, res, next) => {
+const usersInfoController = async (req, res, next) => {
 	try {
 		// Extraer el ID del usuario autntificado desde el token
 		const { id } = req.user;
@@ -24,4 +24,4 @@ const getUserInfo = async (req, res, next) => {
 	}
 };
 
-export default getUserInfo;
+export default usersInfoController;
