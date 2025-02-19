@@ -5,15 +5,12 @@ import path from 'path';
 const staticResourcesMiddleware = (app) => {
 	app.use(
 		'/images',
-		express.static(
-			path.join(process.cwd(), process.env.IMAGES_FOLDER || 'images')
-		)
+		express.static(path.join(process.cwd(), 'public/images'))
 	);
+
 	app.use(
 		'/videos',
-		express.static(
-			path.join(process.cwd(), process.env.VIDEOS_FOLDER || 'videos')
-		)
+		express.static(path.join(process.cwd(), 'public/videos'))
 	);
 
 	// Middleware para manejar rutas no encontradas (404)

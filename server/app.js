@@ -9,6 +9,7 @@ import path from 'path';
 import process from 'process';
 import requestVisitRoutes from './src/routes/user/requestVisitRoutes.js';
 import reviewsRoutes from './src/routes/reviews/reviewsRoutes.js';
+import fileUploadRoute from './src/routes/owner/fileUploadRoute.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,7 +27,7 @@ app.use('/api', usersRoutes); // Rutas de usuarios
 app.use('/api', requestsRoutes); // Rutas de solicitudes
 app.use('/api/solicitudes', requestVisitRoutes); // Ruta para solicitar visita
 app.use('/api/reviews', reviewsRoutes); // Rutas de valoraciones
-
+app.use('/api', fileUploadRoute);
 /*// Ruta de prueba para recibir JSON
 app.post('/api/test-json', (req, res) => {
 	try {

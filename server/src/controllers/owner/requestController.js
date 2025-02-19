@@ -1,29 +1,35 @@
 import getPool from '../../db/getPool.js';
 
 const requestController = async (req, res) => {
-    try {
-        const pool = await getPool();
+	try {
+		const pool = await getPool();
 
-        // Verificar si el usuario tiene permisos (solo owners y admins)
-        if (req.user.rol !== 'owner' && req.user.rol !== 'admin') {
-            return res.status(403).json({ message: 'Unauthorized access' });
-        }
+		// Verificar si el usuario está autenticado
+		if (!req.user) {
+			return res.status(403).json({ message: 'Unauthorized access' });
+		}
 
-        // Consulta para obtener las solicitudes de alquiler
-        const [requests] = await pool.query(
-            `SELECT r.id, r.tenantId, r.propertyId, r.status, r.startDate, r.createdAt, 
-                    u.name AS tenantName, p.adTitle AS propertyTitle
-             FROM rentalContracts r
-             JOIN users u ON r.tenantId = u.id
-             JOIN properties p ON r.propertyId = p.id
-             ORDER BY r.createdAt DESC;`
-        );
+		// Obtener ID del usuario autenticado
+		const userId = req.user.id;
 
-        res.json(requests);
-    } catch (error) {
-        console.error('Error fetching rental requests:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
+		// Consultar solicitudes de alquiler relacionadas con el usuario autenticado
+		const [requests] = await pool.query(
+			`SELECT c.id, c.propertyId, c.status, c.startDate, c.createdAt, 
+                    p.propertyTitle AS propertyTitle, p.ownerId,
+                    u.name AS ownerName
+             FROM contracts c
+             JOIN properties p ON c.propertyId = p.id
+             JOIN users u ON p.ownerId = u.id
+             WHERE c.tenantId = ? OR p.ownerId = ?
+             ORDER BY c.createdAt DESC;`,
+			[userId, userId]
+		);
+
+		res.json(requests);
+	} catch (error) {
+		console.error('Error fetching rental requests:', error);
+		res.status(500).json({ message: 'Internal server error' });
+	}
 };
 
 export { requestController };
