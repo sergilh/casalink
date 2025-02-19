@@ -22,7 +22,10 @@ const contractsController = async (req, res, next) => {
 
 		// Si no hay registros, generar un error antes de devolver la respuesta
 		if (total < 1) {
-			throw generateErrorUtil(`No hay contratos ${status}`, 404);
+			throw generateErrorUtil(
+				`No hay contratos ${status === undefined ? 'de ningun tipo' : status} para el usuario ${userId}`,
+				404
+			);
 		}
 
 		res.status(200).json({
@@ -35,8 +38,6 @@ const contractsController = async (req, res, next) => {
 				totalPages: Math.ceil(total / limit),
 			},
 		});
-
-		res.status(200).json({ contracts });
 	} catch (err) {
 		next(err);
 	}

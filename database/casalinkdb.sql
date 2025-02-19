@@ -47,7 +47,7 @@ CREATE TABLE `properties` (
 	`addressFloor`           VARCHAR(10),
 	`hasEnergyCert`          BOOLEAN DEFAULT false,
 	`zipCode`                VARCHAR(5) NOT NULL,
-	`location`               POINT NOT NULL,
+	`location`               POINT,
 	`squareMeters`           SMALLINT,
 	`bedrooms`               TINYINT NOT NULL,
 	`bathrooms`              TINYINT NOT NULL,

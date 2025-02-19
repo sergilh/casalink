@@ -12,22 +12,30 @@ const selectContractsByStatusModel = async ({
 	// Parámetros de paginación
 	const offset = (page - 1) * limit;
 
-	const [{ total }] = await pool.query(
-		`SELECT COUNT(*) AS total FROM contracts WHERE user_id = ? AND status IN (?)`,
+	const [[{ total }]] = await pool.query(
+		`SELECT COUNT(*) AS total FROM contracts WHERE tenantId = ? AND status IN (?)`,
 		[userId, statusFilter]
+	);
+
+	console.log(
+		await pool.query(
+			`SELECT COUNT(*) AS total FROM contracts WHERE tenantId = ? AND status IN (?)`,
+			[userId, statusFilter]
+		)
 	);
 
 	// Consulta para obtener los contratos paginados
 	const [contracts] = await pool.query(
 		`
-			SELECT * FROM contracts WHERE user_id = ? AND status IN (?)
-			ORDER BY created_at DESC
+			SELECT * FROM contracts WHERE tenantId = ? AND status IN (?)
+			ORDER BY createdAt DESC
 			LIMIT ? OFFSET ?
 			`,
 		[userId, statusFilter, Number(limit), Number(offset)]
 	);
 
-	return { contracts, total };
+	console.log('Total:', total);
+	return { contracts, total: Number(total) };
 };
 
 export default selectContractsByStatusModel;

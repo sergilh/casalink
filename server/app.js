@@ -11,6 +11,7 @@ import requestVisitRoutes from './src/routes/user/requestVisitRoutes.js';
 import reviewsRoutes from './src/routes/reviews/reviewsRoutes.js';
 import fileUploadRoute from './src/routes/owner/fileUploadRoute.js';
 import propertiesRoutes from './src/routes/properties/propertiesRoutes.js';
+import contractsRoutes from './src/routes/contracts/contractsRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -25,6 +26,7 @@ app.use('/static', express.static(path.join(process.cwd(), 'public')));
 
 // Rutas
 app.use('/api', usersRoutes); // Rutas de usuarios
+app.use('/api', contractsRoutes); // Rutas de usuarios
 app.use('/api', requestsRoutes); // Rutas de solicitudes
 app.use('/api/solicitudes', requestVisitRoutes); // Ruta para solicitar visita
 app.use('/api/reviews', reviewsRoutes); // Rutas de valoraciones
