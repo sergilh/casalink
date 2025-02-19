@@ -7,6 +7,8 @@ import usersRegisterController from '../../controllers/user/usersRegisterControl
 import sendRecoverPassMailController from '../../controllers/user/sendRecoverPassMailController.js';
 import validateUserController from '../../controllers/user/validateUserController.js';
 import changePasswordController from '../../controllers/user/changePasswordController.js';
+import usersPreviousRatingController from '../../controllers/user/usersPreviousRatingsController.js';
+import userExistsMiddleware from '../../middlewares/userExistsMiddleware.js';
 
 const router = express.Router();
 
@@ -41,8 +43,12 @@ router.put(
 // Modificar usuario [EXTRA]
 router.put('/users/:id', usersController);
 
-// Histórico de reseñas
-router.get('/users/:id/reviews', usersController);
+// Histórico de reseñas y alquileres
+router.get(
+	'/users/:id/reviews',
+	userExistsMiddleware,
+	usersPreviousRatingController
+);
 
 // Enviar valoración
 router.post('/users/reviews', usersController);
