@@ -6,11 +6,12 @@ import usersLoginController from '../../controllers/user/usersLoginController.js
 import usersRegisterController from '../../controllers/user/usersRegisterController.js';
 import sendRecoverPassMailController from '../../controllers/user/sendRecoverPassMailController.js';
 import validateUserController from '../../controllers/user/validateUserController.js';
+import changePasswordController from '../../controllers/user/changePasswordController.js';
 
 const router = express.Router();
 
 // ✅ Endpoint para obtener la lista de usuarios
-router.get('/users', usersController); // En que contexto se ejecuta?
+router.get('/users', usersController);
 
 // ✅ Endpoint para loguearse
 router.post('/users/login', usersLoginController);
@@ -26,6 +27,13 @@ router.get('/profile', authUserMiddleware, usersInfoController);
 
 // ✅ Registro de usuarios
 router.post('/users/register', usersRegisterController);
+
+// ✅ Endpoint para cambiar contraseña
+router.put(
+	'/users/change-password',
+	authUserMiddleware,
+	changePasswordController
+);
 
 // Información de usuario
 // router.get('/users/:id', usersController); esta es la que actualmente es '/profile'
