@@ -1,149 +1,43 @@
 {
 	"info": {
-		"_postman_id": "46af33d9-401e-48f6-81f7-0360af140ecf",
+		"_postman_id": "88c97539-a01e-4de1-9226-4f98aa95d8d0",
 		"name": "CasaLink",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "40373208"
+		"_exporter_id": "40399609"
 	},
 	"item": [
 		{
-			"name": "test-json",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": ""
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Info Usuario",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
+			"name": "Contratos de Alquiler",
 			"request": {
 				"method": "GET",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InN1cGVyYWRtaW4iLCJpYXQiOjE3Mzk4ODQxNjksImV4cCI6MTc0MDQ4ODk2OX0.NKaIp7pU0BN5sBlSW5GUKikG8itgMqXDsW9BVNv6ydk",
+						"value": "{{user_token_periquito}}",
 						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "http://localhost:5001/api/profile",
+					"raw": "http://localhost:3000/api/contracts/pending?page=1&limit=5",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5001",
+					"port": "3000",
 					"path": [
 						"api",
-						"profile"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Solicitud Visita",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InN1cGVyYWRtaW4iLCJpYXQiOjE3Mzk4Nzg5NDksImV4cCI6MTc0MDQ4Mzc0OX0.1WhOFS19mZcTbjzBp9u0LhYVuVvxoqjaNmsFDA2Rtj4",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"emailCasero\": \"visitante@email.com\",\n  \"mensaje\": \"Hola, me gustaría agendar una visita\",\n  \"usuarioSolicitante\": \"Russel Test\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:5001/api/solicitudes/request-visit",
-					"protocol": "http",
-					"host": [
-						"localhost"
+						"contracts",
+						"pending"
 					],
-					"port": "5001",
-					"path": [
-						"api",
-						"solicitudes",
-						"request-visit"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Valoración 1-5",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InN1cGVyYWRtaW4iLCJpYXQiOjE3Mzk5MTk5MjAsImV4cCI6MTc0MDUyNDcyMH0.Xs5v-dG4jWcRWWEFt0i_1WM7ZQzridNnXyIxNZpzBm4",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"reviewedId\": 2,\n  \"contractId\": 1,\n  \"rating\": 5,\n  \"comment\": \"Excelente experiencia con el alquiler\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "5"
 						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:5001/api/reviews/reviews",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5001",
-					"path": [
-						"api",
-						"reviews",
-						"reviews"
 					]
 				}
 			},
@@ -152,47 +46,56 @@
 		{
 			"name": "Login de usuario",
 			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"admin1@example.com\",\r\n    \"password\": \"AdminOnePass!\"\r\n}\r\n\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
+				"auth": {
+					"type": "jwt",
+					"jwt": [
+						{
+							"key": "payload",
+							"value": "{}",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "header",
+							"value": "{}",
+							"type": "string"
+						},
+						{
+							"key": "isSecretBase64Encoded",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "secret",
+							"value": "{{secret}}",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "HS256",
+							"type": "string"
+						},
+						{
+							"key": "headerPrefix",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "queryParamKey",
+							"value": "token",
+							"type": "string"
 						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:5001/api/users/login",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5001",
-					"path": [
-						"api",
-						"users",
-						"login"
 					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Recuperación Contraseña",
-			"request": {
-				"method": "PATCH",
+				},
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\":\"\"\r\n}",
+					"raw": "{\r\n    \"email\": \"p@ichikstudio.com\",\r\n    \"password\": \"123456\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -200,7 +103,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/users/password",
+					"raw": "http://localhost:3000/api/users/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -209,26 +112,54 @@
 					"path": [
 						"api",
 						"users",
-						"password"
+						"login"
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "Login de usuario",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"demo1\",\r\n    \"email\": \"demo1@mail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
 		},
 		{
 			"name": "Registrar usuario",
 			"request": {
 				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"Russel\",\r\n    \"email\": \"koiclaveria@gmail.com\",\r\n    \"password\": \"1234ABCD.\"\r\n}",
+					"raw": "{\r\n    \"name\": \"Periquito\",\r\n    \"lastName\": \"de los Palotes\",\r\n    \"legalId\": \"ABCeKFG\",\r\n    \"email\": \"p@ichikstudio.com\",\r\n    \"password\": \"123456\",\r\n    \"phone\": \"123456789\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -250,56 +181,45 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
 		},
 		{
-			"name": "Detalles de alquiler",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "http://localhost:5001/api/properties/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5001",
-					"path": [
-						"api",
-						"properties",
-						"1"
-					]
-				}
-			},
-			"response": []
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "user_token_johnatanmoran",
+			"value": "",
+			"type": "string"
 		},
 		{
-			"name": "Historico valoraciones",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:5001/api/users/1/reviews",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5001",
-					"path": [
-						"api",
-						"users",
-						"1",
-						"reviews"
-					]
-				}
-			},
-			"response": []
+			"key": "user_token_periquito",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "secret",
+			"value": "",
+			"type": "string"
 		}
 	]
 }
