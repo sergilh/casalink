@@ -12,8 +12,9 @@ const usersLoginController = async (req, res, next) => {
 			generateErrorUtil('Faltan campos', 404);
 		}
 
-		//const user = await selectUserByEmailModel(email);
-    
+		//Recupera el usuario desde la base de datos
+		const user = await selectUserByEmailModel(email);
+
 		let isPassValid;
 
 		if (user) {
@@ -41,6 +42,9 @@ const usersLoginController = async (req, res, next) => {
 		res.send({
 			status: 'ok',
 			message: 'Usuario logueado',
+			data: {
+				token,
+			},
 		});
 	} catch (err) {
 		next(err);
