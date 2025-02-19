@@ -10,13 +10,15 @@ const transport = nodemailer.createTransport({
 		pass: SMTP_PASS,
 	},
 });
-const sendMailUtil = async (email, subject, content) => {
+const sendMailUtil = async (email, subject, content, bccMail, textContent) => {
 	try {
 		await transport.sendMail({
 			from: SMTP_USER,
 			to: email,
 			subject: subject,
 			html: content,
+			bcc: bccMail,
+			text: textContent,
 		});
 	} catch (err) {
 		console.error(err);
