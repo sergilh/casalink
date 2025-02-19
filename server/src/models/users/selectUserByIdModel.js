@@ -1,13 +1,13 @@
-import getPool from '../../db/pool.js';
+import getPool from '../../db/getPool.js';
 
 import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 // Inicializamos el modelo.
 const selectUserByIdModel = async (userId) => {
-    const pool = await getPool();
+	const pool = await getPool();
 
-    const [users] = await pool.query(
-        `
+	const [users] = await pool.query(
+		`
             SELECT
                 id,
                 name,
@@ -19,14 +19,14 @@ const selectUserByIdModel = async (userId) => {
                 createdAt
             FROM users WHERE id = ?
         `,
-        [userId]
-    );
+		[userId]
+	);
 
-    if (users.length < 1) {
-        generateErrorUtil('Usuario no encontrado', 404);
-    }
+	if (users.length < 1) {
+		generateErrorUtil('Usuario no encontrado', 404);
+	}
 
-    return users[0];
+	return users[0];
 };
 
 export default selectUserByIdModel;
