@@ -8,11 +8,10 @@ const updatePropertyStatusController = async (req, res, next) => {
 		const { id } = req.params;
 		const { action } = req.body; // Se recibe "accion" en lugar de "status"
 
-		// Validamos que la acción sea 'approved' o 'rejected'
-		const validActions = ['approved', 'rejected'];
+		const validActions = ['approve', 'reject'];
 		if (!validActions.includes(action)) {
 			throw generateErrorUtil(
-				"Acción inválida. Debe ser 'approved' o 'rejected'",
+				"Acción inválida. Debe ser 'approve' o 'reject'",
 				400
 			);
 		}
@@ -22,14 +21,26 @@ const updatePropertyStatusController = async (req, res, next) => {
 
 		if (propertyStatus !== 'pending') {
 			throw generateErrorUtil(
-				'La propiedad no está en estado es "pending" para poder hacer esta acción',
+				'La propiedad no está en estado es pending para poder hacer esta acción',
 				400
 			);
 		}
 
-		const userId = await updatePropertyStatusModel(id, action);
+		let userId;
 
-		if (await sendPropertyNotificationModel(userId, id, 'approved')) {
+		if (action === 'approve') {
+			userId = await updatePropertyStatusModel(id, 'available');
+		} else {
+			userId = await updatePropertyStatusModel(id, 'unavailable');
+		}
+
+		if (
+			await sendPropertyNotificationModel(
+				userId,
+				id,
+				action === 'approve' ? 'approved' : 'rejected'
+			)
+		) {
 			res.status(200).json({
 				success: true,
 				message: `Propiedad ${action} con éxito`,

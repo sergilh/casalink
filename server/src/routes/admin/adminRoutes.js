@@ -10,6 +10,10 @@ router.get('/admin/users', usersController);
 // Gestionar usuarios (superadmin) [EXTRA]
 router.put('/admin/users/:id', usersController);
 // Aprobar propiedad (admin)
-router.patch('/properties/:id', authAdminMiddleware, approvePropertyController);
+router.patch(
+	'/admin/properties/:id',
+	authAdminMiddleware,
+	approvePropertyController
+);
 
 export default router;

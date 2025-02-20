@@ -1,5 +1,4 @@
 import createPropertyModel from '../../models/properties/createPropertyModel.js';
-import sendPropertyNotificationModel from '../../models/notifications/sendPropertyNotificationModel.js';
 import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 const propertyController = async (req, res, next) => {
@@ -54,18 +53,11 @@ const propertyController = async (req, res, next) => {
 			price,
 		});
 
-		// Enviar notificación de creación de propiedad
-		await sendPropertyNotificationModel({
-			ownerId: userId,
-			propertyId,
-			title,
-		});
-
 		// Respuesta exitosa
 		res.status(201).json({
 			success: true,
 			message: `Propiedad '${title}' creada exitosamente`,
-			propertyId,
+			propertyId: propertyId.insertId,
 		});
 	} catch (error) {
 		next(error);

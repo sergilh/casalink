@@ -14,8 +14,8 @@ const authAdminMiddleware = async (req, res, next) => {
 		const decoded = jwt.verify(authorization, process.env.JWT_SECRET);
 
 		// Buscamos al usuario en la base de datos
-		const pool = getPool();
-		const [[user]] = await pool.query(
+		const pool = await getPool();
+		const [user] = await pool.query(
 			`SELECT id, role FROM users WHERE id = ?`,
 			[decoded.id]
 		);
@@ -24,10 +24,11 @@ const authAdminMiddleware = async (req, res, next) => {
 			throw generateErrorUtil('Usuario no encontrado', 404);
 		}
 
-		// Verificamos que sea admin
-		if (user.role !== 'admin' || user.role !== 'superadmin') {
+		const validRoles = ['admin', 'superadmin'];
+
+		if (!validRoles.includes(decoded.role)) {
 			throw generateErrorUtil(
-				'Acceso denegado: Se requieren permisos de administrador',
+				`Acceso denegado: Se requieren permisos de administrador (${[decoded.role]})`,
 				403
 			);
 		}

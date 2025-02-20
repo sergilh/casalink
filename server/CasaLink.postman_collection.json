@@ -71,7 +71,7 @@
 						},
 						{
 							"key": "secret",
-							"value": "{{secret}}",
+							"value": "pensandofueradelacajaJWT",
 							"type": "string"
 						},
 						{
@@ -181,6 +181,125 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Crear Propiedad",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{user_token_periquito}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Zoolo 5\",\r\n  \"type\": \"casa\",\r\n  \"description\": \"Ejemplo nomas\",\r\n  \"locality\": \"Ferrol\",\r\n  \"street\": \"Calle del Pinar\",\r\n  \"number\": \"808\",\r\n  \"floor\": \"0\",\r\n  \"hasEnergyCert\": false,\r\n  \"zipCode\": \"15485\",\r\n  \"location\": \"40.4168,-3.7038\",\r\n  \"squareMeters\": 90,\r\n  \"bedrooms\": 2,\r\n  \"bathrooms\": 1,\r\n  \"price\": 1900\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/properties/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"properties",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Aprobación de nuevas propiedades por Admin",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{user_token_johnatanmoran}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"action\": \"approve\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/admin/properties/15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admin",
+						"properties",
+						"15"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Rechazo de nuevas propiedades por Admin",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{user_token_johnatanmoran}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"action\": \"reject\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/admin/properties/14",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admin",
+						"properties",
+						"14"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -213,11 +332,6 @@
 		},
 		{
 			"key": "user_token_periquito",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "secret",
 			"value": "",
 			"type": "string"
 		}

@@ -3,15 +3,15 @@ import generateErrorUtil from './generateErrorUtil.js';
 const validNotificationTypeAndStatus = (type, status) => {
 	let validStatus;
 
+	console.log('TYPE', type);
+	console.log('STATUS', status);
+
 	// Validar que el `status` sea válido
 	switch (type) {
-		case 'property':
-			validStatus = ['approved', 'rejected'];
-			break;
 		case 'review':
 			validStatus = ['requested', 'rejected'];
 			break;
-		case ('visit', 'contract'):
+		case ('visit', 'contract', 'property'):
 			validStatus = ['requested', 'approved', 'rejected'];
 			break;
 		default:
@@ -20,6 +20,9 @@ const validNotificationTypeAndStatus = (type, status) => {
 				400
 			);
 	}
+
+	console.log(status);
+	console.log(!validStatus.includes(status));
 
 	if (!validStatus.includes(status)) {
 		throw generateErrorUtil(

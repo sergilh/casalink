@@ -1,17 +1,14 @@
 import getPool from '../../db/getPool.js';
 import validNotificationStatus from '../../utils/validNotificationStatus.js';
 
-const sendPropertyNotificationModel = async ({
-	userId,
-	propertyId,
-	status,
-}) => {
-	const pool = getPool();
+const sendPropertyNotificationModel = async (userId, propertyId, status) => {
+	const pool = await getPool();
 
 	// ver de hacerlo modular
 
+	console.log('status', status);
 	// Validar que el `status` sea válido
-	if (validNotificationStatus('property', status)) {
+	if (await validNotificationStatus('property', status)) {
 		// Inserción de la notificación en la base de datos
 		const [result] = await pool.query(
 			`
