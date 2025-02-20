@@ -1,11 +1,11 @@
 name: inicio
 class: center, middle, red-bg
 
-.first-slide-logo[![# 🏠 CasaLink](/docs/brandMediaKit/png/casalink_logotipo_main_1080x400.png)]
+.first-slide-logo[![# 🏠 CasaLink](../brandMediaKit/png/casalink_logotipo_main_1080x400.png)]
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 name: que-es
 
@@ -25,7 +25,7 @@ name: que-es
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 name: objetivos
 
@@ -50,7 +50,7 @@ name: objetivos
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -76,7 +76,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -104,7 +104,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -132,7 +132,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -160,7 +160,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -187,7 +187,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -215,7 +215,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -249,7 +249,7 @@ CasaLink/
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -282,7 +282,7 @@ cd CasaLink
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -318,7 +318,7 @@ npm run dev
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -352,7 +352,7 @@ npm start
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -384,7 +384,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -420,13 +420,13 @@ Este proyecto está bajo la licencia MIT.
 
 name: wireframe
 class: center, middle, red-bg
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 ## Wireframes
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -450,7 +450,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -472,7 +472,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -484,13 +484,13 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
     |                           Desktop                            |                           Mobile                            |
     |:------------------------------------------------------------:|:-----------------------------------------------------------:|
-    | ![Landing Page (Desktop)](/docs/media/ui_d_landing_page.jpg) | ![Landing Page (Mobile)](/docs/media/ui_m_landing_page.jpg) |
+    | ![Landing Page (Desktop)](..//media/ui_d_landing_page.jpg) | ![Landing Page (Mobile)](..//media/ui_m_landing_page.jpg) |
 
 ]
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -519,7 +519,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -531,15 +531,15 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 .right-column[
 
-|                                    Desktop                                    |                                    Mobile                                    |
-| :---------------------------------------------------------------------------: | :--------------------------------------------------------------------------: |
-| ![Resultados de Búsqueda (Desktop)](/docs/media/ui_d_resultados_busqueda.jpg) | ![Resultados de Búsqueda (Mobile)](/docs/media/ui_m_resultados_busqueda.jpg) |
+|                                   Desktop                                   |                                   Mobile                                   |
+| :-------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
+| ![Resultados de Búsqueda (Desktop)](..//media/ui_d_resultados_busqueda.jpg) | ![Resultados de Búsqueda (Mobile)](..//media/ui_m_resultados_busqueda.jpg) |
 
 ]
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -572,7 +572,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -587,13 +587,13 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 .right-column[
 | Desktop | Mobile |
 |:-------------------------------------------------------------------------:|:------------------------------------------------------------------------:|
-| ![Detalle de Propiedad (Desktop)](/docs/media/ui_d_detalle_propiedad.jpg) | ![Detalle de Propiedad (Mobile)](/docs/media/ui_m_detalle_propiedad.jpg) |
+| ![Detalle de Propiedad (Desktop)](..//media/ui_d_detalle_propiedad.jpg) | ![Detalle de Propiedad (Mobile)](..//media/ui_m_detalle_propiedad.jpg) |
 
 ]
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -626,7 +626,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -643,13 +643,13 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 .right-column[
 | Desktop | Mobile |
 |:----------------------------------------------------------------------:|:---------------------------------------------------------------------:|
-| ![Dashboard General (Desktop)](/docs/media/ui_d_dashboard_general.jpg) | ![Dashboard General (Mobile)](/docs/media/ui_m_dashboard_general.jpg) |
+| ![Dashboard General (Desktop)](..//media/ui_d_dashboard_general.jpg) | ![Dashboard General (Mobile)](..//media/ui_m_dashboard_general.jpg) |
 
 ]
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -687,7 +687,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -706,13 +706,13 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 .right-column[
 | Desktop | Mobile |
 |:-------------------------------------------------------------------:|:------------------------------------------------------------------:|
-| ![Perfil de Usuario (Desktop)](/docs/media/ui_d_perfil_usuario.jpg) | ![Perfil de Usuario (Mobile)](/docs/media/ui_m_perfil_usuario.jpg) |
+| ![Perfil de Usuario (Desktop)](..//media/ui_d_perfil_usuario.jpg) | ![Perfil de Usuario (Mobile)](..//media/ui_m_perfil_usuario.jpg) |
 
 ]
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -747,7 +747,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -767,15 +767,15 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 .right-column[
 
-|                              Desktop                               |                              Mobile                               |
-| :----------------------------------------------------------------: | :---------------------------------------------------------------: |
-| ![Mis Propiedades (Desktop)](/docs/media/ui_d_mis_propiedades.jpg) | ![Mis Propiedades (Mobile)](/docs/media/ui_m_mis_propiedades.jpg) |
+|                             Desktop                              |                             Mobile                              |
+| :--------------------------------------------------------------: | :-------------------------------------------------------------: |
+| ![Mis Propiedades (Desktop)](..//media/ui_d_mis_propiedades.jpg) | ![Mis Propiedades (Mobile)](..//media/ui_m_mis_propiedades.jpg) |
 
 ]
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -814,7 +814,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -837,13 +837,13 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 .right-column[
 | Desktop | Mobile |
 |:------------------------------------------------------------------------:|:-----------------------------------------------------------------------:|
-| ![Contratos y Visitas (Desktop)](/docs/media/ui_d_contratos_visitas.jpg) | ![Contratos y Visitas (Mobile)](/docs/media/ui_m_contratos_visitas.jpg) |
+| ![Contratos y Visitas (Desktop)](..//media/ui_d_contratos_visitas.jpg) | ![Contratos y Visitas (Mobile)](..//media/ui_m_contratos_visitas.jpg) |
 
 ]
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -878,7 +878,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -902,15 +902,15 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 .right-column[
 
-|                                                                        |
-| :--------------------------------------------------------------------: |
-| ![Mis Notificaciones (Mobile)](/docs/media/ui_m_mis_notifications.jpg) |
+|                                                                      |
+| :------------------------------------------------------------------: |
+| ![Mis Notificaciones (Mobile)](..//media/ui_m_mis_notifications.jpg) |
 
 ]
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -950,7 +950,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -977,13 +977,13 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 .right-column[
 | |
 |:----------------------------------------------------------------------------:|
-| ![Panel de Control Admin (Mobile)](/docs/media/ui_m_panel_control_admin.jpg) |
+| ![Panel de Control Admin (Mobile)](..//media/ui_m_panel_control_admin.jpg) |
 
 ]
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -1029,7 +1029,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 ---
 
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
@@ -1057,7 +1057,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 .right-column[
 
-![Componentes Reutilizables](/docs/media/ui_componentes_reutilizables.jpg)
+![Componentes Reutilizables](..//media/ui_componentes_reutilizables.jpg)
 
 ]
 
@@ -1065,7 +1065,7 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 name: preguntas
 class: center, middle, red-bg
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .center[.text-size-h4[***"Ninguna pregunta es una pregunta tonta. La creatividad nace de la curiosidad."***]] .center[.text-size-h4[ —— Tony Robbins]]
 
@@ -1073,6 +1073,6 @@ background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
 
 name: gracias
 class: center, middle, red-bg
-background-image: url(/docs/media/casalink_casa-graphic_600x200.png)
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .huge-text[**GRACIAS**]

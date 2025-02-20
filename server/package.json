@@ -7,6 +7,7 @@
 		"dev": "nodemon app.js",
 		"initdb": "node src/db/initdb.js",
 		"seed": "node src/db/seed.js",
+		"present": "nodemon src/utils/present.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
