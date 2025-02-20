@@ -24,7 +24,7 @@ CREATE TABLE `users` (
 	`phone`                  VARCHAR(255), -- hashed
 	`avatarUrl`              VARCHAR(255),
 	`bio`                    TEXT,
-	`role`                   ENUM (`user`, `admin`, `superadmin`) DEFAULT `user`,
+	`role`                   ENUM (`user`, `admin`, `superadmin`, `owner`) DEFAULT `user`,
 	`recoveryCode`           VARCHAR(100) DEFAULT NULL,
 	`isEmailVerified`        BOOLEAN DEFAULT FALSE,
 	`isDocsVerified`         BOOLEAN DEFAULT FALSE,
