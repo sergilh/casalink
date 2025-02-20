@@ -52,7 +52,7 @@ CREATE TABLE `properties` (
 	`bedrooms`               TINYINT NOT NULL,
 	`bathrooms`              TINYINT NOT NULL,
 	`price`                  DECIMAL(10,2) NOT NULL,
-	`status`                 ENUM (`available`,`unavailable`, `rented`, `pending`) DEFAULT `pending`,
+	`status`                 ENUM (`available`,`unavailable`, `rented`, `pending`, `rejected`) DEFAULT `pending`,
 	`createdAt`              TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	`updatedAt`              TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	-- Llaves foráneas

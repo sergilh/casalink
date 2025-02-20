@@ -24,6 +24,8 @@ const authUserMiddleware = async (req, res, next) => {
 			const tokenInfo = jwt.verify(token, process.env.JWT_SECRET);
 			req.user = tokenInfo; // Guardar la información del usuario en `req.user`
 
+			console.log('información del usuario', req.user); // Mostrar la información del usuario en la consola
+
 			next();
 		} catch (err) {
 			console.error('Error verificando el token:', err);
