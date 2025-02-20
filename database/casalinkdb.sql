@@ -144,12 +144,17 @@ CREATE TABLE `notifications` (
 	KEY `notificationsIdx` (`userId`, `propertyId`, `type`, `status`)
 );
 
-
--- Insertar un usuario de prueba (John Doe)
-INSERT INTO `users` (`name`, `lastName`, `legalId`, `email`, `password`, `phone`, `avatarUrl`, `bio`, `role`, `isEmailVerified`)
-VALUES (
-    'John', 'Doe', '12345678A', 'johndoe@example.com',
-    '$2b$10$X7GFzJ84X1lU3O7DwESL.eK7zFgC3J83/vImTc2uPaE5yJdTAd9kW', -- Contraseña hash "password123"
-    '123456789', 'https://example.com/avatar.jpg',
-    'Soy un usuario de prueba en Casalink', 'user', FALSE
+-- Tabla de Bloques (Opcional)
+CREATE TABLE `blocks` (
+	`id`                     INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	`userId`                 INT UNSIGNED,
+	`propertyId`             INT UNSIGNED,
+	`createdAt`              TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	`removedAt`              TIMESTAMP DEFAULT NULL,
+	-- Llaves foráneas
+	FOREIGN KEY (`userId`) REFERENCES `users` (`id`),
+	FOREIGN KEY (`propertyId`) REFERENCES `properties` (`id`),
+	-- Indices
+	UNIQUE KEY `blocksIdx` (`userId`, `propertyId`)
 );
+

@@ -88,6 +88,7 @@ cd server
 cp .env.example .env  # Configurar variables de entorno
 npm install
 npm run dbinit
+npm run seed
 npm run dev
 ```
 
@@ -114,5 +115,3 @@ npm start
 ## 📄 Licencia
 
 Este proyecto está bajo la licencia MIT. Puedes ver más detalles en el archivo LICENSE.
-
-_"Donde inquilinos y propietarios se encuentran."_

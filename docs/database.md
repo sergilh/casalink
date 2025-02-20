@@ -24,7 +24,7 @@ Este documento describe la estructura de la base de datos de **CasaLink**, espec
 | legalId         | VARCHAR(20)  | DNI, NIE, Pasaporte, etc.                        |
 | email           | VARCHAR(100) | Único, NOT NULL                                  |
 | password        | VARCHAR(255) | Hash de la contraseña                            |
-| phone           | VARCHAR(255) | Teléfono de contacto                             |
+| phone           | VARCHAR(255) | Hash del Teléfono de contacto                    |
 | avatarUrl       | VARCHAR(255) | URL de la imagen de perfil                       |
 | role            | ENUM         | Valores: user, admin, superadmin (default: user) |
 | recoveryCode    | VARCHAR(100) | Código de recuperación (NULL por defecto)        |
@@ -39,27 +39,27 @@ Este documento describe la estructura de la base de datos de **CasaLink**, espec
 
 ### 🏠 Tabla: `properties`
 
-| Campo           | Tipo          | Detalles                                                            |
-| --------------- | ------------- | ------------------------------------------------------------------- |
-| id 🔑           | INTEGER       | AUTOINCREMENT                                                       |
-| ownerId 🔗      | INTEGER       | users(id)                                                           |
-| propertyTitle   | VARCHAR(255)  | NOT NULL                                                            |
-| propertyType    | ENUM          | Valores: apartmento, casa, piso, duplex, otro                       |
-| description     | TEXT          | NOT NULL                                                            |
-| addressLocality | VARCHAR(255)  | Localidad                                                           |
-| addressStreet   | VARCHAR(255)  | Calle                                                               |
-| addressNumber   | VARCHAR(10)   | Número                                                              |
-| addressFloor    | VARCHAR(10)   | Piso                                                                |
-| hasEnergyCert   | BOOLEAN       | FALSE por defecto                                                   |
-| zipCode         | VARCHAR(5)    | NOT NULL                                                            |
-| location        | POINT         | Ubicación geográfica                                                |
-| squareMeters    | SMALLINT      | Metros cuadrados                                                    |
-| bedrooms        | TINYINT       | Número de habitaciones                                              |
-| bathrooms       | TINYINT       | Número de baños                                                     |
-| price           | DECIMAL(10,2) | Precio                                                              |
-| status          | ENUM          | Valores: available, unavailable, rented, pending (default: pending) |
-| createdAt       | TIMESTAMP     | CURRENT_TIMESTAMP por defecto                                       |
-| updatedAt       | TIMESTAMP     | CURRENT_TIMESTAMP por defecto                                       |
+| Campo           | Tipo          | Detalles                                                                      |
+| --------------- | ------------- | ----------------------------------------------------------------------------- |
+| id 🔑           | INTEGER       | AUTOINCREMENT                                                                 |
+| ownerId 🔗      | INTEGER       | users(id)                                                                     |
+| propertyTitle   | VARCHAR(255)  | NOT NULL                                                                      |
+| propertyType    | ENUM          | Valores: apartmento, casa, piso, duplex, otro                                 |
+| description     | TEXT          | NOT NULL                                                                      |
+| addressLocality | VARCHAR(255)  | Localidad                                                                     |
+| addressStreet   | VARCHAR(255)  | Calle                                                                         |
+| addressNumber   | VARCHAR(10)   | Número                                                                        |
+| addressFloor    | VARCHAR(10)   | Piso                                                                          |
+| hasEnergyCert   | BOOLEAN       | FALSE por defecto                                                             |
+| zipCode         | VARCHAR(5)    | NOT NULL                                                                      |
+| location        | POINT         | Ubicación geográfica                                                          |
+| squareMeters    | SMALLINT      | Metros cuadrados                                                              |
+| bedrooms        | TINYINT       | Número de habitaciones                                                        |
+| bathrooms       | TINYINT       | Número de baños                                                               |
+| price           | DECIMAL(10,2) | Precio                                                                        |
+| status          | ENUM          | Valores: available, unavailable, rented, pending, rejected (default: pending) |
+| createdAt       | TIMESTAMP     | CURRENT_TIMESTAMP por defecto                                                 |
+| updatedAt       | TIMESTAMP     | CURRENT_TIMESTAMP por defecto                                                 |
 
 📇 **Índices:** `(addressLocality, zipCode, price, status)`
 
