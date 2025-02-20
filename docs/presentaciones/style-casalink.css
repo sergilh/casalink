@@ -1,0 +1,191 @@
+/* Tema General */
+
+@font-face {
+	font-family: ArtLab;
+	src: local("ArtLab Bold"),
+		url(/docs/brandMediaKit/fonts/artlab/TTF/Artlab-Bold.ttf);
+	font-weight: bold;
+}
+
+@font-face {
+	font-family: ArtLab;
+	src: local(ArtLab),
+		url(/docs/brandMediaKit/fonts/artlab/TTF/Artlab-Regular.ttf);
+}
+
+@font-face {
+	font-family: Montserrat;
+	src: local(Montserrat),
+		url(/docs/brandMediaKit/fonts/Montserrat/Montserrat-VariableFont_wght.ttf);
+}
+
+:root {
+	--casalink-red: #ff6666;
+	--casalink-blue: #000033;
+	--casalink-cian: #66ffff;
+	--casalink-paleblue: #202040;
+	--casalink-grey: #3d3d40;
+	--casalink-pink: #e6dada;
+	--casalink-black: #111111;
+	--casalink-white: #eeeeee;
+
+	--text-size-xs: 0.64rem;
+	--text-size-sm: 0.8rem;
+	--text-size-md: 1rem;
+	--text-size-lg: 1.25rem;
+	--text-size-xl: 1.56rem;
+	--text-size-2xl: 1.95rem;
+	--text-size-3xl: 2.44rem;
+	--text-size-4xl: 3.05rem;
+	--text-size-5xl: 3.81rem;
+	--text-size-6xl: 4.76rem;
+	--text-size-7xl: 5.95rem;
+	--text-size-8xl: 7.44rem;
+	--text-size-9xl: 9.3rem;
+	--text-size-10xl: 11.62rem;
+	--font-family-headings: ArtLab, Montserrat, "Open Sans", sans-serif;
+	--font-family-body: "Open Sans", sans-serif;
+}
+
+html {
+	font-size: 18px;
+}
+
+body {
+	font-family: "Open Sans", sans-serif;
+	font-weight: false;
+	line-height: 1.65;
+	color: var(--casalink-blue);
+}
+
+p {
+	font-size: 1em;
+}
+
+div.right-column > pre > code.remark-code {
+	padding: 1rem;
+	border-radius: 1rem;
+}
+
+pre .remark-code-line {
+	border-left-style: solid;
+	border-left-color: var(--casalink-grey);
+	border-left-width: var(--text-size-sm);
+	padding-left: var(--text-size-xs);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+	font-family: ArtLab, Montserrat, "Open Sans", sans-serif;
+	font-weight: true;
+	line-height: 1.15;
+}
+
+.remark-slide-content h1,
+.text-size-h1 {
+	font-weight: 700;
+	margin-top: 0;
+	font-size: 3.05em;
+}
+
+.remark-slide-content h2,
+.text-size-h2 {
+	font-size: 2.44em;
+}
+
+.remark-slide-content h3,
+.text-size-h3 {
+	font-size: 1.95em;
+}
+
+.remark-slide-content h4,
+.text-size-h4 {
+	font-size: 1.56em;
+}
+
+.remark-slide-content h5,
+.text-size-h5 {
+	font-size: 1.25em;
+}
+
+.text-caption {
+	font-size: 0.8em;
+}
+
+small,
+.text-small {
+	font-size: 0.64em;
+}
+
+/* Fondo Rojo */
+.red-bg {
+	background-color: var(--casalink-red);
+}
+
+span.first-slide-logo > img {
+	width: 50%;
+}
+
+span.huge-text {
+	font-size: var(--text-size-10xl);
+	font-family: var(--font-family-headings);
+}
+
+/* Two-column layout */
+.left-column {
+	color: var(--casalink-pink);
+	width: 20%;
+	height: 92%;
+	float: left;
+}
+
+.left-column h2,
+.left-column h3 {
+	font-size: var(--text-size-xl);
+	line-height: var(--text-size-2xl);
+}
+
+/*
+.left-column h2:first-of-type,
+.left-column h3:first-of-type,
+.right-column:first-child {
+	margin-top: 0;
+}
+*/
+
+.left-column h2:last-of-type,
+.left-column h3:last-child {
+	color: var(--casalink-blue);
+}
+.right-column {
+	width: 75%;
+	float: right;
+	padding-top: 1em;
+}
+
+/* Avatares */
+
+.avatar img {
+	border-radius: var(--text-size-10xl);
+	width: var(--text-size-9xl);
+	border-color: var(--casalink-red);
+	border-width: var(--text-size-xs);
+	border-style: solid;
+	margin-right: var(--text-size-md);
+}
+
+/* imagen de fondo */
+.remark-slide-content {
+	background-position-x: 110%;
+	background-position-y: 135%;
+	background-size: 25%;
+	background-repeat: no-repeat;
+}
+
+/* Imagenes en tablas*/
+table img {
+	max-height: 60vh;
+}

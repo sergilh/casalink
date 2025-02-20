@@ -1,0 +1,154 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+@import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+/*
+Thin        100
+ExtraLight  200
+Light       300
+Regular     400
+Medium      500
+SemiBold    600
+Bold        700
+Extrabold   800
+Black       900
+*/
+
+* {
+	font-optical-sizing: auto;
+}
+
+h1,
+h2,
+h3 {
+	font-weight: 700;
+}
+
+.dark {
+	background-color: #1a1a1a;
+	color: #e6e6e6;
+}
+
+.ancho-100 {
+	width: 100%;
+	text-align: inherit;
+	display: inline-block;
+}
+.ancho-50 {
+	width: 50%;
+	text-align: inherit;
+	display: inline-block;
+}
+
+.ancho-75 {
+	width: 75%;
+	text-align: inherit;
+	display: inline-block;
+}
+.ancho-25 {
+	width: 25%;
+	text-align: inherit;
+	display: inline-block;
+}
+.ancho-33 {
+	width: 33%;
+	text-align: inherit;
+	display: inline-block;
+}
+
+.ancho-a {
+	width: auto;
+}
+
+.remark-code,
+.remark-inline-code {
+	font-family: "Ubuntu Mono";
+}
+
+em {
+	font-size: 2em;
+	text-align: center;
+}
+
+img {
+	width: 100%;
+}
+
+.pt-10 {
+	padding-top: 10px;
+}
+
+.pt-20 {
+	padding-top: 20px;
+}
+
+.pt-40 {
+	padding-top: 40px;
+}
+
+.pt-80 {
+	padding-top: 80px;
+}
+
+.pt-160 {
+	padding-top: 160px;
+}
+
+.footnote {
+	position: absolute;
+	bottom: 3em;
+}
+
+/* Two-column layout */
+.left-column {
+	width: 30%;
+	height: 92%;
+	float: left;
+}
+.left-column h2:last-of-type,
+.left-column h3:last-child {
+	color: #000;
+}
+.right-column {
+	width: 70%;
+	float: right;
+	padding-top: 2em;
+}
+
+a {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.bg-fit {
+	background-size: cover;
+}
+
+.dark .remark-slide-content {
+	background-position-y: top;
+}
+
+.largex {
+	font-size: 1.5em;
+}
+
+.l1,
+.l2,
+.l3 {
+	position: relative;
+}
+
+.l1 {
+	z-index: 10;
+	top: 0px;
+}
+
+.l2 {
+	z-index: 20;
+	top: -400px;
+}
+
+.l3 {
+	z-index: 30;
+	top: -800px;
+}
