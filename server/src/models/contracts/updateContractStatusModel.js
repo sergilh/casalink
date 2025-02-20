@@ -2,7 +2,7 @@ import getPool from '../../db/getPool.js';
 import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 const updateContractStatusModel = async (contractId, ownerId, status) => {
-	const pool = getPool();
+	const pool = await getPool();
 
 	// Validar si el contrato existe y pertenece a una propiedad del casero
 	const [contract] = await pool.query(
