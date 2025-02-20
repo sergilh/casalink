@@ -8,17 +8,18 @@ const selectUserByIdModel = async (userId) => {
 
 	const [users] = await pool.query(
 		`
-            SELECT
-                id,
-                name,
-                lastName,
-                legalId,
-                email,
-                phone,
-                avatarUrl,
-                createdAt
-            FROM users WHERE id = ?
-        `,
+			SELECT
+				id,
+				name,
+				lastName,
+				legalId,
+				role,
+				email,
+				phone,
+				avatarUrl,
+				createdAt
+			FROM users WHERE id = ?
+		`,
 		[userId]
 	);
 
