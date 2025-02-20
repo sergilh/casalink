@@ -34,6 +34,7 @@ app.use('/api/solicitudes', requestVisitRoutes); // Ruta para solicitar visita
 app.use('/api/reviews', reviewsRoutes); // Rutas de valoraciones
 app.use('/api', fileUploadRoute);
 app.use('/api', propertiesRoutes);
+
 /*// Ruta de prueba para recibir JSON
 app.post('/api/test-json', (req, res) => {
 	try {
