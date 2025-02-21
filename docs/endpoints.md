@@ -2,16 +2,18 @@
 
 ## Endpoints de Usuarios
 
-| Método | Ruta                   | Descripción                   |
-| ------ | ---------------------- | ----------------------------- |
-| POST   | /api/users/register    | Registro de usuarios          |
-| POST   | /api/users/validate    | Validación de usuario (email) |
-| POST   | /api/users/login       | Autenticación JWT             |
-| PATCH  | /api/users/password    | Cambio de contraseña          |
-| GET    | /api/users/:id         | Información de usuario        |
-| PUT    | /api/users/:id         | Modificar usuario [EXTRA]     |
-| GET    | /api/users/:id/reviews | Histórico de reseñas          |
-| POST   | /api/users/reviews     | Enviar valoración             |
+| Método | Ruta                   | Descripción                          |
+| ------ | ---------------------- | ------------------------------------ |
+| POST   | /api/users/register    | Registro de usuarios                 |
+| POST   | /api/users/validate    | Validación de usuario (email)        |
+| POST   | /api/users/login       | Autenticación JWT                    |
+| PATCH  | /api/users/password    | Cambio de contraseña                 |
+| GET    | /api/users/:id         | Información de usuario               |
+| PUT    | /api/users/:id         | Modificar usuario [EXTRA]            |
+| GET    | /api/users/:id/reviews | Histórico de reseñas                 |
+| POST   | /api/users/reviews     | Enviar valoración                    |
+| POST   | /api/users/blocks/:id  | Bloquear propiedad [EXTRA]           |
+| GET    | /api/users/blocks/     | Lista de usuarios bloqueados [EXTRA] |
 
 ## Endpoints de Propiedades
 
@@ -25,11 +27,11 @@
 
 ## Endpoints de Contratos de Alquiler / Visitas
 
-| Método | Ruta               | Descripción                           |
-| ------ | ------------------ | ------------------------------------- |
-| POST   | /api/contracts     | Solicitud de visita (contrato valido) |
-| GET    | /api/contracts     | Lista de solicitudes de alquiler      |
-| PATCH  | /api/contracts/:id | Aceptar/Rechazar solicitud (dueño)    |
+| Método | Ruta               | Descripción                            |
+| ------ | ------------------ | -------------------------------------- |
+| POST   | /api/contracts     | Solicitud de visita (crea un contrato) |
+| GET    | /api/contracts     | Lista de solicitudes de alquiler       |
+| PATCH  | /api/contracts/:id | Aceptar/Rechazar solicitud (owner)     |
 
 ## Endpoints de Admin
 
