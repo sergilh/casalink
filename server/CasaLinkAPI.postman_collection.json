@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "cfc41c00-efe8-4983-a6fe-8c607d94ba39",
-		"name": "CasaLink API",
+		"name": "CasaLinkAPI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "40399609",
 		"_collection_link": "https://casalink.postman.co/workspace/CasaLink-Workspace~bfa4087b-154c-49b8-86a3-9ede5bd1e462/collection/40399609-cfc41c00-efe8-4983-a6fe-8c607d94ba39?action=share&source=collection_link&creator=40399609"
@@ -70,7 +70,7 @@
 					"response": []
 				},
 				{
-					"name": "Autenticación JWT",
+					"name": "Login (Autenticación JWT)",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -224,55 +224,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Bloquear usuario",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Lista de usuarios bloqueados",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								""
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -407,7 +358,7 @@
 					"response": []
 				},
 				{
-					"name": "Modificar una propiedad (dueño o admin)",
+					"name": "Modificar una propiedad (dueño)",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -441,19 +392,10 @@
 			"name": "Contratos",
 			"item": [
 				{
-					"name": "Solicitud de visita (crea un contrato)",
+					"name": "Lista de solicitudes de alquiler",
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "http://localhost:3000/api/",
 							"protocol": "http",
@@ -470,10 +412,19 @@
 					"response": []
 				},
 				{
-					"name": "Lista de solicitudes de alquiler",
+					"name": "Solicitud de visita (crea un contrato)",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://localhost:3000/api/",
 							"protocol": "http",
@@ -522,6 +473,35 @@
 					"name": "Rechazar solicitud (owner)",
 					"request": {
 						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bloquear usuario",
+					"request": {
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -632,6 +612,64 @@
 				},
 				{
 					"name": "Rechazar propiedad",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar una propiedad (admin)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rechazar reseña",
 					"request": {
 						"method": "PATCH",
 						"header": [],

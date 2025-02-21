@@ -10,6 +10,7 @@ import sendRecoverPassMailController from '../controllers/user/sendRecoverPassMa
 import validateUserController from '../controllers/user/validateUserController.js';
 //import changePasswordController from '../controllers/user/changePasswordController.js';
 import usersPreviousRatingController from '../controllers/user/usersPreviousRatingsController.js';
+import addReviewController from '../controllers/reviews/addReviewController.js';
 
 // middlewares
 import authUserMiddleware from '../middlewares/authUserMiddleware.js';
@@ -17,47 +18,35 @@ import userExistsMiddleware from '../middlewares/userExistsMiddleware.js';
 
 const router = express.Router();
 
-// POST		/api/users/register		Registro de usuarios ✅
+// 01 POST	/api/users/register		Registro de usuarios ✅
 router.post('/users/register', usersRegisterController);
 
-// POST		/api/users/validate		Validación de usuario (email) ✅
+// 02 POST	/api/users/validate		Validación de usuario (email) ✅
 router.patch('/users/validate/:email', validateUserController);
 
-// POST		/api/users/login		Autenticación JWT ✅
+// 03 POST	/api/users/login		Autenticación JWT ✅
 router.post('/users/login', usersLoginController);
 
-// PATCH	/api/users/password		Cambio de contraseña ✅
-router.patch('/users/password', sendRecoverPassMailController);
+// 04 PATCH	/api/users/password		Cambio de contraseña ✅
+router.patch('/users/password/:id', sendRecoverPassMailController);
+// ✅ Endpoint para cambiar contraseña
+// router.put(	'/users/change-password', authUserMiddleware, changePasswordController);
+// revisar cuando se usa
 
-// GET		/api/users/:id			Información de usuario ✅
-// router.get('/users/:id', usersController); esta es la que actualmente es '/profile'
+// 05 GET	/api/users/:id			Información de usuario ✅
 router.get('/profile', authUserMiddleware, usersInfoController);
 
-// PUT		/api/users/:id			Modificar usuario [EXTRA] ⛔
-router.put('/users/:id', usersController);
+// 06 PUT	/api/users/:id			Modificar usuario [EXTRA] ⛔
+router.put('/users/:id', authUserMiddleware, usersController);
 
-// GET		/api/users/:id/reviews	Histórico de reseñas ⛔
+// 07 GET	/api/users/:id/reviews	Histórico de reseñas ⛔
 router.get(
 	'/users/:id/reviews',
 	userExistsMiddleware,
 	usersPreviousRatingController
 );
 
-// POST		/api/users/reviews		Enviar valoración ⛔
-router.post('/users/reviews', usersController);
-
-// POST		/api/users/blocks/:id	Bloquear propiedad [EXTRA] ⛔
-router.post('/users/blocks/:id', usersController);
-
-// GET		/api/users/blocks/		Lista de usuarios bloqueados [EXTRA] ⛔
-router.get('/users/blocks/', usersController);
-
-// ✅ Endpoint para obtener la lista de usuarios
-// router.get('/users', usersController);
-// Pasar a adminRoutes.js
-
-// ✅ Endpoint para cambiar contraseña
-// router.put(	'/users/change-password', authUserMiddleware, changePasswordController);
-// revisar cuando se usa
+// 08 POST		/api/users/reviews		Enviar valoración ✅
+router.post('/users/reviews', authUserMiddleware, addReviewController);
 
 export default router;
