@@ -14,7 +14,7 @@ const router = express.Router();
 // Listado de propiedades
 router.get('/properties');
 
-// Creación de nueva propiedad
+// Creación de nueva propiedad ✅
 router.post('/properties', authUserMiddleware, propertyController);
 
 // Detalle de una propiedad
