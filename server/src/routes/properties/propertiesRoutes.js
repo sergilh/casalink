@@ -3,6 +3,7 @@ import propertyDetailsController from '../../controllers/owner/propertyDetailsCo
 import propertyExistsMiddleware from '../../middlewares/propertyExistsMiddleware.js';
 import authUserMiddleware from '../../middlewares/authUserMiddleware.js';
 import propertyController from '../../controllers/properties/propertyController.js';
+import propertyStatusController from '../../controllers/properties/propertyStatusController.js';
 
 const router = express.Router();
 
@@ -17,7 +18,12 @@ router.get(
 	propertyDetailsController
 );
 // Cambio de estado de propiedad (disponible / no disponible)
-router.patch('/properties/:id');
+router.patch(
+	'/properties/:propertyId/:status',
+	propertyExistsMiddleware,
+	propertyStatusController
+);
+
 // Modificar una propiedad (dueño o admin) [EXTRA]
 router.put('/properties/:id');
 
