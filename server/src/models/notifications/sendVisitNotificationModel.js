@@ -46,7 +46,7 @@ const sendVisitNotificationsModel = async ({
 				break;
 			case 'rejected':
 				tenantMessage = `Tu visita a la propiedad ${propertyName} en ${date} fue rechazada.`;
-				ownerMessage = `Si no quieres recibir mas solicitudes de ${tenantName} en ${propertyName}, indícanos en las reseñas.`;
+				ownerMessage = `Si no quieres recibir mas solicitudes de ${tenantName} en ${propertyName}, indícanos en las reseñas.`; // boqueados
 				break;
 			default:
 				tenantMessage = `Tu visita a la propiedad ${propertyName} de ${ownerName} en ${date} está pendiente de aprobación.`;

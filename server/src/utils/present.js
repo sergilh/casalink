@@ -23,5 +23,7 @@ app.get('/', (req, res) => {
 // Iniciar servidor en el puerto 8081
 const PORT = 8081;
 app.listen(PORT, () => {
-	console.log(`🚀 Servidor en http://localhost:${PORT}`);
+	console.log(
+		`🚀 Ya puedes ver nuestra presentacion en  http://localhost:${PORT}`
+	);
 });
