@@ -3,14 +3,14 @@ import express from 'express';
 
 // controladores
 import contractsController from '../controllers/contracts/contractsController.js';
-import requestVisitController from '../../controllers/user/requestVisitController.js';
-import blockUserController from '../../controllers/owner/blockUserController.js';
-//import { requestController } from '../controllers/owner/requestController.js';
-import updateContractStatusController from '../../controllers/contracts/updateContractStatusController.js';
+import { requestVisitController } from '../controllers/contracts/requestVisitController.js';
+import blockUserController from '../controllers/contracts/blockUserController.js';
+import updateContractStatusController from '../controllers/contracts/updateContractStatusController.js';
 
 // middlewares
 import authUserMiddleware from '../middlewares/authUserMiddleware.js';
-import ownerMiddleware from '../middlewares/ownerMiddleware.js';
+import authOwnerMiddleware from '../middlewares/authOwnerMiddleware.js';
+import contractExistMiddleware from '../middlewares/contractExistMiddleware.js';
 
 const router = express.Router();
 
@@ -31,6 +31,19 @@ router.patch(
 );
 
 // 18	POST	/api/contracts/:id/blocks/	Bloquear usuario de propiedad [EXTRA] ⛔
-router.post('/contracts/:id/blocks/', ownerMiddleware, blockUserController);
+router.post(
+	'/contracts/:id/blocks/',
+	authUserMiddleware,
+	contractExistMiddleware,
+	blockUserController
+);
+
+router.post(
+	'/contracts/:id/blocks/',
+	authUserMiddleware,
+	contractExistMiddleware,
+	authOwnerMiddleware,
+	blockUserController
+);
 
 export default router;

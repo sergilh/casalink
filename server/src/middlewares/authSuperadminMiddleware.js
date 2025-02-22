@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import generateErrorUtil from '../utils/generateErrorUtil.js';
 import getPool from '../db/getPool.js';
 
-const authAdminMiddleware = async (req, res, next) => {
+const authSuperadminMiddleware = async (req, res, next) => {
 	try {
 		const { authorization } = req.headers;
 
@@ -24,11 +24,11 @@ const authAdminMiddleware = async (req, res, next) => {
 			throw generateErrorUtil('Usuario no encontrado', 404);
 		}
 
-		const validRoles = ['admin', 'superadmin'];
+		const validRoles = ['superadmin'];
 
 		if (!validRoles.includes(decoded.role)) {
 			throw generateErrorUtil(
-				`Acceso denegado: Se requieren permisos de administrador (${[decoded.role]})`,
+				`Acceso denegado: Se requieren permisos de super administrador (${[decoded.role]})`,
 				403
 			);
 		}
@@ -43,4 +43,4 @@ const authAdminMiddleware = async (req, res, next) => {
 	}
 };
 
-export default authAdminMiddleware;
+export default authSuperadminMiddleware;

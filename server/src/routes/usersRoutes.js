@@ -2,14 +2,14 @@
 import express from 'express';
 
 // controladores
-import usersController from '../controllers/user/usersController.js';
-import usersInfoController from '../controllers/user/usersInfoController.js';
-import usersLoginController from '../controllers/user/usersLoginController.js';
-import usersRegisterController from '../controllers/user/usersRegisterController.js';
-import sendRecoverPassMailController from '../controllers/user/sendRecoverPassMailController.js';
-import validateUserController from '../controllers/user/validateUserController.js';
-//import changePasswordController from '../controllers/user/changePasswordController.js';
-import usersPreviousRatingController from '../controllers/user/usersPreviousRatingsController.js';
+import usersController from '../controllers/users/usersController.js';
+import usersInfoController from '../controllers/users/usersInfoController.js';
+import usersLoginController from '../controllers/users/usersLoginController.js';
+import usersRegisterController from '../controllers/users/usersRegisterController.js';
+import sendRecoverPassMailController from '../controllers/users/sendRecoverPassMailController.js';
+import validateUserController from '../controllers/users/validateUserController.js';
+//import changePasswordController from '../controllers/users/changePasswordController.js';
+import usersPreviousRatingController from '../controllers/users/usersPreviousRatingsController.js';
 import addReviewController from '../controllers/reviews/addReviewController.js';
 
 // middlewares

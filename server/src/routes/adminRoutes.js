@@ -2,13 +2,13 @@
 import express from 'express';
 
 // controladores
-import usersController from '../../controllers/user/usersController.js';
-import approvePropertyController from '../../controllers/admin/approvePropertyController.js';
-import propertyController from '../../controllers/properties/propertyController.js';
-import removeReviewController from '../../controllers/reviews/removeReviewController.js';
+import usersController from '../controllers/users/usersController.js';
+import approvePropertyController from '../controllers/admin/approvePropertyController.js';
+import propertyController from '../controllers/properties/propertyController.js';
+import removeReviewController from '../controllers/reviews/removeReviewController.js';
 
 // middlewares
-import authAdminMiddleware from '../../middlewares/authAdminMiddleware.js';
+import authAdminMiddleware from '../middlewares/authAdminMiddleware.js';
 import authSuperadminMiddleware from '../middlewares/authSuperadminMiddleware.js';
 
 const router = express.Router();

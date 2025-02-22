@@ -1,9 +1,9 @@
 -- Creación de la base de datos para CasaLink
-DROP DATABASE IF EXISTS casalinkdb2;
-CREATE DATABASE casalinkdb2;
+DROP DATABASE IF EXISTS casalinkdb;
+CREATE DATABASE casalinkdb;
 
 -- Seleccionar la base de datos creada
-USE casalinkdb2;
+USE casalinkdb;
 
 -- Borrar tablas si existen
 DROP TABLE IF EXISTS blocks;

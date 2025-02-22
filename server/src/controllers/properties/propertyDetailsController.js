@@ -1,4 +1,4 @@
-import selectPropertyByIdModel from '../../models/owner/selectPropertyByIdModel.js';
+import selectPropertyByIdModel from '../../models/properties/selectPropertyByIdModel.js';
 //FALTA PROBAR CON DATOS DE PRUEBA
 const propertyDetailsController = async (req, res, next) => {
 	try {

@@ -2,17 +2,17 @@
 import express from 'express';
 
 // middlewares
-import propertyExistsMiddleware from '../../middlewares/propertyExistsMiddleware.js';
-import authUserMiddleware from '../../middlewares/authUserMiddleware.js';
+import propertyExistsMiddleware from '../middlewares/propertyExistsMiddleware.js';
+import authUserMiddleware from '../middlewares/authUserMiddleware.js';
 import { fileUploadMiddleware } from '../middlewares/fileUploadMiddleware.js';
-import authOwnerMiddleware from '../../middlewares/authOwnerMiddleware.js';
+import authOwnerMiddleware from '../middlewares/authOwnerMiddleware.js';
 
 // controladores
-import propertyDetailsController from '../../controllers/owner/propertyDetailsController.js';
-import propertyController from '../../controllers/properties/propertyController.js';
-import fileUploadController from '../controllers/owner/fileUploadController.js';
-import propertyStatusController from '../../controllers/properties/propertyStatusController.js';
-import { getPropertiesController } from '../controllers/properties/getPropertiesController.js';
+import propertyDetailsController from '../controllers/properties/propertyDetailsController.js';
+import propertyController from '../controllers/properties/propertyController.js';
+import fileUploadController from '../controllers/properties/fileUploadController.js';
+import propertyStatusController from '../controllers/properties/propertyStatusController.js';
+import getPropertiesController from '../controllers/properties/getPropertiesController.js';
 
 const router = express.Router();
 
@@ -40,7 +40,13 @@ router.patch(
 );
 
 // 13 Modificar una propiedad (dueño o admin) [EXTRA] ⛔
-router.put('/properties/:id', authOwnerMiddleware, propertyController);
+router.put(
+	'/properties/:id',
+	authUserMiddleware,
+	propertyExistsMiddleware,
+	authOwnerMiddleware,
+	propertyController
+);
 
 // 14 Ruta para subir imágenes y videos asociados a una propiedad
 router.post(
