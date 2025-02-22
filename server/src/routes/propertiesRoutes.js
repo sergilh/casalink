@@ -11,11 +11,13 @@ import authOwnerMiddleware from '../../middlewares/authOwnerMiddleware.js';
 import propertyDetailsController from '../../controllers/owner/propertyDetailsController.js';
 import propertyController from '../../controllers/properties/propertyController.js';
 import fileUploadController from '../controllers/owner/fileUploadController.js';
+import propertyStatusController from '../../controllers/properties/propertyStatusController.js';
+import { getPropertiesController } from '../controllers/properties/getPropertiesController.js';
 
 const router = express.Router();
 
 // 09 Listado de propiedades ⛔
-router.get('/properties');
+router.get('/properties', getPropertiesController);
 
 // 10 Creación de nueva propiedad ✅
 router.post('/properties', authUserMiddleware, propertyController);
@@ -29,6 +31,13 @@ router.get(
 
 // 12 Cambio de estado de propiedad (disponible / no disponible) ✅
 router.patch('/properties/:id', authUserMiddleware, propertyController);
+
+// Cambio de estado de propiedad (disponible / no disponible) Ver cual va mejor
+router.patch(
+	'/properties/:propertyId/:status',
+	propertyExistsMiddleware,
+	propertyStatusController
+);
 
 // 13 Modificar una propiedad (dueño o admin) [EXTRA] ⛔
 router.put('/properties/:id', authOwnerMiddleware, propertyController);

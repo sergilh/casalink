@@ -2,11 +2,11 @@
 import express from 'express';
 
 // controladores
-import usersController from '../controllers/user/usersController.js';
 import contractsController from '../controllers/contracts/contractsController.js';
 import requestVisitController from '../../controllers/user/requestVisitController.js';
 import blockUserController from '../../controllers/owner/blockUserController.js';
 //import { requestController } from '../controllers/owner/requestController.js';
+import updateContractStatusController from '../../controllers/contracts/updateContractStatusController.js';
 
 // middlewares
 import authUserMiddleware from '../middlewares/authUserMiddleware.js';
@@ -23,8 +23,12 @@ router.get('/contracts/', authUserMiddleware, contractsController);
 // 16 Solicitud de visita (contrato valido) ✅
 router.post('/contracts', authUserMiddleware, requestVisitController);
 
-// 17 Aceptar/Rechazar solicitud (dueño) ⛔
-router.patch('/contracts/:id', usersController);
+// 17 Aceptar/Rechazar solicitud (dueño) ✅
+router.patch(
+	'/contracts/:id/status',
+	authUserMiddleware,
+	updateContractStatusController
+);
 
 // 18	POST	/api/contracts/:id/blocks/	Bloquear usuario de propiedad [EXTRA] ⛔
 router.post('/contracts/:id/blocks/', ownerMiddleware, blockUserController);

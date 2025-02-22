@@ -29,7 +29,7 @@ router.patch(
 // 22 Modificar una propiedad (dueño o admin) [EXTRA] ⛔
 router.put('/admin/properties/:id', authAdminMiddleware, propertyController);
 
-// 23	PATCH	/api/admin/review/:id/	Gestionar reseñas (admin) ⛔
+// 23	PATCH	/api/admin/review/:id/	Gestionar reseñas (admin) [EXTRA] ⛔
 router.patch('/admin/review/:id', authAdminMiddleware, removeReviewController);
 
 export default router;

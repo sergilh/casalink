@@ -26,51 +26,9 @@ app.use('/static', express.static(path.join(process.cwd(), 'public'))); // Middl
 
 // Rutas
 app.use('/api', usersRoutes); // Rutas de usuarios
-<<<<<<< HEAD
 app.use('/api', propertiesRoutes); // Rutas de propiedades
 app.use('/api', contractsRoutes); // Rutas de contratos
 app.use('/api', adminRoutes); // Rutas de admin
-=======
-app.use('/api', adminRoutes); // Rutas de usuarios
-app.use('/api', contractsRoutes); // Rutas de usuarios
-app.use('/api', requestsRoutes); // Rutas de solicitudes
-app.use('/api/solicitudes', requestVisitRoutes); // Ruta para solicitar visita
-app.use('/api/reviews', reviewsRoutes); // Rutas de valoraciones
-app.use('/api', fileUploadRoute);
-app.use('/api', propertiesRoutes);
-
-/*// Ruta de prueba para recibir JSON
-app.post('/api/test-json', (req, res) => {
-	try {
-		console.log('Body recibido:', req.body); // Ver el body en la terminal
-		res.json({
-			status: 'ok',
-			receivedBody: req.body, // Retorna el body recibido
-		});
-	} catch (error) {
-		res.status(400).json({ error: 'Error procesando JSON' });
-	}
-});*/
-
-// Ruta de prueba para verificar la conexión a la base de datos
-app.get('/', async (req, res) => {
-	try {
-		const pool = await getPool();
-		// Realizamos una consulta simple para obtener la hora actual desde MySQL.
-		const [rows] = await pool.query('SELECT NOW() AS currentTime');
-		res.json({
-			message:
-				'Servidor Express funcionando y conectado a la base de datos',
-			currentTime: rows[0].currentTime,
-		});
-	} catch (error) {
-		console.error('Error en la consulta:', error);
-		res.status(500).json({
-			error: 'Error en la consulta a la base de datos',
-		});
-	}
-});
->>>>>>> e330840663f7ad84f4f8ad7cdb3c2ffad11a013d
 
 // Middleware de gestión de errores
 // eslint-disable-next-line no-unused-vars
