@@ -22,7 +22,7 @@ const router = express.Router();
 router.post('/users/register', usersRegisterController);
 
 // 02 POST	/api/users/validate		Validación de usuario (email) ✅
-router.patch('/users/validate/:email', validateUserController);
+router.patch('/users/validate/', validateUserController);
 
 // 03 POST	/api/users/login		Autenticación JWT ✅
 router.post('/users/login', usersLoginController);

@@ -1,14 +1,29 @@
 import getPool from '../../db/getPool.js';
+import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
-const validateUserModel = async ({ email = '' }) => {
+const validateUserModel = async ({ email, validationCode }) => {
 	const pool = await getPool();
 
-	let query = `UPDATE users SET isEmailVerified = TRUE WHERE email = ?`;
+	const [[{ isEmailVerified, recoveryCode }]] = await pool.query(
+		`SELECT isEmailVerified, recoveryCode FROM users WHERE email=?`,
+		[email]
+	);
 
-	const queryParams = [`%${email}%`];
+	if (isEmailVerified) {
+		generateErrorUtil('El usuario ya ha sido verificado', 400);
+	}
 
-	// Si no queremos retornar nada, simplemente llamamos a modificar la tabla y capturamos un res.status 200 o error
-	return await pool.query(query, queryParams);
+	if (recoveryCode !== validationCode) {
+		generateErrorUtil(`El código de validación no es correcto`, 400);
+	}
+
+	const [{ verification }] = await pool.query(
+		`UPDATE users SET isEmailVerified = TRUE, recoveryCode = NULL WHERE email = ?;`,
+		[email]
+	);
+
+	console.log(verification);
+	return verification;
 };
 
 export default validateUserModel;

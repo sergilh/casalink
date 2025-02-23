@@ -5,23 +5,22 @@ const userModel = async ({ email = '' }) => {
 
 	//  Si no se proporciona email, obtenemos todos los usuarios
 	let query = `
-    SELECT 
-      id, 
-      name, 
-      lastName,
-      legalId,
-      email, 
-      phone, 
-      avatarUrl, 
-      bio, 
-      role, 
-      isEmailVerified, 
-      isDocsVerified, 
-      createdAt, 
-      updatedAt
-    FROM users
-  `;
-
+		SELECT
+			id,
+			name,
+			lastName,
+			legalId,
+			email,
+			phone,
+			avatarUrl,
+			bio,
+			role,
+			isEmailVerified,
+			isDocsVerified,
+			createdAt,
+			updatedAt
+		FROM users
+	`;
 	const queryParams = [];
 
 	//  Si se proporciona un email, filtramos por él
