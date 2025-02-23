@@ -109,67 +109,6 @@ const getPropertiesController = async (req, res, next) => {
 	try {
 		const pool = await getPool();
 
-		/*
-		const [results] = await pool.query(
-			`
-		SELECT
-			p.id AS propertyId,
-			p.propertyTitle,
-			p.propertyType,
-			p.description,
-			p.zipCode,
-			p.bedrooms,
-			p.bathrooms,
-			p.price,
-			p.status,
-			p.hasEnergyCert,
-			p.createdAt AS propertyCreatedAt,
-			u.name AS ownerName,
-			JSON_OBJECT(
-				'ownerId', u.id,
-				'ownerName', u.name,
-				'lastName', u.lastName,
-				'avatarUrl', u.avatarUrl,
-				'isDocsVerified', u.isDocsVerified,
-				'averageRating', u.averageRating,
-				'totalReviews', u.totalReviews
-			) AS ownerInfo,
-			(SELECT pi.imageUrl FROM images pi WHERE pi.propertyId = p.id ORDER BY pi.sortIndex ASC LIMIT 1) AS mainImage
-		FROM properties p
-		JOIN users u ON p.ownerId = u.id
-		LEFT JOIN reviews r ON u.id = r.reviewedId
-		WHERE
-			p.status = ?
-			AND (p.price >= ? OR ? IS NULL)
-			AND (p.price <= ? OR ? IS NULL)
-			AND (p.bedrooms = ? OR ? IS NULL)
-			AND (p.bathrooms = ? OR ? IS NULL)
-			AND (p.hasEnergyCert = ? OR ? IS NULL)
-		GROUP BY p.id, u.id
-		HAVING
-			AVG(r.rating) >= COALESCE(?, 0)
-		ORDER BY p.${sortColumn} ${sortOrder}
-		LIMIT ? OFFSET ?;
-	`,
-			[
-				'pending',
-				minPrice,
-				minPrice,
-				maxPrice,
-				maxPrice,
-				bedrooms,
-				bedrooms,
-				bathrooms,
-				bathrooms,
-				energyCertificate,
-				energyCertificate,
-				minOwnerRating,
-				limit,
-				offset,
-			]
-		);
-		*/
-
 		const [results] = await pool.query(
 			`
 			SELECT
@@ -199,7 +138,7 @@ const getPropertiesController = async (req, res, next) => {
 			JOIN users u ON p.ownerId = u.id
 			LEFT JOIN reviews r ON u.id = r.reviewedId
 			WHERE
-				p.status IN ('available', 'pending')
+				p.status IN ('available')
 				AND (COALESCE(?, p.price) <= p.price)
 				AND (COALESCE(?, p.price) >= p.price)
 				AND (COALESCE(?, p.bedrooms) = p.bedrooms)

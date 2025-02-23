@@ -6,7 +6,7 @@ import generateErrorUtil from '../utils/generateErrorUtil.js';
 
 const authOwnerMiddleware = async (req, res, next) => {
 	try {
-		const { userId } = req; // ID del usuario autenticado (de authUserMiddleware)
+		const { id: userId } = req.user; // ID del usuario autenticado (de authUserMiddleware)
 		const { id: propertyId } = req.params; // ID de la propiedad desde la URL
 
 		// Consultar si la propiedad pertenece al usuario autenticado
@@ -16,11 +16,7 @@ const authOwnerMiddleware = async (req, res, next) => {
 			[propertyId]
 		);
 
-		console.log(property);
-
-		const { ownerId } = property[0];
-
-		if (ownerId !== userId) {
+		if (property[0].ownerId !== userId) {
 			generateErrorUtil(
 				'Acceso denegado. No eres el propietario de esta propiedad.',
 				403

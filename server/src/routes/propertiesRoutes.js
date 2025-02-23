@@ -30,9 +30,15 @@ router.get(
 );
 
 // 12 Cambio de estado de propiedad (disponible / no disponible) ✅
-router.patch('/properties/:id', authUserMiddleware, propertyController);
+router.patch(
+	'/properties/:id',
+	authUserMiddleware,
+	propertyExistsMiddleware,
+	authOwnerMiddleware,
+	propertyStatusController
+);
 
-// Cambio de estado de propiedad (disponible / no disponible) Ver cual va mejor
+// Cambio de estado de propiedad (disponible / no disponible) Ver cual va mejor ✅
 router.patch(
 	'/properties/:propertyId/:status',
 	propertyExistsMiddleware,
