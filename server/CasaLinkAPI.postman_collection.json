@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "cfc41c00-efe8-4983-a6fe-8c607d94ba39",
+		"_postman_id": "073b13d5-e07e-44ee-8fb7-58ce0a9d7954",
 		"name": "CasaLinkAPI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "40399609",
-		"_collection_link": "https://casalink.postman.co/workspace/CasaLink-Workspace~bfa4087b-154c-49b8-86a3-9ede5bd1e462/collection/40399609-cfc41c00-efe8-4983-a6fe-8c607d94ba39?action=share&source=collection_link&creator=40399609"
+		"_collection_link": "https://casalink.postman.co/workspace/CasaLink-Workspace~bfa4087b-154c-49b8-86a3-9ede5bd1e462/collection/40399609-073b13d5-e07e-44ee-8fb7-58ce0a9d7954?action=share&source=collection_link&creator=40399609"
 	},
 	"item": [
 		{
@@ -43,64 +43,6 @@
 				{
 					"name": "Validación de usuario",
 					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Login (Autenticación JWT)",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Cambio de contraseña",
-					"request": {
 						"method": "PATCH",
 						"header": [],
 						"body": {
@@ -113,7 +55,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/users/validate?email={{user_email_02}}&validationCode={{verification_code_02}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -121,7 +63,111 @@
 							"port": "3000",
 							"path": [
 								"api",
-								""
+								"users",
+								"validate"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "{{user_email_02}}"
+								},
+								{
+									"key": "validationCode",
+									"value": "{{verification_code_02}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login (Autenticación JWT)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"usr02@example.com\",\r\n  \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cambio de contraseña",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"johndoe@example.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Perfil del Usuario",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{johndoe_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/users/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"profile"
 							]
 						}
 					},
@@ -130,10 +176,19 @@
 				{
 					"name": "Información de usuario",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{johndoe_token}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/users/:id",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -141,7 +196,14 @@
 							"port": "3000",
 							"path": [
 								"api",
-								""
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3"
+								}
 							]
 						}
 					},
@@ -180,9 +242,15 @@
 					"name": "Histórico de reseñas",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{johndoe_token}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/users/:id/reviews",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -190,7 +258,15 @@
 							"port": "3000",
 							"path": [
 								"api",
-								""
+								"users",
+								":id",
+								"reviews"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "13"
+								}
 							]
 						}
 					},
@@ -200,7 +276,13 @@
 					"name": "Enviar valoración",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{johndoe_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -211,7 +293,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/users/reviews",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -219,7 +301,8 @@
 							"port": "3000",
 							"path": [
 								"api",
-								""
+								"users",
+								"reviews"
 							]
 						}
 					},
@@ -232,11 +315,23 @@
 			"item": [
 				{
 					"name": "Listado de propiedades",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"minPrice\": 1,\r\n    \"maxPrice\": 10000,\r\n    \"bedrooms\": 2,\r\n    \"bathrooms\": 1,\r\n    \"minOwnerRating\": 1,\r\n    \"energyCertificate\": false,\r\n    \"sortBy\": \"price\",\r\n    \"order\": \"ASC\",\r\n    \"limit\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/properties",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -244,7 +339,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								""
+								"properties"
 							]
 						}
 					},
@@ -254,10 +349,16 @@
 					"name": "Nueva propiedad",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{johndoe_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n  \"title\": \"Casa 01\",\r\n  \"type\": \"casa\",\r\n  \"description\": \"Una casa de ejemplo\",\r\n  \"locality\": \"Ferrol\",\r\n  \"street\": \"Calle del Pinar\",\r\n  \"number\": \"808\",\r\n  \"floor\": \"0\",\r\n  \"hasEnergyCert\": true,\r\n  \"zipCode\": \"15485\",\r\n  \"location\": \"40.4168,-3.7038\",\r\n  \"squareMeters\": 90,\r\n  \"bedrooms\": 2,\r\n  \"bathrooms\": 1,\r\n  \"price\": 5900\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -265,7 +366,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/properties",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -273,7 +374,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								""
+								"properties"
 							]
 						}
 					},
@@ -285,7 +386,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/properties/:id",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -293,7 +394,14 @@
 							"port": "3000",
 							"path": [
 								"api",
-								""
+								"properties",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -303,10 +411,16 @@
 					"name": "Propiedad disponible",
 					"request": {
 						"method": "PATCH",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{johndoe_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"status\": \"available\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -314,7 +428,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/properties/:id",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -322,7 +436,14 @@
 							"port": "3000",
 							"path": [
 								"api",
-								""
+								"properties",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -332,10 +453,16 @@
 					"name": "Propiedad no disponible",
 					"request": {
 						"method": "PATCH",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{johndoe_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"status\": \"unavailable\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -343,7 +470,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/properties/:id",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -351,7 +478,14 @@
 							"port": "3000",
 							"path": [
 								"api",
-								""
+								"properties",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -381,6 +515,37 @@
 							"path": [
 								"api",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cargar Multimedia",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/properties/:id/upload",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"properties",
+								":id",
+								"upload"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
 							]
 						}
 					},
@@ -700,6 +865,46 @@
 			]
 		}
 	],
+	"auth": {
+		"type": "jwt",
+		"jwt": [
+			{
+				"key": "algorithm",
+				"value": "HS256",
+				"type": "string"
+			},
+			{
+				"key": "isSecretBase64Encoded",
+				"value": false,
+				"type": "boolean"
+			},
+			{
+				"key": "payload",
+				"value": "{}",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "headerPrefix",
+				"value": "Bearer",
+				"type": "string"
+			},
+			{
+				"key": "queryParamKey",
+				"value": "token",
+				"type": "string"
+			},
+			{
+				"key": "header",
+				"value": "{}",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -732,6 +937,66 @@
 			"key": "user_token_admin",
 			"value": "",
 			"type": "string"
+		},
+		{
+			"key": "owner_token_1",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_token_1",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_token_2",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "owner_token_2",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "verification_code_01",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "superadmin_email",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "superadmin_password",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "datos_usuario_01",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_email_02",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "verification_code_02",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "johndoe_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_token_03",
+			"value": "",
+			"type": "default"
 		}
 	]
 }
