@@ -1,4 +1,5 @@
 import selectUserReviewsModel from '../../models/users/selectUserReviewsModel.js';
+
 const usersPreviousRatingController = async (req, res, next) => {
 	try {
 		const { id } = req.params;

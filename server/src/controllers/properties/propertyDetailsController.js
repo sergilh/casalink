@@ -2,9 +2,9 @@ import selectPropertyByIdModel from '../../models/properties/selectPropertyByIdM
 //FALTA PROBAR CON DATOS DE PRUEBA
 const propertyDetailsController = async (req, res, next) => {
 	try {
-		const { propertyId } = req.params;
+		const { id } = req.params;
 
-		const property = await selectPropertyByIdModel(propertyId);
+		const property = await selectPropertyByIdModel(id);
 
 		res.send({
 			status: 'ok',

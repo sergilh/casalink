@@ -16,6 +16,8 @@ import usersByIdController from '../controllers/users/usersByIdController.js';
 // middlewares
 import authUserMiddleware from '../middlewares/authUserMiddleware.js';
 import userExistsMiddleware from '../middlewares/userExistsMiddleware.js';
+import activeContractExists from '../middlewares/activeContractExists.js';
+import noReviewExistsFromUser from '../middlewares/noReviewExistsFromUser.js';
 
 const router = express.Router();
 
@@ -47,14 +49,21 @@ router.put(
 	changePasswordController
 );
 
-// 08 GET	/api/users/:id/reviews	Histórico de reseñas ⛔
+// 08 GET	/api/users/:id/reviews	Histórico de reseñas ✅
 router.get(
 	'/users/:id/reviews',
+	authUserMiddleware,
 	userExistsMiddleware,
 	usersPreviousRatingController
 );
 
 // 09 POST		/api/users/reviews		Enviar valoración ✅
-router.post('/users/reviews', authUserMiddleware, addReviewController);
+router.post(
+	'/users/reviews',
+	authUserMiddleware,
+	activeContractExists,
+	noReviewExistsFromUser,
+	addReviewController
+);
 
 export default router;

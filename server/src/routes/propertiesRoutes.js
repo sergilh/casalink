@@ -16,7 +16,7 @@ import getPropertiesController from '../controllers/properties/getPropertiesCont
 
 const router = express.Router();
 
-// 09 Listado de propiedades ⛔
+// 09 Listado de propiedades ✅
 router.get('/properties', getPropertiesController);
 
 // 10 Creación de nueva propiedad ✅
