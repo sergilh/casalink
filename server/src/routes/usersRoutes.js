@@ -2,7 +2,6 @@
 import express from 'express';
 
 // controladores
-import usersController from '../controllers/users/usersController.js';
 import usersInfoController from '../controllers/users/usersInfoController.js';
 import usersLoginController from '../controllers/users/usersLoginController.js';
 import usersRegisterController from '../controllers/users/usersRegisterController.js';
@@ -12,6 +11,7 @@ import changePasswordController from '../controllers/users/changePasswordControl
 import usersPreviousRatingController from '../controllers/users/usersPreviousRatingsController.js';
 import addReviewController from '../controllers/reviews/addReviewController.js';
 import usersByIdController from '../controllers/users/usersByIdController.js';
+import usersModificationController from '../controllers/users/usersModificationController.js';
 
 // middlewares
 import authUserMiddleware from '../middlewares/authUserMiddleware.js';
@@ -39,8 +39,8 @@ router.get('/users/profile', authUserMiddleware, usersInfoController);
 // 05b GET	/api/users/:userId			Información de un usuario ✅
 router.get('/users/:userId', authUserMiddleware, usersByIdController);
 
-// 06 PUT	/api/users/:id			Modificar usuario [EXTRA] ⛔
-router.put('/users/:id', authUserMiddleware, usersController);
+// 06 PUT	/api/users/			Modificar usuario [EXTRA] ⛔
+router.put('/users/', authUserMiddleware, usersModificationController);
 
 // 07 Endpoint para cambiar contraseña ✅
 router.put(

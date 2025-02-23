@@ -16,7 +16,7 @@ const router = express.Router();
 // 19	GET		/api/admin/users		Lista de usuarios ✅
 router.get('/admin/users', authAdminMiddleware, usersController);
 
-// 20 Gestionar usuarios (superadmin) [EXTRA]
+// 20 Gestionar usuarios (superadmin) [EXTRA] ⛔
 router.put('/admin/users/:id', authSuperadminMiddleware, usersController);
 
 // 21 Aprobar propiedad ✅

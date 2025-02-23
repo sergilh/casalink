@@ -35,13 +35,6 @@ router.post(
 	'/contracts/:id/blocks/',
 	authUserMiddleware,
 	contractExistMiddleware,
-	blockUserController
-);
-
-router.post(
-	'/contracts/:id/blocks/',
-	authUserMiddleware,
-	contractExistMiddleware,
 	authOwnerMiddleware,
 	blockUserController
 );
