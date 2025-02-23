@@ -1,26 +1,56 @@
-import updateContractStatusModel from '../../models/contracts/updateContractStatusModel.js';
+import updatePropertyModel from '../../models/properties/updatePropertyModel.js';
 
-const updateContractStatusController = async (req, res, next) => {
+const updatePropertyController = async (req, res, next) => {
 	try {
-		const { contractId } = req.params; // ID del contrato desde la URL
-		const { status } = req.body; // Estado que se quiere asignar
-		const ownerId = req.user.id; // ID del casero autenticado desde el token
+		const { propertyId } = req.params;
 
-		// Actualizar el estado del contrato
-		const updatedContract = await updateContractStatusModel(
-			contractId,
-			ownerId,
-			status
-		);
+		console.log('>>> propertyId en controller:', propertyId);
 
-		res.status(200).json({
-			status: 'ok',
-			message: `Contrato actualizado a ${status}`,
-			data: updatedContract,
+		if (!propertyId) {
+			throw new Error('ID de propiedad no recibido.');
+		}
+
+		const {
+			title,
+			type,
+			description,
+			locality,
+			street,
+			number,
+			floor,
+			hasEnergyCert,
+			zipCode,
+			location,
+			squareMeters,
+			bedrooms,
+			bathrooms,
+			price,
+		} = req.body;
+
+		await updatePropertyModel(propertyId, {
+			title,
+			type,
+			description,
+			locality,
+			street,
+			number,
+			floor,
+			hasEnergyCert,
+			zipCode,
+			location,
+			squareMeters,
+			bedrooms,
+			bathrooms,
+			price,
+		});
+
+		return res.status(200).json({
+			success: true,
+			message: `Propiedad ${propertyId} actualizada correctamente`,
 		});
 	} catch (error) {
 		next(error);
 	}
 };
 
-export default updateContractStatusController;
+export default updatePropertyController;

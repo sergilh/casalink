@@ -1,22 +1,25 @@
 import getPool from '../db/getPool.js';
 import generateErrorUtil from '../utils/generateErrorUtil.js';
+
 const propertyExistsMiddleware = async (req, res, next) => {
 	try {
-		const { id } = req.params;
-		console.log('propertyId', id);
+		const { propertyId } = req.params;
+
+		if (!propertyId) {
+			throw generateErrorUtil('ID de propiedad no válido.', 400);
+		}
 
 		const pool = await getPool();
-
 		const [properties] = await pool.query(
-			`
-				SELECT id FROM properties WHERE id=?
-			`,
-			[id]
+			'SELECT * FROM properties WHERE id = ?',
+			[propertyId]
 		);
 
 		if (properties.length < 1) {
-			generateErrorUtil('La propiedad ya no existe', 404);
+			throw generateErrorUtil('La propiedad ya no existe.', 404);
 		}
+
+		req.property = properties[0];
 		next();
 	} catch (err) {
 		next(err);

@@ -2,10 +2,12 @@ import updatePropertyModel from '../../models/properties/updatePropertyModel.js'
 
 const updatePropertyController = async (req, res, next) => {
 	try {
-		// Obtenemos el ID de la propiedad desde los parámetros de la ruta
 		const { propertyId } = req.params;
 
-		// Datos a actualizar
+		if (!propertyId) {
+			throw new Error('ID de propiedad no recibido.');
+		}
+
 		const {
 			title,
 			type,
@@ -23,7 +25,6 @@ const updatePropertyController = async (req, res, next) => {
 			price,
 		} = req.body;
 
-		// Llamamos al modelo que actualiza la propiedad en la base de datos
 		await updatePropertyModel(propertyId, {
 			title,
 			type,
@@ -41,7 +42,6 @@ const updatePropertyController = async (req, res, next) => {
 			price,
 		});
 
-		// Respuesta exitosa
 		return res.status(200).json({
 			success: true,
 			message: `Propiedad ${propertyId} actualizada correctamente`,
