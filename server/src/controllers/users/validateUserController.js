@@ -13,17 +13,17 @@ const validateUserController = async (req, res) => {
 			generateErrorUtil('Faltan el campo validationCode', 400);
 		}
 
-		await validateUserModel({ email, validationCode });
+		const validated = await validateUserModel({ email, validationCode });
 
-		// TODO error al peticionar TypeError: res.status is not a function
+		if (!validated) {
+			generateErrorUtil('El usuario no ha sido verificado', 400);
+		}
+
 		res.status(200).json({
 			message: `El usuario ${email} ha sido verificado`,
 		});
 	} catch (error) {
-		res.status(500).json({
-			error: 'Error al validar usuario',
-			details: error.message,
-		});
+		console.error('Error al validar usuario:', error);
 	}
 };
 

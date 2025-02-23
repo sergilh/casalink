@@ -13,6 +13,7 @@ import usersRoutes from './src/routes/usersRoutes.js';
 import propertiesRoutes from './src/routes/propertiesRoutes.js';
 import contractsRoutes from './src/routes/contractsRoutes.js';
 import adminRoutes from './src/routes/adminRoutes.js';
+import notFoundMiddleware from './src/middlewares/notFoundMiddleware.js';
 
 // variables
 const app = express();
@@ -29,6 +30,9 @@ app.use('/api', usersRoutes); // Rutas de usuarios
 app.use('/api', propertiesRoutes); // Rutas de propiedades
 app.use('/api', contractsRoutes); // Rutas de contratos
 app.use('/api', adminRoutes); // Rutas de admin
+
+// 404 Error
+app.use(notFoundMiddleware);
 
 // Middleware de gestión de errores
 // eslint-disable-next-line no-unused-vars
