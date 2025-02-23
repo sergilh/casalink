@@ -8,7 +8,8 @@ const userExistsMiddleware = async (req, res, next) => {
 
 		const [user] = await pool.query(
 			`
-            SELECT id FROM users WHERE id=?`,
+				SELECT id FROM users WHERE id=?
+			`,
 			[id]
 		);
 

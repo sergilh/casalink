@@ -8,7 +8,7 @@ const usersRegisterController = async (req, res, next) => {
 
 		// Validación de datos obligatorios
 		if (!name || !lastName || !email || !password || !phone || !legalId) {
-			generateErrorUtil('Faltan campos', 400);
+			generateErrorUtil('Faltan campos para registrar un usuario', 400);
 		}
 
 		// Insertamos el usuario el la base de datos.
@@ -19,7 +19,6 @@ const usersRegisterController = async (req, res, next) => {
 			userId: res.insertId,
 			name,
 			lastName,
-			isEmailVerified: false, // Para mostrar el mensaje de que hace falta la validación de email
 		});
 	} catch (err) {
 		next(err);

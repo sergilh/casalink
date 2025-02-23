@@ -12,7 +12,7 @@ const usersInfoController = async (req, res, next) => {
 		// Obtener los datos del usuario desde la base de datos
 		const [user] = await pool.query(
 			`SELECT id, name, lastName, email, phone, avatarUrl, isEmailVerified, isDocsVerified, createdAt 
-            FROM users WHERE id = ?`,
+			FROM users WHERE id = ?`,
 			[id]
 		);
 

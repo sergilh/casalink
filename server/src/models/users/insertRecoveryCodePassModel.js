@@ -7,7 +7,8 @@ const insertRecoveryCodePassModel = async (recoveryCode, email) => {
 
 	await pool.query(
 		`
-        UPDATE users SET recoveryCode=?, updatedAt=? WHERE email=?`,
+			UPDATE users SET recoveryCode=?, updatedAt=? WHERE email=?
+		`,
 		[recoveryCode, now, email]
 	);
 };

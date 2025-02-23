@@ -21,6 +21,7 @@ Enum "properties_status_enum" {
   "unavailable"
   "rented"
   "pending"
+  "rejected"
 }
 
 Enum "contracts_status_enum" {
@@ -166,6 +167,18 @@ Table "notifications" {
   }
 }
 
+Table "blocks" {
+  "id" INT [pk, not null, increment]
+  "userId" INT
+  "propertyId" INT
+  "createdAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+  "removedAt" TIMESTAMP [default: NULL]
+
+  Indexes {
+    (userId, propertyId) [unique, name: "blocksIdx"]
+  }
+}
+
 Ref:"users"."id" < "properties"."ownerId" [delete: cascade]
 
 Ref:"users"."id" < "contracts"."tenantId" [delete: cascade]
@@ -187,3 +200,7 @@ Ref:"properties"."id" < "favs"."propertyId"
 Ref:"users"."id" < "notifications"."userId"
 
 Ref:"properties"."id" < "notifications"."propertyId"
+
+Ref:"users"."id" < "blocks"."userId"
+
+Ref:"properties"."id" < "blocks"."propertyId"

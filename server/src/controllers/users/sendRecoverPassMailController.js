@@ -27,7 +27,7 @@ const sendRecoverPassMailController = async (req, res, next) => {
 		//Aquí el código ya está metido en la BBDD del usuario.
 
 		const emailSubject = 'Recuperación de contraseña - Casalink';
-		const textContent = `¡Hola!\n\nHemos recibido una solicitud para recuperar tu contraseña.\nSi no realizaste esta solicitud, por favor ignora este mensaje.\n\nPara restablecer tu contraseña, por favor, haz click en el siguiente enlace:\n\n${process.env.CLIENT_URL}/users/password/${recoveryCode}\n\nSi necesitas más ayuda o tienes problemas, no dudes en ponerte en contacto con nosotros.\n\n¡Gracias por ser parte de nuestra comunidad!\n\nSaludos,\n\nEl equipo de Casalink\n`;
+		const textContent = `¡Hola!\n\nHemos recibido una solicitud para recuperar tu contraseña.\nSi no realizaste esta solicitud, por favor ignora este mensaje.\n\nPara restablecer tu contraseña, por favor, haz click en el siguiente enlace:\n\n${process.env.CLIENT_URL}users/password/${recoveryCode}\n\nSi necesitas más ayuda o tienes problemas, no dudes en ponerte en contacto con nosotros.\n\n¡Gracias por ser parte de nuestra comunidad!\n\nSaludos,\n\nEl equipo de Casalink\n`;
 		const bccMail = process.env.SUPERADMIN_EMAIL;
 
 		const htmlContent = `
@@ -255,11 +255,10 @@ const sendRecoverPassMailController = async (req, res, next) => {
 																class="button-td"
 															>
 																<a
-																	href="${process.env.CLIENT_URL}/users/password/${recoveryCode}"
+																	href="${process.env.CLIENT_URL}users/password/${recoveryCode}"
 																	style="
 																		background: #ff6666;
-																		border: 30px solid
-																			#ff6666;
+																		border: 30px solid #ff6666;
 																		padding: 0 20px;
 																		color: #ffffff;
 																		font-family: sans-serif;
