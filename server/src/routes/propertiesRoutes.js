@@ -5,6 +5,7 @@ import propertyExistsMiddleware from '../middlewares/propertyExistsMiddleware.js
 import authUserMiddleware from '../middlewares/authUserMiddleware.js';
 import checkPropertyOwnerOrAdmin from '../middlewares/checkPropertyOwnerOrAdmin.js';
 import { fileUploadMiddleware } from '../middlewares/fileUploadMiddleware.js';
+import validateRequest from '../middlewares/validateRequest.js';
 
 // Controladores
 import propertyDetailsController from '../controllers/properties/propertyDetailsController.js';
@@ -14,13 +15,21 @@ import propertyStatusController from '../controllers/properties/propertyStatusCo
 import getPropertiesController from '../controllers/properties/getPropertiesController.js';
 import updatePropertyController from '../controllers/properties/updatePropertyController.js';
 
+// Validadores Joi
+import { propertySchema, updatePropertySchema } from '../utils/validators.js';
+
 const router = express.Router();
 
 // 09 Listado de propiedades ✅
 router.get('/properties', getPropertiesController);
 
-// 10 Creación de nueva propiedad ✅
-router.post('/properties', authUserMiddleware, propertyController);
+// 10 Creación de nueva propiedad ✅ (Con validación)
+router.post(
+	'/properties',
+	authUserMiddleware,
+	validateRequest(propertySchema),
+	propertyController
+);
 
 // 11 Detalle de una propiedad ✅
 router.get(
@@ -38,12 +47,13 @@ router.patch(
 	propertyStatusController
 );
 
-// 13 Modificar una propiedad (solo dueño o admin) ✅
+// 13 Modificar una propiedad (solo dueño o admin) ✅ (Con validación)
 router.put(
 	'/properties/:propertyId',
 	authUserMiddleware,
 	propertyExistsMiddleware,
 	checkPropertyOwnerOrAdmin,
+	validateRequest(updatePropertySchema),
 	updatePropertyController
 );
 
