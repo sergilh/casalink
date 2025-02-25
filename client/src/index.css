@@ -1,3 +1,20 @@
+/* CSS Básco para que tenga el modo oscuro
+¿Activar y borrar el resto?
+*/
+laber {
+  display: block;
+}
+
+html {
+  background-color: #232323;
+}
+
+div#root {
+  color: #ffffff;
+}
+
+
+/*
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -66,3 +83,4 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+*/
