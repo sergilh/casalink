@@ -4,8 +4,6 @@ const updatePropertyController = async (req, res, next) => {
 	try {
 		const { propertyId } = req.params;
 
-		console.log('>>> propertyId en controller:', propertyId);
-
 		if (!propertyId) {
 			throw new Error('ID de propiedad no recibido.');
 		}
