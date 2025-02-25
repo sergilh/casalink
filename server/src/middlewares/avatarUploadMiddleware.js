@@ -6,7 +6,7 @@ const storage = multer.memoryStorage();
 
 // Filtro para aceptar solo imágenes y videos
 const fileFilter = (req, file, cb) => {
-	const formatosPermitidos = /jpeg|jpg|png|gif|mp4|mov|avi|mkv/;
+	const formatosPermitidos = /jpeg|jpg|png/;
 	const esValido =
 		formatosPermitidos.test(
 			path.extname(file.originalname).toLowerCase()
@@ -17,7 +17,7 @@ const fileFilter = (req, file, cb) => {
 	} else {
 		cb(
 			new Error(
-				'Formato no permitido. Solo se aceptan imágenes (JPEG, PNG, GIF) y videos (MP4, MOV, AVI, MKV).'
+				'Formato no permitido. Solo se aceptan imágenes (JPEG y PNG).'
 			)
 		);
 	}
@@ -26,9 +26,9 @@ const fileFilter = (req, file, cb) => {
 // Configuración de multer
 const upload = multer({
 	storage,
-	limits: { fileSize: 50 * 1024 * 1024 }, // Límite de 50MB
+	limits: { fileSize: 5 * 1024 * 1024 }, // Límite de 50MB
 	fileFilter,
 });
 
 // Middleware para subir múltiples archivos
-export const fileUploadMiddleware = upload.array('files', 10);
+export const avatarUploadMiddleware = upload.array('avatar', 1);

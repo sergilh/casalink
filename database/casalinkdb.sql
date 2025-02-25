@@ -154,6 +154,7 @@ CREATE TABLE blocks (
 	id                     INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	userId                 INT UNSIGNED,
 	propertyId             INT UNSIGNED,
+	reason                 TEXT,
 	createdAt              TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	removedAt              TIMESTAMP DEFAULT NULL,
 	-- Llaves foráneas

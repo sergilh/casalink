@@ -3,13 +3,8 @@ import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 const propertyStatusController = async (req, res, next) => {
 	try {
-		const { id: propertyId } = req.params;
+		const { propertyId } = req.params;
 		const { status } = req.body;
-
-		// Verificar que todos los datos requeridos están presentes
-		if (!status || !propertyId) {
-			throw generateErrorUtil('Todos los campos son obligatorios', 400);
-		}
 
 		// Modificar el status de la propiedad en la base de datos
 		if (!(await updatePropertyStatusModel(propertyId, status))) {

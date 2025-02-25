@@ -32,7 +32,7 @@ router.patch(
 
 // 18	POST	/api/contracts/:id/blocks/	Bloquear usuario de propiedad [EXTRA] ⛔
 router.post(
-	'/contracts/:id/blocks/',
+	'/contracts/:contractId/blocks/',
 	authUserMiddleware,
 	contractExistMiddleware,
 	authOwnerMiddleware,

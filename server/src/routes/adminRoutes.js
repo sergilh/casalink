@@ -1,6 +1,9 @@
 // dependencias
 import express from 'express';
 
+// Validadores Joi
+import { propertyApprovalSchema } from '../utils/validators.js';
+
 // controladores
 import usersController from '../controllers/users/usersController.js';
 import approvePropertyController from '../controllers/admin/approvePropertyController.js';
@@ -10,6 +13,7 @@ import removeReviewController from '../controllers/reviews/removeReviewControlle
 // middlewares
 import authAdminMiddleware from '../middlewares/authAdminMiddleware.js';
 import authSuperadminMiddleware from '../middlewares/authSuperadminMiddleware.js';
+import validateRequest from '../middlewares/validateRequest.js';
 
 const router = express.Router();
 
@@ -21,8 +25,9 @@ router.put('/admin/users/:id', authSuperadminMiddleware, usersController);
 
 // 21 Aprobar propiedad ✅
 router.patch(
-	'/admin/properties/:id',
+	'/admin/properties/:propertyId/:action',
 	authAdminMiddleware,
+	validateRequest(propertyApprovalSchema),
 	approvePropertyController
 );
 

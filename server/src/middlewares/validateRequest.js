@@ -3,6 +3,7 @@ const validateRequest = (schema) => {
 		const { error } = schema.validate(req.body, { abortEarly: false });
 
 		if (error) {
+			//console.log(error);
 			return res.status(400).json({
 				status: 'error',
 				message: 'Datos de entrada no válidos',

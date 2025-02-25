@@ -16,12 +16,21 @@ import getPropertiesController from '../controllers/properties/getPropertiesCont
 import updatePropertyController from '../controllers/properties/updatePropertyController.js';
 
 // Validadores Joi
-import { propertySchema, updatePropertySchema } from '../utils/validators.js';
+import {
+	propertySchema,
+	updatePropertySchema,
+	searchPropertySchema,
+	propertyStatusSchema,
+} from '../utils/validators.js';
 
 const router = express.Router();
 
-// 09 Listado de propiedades ✅
-router.get('/properties', getPropertiesController);
+// 12 Listado de propiedades ✅ (Con validación)
+router.get(
+	'/properties',
+	validateRequest(searchPropertySchema),
+	getPropertiesController
+);
 
 // 10 Creación de nueva propiedad ✅ (Con validación)
 router.post(
@@ -38,12 +47,13 @@ router.get(
 	propertyDetailsController
 );
 
-// 12 Cambio de estado de propiedad (disponible / no disponible) ✅
+// 12 Cambio de estado de propiedad (disponible / no disponible) ✅ (Con validación)
 router.patch(
 	'/properties/:propertyId',
 	authUserMiddleware,
 	propertyExistsMiddleware,
 	checkPropertyOwnerOrAdmin,
+	validateRequest(propertyStatusSchema),
 	propertyStatusController
 );
 
@@ -59,7 +69,10 @@ router.put(
 
 // 14 Ruta para subir imágenes y videos asociados a una propiedad ✅
 router.post(
-	'/upload-files/:propertyId',
+	'/properties/:propertyId/upload',
+	authUserMiddleware,
+	propertyExistsMiddleware,
+	checkPropertyOwnerOrAdmin,
 	fileUploadMiddleware,
 	fileUploadController
 );
