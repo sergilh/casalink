@@ -4,6 +4,7 @@ import generateErrorUtil from '../utils/generateErrorUtil.js';
 const propertyExistsMiddleware = async (req, res, next) => {
 	try {
 		const { propertyId } = req.params;
+		console.log('propertyId', propertyId);
 
 		if (!propertyId) {
 			throw generateErrorUtil('ID de propiedad no válido.', 400);
@@ -11,7 +12,9 @@ const propertyExistsMiddleware = async (req, res, next) => {
 
 		const pool = await getPool();
 		const [properties] = await pool.query(
-			'SELECT * FROM properties WHERE id = ?',
+			`
+				SELECT id FROM properties WHERE id=?
+			`,
 			[propertyId]
 		);
 
