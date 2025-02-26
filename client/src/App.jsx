@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import './index.css';
 
 const App = () => {
 	return (
@@ -14,6 +15,7 @@ const App = () => {
 				<Route path="/" element={<HomePage />} />
 				<Route path="/Login" element={<LoginPage />} />
 			</Routes>
+			<button className="bg-blue-500">Button A</button>
 
 			<Footer />
 		</>

@@ -1,6 +1,6 @@
 /* CSS Básco para que tenga el modo oscuro
 ¿Activar y borrar el resto?
-*/
+
 laber {
   display: block;
 }
@@ -12,7 +12,9 @@ html {
 div#root {
   color: #ffffff;
 }
+*/
 
+@import "tailwindcss";
 
 /*
 :root {
