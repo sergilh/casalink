@@ -15,7 +15,6 @@ const App = () => {
 				<Route path="/" element={<HomePage />} />
 				<Route path="/Login" element={<LoginPage />} />
 			</Routes>
-			<button className="bg-blue-500">Button A</button>
 
 			<Footer />
 		</>
