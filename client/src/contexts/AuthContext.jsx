@@ -13,11 +13,15 @@ const AuthProvider = ({ children }) => {
 		cookies.get(VITE_AUTH_TOKEN) || null
 	);
 	const [authUser, setAuthUser] = useState(null);
+	
+	const [authLoading, setAuthLoading] = useState(true);
+    
+    
 
 	useEffect(() => {
 		const fetchUser = async () => {
 			try {
-				const res = await fetch(`${VITE_API_URL}/api/users`, {
+				const res = await fetch(`${VITE_API_URL}/api/users/profile`, {
 					headers: {
 						Authorization: authToken,
 					},
@@ -29,26 +33,33 @@ const AuthProvider = ({ children }) => {
 					throw new Error(body.message);
 				}
 
-				setAuthUser(body.data.user);
+				setAuthUser(body.user);
 			} catch (err) {
 				console.error(err.message);
 
 				authLogoutState();
+
+				setAuthUser(null)
+			} finally {
+				setAuthLoading(false);
 			}
 		};
 
 		if (authToken) {
 			fetchUser();
+		} else {
+			setAuthUser(null)
 		}
 	}, [authToken]);
 
 	const authLoginState = (newToken) => {
 		setAuthToken(newToken);
-		cookies.set(VITE_AUTH_TOKEN, newToken);
+		cookies.set(VITE_AUTH_TOKEN, newToken, {
+			expires:7,
+		});
 	};
 
 	const authLogoutState = () => {
-		setAuthUser(null);
 		setAuthToken(null);
 		cookies.remove(VITE_AUTH_TOKEN);
 	};
