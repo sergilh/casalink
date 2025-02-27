@@ -6,7 +6,7 @@ const useFetch = () => {
 
     const fetchData = async ({
         url,
-        method = "GET",
+        method = "GET", // Por defecto es GET, pero se puede cambiar en la llamada
         body = null,
         token = "",
         isFormData = false,
@@ -15,8 +15,8 @@ const useFetch = () => {
         try {
             setLoading(true);
 
-            const headers = token ? { Authorization: `Bearer ${token}` } : {};
-            if (!isFormData) headers["Content-Type"] = "application/json";
+            const headers = token ? { Authorization: `Bearer ${token}` } : {}; /* Si hay token, lo añadimos a los headers */
+            if (!isFormData) headers["Content-Type"] = "application/json"; /* Si no es FormData, añadimos el Content-Type */
 
             const res = await fetch(url, {
                 method,
@@ -30,9 +30,9 @@ const useFetch = () => {
                 throw new Error(data.message || "Error en la petición");
             }
 
-            showToast && toast.success(data.message);
+            showToast && toast.success(data.message); /*si showToast es true, mostramos el mensaje de éxito*/
 
-            return data;
+            return data; /* Devolvemos los datos recibidos del servidor para que el componente pueda hacer algo con ellos */
         } catch (err) {
             toast.error(err.message);
             return null;
@@ -41,7 +41,7 @@ const useFetch = () => {
         }
     };
 
-    return { fetchData, loading };
+    return { fetchData, loading };/* Devolvemos fetchData y loading para que cualquier componente que use useFetch pueda acceder a ellos */
 };
 
 export default useFetch;
