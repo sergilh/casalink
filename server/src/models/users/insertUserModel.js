@@ -384,7 +384,7 @@ const insertUserModel = async (
 	`;
 	await sendMailUtil(email, emailSubject, htmlContent, bccMail, textContent);
 
-	await pool.query(
+	const [result] = await pool.query(
 		`INSERT INTO users (name, lastName, email, password, phone, legalId, recoveryCode, isEmailVerified)
 				VALUES (?, ?, ?, ?, ?, ?, ?, false)`,
 		[
@@ -397,6 +397,8 @@ const insertUserModel = async (
 			validationCode,
 		]
 	);
+
+	return result.insertId;
 };
 
 export default insertUserModel;

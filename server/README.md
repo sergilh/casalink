@@ -13,50 +13,51 @@
 
 ## 🗄️ Endpoints de la API
 
-## Endpoints de Usuarios
+Para más información sobre el uso de la API, consulta el [manual de endpoints (rutas)](../docs/endpoints.md).
 
-| Id  | Método | Ruta                       | Descripción                   |
-| --- | ------ | -------------------------- | ----------------------------- |
-| 01  | POST   | /api/users/register        | Registro de usuarios          |
-| 02  | POST   | /api/users/validate        | Validación de usuario (email) |
-| 03  | POST   | /api/users/login           | Autenticación JWT             |
-| 04  | PATCH  | /api/users/password        | Cambio de contraseña          |
-| 05  | GET    | /api/users/profile         | Perfil del usuario            |
-| 06  | GET    | /api/users/:id             | Información de un usuario     |
-| 07  | PUT    | /api/users/                | Modificar usuario [EXTRA]     |
-| 08  | PUT    | /api/users/change-password | Modificar contraseña          |
-| 09  | GET    | /api/users/:id/reviews     | Histórico de reseñas          |
-| 10  | POST   | /api/users/reviews         | Enviar valoración             |
+| Id   | Método | Ruta                       | Descripción                    |
+| ---- | ------ | -------------------------- | ------------------------------ |
+| 1.01 | POST   | /api/users/register        | Registro de usuarios           |
+| 1.02 | PATCH  | /api/users/validate        | Validación de usuario (email)  |
+| 1.03 | POST   | /api/users/login           | Autenticación JWT              |
+| 1.04 | GET    | /api/users/password        | Solicitar cambio de contraseña |
+| 1.05 | GET    | /api/users/profile         | Perfil del usuario             |
+| 1.06 | GET    | /api/users/:userId         | Información de un usuario      |
+| 1.07 | PUT    | /api/users/                | Modificar usuario [EXTRA]      |
+| 1.08 | PUT    | /api/users/change-password | Modificar contraseña           |
+| 1.09 | GET    | /api/users/:userId/reviews | Histórico de reseñas           |
+| 1.10 | POST   | /api/users/reviews         | Enviar valoración              |
+| 1.11 | PATCH  | /api/users/avatar          | Avatar del usuario             |
 
 ## Endpoints de Propiedades
 
-| Id  | Método | Ruta                       | Descripción                             |
-| --- | ------ | -------------------------- | --------------------------------------- |
-| 11  | GET    | /api/properties            | Listado de propiedades                  |
-| 12  | POST   | /api/properties            | Creación de nueva propiedad             |
-| 13  | GET    | /api/properties/:id        | Detalle de una propiedad                |
-| 14  | PATCH  | /api/properties/:id        | Disponibilidad de una propiedad (dueño) |
-| 15  | PUT    | /api/properties/:id        | Modificar una propiedad (dueño) [EXTRA] |
-| 16  | POST   | /api/properties/:id/upload | Cargar multimedia a una propiedad       |
+| Id   | Método | Ruta                               | Descripción                             |
+| ---- | ------ | ---------------------------------- | --------------------------------------- |
+| 2.12 | GET    | /api/properties                    | Listado de propiedades                  |
+| 2.13 | POST   | /api/properties                    | Creación de nueva propiedad             |
+| 2.14 | GET    | /api/properties/:propertyId        | Detalle de una propiedad                |
+| 2.15 | PATCH  | /api/properties/:propertyId        | Disponibilidad de una propiedad (dueño) |
+| 2.16 | PUT    | /api/properties/:propertyId        | Modificar una propiedad (dueño) [EXTRA] |
+| 2.17 | POST   | /api/properties/:propertyId/upload | Cargar multimedia a una propiedad       |
 
 ## Endpoints de Contratos de Alquiler / Visitas
 
-| Id  | Método | Ruta                       | Descripción                            |
-| --- | ------ | -------------------------- | -------------------------------------- |
-| 17  | GET    | /api/contracts             | Lista de solicitudes de alquiler       |
-| 18  | POST   | /api/contracts             | Solicitud de visita (crea un contrato) |
-| 19  | PATCH  | /api/contracts/:id         | Aceptar/Rechazar solicitud (owner)     |
-| 20  | POST   | /api/contracts/:id/blocks/ | Bloquear usuario de propiedad [EXTRA]  |
+| Id   | Método | Ruta                               | Descripción                            |
+| ---- | ------ | ---------------------------------- | -------------------------------------- |
+| 3.18 | GET    | /api/contracts                     | Lista de solicitudes de alquiler       |
+| 3.19 | POST   | /api/contracts/:propertyId         | Solicitud de visita (crea un contrato) |
+| 3.20 | PATCH  | /api/contracts/:contractId/:status | Aceptar/Rechazar solicitud (owner)     |
+| 3.21 | POST   | /api/contracts/:contractId/blocks/ | Bloquear usuario de propiedad [EXTRA]  |
 
 ## Endpoints de Admin
 
-| Id  | Método | Ruta                       | Descripción                             |
-| --- | ------ | -------------------------- | --------------------------------------- |
-| 21  | GET    | /api/admin/users           | Lista de usuarios (admin)               |
-| 22  | PUT    | /api/admin/users/:id       | Gestionar usuarios (superadmin) [EXTRA] |
-| 23  | PATCH  | /api/admin/properties/:id/ | Aprobar propiedad (admin)               |
-| 24  | PUT    | /api/admin/properties/:id  | Modificar una propiedad (admin) [EXTRA] |
-| 25  | PATCH  | /api/admin/review/:id/     | Gestionar reseñas (admin)               |
+| Id   | Método | Ruta                                      | Descripción                             |
+| ---- | ------ | ----------------------------------------- | --------------------------------------- |
+| 4.22 | GET    | /api/admin/users                          | Lista de usuarios (admin)               |
+| 4.23 | PATCH  | /api/admin/users/:userId/:newRole         | Gestionar usuarios (superadmin) [EXTRA] |
+| 4.24 | PATCH  | /api/admin/properties/:propertyId/:action | Aprobar/Rechazar propiedad (admin)      |
+| 4.25 | PUT    | /api/admin/properties/:propertyId         | Modificar una propiedad (admin) [EXTRA] |
+| 4.26 | PATCH  | /api/admin/review/:reviewId               | Gestionar reseñas (admin)               |
 
 ---
 

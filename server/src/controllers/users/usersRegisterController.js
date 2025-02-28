@@ -12,13 +12,28 @@ const usersRegisterController = async (req, res, next) => {
 		}
 
 		// Insertamos el usuario el la base de datos.
-		await insertUserModel(name, lastName, email, password, phone, legalId);
-
-		res.status(201).json({
-			message: 'Usuario registrado con éxito.',
-			userId: res.insertId,
+		const newUserId = await insertUserModel(
 			name,
 			lastName,
+			email,
+			password,
+			phone,
+			legalId
+		);
+
+		console.log(newUserId);
+
+		res.status(201).json({
+			status: 'success',
+			message: 'Usuario registrado con éxito.',
+			data: {
+				newUserId: newUserId,
+				name,
+				lastName,
+				email,
+				phone,
+				legalId,
+			},
 		});
 	} catch (err) {
 		next(err);
