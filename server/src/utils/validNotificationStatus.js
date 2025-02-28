@@ -11,7 +11,9 @@ const validNotificationTypeAndStatus = (type, status) => {
 		case 'review':
 			validStatus = ['requested', 'rejected'];
 			break;
-		case ('visit', 'contract', 'property'):
+		case 'visit':
+		case 'contract':
+		case 'property':
 			validStatus = ['requested', 'approved', 'rejected'];
 			break;
 		default:

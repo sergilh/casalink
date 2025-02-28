@@ -32,7 +32,7 @@ router.get(
 	getPropertiesController
 );
 
-// 10 Creación de nueva propiedad ✅ (Con validación)
+// 13 Creación de nueva propiedad ✅ (Con validación)
 router.post(
 	'/properties',
 	authUserMiddleware,
@@ -40,14 +40,14 @@ router.post(
 	propertyController
 );
 
-// 11 Detalle de una propiedad ✅
+// 14 Detalle de una propiedad ✅
 router.get(
 	'/properties/:propertyId',
 	propertyExistsMiddleware,
 	propertyDetailsController
 );
 
-// 12 Cambio de estado de propiedad (disponible / no disponible) ✅ (Con validación)
+// 15 Cambio de estado de propiedad (disponible / no disponible) ✅ (Con validación)
 router.patch(
 	'/properties/:propertyId',
 	authUserMiddleware,
@@ -57,7 +57,7 @@ router.patch(
 	propertyStatusController
 );
 
-// 13 Modificar una propiedad (solo dueño o admin) ✅ (Con validación)
+// 16 Modificar una propiedad (solo dueño) ✅ (Con validación)
 router.put(
 	'/properties/:propertyId',
 	authUserMiddleware,
@@ -67,7 +67,7 @@ router.put(
 	updatePropertyController
 );
 
-// 14 Ruta para subir imágenes y videos asociados a una propiedad ✅
+// 17 Ruta para subir imágenes y videos asociados a una propiedad ✅
 router.post(
 	'/properties/:propertyId/upload',
 	authUserMiddleware,

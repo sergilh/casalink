@@ -10,6 +10,14 @@ const sendPropertyNotificationModel = async (userId, propertyId, status) => {
 	// Validar que el `status` sea válido
 	if (await validNotificationStatus('property', status)) {
 		// Inserción de la notificación en la base de datos
+
+		const [[{ propertyTitle: propertyName }]] = await pool.query(
+			`SELECT propertyTitle FROM properties WHERE id = ?`,
+			[propertyId]
+		);
+
+		console.log('propertyName', propertyName);
+
 		const [result] = await pool.query(
 			`
 			INSERT INTO notifications
@@ -19,10 +27,7 @@ const sendPropertyNotificationModel = async (userId, propertyId, status) => {
 			[
 				userId,
 				propertyId,
-				`La propiedad ${await pool.query(
-					`SELECT propertyTitle FROM properties WHERE id = ?`,
-					[propertyId]
-				)} ha sido ${status === 'approved' ? 'aprobada' : 'rechazada'}`,
+				`La propiedad ${propertyName} ha sido ${status === 'approved' ? 'aprobada' : 'rechazada'}`,
 				'property',
 				status,
 			]

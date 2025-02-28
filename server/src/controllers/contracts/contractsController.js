@@ -1,45 +1,82 @@
-import selectContractByStatusModel from '../../models/contracts/selectContractByStatusModel.js';
-import generateErrorUtil from '../../utils/generateErrorUtil.js';
+import getPool from '../../db/getPool.js';
 
 const contractsController = async (req, res, next) => {
 	try {
-		const { status } = req.params; // Estado opcional desde la URL
-		const userId = req.user.id; // ID del usuario autenticado desde el token
+		const pool = await getPool();
+		const { status = null } = req.body; // Estado opcional desde la URL000
 		const { page = 1, limit = 10 } = req.query; // Parámetros de paginación
+		const userId = req.user.id; // ID del usuario autenticado
+		const offset = (page - 1) * limit;
 
-		// Si status está presente, filtra por ese estado; si no, busca todos
-		const statusFilter = status
-			? [status]
-			: ['pending', 'approved', 'ongoing'];
+		console.log('status', status);
 
-		// Consultamos la base de datos
-		const { contracts, total } = await selectContractByStatusModel({
-			userId,
-			statusFilter,
-			page,
-			limit,
+		// Consultar solicitudes hechas (donde el usuario es inquilino)
+
+		console.log(
+			'SQL',
+			pool.format(
+				`
+				SELECT c.id, c.propertyId, c.status, c.startDate, c.createdAt,
+						p.propertyTitle, u.name AS ownerName
+				FROM contracts c
+				JOIN properties p ON c.propertyId = p.id
+				JOIN users u ON p.ownerId = u.id
+				WHERE c.tenantId = ? AND c.status IN (COALESCE(?, ('pending', 'approved', 'ongoing')))
+				ORDER BY c.createdAt DESC
+				LIMIT ? OFFSET ?
+			 `,
+				[userId, status, Number(limit), Number(offset)]
+			)
+		);
+		const [contractsAsTenant] = await pool.query(
+			`
+				SELECT
+					c.id,
+					c.propertyId,
+					c.status,
+					c.startDate,
+					c.createdAt,
+					p.propertyTitle,
+					u.name AS ownerName
+				FROM contracts c
+				JOIN properties p ON c.propertyId = p.id
+				JOIN users u ON p.ownerId = u.id
+				WHERE c.tenantId = ?
+				AND (COALESCE(?, c.status) = c.status)
+				ORDER BY c.createdAt DESC
+				LIMIT ? OFFSET ?
+			 `,
+			[userId, status, Number(limit), Number(offset)]
+		);
+
+		// Consultar solicitudes recibidas (donde el usuario es dueño)
+		const [contractsAsOwner] = await pool.query(
+			`
+				SELECT
+					c.id,
+					c.tenantId,
+					c.status,
+					c.startDate,
+					c.createdAt,
+					u.name AS tenantName,
+					p.propertyTitle
+				FROM contracts c
+				JOIN users u ON c.tenantId = u.id
+				JOIN properties p ON c.propertyId = p.id
+				WHERE p.ownerId = ?
+				AND (COALESCE(?, c.status) = c.status)
+				ORDER BY c.createdAt DESC
+				LIMIT ? OFFSET ?
+			 `,
+			[userId, status, Number(limit), Number(offset)]
+		);
+
+		res.json({
+			contractsAsTenant, // Slicitudes que el usuario hizo para alquilar propiedades
+			contractsAsOwner, // Solicitudes que el usuario recibió como dueño de propiedades
 		});
-
-		// Si no hay registros, generar un error antes de devolver la respuesta
-		if (total < 1) {
-			throw generateErrorUtil(
-				`No hay contratos ${status === undefined ? 'de ningun tipo' : status} para el usuario ${userId}`,
-				404
-			);
-		}
-
-		res.status(200).json({
-			success: true,
-			data: contracts,
-			pagination: {
-				total,
-				page: Number(page),
-				limit: Number(limit),
-				totalPages: Math.ceil(total / limit),
-			},
-		});
-	} catch (err) {
-		next(err);
+	} catch (error) {
+		next(error);
 	}
 };
 

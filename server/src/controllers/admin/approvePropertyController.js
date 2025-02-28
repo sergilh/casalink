@@ -30,7 +30,7 @@ const updatePropertyStatusController = async (req, res, next) => {
 		if (action === 'approve') {
 			userId = await updatePropertyStatusModel(propertyId, 'available');
 		} else {
-			userId = await updatePropertyStatusModel(propertyId, 'unavailable');
+			userId = await updatePropertyStatusModel(propertyId, 'rejected');
 		}
 
 		if (

@@ -12,12 +12,13 @@ const updatePropertyStatusModel = async (propertyId, newStatus) => {
 	console.log('Propiedad:', property);
 	console.log('Estado actual:', property.status);
 
-	// Verificar que la propiedad ya fuera aprobada
 	if (property.status === 'pending') {
-		throw generateErrorUtil(
-			'La propiedad no puede estar pendiente de aprobación, debe ser aprobada primero.',
-			400
-		);
+		if (newStatus !== 'available') {
+			throw generateErrorUtil(
+				'La propiedad no puede estar pendiente de aprobación, debe ser aprobada primero.',
+				400
+			);
+		}
 	}
 
 	if (property.status === newStatus) {

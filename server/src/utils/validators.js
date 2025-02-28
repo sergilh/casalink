@@ -111,16 +111,6 @@ export const searchPropertySchema = Joi.object({
 	}),
 });
 
-export const propertyApprovalSchema = Joi.object({
-	sortBy: Joi.string()
-		.valid('approve', 'reject')
-		.messages({
-			'any.only':
-				"El campo action solo puede tener los valores:'approve', 'reject'.",
-		})
-		.required(),
-});
-
 export const propertyStatusSchema = Joi.object({
 	status: Joi.string()
 		.valid('available', 'unavailable')
@@ -129,4 +119,14 @@ export const propertyStatusSchema = Joi.object({
 				"El campo status solo puede tener los valores:'available', 'unavailable'.",
 		})
 		.required(),
+});
+
+export const searchContractSchema = Joi.object({
+	status: Joi.string()
+		.valid('pending', 'approved', 'ongoing', 'finished', 'canceled')
+		.messages({
+			'any.only':
+				"El campo status solo puede tener los valores:'pending', 'approved', 'ongoing', 'finished', 'canceled'.",
+		})
+		.optional(),
 });

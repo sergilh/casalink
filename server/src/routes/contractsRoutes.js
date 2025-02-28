@@ -11,26 +11,40 @@ import updateContractStatusController from '../controllers/contracts/updateContr
 import authUserMiddleware from '../middlewares/authUserMiddleware.js';
 import authOwnerMiddleware from '../middlewares/authOwnerMiddleware.js';
 import contractExistMiddleware from '../middlewares/contractExistMiddleware.js';
+import propertyExistsMiddleware from '../middlewares/propertyExistsMiddleware.js';
+import validateRequest from '../middlewares/validateRequest.js';
+
+// Validadores Joi
+import { searchContractSchema } from '../utils/validators.js';
 
 const router = express.Router();
 
-// 15 Lista de solicitudes de alquiler ✅
-router.get('/contracts/', authUserMiddleware, contractsController);
-// Ruta GET para obtener las solicitudes de alquiler ✅
-//router.get('/requests', authUserMiddleware, requestController);
-// creo que esta repetida
-
-// 16 Solicitud de visita (contrato valido) ✅
-router.post('/contracts', authUserMiddleware, requestVisitController);
-
-// 17 Aceptar/Rechazar solicitud (dueño) ✅
-router.patch(
-	'/contracts/:id/status',
+// 18 Lista de solicitudes de alquiler ✅
+router.get(
+	`/contracts/`,
 	authUserMiddleware,
+	validateRequest(searchContractSchema),
+	contractsController
+);
+
+// 19 Solicitud de visita (contrato valido) ✅
+router.post(
+	'/contracts/:propertyId',
+	authUserMiddleware,
+	propertyExistsMiddleware,
+	requestVisitController
+);
+
+// 20 Aceptar/Rechazar solicitud (dueño) ✅
+router.patch(
+	'/contracts/:contractId/:status',
+	authUserMiddleware,
+	contractExistMiddleware,
+	authOwnerMiddleware,
 	updateContractStatusController
 );
 
-// 18	POST	/api/contracts/:id/blocks/	Bloquear usuario de propiedad [EXTRA] ⛔
+// 21	POST	/api/contracts/:id/blocks/	Bloquear usuario de propiedad [EXTRA] ✅
 router.post(
 	'/contracts/:contractId/blocks/',
 	authUserMiddleware,

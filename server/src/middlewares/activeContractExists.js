@@ -9,27 +9,36 @@ const validStatuses = [
 	'canceled',
 ];
 
-const contractStatusMiddleware = async (req, res, next) => {
+const activeContractExists = async (req, res, next) => {
 	try {
-		const { id: otherUserId } = req.params; // ID del usuario en la URL
+		const { reviewedId: otherUserId } = req.body; // ID del usuario en la URL
 		const userId = req.user.id; // ID del usuario autenticado (JWT)
 		const pool = await getPool();
 
-		// Obtener el contrato con la propiedad asociada
-		const [contracts] = await pool.query(
-			`
+		const query = `
 				SELECT c.id, c.tenantId, p.ownerId
 				FROM contracts c
 				JOIN properties p ON c.propertyId = p.id
 				WHERE c.status IN (?)
 				AND (c.tenantId = ? OR p.ownerId = ?)
 				AND (c.tenantId = ? OR p.ownerId = ?)
-			`,
-			[validStatuses, userId, userId, otherUserId, otherUserId]
-		);
+			`;
+
+		const values = [
+			validStatuses,
+			userId,
+			userId,
+			otherUserId,
+			otherUserId,
+		];
+
+		// Obtener el contrato con la propiedad asociada
+		const [contracts] = await pool.query(query, values);
 
 		// Si no hay un contrato válido, lanzar error
 		if (contracts.length === 0) {
+			console.log('contacts', contracts);
+
 			generateErrorUtil(
 				'No tienes un contrato válido con este usuario.',
 				403
@@ -57,4 +66,4 @@ const contractStatusMiddleware = async (req, res, next) => {
 	}
 };
 
-export default contractStatusMiddleware;
+export default activeContractExists;

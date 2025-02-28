@@ -1,14 +1,14 @@
 import getPool from '../../db/getPool.js';
 
-const sendReviewNotificationsModel = async (
+const sendReviewRejectionNotificationsModel = async (
+	propertyId,
+	propertyTitle,
+	tenantId,
+	tenantName,
+	ownerName,
 	reviewerId,
 	reviewedId,
-	propertyTitle,
-	tenantName,
-	tenantId,
-	ownerName,
-	propertyId,
-	rating
+	reason
 ) => {
 	const pool = await getPool();
 
@@ -22,8 +22,8 @@ const sendReviewNotificationsModel = async (
 		reviewedName = tenantName;
 	}
 
-	const reviewerMessage = `Has dejado una reseña, por la propiedad ${propertyTitle}, en el perfil de ${reviewedName}.`;
-	const reviewedMessage = `${reviewerName} ha dejado una reseña de ${rating} ⭐ en tu perfil por la propiedad ${propertyTitle}.`;
+	const reviewerMessage = `Tu reseña, por la propiedad ${propertyTitle}, en el perfil de ${reviewedName} ha sido rechazada por ${reason}.`;
+	const reviewedMessage = `La reseña de ${reviewerName} en tu perfil por la propiedad ${propertyTitle} ha sido rechazada y ya no aparecerá en tu historial de reseñas.`;
 
 	const notifications = [
 		{ userId: reviewerId, propertyId, message: reviewerMessage },
@@ -56,4 +56,4 @@ const sendReviewNotificationsModel = async (
 	return insertedNotifications; // Devuelve el ID de las notificaciones creada
 };
 
-export default sendReviewNotificationsModel;
+export default sendReviewRejectionNotificationsModel;

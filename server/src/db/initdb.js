@@ -102,7 +102,7 @@ const initDb = async () => {
 					id                     INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
 					reviewerId             INT UNSIGNED,
 					reviewedId             INT UNSIGNED,
-					contracId              INT UNSIGNED,
+					contractId              INT UNSIGNED,
 					rating                 TINYINT NOT NULL CHECK (rating >= 1 AND rating <= 5),
 					comment                TEXT,
 					createdAt              TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

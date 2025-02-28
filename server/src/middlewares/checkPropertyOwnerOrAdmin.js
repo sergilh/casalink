@@ -6,23 +6,19 @@ const checkPropertyOwnerOrAdmin = (req, res, next) => {
 	try {
 		// propertyExistsMiddleware debe haber adjuntado la propiedad en req.property
 		// con al menos la info de ownerId
-		const { property } = req;
-		const { id: currentUserId, role: currentUserRole } = req.user;
+		const currentUserRole = req.user.role;
 
-		// Si es admin o superadmin, puede pasar
+		console.log('currentUserRole', currentUserRole);
+
 		if (currentUserRole === 'admin' || currentUserRole === 'superadmin') {
+			// Si es superadmin, también puede pasar
 			return next();
-		}
-
-		// Si NO es admin, comprobamos si es el dueño
-		if (property.ownerId !== currentUserId) {
+		} else {
 			throw generateErrorUtil(
 				'No tienes permisos para modificar esta propiedad.',
 				403
 			);
 		}
-
-		next();
 	} catch (error) {
 		next(error);
 	}

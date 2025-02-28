@@ -5,7 +5,7 @@ const blockUserController = async (req, res, next) => {
 	try {
 		const { id: contractId } = req.params;
 		const { blockedUserId, reason } = req.body;
-		const userId = req.user.id;
+		const { propertyId } = req.propertyId;
 
 		if (!blockedUserId) {
 			generateErrorUtil('Se requiere el ID del usuario a bloquear', 400);
@@ -21,10 +21,13 @@ const blockUserController = async (req, res, next) => {
 		// Verificar si ya está bloqueado
 		const [existingBlock] = await pool.query(
 			`
-			SELECT id FROM contract_blocks 
-			WHERE contractId = ? AND blockedUserId = ?
+				SELECT
+					b.id AS blockId
+				FROM blocks b
+				JOIN contracts c ON b.propertyId = c.propertyId
+				WHERE b.userId = ? AND c.id = ?;
 			`,
-			[contractId, blockedUserId]
+			[blockedUserId, contractId]
 		);
 
 		if (existingBlock.length > 0) {
@@ -37,10 +40,10 @@ const blockUserController = async (req, res, next) => {
 		// Insertar en la tabla de bloqueos
 		await pool.query(
 			`
-			INSERT INTO contract_blocks (contractId, ownerId, blockedUserId, reason)
-			VALUES (?, ?, ?, ?)
+			INSERT INTO blocks (userId, propertyId, reason)
+			VALUES (?, ?, ?)
 			`,
-			[contractId, userId, blockedUserId, reason]
+			[blockedUserId, propertyId, reason]
 		);
 
 		res.status(201).json({ message: 'Usuario bloqueado exitosamente' });
