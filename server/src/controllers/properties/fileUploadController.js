@@ -4,6 +4,8 @@ import saveFileUtil from '../../utils/saveFileUtil.js';
 // Controlador para manejar la subida de archivos (imágenes y videos)
 const fileUploadController = async (req, res, next) => {
 	try {
+		//console.log('req.files', req.files);
+
 		// Verificar si se subieron archivos
 		if (!req.files || req.files.length === 0) {
 			return res

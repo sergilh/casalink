@@ -114,7 +114,7 @@ Table "reviews" {
   "id" INT [pk, not null, increment]
   "reviewerId" INT
   "reviewedId" INT
-  "contracId" INT
+  "contractId" INT
   "rating" TINYINT [not null]
   "comment" TEXT
   "createdAt" TIMESTAMP [default: `CURRENT_TIMESTAMP`]

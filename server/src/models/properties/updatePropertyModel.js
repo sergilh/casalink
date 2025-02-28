@@ -94,10 +94,10 @@ const updatePropertyModel = async (propertyId, updateData) => {
 	}
 
 	const updateQuery = `
-        UPDATE properties
-        SET ${fields.join(', ')}
-        WHERE id = ?
-    `;
+			UPDATE properties
+			SET ${fields.join(', ')}, status = 'pending'
+			WHERE id = ?
+		`;
 	values.push(propertyId);
 
 	const [result] = await pool.query(updateQuery, values);

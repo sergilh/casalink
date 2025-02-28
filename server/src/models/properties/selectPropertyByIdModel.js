@@ -34,10 +34,11 @@ const selectPropertyByIdModel = async (propertyId) => {
 
 	const [images] = await pool.query(
 		`
-			SELECT id,imageUrl FROM images WHERE propertyId=?
+			SELECT imageUrl,sortIndex FROM images WHERE propertyId=?
 		`,
-		[properties[0].id]
+		[propertyId]
 	);
+
 	//Creamos una propiedad a properties, para manejar mejor las imagenes.
 	properties[0].images = images;
 

@@ -44,6 +44,7 @@ const updatePropertyController = async (req, res, next) => {
 
 		return res.status(200).json({
 			success: true,
+			author: req.user.role,
 			message: `Propiedad ${propertyId} actualizada correctamente`,
 		});
 	} catch (error) {

@@ -2,9 +2,9 @@ import selectUserReviewsModel from '../../models/users/selectUserReviewsModel.js
 
 const usersPreviousRatingController = async (req, res, next) => {
 	try {
-		const { id } = req.params;
+		const { userId } = req.params;
 
-		const review = await selectUserReviewsModel(id);
+		const review = await selectUserReviewsModel(userId);
 
 		res.send({
 			status: 'ok',

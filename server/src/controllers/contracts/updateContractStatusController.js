@@ -1,56 +1,18 @@
-import updatePropertyModel from '../../models/properties/updatePropertyModel.js';
+import updateContractStatusModel from '../../models/contracts/updateContractStatusModel.js';
 
-const updatePropertyController = async (req, res, next) => {
+const updateContractStatusController = async (req, res, next) => {
 	try {
-		const { propertyId } = req.params;
+		const { status, contractId } = req.params;
 
-		console.log('>>> propertyId en controller:', propertyId);
-
-		if (!propertyId) {
-			throw new Error('ID de propiedad no recibido.');
+		if ((await updateContractStatusModel(contractId, status)) === 1) {
+			return res.status(200).json({
+				success: true,
+				message: `El contrato ${contractId} ha sido actualizado con éxito a ${status}`,
+			});
 		}
-
-		const {
-			title,
-			type,
-			description,
-			locality,
-			street,
-			number,
-			floor,
-			hasEnergyCert,
-			zipCode,
-			location,
-			squareMeters,
-			bedrooms,
-			bathrooms,
-			price,
-		} = req.body;
-
-		await updatePropertyModel(propertyId, {
-			title,
-			type,
-			description,
-			locality,
-			street,
-			number,
-			floor,
-			hasEnergyCert,
-			zipCode,
-			location,
-			squareMeters,
-			bedrooms,
-			bathrooms,
-			price,
-		});
-
-		return res.status(200).json({
-			success: true,
-			message: `Propiedad ${propertyId} actualizada correctamente`,
-		});
 	} catch (error) {
 		next(error);
 	}
 };
 
-export default updatePropertyController;
+export default updateContractStatusController;

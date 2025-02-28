@@ -55,7 +55,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/users/validate?email={{user_email_02}}&validationCode={{verification_code_02}}",
+							"raw": "http://localhost:3000/api/users/validate?email={{usuario_registrado_email}}&validationCode={{verification_code_01}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -69,11 +69,11 @@
 							"query": [
 								{
 									"key": "email",
-									"value": "{{user_email_02}}"
+									"value": "{{usuario_registrado_email}}"
 								},
 								{
 									"key": "validationCode",
-									"value": "{{verification_code_02}}"
+									"value": "{{verification_code_01}}"
 								}
 							]
 						}
@@ -87,7 +87,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"usr02@example.com\",\r\n  \"password\": \"123456\"\r\n}",
+							"raw": "{{superadmin_user}}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -213,10 +213,16 @@
 					"name": "Modificar usuario",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{user_token_1}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"name\": \"Usuario\",\r\n    \"lastName\": \"Registrado\",\r\n    \"email\": \"usuarioregistrado@example.com\",\r\n    \"password\": \"123456\",\r\n    \"phone\": \"+34123456789\",\r\n    \"bio\": \"Nada especial!\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -224,7 +230,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/users/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -232,6 +238,7 @@
 							"port": "3000",
 							"path": [
 								"api",
+								"users",
 								""
 							]
 						}
@@ -279,13 +286,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{johndoe_token}}",
+								"value": "{{usuario_registrado_token}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"reviewedId\": 3,\r\n    \"contractId\": 2,\r\n    \"rating\": 4,\r\n    \"comment\": \"Muy buen trato.\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -293,7 +300,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/users/reviews",
+							"raw": "http://localhost:3000/api/users/reviews/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -302,7 +309,45 @@
 							"path": [
 								"api",
 								"users",
-								"reviews"
+								"reviews",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar Avatar",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{johndoe_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/C:/Users/johna/OneDrive/Imágenes/DSC_0037.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/avatar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"avatar"
 							]
 						}
 					},
@@ -313,38 +358,6 @@
 		{
 			"name": "Propiedades",
 			"item": [
-				{
-					"name": "Listado de propiedades",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"minPrice\": 1,\r\n    \"maxPrice\": 10000,\r\n    \"bedrooms\": 2,\r\n    \"bathrooms\": 1,\r\n    \"minOwnerRating\": 1,\r\n    \"energyCertificate\": false,\r\n    \"sortBy\": \"price\",\r\n    \"order\": \"ASC\",\r\n    \"limit\": 10\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/properties",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"properties"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "Nueva propiedad",
 					"request": {
@@ -358,7 +371,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"title\": \"Casa 01\",\r\n  \"type\": \"casa\",\r\n  \"description\": \"Una casa de ejemplo\",\r\n  \"locality\": \"Ferrol\",\r\n  \"street\": \"Calle del Pinar\",\r\n  \"number\": \"808\",\r\n  \"floor\": \"0\",\r\n  \"hasEnergyCert\": true,\r\n  \"zipCode\": \"15485\",\r\n  \"location\": \"40.4168,-3.7038\",\r\n  \"squareMeters\": 90,\r\n  \"bedrooms\": 2,\r\n  \"bathrooms\": 1,\r\n  \"price\": 5900\r\n}",
+							"raw": "{\r\n\t\"title\": \"Casa 6\",\r\n\t\"type\": \"casa\",\r\n\t\"description\": \"Una casa de ejemplo\",\r\n\t\"locality\": \"Ferrol\",\r\n\t\"street\": \"Calle del Pinar\",\r\n\t\"number\": \"808\",\r\n\t\"floor\": \"5\",\r\n\t\"hasEnergyCert\": false,\r\n\t\"zipCode\": \"15485\",\r\n\t\"location\": \"40.4168,-3.7038\",\r\n\t\"squareMeters\": 25,\r\n\t\"bedrooms\": 5,\r\n\t\"bathrooms\": 2,\r\n\t\"price\": 5900\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -381,12 +394,12 @@
 					"response": []
 				},
 				{
-					"name": "Detalle de un alquiler",
+					"name": "Detalle de una propiedad",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/properties/:id",
+							"raw": "http://localhost:3000/api/properties/:propertyId",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -395,13 +408,45 @@
 							"path": [
 								"api",
 								"properties",
-								":id"
+								":propertyId"
 							],
 							"variable": [
 								{
-									"key": "id",
-									"value": "2"
+									"key": "propertyId",
+									"value": "4"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listado de propiedades",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"minPrice\": 1,\r\n    \"maxPrice\": 10000,\r\n    \"bedrooms\": 3,\r\n    \"bathrooms\": 1,\r\n    \"order\": \"ASC\",\r\n    \"limit\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/properties",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"properties"
 							]
 						}
 					},
@@ -428,7 +473,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/properties/:id",
+							"raw": "http://localhost:3000/api/properties/:propertyId",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -437,11 +482,11 @@
 							"path": [
 								"api",
 								"properties",
-								":id"
+								":propertyId"
 							],
 							"variable": [
 								{
-									"key": "id",
+									"key": "propertyId",
 									"value": "2"
 								}
 							]
@@ -470,7 +515,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/properties/:id",
+							"raw": "http://localhost:3000/api/properties/:propertyId",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -479,11 +524,11 @@
 							"path": [
 								"api",
 								"properties",
-								":id"
+								":propertyId"
 							],
 							"variable": [
 								{
-									"key": "id",
+									"key": "propertyId",
 									"value": "2"
 								}
 							]
@@ -495,10 +540,16 @@
 					"name": "Modificar una propiedad (dueño)",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{johndoe_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"title\": \"Castillo 7\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -506,7 +557,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/properties/:propertyId",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -514,7 +565,14 @@
 							"port": "3000",
 							"path": [
 								"api",
-								""
+								"properties",
+								":propertyId"
+							],
+							"variable": [
+								{
+									"key": "propertyId",
+									"value": "7"
+								}
 							]
 						}
 					},
@@ -527,9 +585,25 @@
 							"type": "noauth"
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{johndoe_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": "/C:/Users/johna/OneDrive/Escritorio/castillo.jpg"
+								}
+							]
+						},
 						"url": {
-							"raw": "http://localhost:3000/api/properties/:id/upload",
+							"raw": "http://localhost:3000/api/properties/:propertyId/upload",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -538,13 +612,13 @@
 							"path": [
 								"api",
 								"properties",
-								":id",
+								":propertyId",
 								"upload"
 							],
 							"variable": [
 								{
-									"key": "id",
-									"value": ""
+									"key": "propertyId",
+									"value": "4"
 								}
 							]
 						}
@@ -557,33 +631,19 @@
 			"name": "Contratos",
 			"item": [
 				{
-					"name": "Lista de solicitudes de alquiler",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Solicitud de visita (crea un contrato)",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{usuario_registrado_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"startDate\":\"2025-03-27 10:10:00\",\r\n    \"endDate\": \"2026-03-26 10:09:59\",\r\n    \"visitDate\":\"2025-02-27 15:30:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -591,7 +651,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/contracts/:propertyId",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -599,6 +659,52 @@
 							"port": "3000",
 							"path": [
 								"api",
+								"contracts",
+								":propertyId"
+							],
+							"variable": [
+								{
+									"key": "propertyId",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lista de solicitudes de alquiler",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{johndoe_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"ongoing\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/contracts/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"contracts",
 								""
 							]
 						}
@@ -609,18 +715,15 @@
 					"name": "Aceptar solicitud (owner)",
 					"request": {
 						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{johndoe_token}}",
+								"type": "text"
 							}
-						},
+						],
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/contracts/:contractId/:status",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -628,7 +731,19 @@
 							"port": "3000",
 							"path": [
 								"api",
-								""
+								"contracts",
+								":contractId",
+								":status"
+							],
+							"variable": [
+								{
+									"key": "contractId",
+									"value": "2"
+								},
+								{
+									"key": "status",
+									"value": "approved"
+								}
 							]
 						}
 					},
@@ -638,7 +753,13 @@
 					"name": "Rechazar solicitud (owner)",
 					"request": {
 						"method": "PATCH",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{johndoe_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -649,7 +770,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/contracts/:contractId/:status",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -657,7 +778,19 @@
 							"port": "3000",
 							"path": [
 								"api",
-								""
+								"contracts",
+								":contractId",
+								":status"
+							],
+							"variable": [
+								{
+									"key": "contractId",
+									"value": "1"
+								},
+								{
+									"key": "status",
+									"value": "rejected"
+								}
 							]
 						}
 					},
@@ -667,10 +800,16 @@
 					"name": "Bloquear usuario",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{johndoe_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"blockedUserId\": 4,\r\n    \"reason\": \"Me cae mal!\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -678,7 +817,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/contracts/:contractId/blocks/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -686,7 +825,16 @@
 							"port": "3000",
 							"path": [
 								"api",
+								"contracts",
+								":contractId",
+								"blocks",
 								""
+							],
+							"variable": [
+								{
+									"key": "contractId",
+									"value": "{{contrato_demo}}"
+								}
 							]
 						}
 					},
@@ -701,9 +849,15 @@
 					"name": "Lista de usuarios (admin)",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin_token}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/admin/users/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -711,6 +865,8 @@
 							"port": "3000",
 							"path": [
 								"api",
+								"admin",
+								"users",
 								""
 							]
 						}
@@ -720,8 +876,14 @@
 				{
 					"name": "Asignar rol a usuarios (superadmin)",
 					"request": {
-						"method": "PUT",
-						"header": [],
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{superadmin_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -732,7 +894,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/admin/users/:userId/:newRole",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -740,7 +902,20 @@
 							"port": "3000",
 							"path": [
 								"api",
-								""
+								"admin",
+								"users",
+								":userId",
+								":newRole"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "3"
+								},
+								{
+									"key": "newRole",
+									"value": "user"
+								}
 							]
 						}
 					},
@@ -750,7 +925,13 @@
 					"name": "Aprobar propiedad",
 					"request": {
 						"method": "PATCH",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -761,7 +942,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/admin/properties/:propertyId/:action",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -769,7 +950,20 @@
 							"port": "3000",
 							"path": [
 								"api",
-								""
+								"admin",
+								"properties",
+								":propertyId",
+								":action"
+							],
+							"variable": [
+								{
+									"key": "propertyId",
+									"value": "7"
+								},
+								{
+									"key": "action",
+									"value": "approve"
+								}
 							]
 						}
 					},
@@ -779,7 +973,13 @@
 					"name": "Rechazar propiedad",
 					"request": {
 						"method": "PATCH",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -790,7 +990,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/admin/properties/:propertyId/:action",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -798,7 +998,20 @@
 							"port": "3000",
 							"path": [
 								"api",
-								""
+								"admin",
+								"properties",
+								":propertyId",
+								":action"
+							],
+							"variable": [
+								{
+									"key": "propertyId",
+									"value": "7"
+								},
+								{
+									"key": "action",
+									"value": "reject"
+								}
 							]
 						}
 					},
@@ -808,10 +1021,16 @@
 					"name": "Modificar una propiedad (admin)",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"title\": \"Casa 1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -819,7 +1038,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/admin/properties/:propertyId",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -827,7 +1046,15 @@
 							"port": "3000",
 							"path": [
 								"api",
-								""
+								"admin",
+								"properties",
+								":propertyId"
+							],
+							"variable": [
+								{
+									"key": "propertyId",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -837,10 +1064,16 @@
 					"name": "Rechazar reseña",
 					"request": {
 						"method": "PATCH",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"reason\": \"Viola las politicas del sitio\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -848,7 +1081,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/",
+							"raw": "http://localhost:3000/api/admin/review/:reviewId",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -856,7 +1089,15 @@
 							"port": "3000",
 							"path": [
 								"api",
-								""
+								"admin",
+								"review",
+								":reviewId"
+							],
+							"variable": [
+								{
+									"key": "reviewId",
+									"value": "55"
+								}
 							]
 						}
 					},
@@ -929,72 +1170,47 @@
 	],
 	"variable": [
 		{
-			"key": "user_token_superadmin",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "user_token_admin",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "owner_token_1",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "user_token_1",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "user_token_2",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "owner_token_2",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "verification_code_01",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "superadmin_email",
-			"value": "",
-			"type": "default"
-		},
-		{
-			"key": "superadmin_password",
-			"value": "",
-			"type": "default"
-		},
-		{
-			"key": "datos_usuario_01",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "user_email_02",
-			"value": "",
-			"type": "default"
-		},
-		{
-			"key": "verification_code_02",
-			"value": "",
-			"type": "default"
-		},
-		{
 			"key": "johndoe_token",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"key": "user_token_03",
+			"key": "admin_token",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "contrato_demo",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "usuario_registrado",
+			"value": "{\n  \"email\": \"usuarioregistrado@example.com\",\n  \"password\": \"123456\"\n}",
+			"type": "default"
+		},
+		{
+			"key": "usuario_registrado_email",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "verification_code_01",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "usuario_registrado_token",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "superadmin_user",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "superadmin_token",
 			"value": "",
 			"type": "default"
 		}

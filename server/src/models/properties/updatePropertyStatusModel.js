@@ -4,16 +4,21 @@ import generateErrorUtil from '../../utils/generateErrorUtil.js';
 const updatePropertyStatusModel = async (propertyId, newStatus) => {
 	const pool = await getPool();
 
-	const [property] = await pool.query(
+	const [[property]] = await pool.query(
 		`SELECT id, status, ownerId FROM properties WHERE id = ?`,
 		[propertyId]
 	);
 
-	if (!property) {
-		throw generateErrorUtil(
-			`La propiedad ${propertyId} no existe o ya tiene el estado ${newStatus}.`,
-			404
-		);
+	console.log('Propiedad:', property);
+	console.log('Estado actual:', property.status);
+
+	if (property.status === 'pending') {
+		if (newStatus !== 'available') {
+			throw generateErrorUtil(
+				'La propiedad no puede estar pendiente de aprobación, debe ser aprobada primero.',
+				400
+			);
+		}
 	}
 
 	if (property.status === newStatus) {
@@ -28,7 +33,7 @@ const updatePropertyStatusModel = async (propertyId, newStatus) => {
 		Number(propertyId),
 	]);
 
-	return property[0].ownerId;
+	return property.ownerId;
 };
 
 export default updatePropertyStatusModel;

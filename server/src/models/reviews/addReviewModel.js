@@ -24,13 +24,15 @@ const addReviewModel = async (
 	}
 
 	// Insertar la nueva reseña
-	await pool.query(
-		`INSERT INTO reviews (reviewerId, reviewedId, contractId, rating, comment)
-         VALUES (?, ?, ?, ?, ?)`,
+	const [review] = await pool.query(
+		`
+			INSERT INTO reviews (reviewerId, reviewedId, contractId, rating, comment)
+			VALUES (?, ?, ?, ?, ?)
+		`,
 		[reviewerId, reviewedId, contractId, rating, comment]
 	);
 
-	return true;
+	return review.insertId;
 };
 
 export default addReviewModel;

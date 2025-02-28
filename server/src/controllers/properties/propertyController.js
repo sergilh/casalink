@@ -1,5 +1,5 @@
 import createPropertyModel from '../../models/properties/createPropertyModel.js';
-import generateErrorUtil from '../../utils/generateErrorUtil.js';
+//import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 const propertyController = async (req, res, next) => {
 	try {
@@ -21,6 +21,7 @@ const propertyController = async (req, res, next) => {
 			price,
 		} = req.body;
 
+		/* Con JOI ya no hace falta validar los datos, ya que se hace en el
 		// Verificar que todos los datos requeridos están presentes
 		if (
 			!title ||
@@ -33,6 +34,7 @@ const propertyController = async (req, res, next) => {
 		) {
 			throw generateErrorUtil('Todos los campos son obligatorios', 400);
 		}
+		*/
 
 		// Crear la propiedad en la base de datos
 		const propertyId = await createPropertyModel({

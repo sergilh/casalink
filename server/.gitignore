@@ -1,4 +1,6 @@
 node_modules
 .env
-uploads
 hashPassword.js
+
+# Imágenes cargadas
+public/uploads/

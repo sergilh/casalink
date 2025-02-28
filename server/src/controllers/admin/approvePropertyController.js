@@ -5,8 +5,7 @@ import sendPropertyNotificationModel from '../../models/notifications/sendProper
 
 const updatePropertyStatusController = async (req, res, next) => {
 	try {
-		const { id } = req.params;
-		const { action } = req.body; // Se recibe "accion" en lugar de "status"
+		const { propertyId, action } = req.params;
 
 		const validActions = ['approve', 'reject'];
 		if (!validActions.includes(action)) {
@@ -17,7 +16,7 @@ const updatePropertyStatusController = async (req, res, next) => {
 		}
 
 		// Verificamos si la propiedad está en estado "pending"
-		const propertyStatus = await getPropertyStatusModel(id);
+		const propertyStatus = await getPropertyStatusModel(propertyId);
 
 		if (propertyStatus !== 'pending') {
 			throw generateErrorUtil(
@@ -29,15 +28,15 @@ const updatePropertyStatusController = async (req, res, next) => {
 		let userId;
 
 		if (action === 'approve') {
-			userId = await updatePropertyStatusModel(id, 'available');
+			userId = await updatePropertyStatusModel(propertyId, 'available');
 		} else {
-			userId = await updatePropertyStatusModel(id, 'unavailable');
+			userId = await updatePropertyStatusModel(propertyId, 'rejected');
 		}
 
 		if (
 			await sendPropertyNotificationModel(
 				userId,
-				id,
+				propertyId,
 				action === 'approve' ? 'approved' : 'rejected'
 			)
 		) {

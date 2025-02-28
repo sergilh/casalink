@@ -12,58 +12,68 @@ import usersPreviousRatingController from '../controllers/users/usersPreviousRat
 import addReviewController from '../controllers/reviews/addReviewController.js';
 import usersByIdController from '../controllers/users/usersByIdController.js';
 import usersModificationController from '../controllers/users/usersModificationController.js';
+import usersAvatarController from '../controllers/users/usersAvatarController.js';
 
 // middlewares
 import authUserMiddleware from '../middlewares/authUserMiddleware.js';
 import userExistsMiddleware from '../middlewares/userExistsMiddleware.js';
 import activeContractExists from '../middlewares/activeContractExists.js';
 import noReviewExistsFromUser from '../middlewares/noReviewExistsFromUser.js';
+import { avatarUploadMiddleware } from '../middlewares/avatarUploadMiddleware.js';
 
 const router = express.Router();
 
-// 01 POST	/api/users/register		Registro de usuarios ✅
+// 01 POST	/api/users/register		Registro de usuarios
 router.post('/users/register', usersRegisterController);
 
-// 02 POST	/api/users/validate		Validación de usuario (email) ✅
+// 02 POST	/api/users/validate		Validación de usuario (email)
 router.patch('/users/validate/', validateUserController);
 
-// 03 POST	/api/users/login		Autenticación JWT ✅
+// 03 POST	/api/users/login		Autenticación JWT
 router.post('/users/login', usersLoginController);
 
-// 04 GET	/api/users/password		Cambio de contraseña ✅
+// 04 GET	/api/users/password		Cambio de contraseña
 router.get('/users/password/', sendRecoverPassMailController); // Revisar que se hará después
 
-// 05 GET	/api/users/profile			Información de usuario ✅
+// 05 GET	/api/users/profile			Información de usuario
 router.get('/users/profile', authUserMiddleware, usersInfoController);
 
-// 05b GET	/api/users/:userId			Información de un usuario ✅
+// 06 GET	/api/users/:userId			Información de un usuario
 router.get('/users/:userId', authUserMiddleware, usersByIdController);
 
-// 06 PUT	/api/users/			Modificar usuario [EXTRA] ⛔
+// 07 PUT	/api/users/			Modificar usuario [EXTRA]
 router.put('/users/', authUserMiddleware, usersModificationController);
 
-// 07 Endpoint para cambiar contraseña ✅
+// 08 Endpoint para cambiar contraseña
 router.put(
 	'/users/change-password',
 	authUserMiddleware,
 	changePasswordController
 );
 
-// 08 GET	/api/users/:id/reviews	Histórico de reseñas ✅
+// 09 GET	/api/users/:id/reviews	Histórico de reseñas
 router.get(
-	'/users/:id/reviews',
+	'/users/:userId/reviews',
 	authUserMiddleware,
 	userExistsMiddleware,
 	usersPreviousRatingController
 );
 
-// 09 POST		/api/users/reviews		Enviar valoración ✅
+// 10 POST		/api/users/reviews		Enviar valoración
 router.post(
-	'/users/reviews',
+	'/users/reviews/',
 	authUserMiddleware,
 	activeContractExists,
 	noReviewExistsFromUser,
 	addReviewController
+);
+
+// 11 PATCH	/api/users/avatar		Avatar del usuario
+router.patch(
+	'/users/avatar',
+	authUserMiddleware,
+	avatarUploadMiddleware,
+	usersAvatarController
 );
 
 export default router;

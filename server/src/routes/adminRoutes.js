@@ -2,34 +2,58 @@
 import express from 'express';
 
 // controladores
-import usersController from '../controllers/users/usersController.js';
 import approvePropertyController from '../controllers/admin/approvePropertyController.js';
-import propertyController from '../controllers/properties/propertyController.js';
 import removeReviewController from '../controllers/reviews/removeReviewController.js';
+import usersListController from '../controllers/admin/usersListController.js';
+import updateUserRoleController from '../controllers/admin/updateUserRoleController;.js';
+import updatePropertyController from '../controllers/properties/updatePropertyController.js';
 
 // middlewares
-import authAdminMiddleware from '../middlewares/authAdminMiddleware.js';
-import authSuperadminMiddleware from '../middlewares/authSuperadminMiddleware.js';
+import {
+	authAdminMiddleware,
+	authSuperadminMiddleware,
+	propertyExistsMiddleware,
+	validateRequest,
+	reviewExistMiddleware,
+} from '../middlewares/index.js';
+
+// Validadores Joi
+import { updatePropertySchema } from '../utils/validators.js';
 
 const router = express.Router();
 
-// 19	GET		/api/admin/users		Lista de usuarios ✅
-router.get('/admin/users', authAdminMiddleware, usersController);
+// 22	GET		/api/admin/users		Lista de usuarios ✅
+router.get('/admin/users/', authAdminMiddleware, usersListController);
 
-// 20 Gestionar usuarios (superadmin) [EXTRA] ⛔
-router.put('/admin/users/:id', authSuperadminMiddleware, usersController);
-
-// 21 Aprobar propiedad ✅
+// 23 Gestionar usuarios (superadmin) [EXTRA] ✅
 router.patch(
-	'/admin/properties/:id',
+	'/admin/users/:userId/:newRole',
+	authSuperadminMiddleware,
+	updateUserRoleController
+);
+
+// 24 Aprobar/Rechazar propiedad ✅
+router.patch(
+	'/admin/properties/:propertyId/:action',
 	authAdminMiddleware,
 	approvePropertyController
 );
 
-// 22 Modificar una propiedad (dueño o admin) [EXTRA] ⛔
-router.put('/admin/properties/:id', authAdminMiddleware, propertyController);
+// 25 Modificar una propiedad (admin) [EXTRA] ✅
+router.put(
+	'/admin/properties/:propertyId',
+	authAdminMiddleware,
+	propertyExistsMiddleware,
+	validateRequest(updatePropertySchema),
+	updatePropertyController
+);
 
-// 23	PATCH	/api/admin/review/:id/	Gestionar reseñas (admin) [EXTRA] ⛔
-router.patch('/admin/review/:id', authAdminMiddleware, removeReviewController);
+// 26	PATCH	/api/admin/review/:reviewId	Gestionar reseñas (admin) [EXTRA] ⛔
+router.patch(
+	'/admin/review/:reviewId',
+	authAdminMiddleware,
+	reviewExistMiddleware,
+	removeReviewController
+);
 
 export default router;

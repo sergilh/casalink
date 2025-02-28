@@ -16,14 +16,23 @@ import getPropertiesController from '../controllers/properties/getPropertiesCont
 import updatePropertyController from '../controllers/properties/updatePropertyController.js';
 
 // Validadores Joi
-import { propertySchema, updatePropertySchema } from '../utils/validators.js';
+import {
+	propertySchema,
+	updatePropertySchema,
+	searchPropertySchema,
+	propertyStatusSchema,
+} from '../utils/validators.js';
 
 const router = express.Router();
 
-// 09 Listado de propiedades ✅
-router.get('/properties', getPropertiesController);
+// 12 Listado de propiedades ✅ (Con validación)
+router.get(
+	'/properties',
+	validateRequest(searchPropertySchema),
+	getPropertiesController
+);
 
-// 10 Creación de nueva propiedad ✅ (Con validación)
+// 13 Creación de nueva propiedad ✅ (Con validación)
 router.post(
 	'/properties',
 	authUserMiddleware,
@@ -31,23 +40,24 @@ router.post(
 	propertyController
 );
 
-// 11 Detalle de una propiedad ✅
+// 14 Detalle de una propiedad ✅
 router.get(
 	'/properties/:propertyId',
 	propertyExistsMiddleware,
 	propertyDetailsController
 );
 
-// 12 Cambio de estado de propiedad (disponible / no disponible) ✅
+// 15 Cambio de estado de propiedad (disponible / no disponible) ✅ (Con validación)
 router.patch(
 	'/properties/:propertyId',
 	authUserMiddleware,
 	propertyExistsMiddleware,
 	checkPropertyOwnerOrAdmin,
+	validateRequest(propertyStatusSchema),
 	propertyStatusController
 );
 
-// 13 Modificar una propiedad (solo dueño o admin) ✅ (Con validación)
+// 16 Modificar una propiedad (solo dueño) ✅ (Con validación)
 router.put(
 	'/properties/:propertyId',
 	authUserMiddleware,
@@ -57,9 +67,12 @@ router.put(
 	updatePropertyController
 );
 
-// 14 Ruta para subir imágenes y videos asociados a una propiedad ✅
+// 17 Ruta para subir imágenes y videos asociados a una propiedad ✅
 router.post(
-	'/upload-files/:propertyId',
+	'/properties/:propertyId/upload',
+	authUserMiddleware,
+	propertyExistsMiddleware,
+	checkPropertyOwnerOrAdmin,
 	fileUploadMiddleware,
 	fileUploadController
 );

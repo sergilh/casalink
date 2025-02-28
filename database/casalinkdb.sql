@@ -89,7 +89,7 @@ CREATE TABLE reviews (
 	id                     INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	reviewerId             INT UNSIGNED,
 	reviewedId             INT UNSIGNED,
-	contracId              INT UNSIGNED,
+	contractId             INT UNSIGNED,
 	rating                 TINYINT NOT NULL CHECK (rating >= 1 AND rating <= 5),
 	comment                TEXT,
 	createdAt              TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -154,6 +154,7 @@ CREATE TABLE blocks (
 	id                     INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	userId                 INT UNSIGNED,
 	propertyId             INT UNSIGNED,
+	reason                 TEXT,
 	createdAt              TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	removedAt              TIMESTAMP DEFAULT NULL,
 	-- Llaves foráneas
