@@ -25,14 +25,14 @@ import {
 
 const router = express.Router();
 
-// 12 Listado de propiedades ✅ (Con validación)
+// 2.12 Listado de propiedades ✅ (Con validación)
 router.get(
 	'/properties',
 	validateRequest(searchPropertySchema),
 	getPropertiesController
 );
 
-// 13 Creación de nueva propiedad ✅ (Con validación)
+// 2.13 Creación de nueva propiedad ✅ (Con validación)
 router.post(
 	'/properties',
 	authUserMiddleware,
@@ -40,14 +40,14 @@ router.post(
 	propertyController
 );
 
-// 14 Detalle de una propiedad ✅
+// 2.14 Detalle de una propiedad ✅
 router.get(
 	'/properties/:propertyId',
 	propertyExistsMiddleware,
 	propertyDetailsController
 );
 
-// 15 Cambio de estado de propiedad (disponible / no disponible) ✅ (Con validación)
+// 2.15 Cambio de estado de propiedad (disponible / no disponible) ✅ (Con validación)
 router.patch(
 	'/properties/:propertyId',
 	authUserMiddleware,
@@ -57,7 +57,7 @@ router.patch(
 	propertyStatusController
 );
 
-// 16 Modificar una propiedad (solo dueño) ✅ (Con validación)
+// 2.16 Modificar una propiedad (solo dueño) ✅ (Con validación)
 router.put(
 	'/properties/:propertyId',
 	authUserMiddleware,
@@ -67,7 +67,7 @@ router.put(
 	updatePropertyController
 );
 
-// 17 Ruta para subir imágenes y videos asociados a una propiedad ✅
+// 2.17 Ruta para subir imágenes y videos asociados a una propiedad ✅
 router.post(
 	'/properties/:propertyId/upload',
 	authUserMiddleware,
