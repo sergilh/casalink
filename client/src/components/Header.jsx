@@ -1,4 +1,4 @@
-import casalinkLogo from '../assets/images/casalink-logotipo_main_1080x400.svg';
+import { casalinkLogo } from '../assets/images/casalink-logotipo_main_1080x400.svg';
 import { Link } from 'react-router-dom';
 
 const Header = () => {

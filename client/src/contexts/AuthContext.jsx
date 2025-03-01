@@ -13,10 +13,8 @@ const AuthProvider = ({ children }) => {
 		cookies.get(VITE_AUTH_TOKEN) || null
 	);
 	const [authUser, setAuthUser] = useState(null);
-	
+
 	const [authLoading, setAuthLoading] = useState(true);
-    
-    
 
 	useEffect(() => {
 		const fetchUser = async () => {
@@ -39,7 +37,7 @@ const AuthProvider = ({ children }) => {
 
 				authLogoutState();
 
-				setAuthUser(null)
+				setAuthUser(null);
 			} finally {
 				setAuthLoading(false);
 			}
@@ -48,14 +46,14 @@ const AuthProvider = ({ children }) => {
 		if (authToken) {
 			fetchUser();
 		} else {
-			setAuthUser(null)
+			setAuthUser(null);
 		}
 	}, [authToken]);
 
 	const authLoginState = (newToken) => {
 		setAuthToken(newToken);
 		cookies.set(VITE_AUTH_TOKEN, newToken, {
-			expires:7,
+			expires: 7,
 		});
 	};
 
