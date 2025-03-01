@@ -14,6 +14,7 @@ const Header = () => {
 					<li>
 						<Link to="/register">Register</Link>
 					</li>
+					
 				</ul>
 			</nav>
 		</header>
