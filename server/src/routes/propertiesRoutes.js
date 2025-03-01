@@ -32,12 +32,13 @@ router.get(
 	getPropertiesController
 );
 
-// 13 Creación de nueva propiedad ✅ (Con validación)
+// 13 Creación de nueva propiedad ✅ (Con validación y subida de archivos)
 router.post(
 	'/properties',
 	authUserMiddleware,
-	validateRequest(propertySchema),
-	propertyController
+	fileUploadMiddleware, // 1) Parsea multipart/form-data (campos + archivos)
+	validateRequest(propertySchema), // 2) Valida req.body con Joi
+	propertyController // 3) Controlador final
 );
 
 // 14 Detalle de una propiedad ✅
