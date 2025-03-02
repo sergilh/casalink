@@ -37,7 +37,7 @@ const RegisterPage = () => {
         delete userData.repeatedPass; // Eliminamos la propiedad innecesaria
     
         const response = await fetchData({
-            url: `${VITE_API_URL}/users/register`,
+            url: `${VITE_API_URL}/api/users/register`,
             method: 'POST',
             body: userData,
         });

@@ -36,8 +36,9 @@ router.get(
 router.post(
 	'/properties',
 	authUserMiddleware,
-	validateRequest(propertySchema),
-	propertyController
+	fileUploadMiddleware, // 1) Parsea multipart/form-data (campos + archivos)
+	validateRequest(propertySchema), // 2) Valida req.body con Joi
+	propertyController // 3) Controlador final
 );
 
 // 2.14 Detalle de una propiedad ✅

@@ -3,11 +3,11 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 
 import RegisterPage from './pages/RegisterPage';
-
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-import AboutPage from './pages/AboutPage';
+import CreateRentWithImages from './pages/CreateRentWithImages'; // Variante con imágenes
 import ContactPage from './pages/ContactPage';
+import AboutPage from './pages/AboutPage';
 import HelpPage from './pages/HelpPage';
 import './index.css';
 
@@ -24,6 +24,11 @@ const App = () => {
 					<Route path="/about" element={<AboutPage />} />
 					<Route path="/contact" element={<ContactPage />} />
 					<Route path="/help" element={<HelpPage />} />
+					{/* Ruta para probar la creación de alquiler con imágenes */}
+					<Route
+						path="/create-rent"
+						element={<CreateRentWithImages />}
+					/>
 				</Routes>
 
 				<Footer />

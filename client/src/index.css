@@ -1,5 +1,18 @@
+
 @import url(./assets/fonts/fonts.css);
 @import 'tailwindcss';
+
+laber {
+  display: block;
+}
+
+html {
+  background-color: #232323;
+}
+
+div#root {
+  color: #ffffff;
+}
 
 /*
 @import 'tailwindcss/casalink';

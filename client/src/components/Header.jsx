@@ -1,11 +1,9 @@
-//import casalinkMainLogo from '../assets/images/brand/casalink-logotipo-main-1080x400.svg';
-//import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 
 const Header = () => {
 	return (
 		<header>
-			{/* 
+			{/*
 			<Link to="/" className="flex items-center">
 				<h1>
 					<img
