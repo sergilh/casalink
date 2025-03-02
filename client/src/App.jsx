@@ -5,6 +5,8 @@ import Footer from './components/Footer';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import UpdateProductPage from './pages/UpdateProductPage';
+import RentalRequestsPage from './pages/RentalRequestsPage';
 import CreateRentWithImages from './pages/CreateRentWithImages'; // Variante con imágenes
 import ContactPage from './pages/ContactPage';
 import AboutPage from './pages/AboutPage';
@@ -18,16 +20,26 @@ const App = () => {
 				<Header />
 
 				<Routes>
+					{/* Rutas Públicas */}
 					<Route path="/" element={<HomePage />} />
 					<Route path="/login" element={<LoginPage />} />
 					<Route path="/register" element={<RegisterPage />} />
 					<Route path="/about" element={<AboutPage />} />
 					<Route path="/contact" element={<ContactPage />} />
 					<Route path="/help" element={<HelpPage />} />
-					{/* Ruta para probar la creación de alquiler con imágenes */}
+
+					{/* Rutas de Gestión */}
 					<Route
 						path="/create-rent"
 						element={<CreateRentWithImages />}
+					/>
+					<Route
+						path="/update-product"
+						element={<UpdateProductPage />}
+					/>
+					<Route
+						path="/rental-requests"
+						element={<RentalRequestsPage />}
 					/>
 				</Routes>
 
