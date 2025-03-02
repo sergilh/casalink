@@ -23,26 +23,29 @@ const UserValidationPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const { email, validationCode } = formValues;
-
+  
     if (!email || !validationCode) {
       toast.error('Todos los campos son obligatorios.');
       return;
     }
-
+  
+    console.log("Enviando:", { email, validationCode }); // 🔥 DEBUG
+  
     const response = await fetchData({
-      url: `${VITE_API_URL}/users/validate`,
-      method: 'POST',
-      body: { email, validationCode },
+      url: `${VITE_API_URL}/users/validate`,  
+      method: 'PATCH',  // 🔥 DEBE SER PATCH
+      body: { email, validationCode },  // 🔥 VERIFICAR QUE SE ENVÍAN LOS CAMPOS
       showToast: true,
     });
-
+  
     if (response) {
       toast.success('✅ Usuario validado con éxito. Redirigiendo al login...');
       setTimeout(() => navigate('/login'), 2000);
     }
   };
+  
 
   return (
     <section className="min-h-screen bg-gray-100 flex items-center justify-center">
