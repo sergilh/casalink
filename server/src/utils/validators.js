@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-// ✅ Esquema para crear una propiedad
+// ✅ Esquema para crear una propiedad (con location)
 export const propertySchema = Joi.object({
 	title: Joi.string().max(255).required(),
 	type: Joi.string()
@@ -11,13 +11,21 @@ export const propertySchema = Joi.object({
 	street: Joi.string().max(255).required(),
 	number: Joi.number().integer().positive().required(),
 	floor: Joi.string().max(10).required(),
-	hasEnergyCert: Joi.boolean(),
+	hasEnergyCert: Joi.boolean()
+		.truthy('true')
+		.truthy('1')
+		.falsy('false')
+		.falsy('0')
+		.default(false),
+
 	zipCode: Joi.string()
 		.pattern(/^\d{5}$/)
 		.required()
 		.messages({
 			'string.pattern.base': 'El código postal debe tener 5 dígitos.',
 		}),
+
+	// Campo location nuevamente presente
 	location: Joi.string()
 		.pattern(/^(-?\d{1,2}(\.\d+)?),\s*(-?\d{1,3}(\.\d+)?)$/)
 		.custom((value, helpers) => {
@@ -26,11 +34,16 @@ export const propertySchema = Joi.object({
 				return helpers.error('any.invalid');
 			}
 			return value;
-		}, 'Latitude and Longitude validation'),
+		}, 'Latitude and Longitude validation')
+		.required(),
+
 	squareMeters: Joi.number().integer().positive().required(),
 	bedrooms: Joi.number().integer().positive().required(),
 	bathrooms: Joi.number().integer().positive().required(),
 	price: Joi.number().positive().required(),
+
+	// Nuevo: para no rechazar el campo 'images'
+	images: Joi.any(),
 });
 
 // ✅ Esquema para actualizar una propiedad (pueden enviarse campos opcionales)

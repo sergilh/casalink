@@ -31,4 +31,4 @@ const upload = multer({
 });
 
 // Middleware para subir múltiples archivos
-export const fileUploadMiddleware = upload.array('files', 10);
+export const fileUploadMiddleware = upload.array('images', 10);

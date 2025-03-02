@@ -1,47 +1,71 @@
 import { useState } from "react";
-import toast from "react-hot-toast";
 
 const useFetch = () => {
-    const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-    const fetchData = async ({
-        url,
-        method = "GET", // Por defecto es GET, pero se puede cambiar en la llamada
-        body = null,
-        token = "",
-        isFormData = false,
-        showToast = true,
-    }) => {
-        try {
-            setLoading(true);
+  /**
+   * fetchData recibe un objeto con:
+   * - url: string
+   * - method?: string (por defecto "GET")
+   * - body?: any (objeto o FormData)
+   * - isFormData?: boolean (para no poner cabecera JSON)
+   * - showToast?: boolean (por si usas toasts de error)
+   */
+  const fetchData = async ({
+    url,
+    method = "GET",
+    body,
+    isFormData = false,
+    showToast = false,
+  }) => {
+    setLoading(true);
 
-            const headers = token ? { Authorization: `Bearer ${token}` } : {}; /* Si hay token, lo añadimos a los headers */
-            if (!isFormData) headers["Content-Type"] = "application/json"; /* Si no es FormData, añadimos el Content-Type */
+    try {
+      // Preparamos cabeceras
+      const headers = {};
 
-            const res = await fetch(url, {
-                method,
-                headers,
-                body: isFormData ? body : body ? JSON.stringify(body) : null,
-            });
+      // 1) Recuperamos el token del localStorage
+      const token = localStorage.getItem("token");
 
-            const data = await res.json();
+      // 2) Si hay token, lo añadimos como Authorization: Bearer <token>
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
 
-            if (!res.ok) {
-                throw new Error(data.message || "Error en la petición");
-            }
+      // 3) Solo si no es formData, indicamos el Content-Type JSON
+      if (!isFormData) {
+        headers["Content-Type"] = "application/json";
+      }
 
-            showToast && toast.success(data.message); /*si showToast es true, mostramos el mensaje de éxito*/
+      // 4) Construimos la petición
+      const res = await fetch(url, {
+        method,
+        headers,
+        // Si es FormData, enviamos body tal cual; si no, lo convertimos a JSON
+        body: isFormData ? body : body ? JSON.stringify(body) : undefined,
+      });
 
-            return data; /* Devolvemos los datos recibidos del servidor para que el componente pueda hacer algo con ellos */
-        } catch (err) {
-            toast.error(err.message);
-            return null;
-        } finally {
-            setLoading(false);
-        }
-    };
+      // 5) Parseamos la respuesta a JSON
+      const data = await res.json();
 
-    return { fetchData, loading };/* Devolvemos fetchData y loading para que cualquier componente que use useFetch pueda acceder a ellos */
+      // 6) Si el status code no es 2xx, lanzamos un error
+      if (!res.ok) {
+        throw new Error(data?.message || "Error en la petición");
+      }
+
+      // 7) Si todo va bien, devolvemos la data parseada
+      return data;
+    } catch (error) {
+      if (showToast) {
+        console.error("Error en fetchData:", error);
+      }
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { fetchData, loading };
 };
 
 export default useFetch;
