@@ -1,39 +1,74 @@
-import { casalinkLogo } from '../assets/images/casalink-logotipo_main_1080x400.svg';
-import { Link } from 'react-router-dom';
+//import casalinkMainLogo from '../assets/images/brand/casalink-logotipo-main-1080x400.svg';
+//import { Link } from 'react-router-dom';
+import Navbar from './Navbar';
 
 const Header = () => {
 	return (
-		<header className="bg-gray-100 py-4 px-6 flex items-center justify-between">
-			<div className="flex items-center">
-				<div className="text-2xl font-bold">
-					<Link to="/">
-						<img
-							src={casalinkLogo}
-							className="logo"
-							alt="Casalink"
-						/>
-					</Link>
-				</div>
-			</div>
+		<header>
+			{/* 
+			<Link to="/" className="flex items-center">
+				<h1>
+					<img
+						src={casalinkMainLogo}
+						className="h-16 w-auto"
+						alt="Casalink"
+					/>
+				</h1>
+			</Link>
+
 			<nav className="hidden md:flex items-center space-x-8">
-				<a href="#" className="text-gray-600">
+				<Link to="/about" className="text-gray-600">
 					Acerca
-				</a>
-				<a href="#" className="text-gray-600">
+				</Link>
+				<Link to="/contact" className="text-gray-600">
 					Contacto
-				</a>
-				<a href="#" className="text-gray-600">
+				</Link>
+				<Link to="/help" className="text-gray-600">
 					Ayuda
-				</a>
-				<a href="#" className="text-gray-600 font-medium">
+				</Link>
+				<Link to={'/publish'} className="text-gray-600">
 					Publicar
-				</a>
-				<Link to="/login">Login</Link>
-				<Link to="/register">Register</Link>
+				</Link>
+				<Link to="/login" className="text-gray-600">
+					Login
+				</Link>
+				<Link to="/register" className="text-gray-600">
+					Register
+				</Link>
 			</nav>
-			<div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-				<div className="w-4 h-4 bg-gray-500 rounded-full"></div>
-			</div>
+
+			<div id="user-section" className="flex max-w-10 mx">
+				<div
+					id="user-avatar"
+					className="flex items-center justify-center"
+				>
+					<div
+						id="avatar-wrapper"
+						className="relative overflow-clip size-12 bg-[#e6dada] rounded-full"
+					>
+						<div
+							id="avatar-head"
+							className="size-4 bg-[#000033] rounded-full mx-auto m-2"
+						></div>
+						<div
+							id="avatar-body"
+							className="size-12 bg-[#000033] rounded-full"
+						></div>
+					</div>
+					<div
+						id="notification-circle"
+						className="relative size-4 bg-[#ff6666] rounded-full -translate-x-1/2 mb-6"
+					>
+						<span
+							id="notification-count"
+							className="text-white block font-bold text-center text-xs"
+						>
+							9
+						</span>
+					</div>
+				</div>
+			</div> */}
+			<Navbar />
 		</header>
 	);
 };

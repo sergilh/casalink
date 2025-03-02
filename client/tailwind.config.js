@@ -1,45 +1,64 @@
-/** @type {import('tailwindcss').Config} */
-export const darkMode = ['class'];
-export const theme = {
-	colors: {
-		border: 'hsl(var(--border))',
-		input: 'hsl(var(--input))',
-		ring: 'hsl(var(--ring))',
-		background: 'hsl(var(--background))',
-		foreground: 'hsl(var(--foreground))',
-		primary: {
-			DEFAULT: 'hsl(var(--primary))',
-			foreground: 'hsl(var(--primary-foreground))',
+const darkMode = ['class'];
+const theme = {
+	name: 'casalink',
+	fontFamily: {
+		sans: [
+			'"Open Sans"',
+			'sans-serif',
+			/* '"Apple Color Emoji"',
+			'"Segoe UI Emoji"',
+			'"Segoe UI Symbol"',
+			'"Noto Color Emoji"', */
+		],
+		fontFamily: {
+			titles: [
+				'ArtLab',
+				'Montserrat',
+				'"Open Sans"',
+				'sans-serif',
+				/* '"Apple Color Emoji"',
+				'"Segoe UI Emoji"',
+				'"Segoe UI Symbol"',
+				'"Noto Color Emoji"', */
+			],
+			body: [
+				'"Open Sans"',
+				'sans-serif',
+				/* '"Apple Color Emoji"',
+				'"Segoe UI Emoji"',
+				'"Segoe UI Symbol"',
+				'"Noto Color Emoji"', */
+			],
 		},
-		secondary: {
-			DEFAULT: 'hsl(var(--secondary))',
-			foreground: 'hsl(var(--secondary-foreground))',
+		colors: {
+			neutral: {
+				50: '#f7f7f7',
+				100: '#eeeeee',
+				200: '#e0e0e0',
+				300: '#cacaca',
+				400: '#b1b1b1',
+				500: '#999999',
+				600: '#7f7f7f',
+				700: '#676767',
+				800: '#545454',
+				900: '#464646',
+				950: '#282828',
+			},
+			primary: {
+				50: '#fff1f1',
+				100: '#ffe1e1',
+				200: '#ffc7c7',
+				300: '#ffa0a0',
+				400: '#ff6666',
+				500: '#f83b3b',
+				600: '#e51d1d',
+				700: '#c11414',
+				800: '#a01414',
+				900: '#841818',
+				950: '#480707',
+				DEFAULT: '#ff6666',
+			},
 		},
-		destructive: {
-			DEFAULT: 'hsl(var(--destructive))',
-			foreground: 'hsl(var(--destructive-foreground))',
-		},
-		muted: {
-			DEFAULT: 'hsl(var(--muted))',
-			foreground: 'hsl(var(--muted-foreground))',
-		},
-		accent: {
-			DEFAULT: 'hsl(var(--accent))',
-			foreground: 'hsl(var(--accent-foreground))',
-		},
-		popover: {
-			DEFAULT: 'hsl(var(--popover))',
-			foreground: 'hsl(var(--popover-foreground))',
-		},
-		card: {
-			DEFAULT: 'hsl(var(--card))',
-			foreground: 'hsl(var(--card-foreground))',
-		},
-	},
-	borderRadius: {
-		lg: 'var(--radius)',
-		md: 'calc(var(--radius) - 2px)',
-		sm: 'calc(var(--radius) - 4px)',
 	},
 	fontSize: {
 		sm: '0.64rem',
@@ -54,8 +73,55 @@ export const theme = {
 		'6xl': '4.77rem',
 		'7xl': '5.96rem',
 	},
-	fontFamily: {
-		titles: 'ArtLab, Montserrat, "Open Sans", sans-serif',
-		body: '"Open Sans", sans-serif',
+	borderRadius: {
+		none: '0px',
+		sm: '6px',
+		DEFAULT: '12px',
+		md: '18px',
+		lg: '24px',
+		xl: '36px',
+		'2xl': '48px',
+		'3xl': '72px',
+		full: '9999px',
+	},
+	spacing: {
+		0: '0px',
+		1: '4px',
+		2: '8px',
+		3: '12px',
+		4: '16px',
+		5: '20px',
+		6: '24px',
+		7: '28px',
+		8: '32px',
+		9: '36px',
+		10: '40px',
+		11: '44px',
+		12: '48px',
+		14: '56px',
+		16: '64px',
+		20: '80px',
+		24: '96px',
+		28: '112px',
+		32: '128px',
+		36: '144px',
+		40: '160px',
+		44: '176px',
+		48: '192px',
+		52: '208px',
+		56: '224px',
+		60: '240px',
+		64: '256px',
+		72: '288px',
+		80: '320px',
+		96: '384px',
+		px: '1px',
+		0.5: '2px',
+		1.5: '6px',
+		2.5: '10px',
+		3.5: '14px',
 	},
 };
+const plugins = [];
+
+export { darkMode, theme, plugins };
