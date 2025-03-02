@@ -1,10 +1,10 @@
 import createPropertyModel from '../../models/properties/createPropertyModel.js';
-//import generateErrorUtil from '../../utils/generateErrorUtil.js';
+// import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 const propertyController = async (req, res, next) => {
 	try {
-		const { id: userId } = req.user; // ID del usuario autenticado
-		const {
+		const { id: userId } = req.user;
+		let {
 			title,
 			type,
 			description,
@@ -12,7 +12,7 @@ const propertyController = async (req, res, next) => {
 			street,
 			number,
 			floor,
-			hasEnergyCert,
+			hasEnergyCert, // ahora sí es un boolean real (true o false), gracias a Joi
 			zipCode,
 			location,
 			squareMeters,
@@ -21,22 +21,9 @@ const propertyController = async (req, res, next) => {
 			price,
 		} = req.body;
 
-		/* Con JOI ya no hace falta validar los datos, ya que se hace en el
-		// Verificar que todos los datos requeridos están presentes
-		if (
-			!title ||
-			!description ||
-			!zipCode ||
-			!squareMeters ||
-			!bedrooms ||
-			!bathrooms ||
-			!price
-		) {
-			throw generateErrorUtil('Todos los campos son obligatorios', 400);
-		}
-		*/
+		// Convertimos el boolean a 1 o 0
+		const certValue = hasEnergyCert === true ? 1 : 0;
 
-		// Crear la propiedad en la base de datos
 		const propertyId = await createPropertyModel({
 			userId,
 			title,
@@ -46,7 +33,7 @@ const propertyController = async (req, res, next) => {
 			street,
 			number,
 			floor,
-			hasEnergyCert,
+			hasEnergyCert: certValue, // le pasamos 0 o 1 al modelo
 			zipCode,
 			location,
 			squareMeters,
@@ -55,7 +42,6 @@ const propertyController = async (req, res, next) => {
 			price,
 		});
 
-		// Respuesta exitosa
 		res.status(201).json({
 			success: true,
 			message: `Propiedad '${title}' creada exitosamente`,

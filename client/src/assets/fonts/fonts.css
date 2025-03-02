@@ -1,0 +1,188 @@
+/* Artlab Black - 900 */
+@font-face {
+	font-family: 'ArtLab';
+	src: format('woff') url('./artlab/WOFF/Artlab-Black.woff');
+	src: format('woff2') url('./artlab/WOFF2/Artlab-Black.woff2');
+	src: format('opentype') url('./artlab/OTF/Artlab-Black.otf');
+	src: format('truetype') url('./artlab/TTF/Artlab-Black.ttf');
+	font-weight: 900;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'ArtLab';
+	src: format('woff') url('./artlab/WOFF/Artlab-BlackItalic.woff');
+	src: format('woff2') url('./artlab/WOFF2/Artlab-BlackItalic.woff2');
+	src: format('opentype') url('./artlab/OTF/Artlab-BlackItalic.otf');
+	src: format('truetype') url('./artlab/TTF/Artlab-BlackItalic.ttf');
+	font-weight: 900;
+	font-style: italic;
+}
+
+/* Artlab ExtraBold - 800*/
+@font-face {
+	font-family: 'ArtLab';
+	src: format('woff') url('./artlab/WOFF/Artlab-ExtraBold.woff');
+	src: format('woff2') url('./artlab/WOFF2/Artlab-ExtraBold.woff2');
+	src: format('opentype') url('./artlab/OTF/Artlab-ExtraBold.otf');
+	src: format('truetype') url('./artlab/TTF/Artlab-ExtraBold.ttf');
+	font-weight: bolder;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'ArtLab';
+	src: format('woff') url('./artlab/WOFF/Artlab-ExtraBoldItalic.woff');
+	src: format('woff2') url('./artlab/WOFF2/Artlab-ExtraBoldItalic.woff2');
+	src: format('opentype') url('./artlab/OTF/Artlab-ExtraBoldItalic.otf');
+	src: format('truetype') url('./artlab/TTF/Artlab-ExtraBoldItalic.ttf');
+	font-weight: bolder;
+	font-style: italic;
+}
+
+/* Artlab Bold - 700*/
+@font-face {
+	font-family: 'ArtLab';
+	src: format('woff') url('./artlab/WOFF/Artlab-Bold.woff');
+	src: format('woff2') url('./artlab/WOFF2/Artlab-Bold.woff2');
+	src: format('opentype') url('./artlab/OTF/Artlab-Bold.otf');
+	src: format('truetype') url('./artlab/TTF/Artlab-Bold.ttf');
+	font-weight: bold;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'ArtLab';
+	src: format('woff') url('./artlab/WOFF/Artlab-BoldItalic.woff');
+	src: format('woff2') url('./artlab/WOFF2/Artlab-BoldItalic.woff2');
+	src: format('opentype') url('./artlab/OTF/Artlab-BoldItalic.otf');
+	src: format('truetype') url('./artlab/TTF/Artlab-BoldItalic.ttf');
+	font-weight: bold;
+	font-style: italic;
+}
+
+/* Artlab SemiBold - 600*/
+@font-face {
+	font-family: 'ArtLab';
+	src: format('woff') url('./artlab/WOFF/Artlab-SemiBold.woff');
+	src: format('woff2') url('./artlab/WOFF2/Artlab-SemiBold.woff2');
+	src: format('opentype') url('./artlab/OTF/Artlab-SemiBold.otf');
+	src: format('truetype') url('./artlab/TTF/Artlab-SemiBold.ttf');
+	font-weight: 600;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'ArtLab';
+	src: format('woff') url('./artlab/WOFF/Artlab-SemiBoldItalic.woff');
+	src: format('woff2') url('./artlab/WOFF2/Artlab-SemiBoldItalic.woff2');
+	src: format('opentype') url('./artlab/OTF/Artlab-SemiBoldItalic.otf');
+	src: format('truetype') url('./artlab/TTF/Artlab-SemiBoldItalic.ttf');
+	font-weight: 600;
+	font-style: italic;
+}
+
+/* Artlab Medium - 500*/
+@font-face {
+	font-family: 'ArtLab';
+	src: format('woff') url('./artlab/WOFF/Artlab-Medium.woff');
+	src: format('woff2') url('./artlab/WOFF2/Artlab-Medium.woff2');
+	src: format('opentype') url('./artlab/OTF/Artlab-Medium.otf');
+	src: format('truetype') url('./artlab/TTF/Artlab-Medium.ttf');
+	font-weight: 500;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'ArtLab';
+	src: format('woff') url('./artlab/WOFF/Artlab-MediumItalic.woff');
+	src: format('woff2') url('./artlab/WOFF2/Artlab-MediumItalic.woff2');
+	sec: format('opentype') url('./artlab/OTF/Artlab-MediumItalic.otf');
+	src: format('truetype') url('./artlab/TTF/Artlab-MediumItalic.ttf');
+	font-weight: 500;
+	font-style: italic;
+}
+
+/* Artlab Regular - 400*/
+@font-face {
+	font-family: 'ArtLab';
+	src: format('woff') url('./artlab/WOFF/Artlab-Regular.woff');
+	src: format('woff2') url('./artlab/WOFF2/Artlab-Regular.woff2');
+	src: format('opentype') url('./artlab/OTF/Artlab-Regular.otf');
+	src: format('truetype') url('./artlab/TTF/Artlab-Regular.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'ArtLab';
+	src: format('woff') url('./artlab/WOFF/Artlab-Italic.woff');
+	src: format('woff2') url('./artlab/WOFF2/Artlab-Italic.woff2');
+	src: format('opentype') url('./artlab/OTF/Artlab-Italic.otf');
+	src: format('truetype') url('./artlab/TTF/Artlab-Italic.ttf');
+	font-weight: normal;
+	font-style: italic;
+}
+
+/* Artlab Light - 300*/
+@font-face {
+	font-family: 'ArtLab';
+	src: format('woff') url('./artlab/WOFF/Artlab-Light.woff');
+	src: format('woff2') url('./artlab/WOFF2/Artlab-Light.woff2');
+	src: format('opentype') url('./artlab/OTF/Artlab-Light.otf');
+	src: format('truetype') url('./artlab/TTF/Artlab-Light.ttf');
+	font-weight: 300;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'ArtLab';
+	src: format('woff') url('./artlab/WOFF/Artlab-LightItalic.woff');
+	src: format('woff2') url('./artlab/WOFF2/Artlab-LightItalic.woff2');
+	src: format('opentype') url('./artlab/OTF/Artlab-LightItalic.otf');
+	src: format('truetype') url('./artlab/TTF/Artlab-LightItalic.ttf');
+	font-weight: 300;
+	font-style: italic;
+}
+
+/* Artlab ExtraLight - 200 */
+@font-face {
+	font-family: 'ArtLab';
+	src: format('woff') url('./artlab/WOFF/Artlab-ExtraLight.woff');
+	src: format('woff2') url('./artlab/WOFF2/Artlab-ExtraLight.woff2');
+	src: format('opentype') url('./artlab/OTF/Artlab-ExtraLight.otf');
+	src: format('truetype') url('./artlab/TTF/Artlab-ExtraLight.ttf');
+	font-weight: 200;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'ArtLab';
+	src: format('woff') url('./artlab/WOFF/Artlab-ExtraLightItalic.woff');
+	src: format('woff2') url('./artlab/WOFF2/Artlab-ExtraLightItalic.woff2');
+	src: format('opentype') url('./artlab/OTF/Artlab-ExtraLightItalic.otf');
+	src: format('truetype') url('./artlab/TTF/Artlab-ExtraLightItalic.ttf');
+	font-weight: 200;
+	font-style: italic;
+}
+
+/* Artlab Thin - 100*/
+@font-face {
+	font-family: 'ArtLab';
+	src: format('woff') url('./artlab/WOFF/Artlab-Thin.woff');
+	src: format('woff2') url('./artlab/WOFF2/Artlab-Thin.woff2');
+	src: format('opentype') url('./artlab/OTF/Artlab-Thin.otf');
+	src: format('truetype') url('./artlab/TTF/Artlab-Thin.ttf');
+	font-weight: 100;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'ArtLab';
+	src: format('woff') url('./artlab/WOFF/Artlab-ThinItalic.woff');
+	src: format('woff2') url('./artlab/WOFF2/Artlab-ThinItalic.woff2');
+	src: format('opentype') url('./artlab/OTF/Artlab-ThinItalic.otf');
+	src: format('truetype') url('./artlab/TTF/Artlab-ThinItalic.ttf');
+	font-weight: 100;
+	font-style: italic;
+}
