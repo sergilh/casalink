@@ -1,16 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import casalinkMainLogo from '../assets/images/brand/casalink-logotipo-main-1080x400.svg';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
 	const [isOpen, setIsOpen] = useState(false);
-	//const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+	// Efecto para cerrar el menú si la pantalla se agranda
+	useEffect(() => {
+		const handleResize = () => {
+			if (window.innerWidth >= 768) {
+				setIsOpen(false);
+			}
+		};
+
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
 
 	return (
-		<nav
-			id="main-navbar"
-			className="bg-[#eeeeee] py-4 px-6 flex items-center justify-between gap-3"
-		>
+		<nav className="bg-[#eeeeee] py-4 px-6 flex items-center justify-between gap-3">
 			{/* Logo */}
 			<h1>
 				<Link to="/" className="flex items-center">
@@ -24,24 +32,30 @@ const Navbar = () => {
 
 			{/* Botón hamburguesa */}
 			<button
-				className="md:hidden flex flex-col space-y-2"
+				className="md:hidden flex flex-col space-y-1"
 				onClick={() => setIsOpen(!isOpen)}
 			>
 				<span
-					className={`block w-8 h-1 bg-[#000033] transition-transform ${isOpen ? 'rotate-45 translate-y-3' : ''}`}
+					className={`block w-8 h-1 bg-[#000033] transition-transform ${
+						isOpen ? 'rotate-45 translate-y-2' : ''
+					}`}
 				></span>
 				<span
 					className={`block w-8 h-1 bg-[#000033] ${isOpen ? 'opacity-0' : ''}`}
 				></span>
 				<span
-					className={`block w-8 h-1 bg-[#000033] transition-transform ${isOpen ? '-rotate-45 -translate-y-3' : ''}`}
+					className={`block w-8 h-1 bg-[#000033] transition-transform ${
+						isOpen ? '-rotate-45 -translate-y-2' : ''
+					}`}
 				></span>
 			</button>
+
 			<div className="flex justify-between items-center gap-6">
 				{/* Menú de navegación */}
 				<ul
-					//className={`absolute top-16 left-0 w-full bg-gray-800 p-4 space-y-4 text-center transition-transform transform ${isOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'} md:opacity-100 md:translate-y-0 md:relative md:bg-transparent md:flex md:space-x-6 md:p-0`}
-					className={`top-24 absolute md:flex md:relative md:space-x-6 md:opacity-100 items-center md:bg-transparent md:text-1 h-full left-0 p-8 md:p-0 z-50 text-center w-full ${isOpen ? 'translate-y-0 opacity-100 text-2xl bg-[#ff6666]' : ' opacity-0 bg-none md:top-0'}`}
+					className={`absolute left-0 w-full text-center p-8 transition-all duration-300 ease-in-out z-50
+					${isOpen ? 'opacity-100 text-2xl bg-[#ff6666] top-24 h-full' : 'opacity-0 pointer-events-none'}
+					md:opacity-100 md:pointer-events-auto md:flex md:relative md:space-x-6 md:bg-transparent md:text-1 md:p-0`}
 				>
 					<li>
 						<Link to="/about" className="text-gray-600">
@@ -59,7 +73,7 @@ const Navbar = () => {
 						</Link>
 					</li>
 					<li>
-						<Link to={'/publish'} className="text-gray-600">
+						<Link to="/publish" className="text-gray-600">
 							Publicar
 						</Link>
 					</li>
@@ -76,11 +90,7 @@ const Navbar = () => {
 				</ul>
 
 				{/* User Section */}
-				<div
-					id="user-section"
-					//className={`${isLoggedIn ? 'flex max-w-10 mx' : 'hidden'}`}
-					className="flex max-w-10 mx"
-				>
+				<div id="user-section" className="flex max-w-10 mx">
 					<div
 						id="user-avatar"
 						className="flex items-center justify-center"
