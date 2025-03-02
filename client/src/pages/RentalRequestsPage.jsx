@@ -13,7 +13,7 @@ const RentalRequestsPage = () => {
 		const fetchRentalRequests = async () => {
 			try {
 				const res = await fetch(
-					`${import.meta.env.VITE_API_URL}/api/contracts/`,
+					`${import.meta.env.VITE_API_URL}/contracts/`,
 					{
 						method: 'GET',
 						credentials: 'include',
@@ -31,10 +31,14 @@ const RentalRequestsPage = () => {
 				}
 
 				const data = await res.json();
-				console.log('📢 Datos recibidos de la API:', data); // 🔍 Mostrar en consola
-				setRentalRequests(data.requests);
+				console.log('Datos recibidos de la API:', data); // Mostrar en consola
+				// Unir las dos listas de contratos
+				setRentalRequests([
+					...data.contractsAsTenant,
+					...data.contractsAsOwner,
+				]);
 			} catch (err) {
-				console.error('❌ Error en la API:', err.message);
+				console.error('Error en la API:', err.message);
 				setError(err.message);
 			} finally {
 				setLoading(false);
