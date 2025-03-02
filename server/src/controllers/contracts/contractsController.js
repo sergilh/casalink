@@ -14,7 +14,8 @@ const contractsController = async (req, res, next) => {
 		// Si status no está definido, asignamos NULL
 		const statusFilter = status || null;
 
-		/*console.log('status', status);
+		/* //NO DA DATOS EN POSTMAN
+		console.log('status', status);
 
 		// Consultar solicitudes hechas (donde el usuario es inquilino)
 
