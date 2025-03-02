@@ -73,7 +73,7 @@ const Navbar = () => {
 						</Link>
 					</li>
 					<li>
-						<Link to="/publish" className="text-gray-600">
+						<Link to="/create-rent" className="text-gray-600">
 							Publicar
 						</Link>
 					</li>

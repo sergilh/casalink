@@ -24,7 +24,7 @@ const Header = () => {
 				<Link to="/help" className="text-gray-600">
 					Ayuda
 				</Link>
-				<Link to={'/publish'} className="text-gray-600">
+				<Link to={'/create-rent'} className="text-gray-600">
 					Publicar
 				</Link>
 				<Link to="/login" className="text-gray-600">

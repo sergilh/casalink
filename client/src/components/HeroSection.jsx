@@ -18,7 +18,7 @@ const HeroSection = () => {
 			>
 				<form
 					id="search-form"
-					className="bg-white rounded-full flex justify-between p-1 w-full max-w-[500px] shadow-lg transform hover:shadow-xl transition-all duration-300"
+					className="bg-white rounded-full flex justify-between p-1 w-full max-w-[500px] shadow-lg transform hover:shadow-xl transition-all duration-300 h-16"
 				>
 					<input
 						id="locality"
@@ -40,7 +40,7 @@ const HeroSection = () => {
 					/>
 					<button
 						id="search-button"
-						className="bg-[#66ffff] p-2 rounded-full text-white hover:bg-[#ff6666]  transition-colors transform hover:scale-95 duration-200 color-white"
+						className="bg-[#66ffff] rounded-full text-white hover:bg-[#ff6666]  transition-colors transform hover:scale-95 duration-200 color-white p-4"
 					>
 						<span id="search-icon">🔎</span>
 					</button>
