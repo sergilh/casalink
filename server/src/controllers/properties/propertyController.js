@@ -27,6 +27,9 @@ const propertyController = async (req, res, next) => {
 			req.files
 		);
 
+		// Convertir hasEnergyCert a 0 o 1 comparando con la cadena "true"
+		const certValue = hasEnergyCert === 'true' ? 1 : 0;
+
 		// 1️⃣ Crear la propiedad en la base de datos y obtener su ID
 		const propertyId = await createPropertyModel({
 			userId,
@@ -37,7 +40,7 @@ const propertyController = async (req, res, next) => {
 			street,
 			number,
 			floor,
-			hasEnergyCert,
+			hasEnergyCert: certValue, // se pasa 1 o 0
 			zipCode,
 			location,
 			squareMeters,
