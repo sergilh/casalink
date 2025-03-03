@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 const UpdateProductPage = () => {
 	const { id } = useParams(); // Obtener el ID del producto desde la URL
+	console.log('ID recibido en la URL:', id);
 	const navigate = useNavigate();
 	const token = localStorage.getItem('token'); // Obtener token de autenticación
 

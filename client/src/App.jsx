@@ -34,7 +34,7 @@ const App = () => {
 						element={<CreateRentWithImages />}
 					/>
 					<Route
-						path="/update-product"
+						path="/products/:id/update"
 						element={<UpdateProductPage />}
 					/>
 					<Route
