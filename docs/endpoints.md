@@ -368,10 +368,19 @@
     ```json
     {
     	"title": "string",
+    	"type": "string", // "apartamento", "casa", "piso", "duplex", "otro"
     	"description": "string",
-    	"price": "number",
-    	"location": "string",
-    	"images": ["string"] // URLs de las imágenes
+    	"locality": "string",
+    	"street": "string",
+    	"number": "string",
+    	"floor": "string",
+    	"hasEnergyCert": boolean,
+    	"zipCode": "string", // 5 dígitos
+    	"location": "40.4168,-3.7038", // Latitude y longitud separadas por coma
+    	"squareMeters": number,
+    	"bedrooms": number,
+    	"bathrooms": number,
+    	"price": number
     }
     ```
 -   **Respuesta:**

@@ -25,14 +25,14 @@ import {
 
 const router = express.Router();
 
-// 12 Listado de propiedades ✅ (Con validación)
+// 2.12 Listado de propiedades ✅ (Con validación)
 router.get(
 	'/properties',
 	validateRequest(searchPropertySchema),
 	getPropertiesController
 );
 
-// 13 Creación de nueva propiedad ✅ (Con validación y subida de archivos)
+// 2.13 Creación de nueva propiedad ✅ (Con validación)
 router.post(
 	'/properties',
 	authUserMiddleware,
@@ -41,14 +41,14 @@ router.post(
 	propertyController // 3) Controlador final
 );
 
-// 14 Detalle de una propiedad ✅
+// 2.14 Detalle de una propiedad ✅
 router.get(
 	'/properties/:propertyId',
 	propertyExistsMiddleware,
 	propertyDetailsController
 );
 
-// 15 Cambio de estado de propiedad (disponible / no disponible) ✅ (Con validación)
+// 2.15 Cambio de estado de propiedad (disponible / no disponible) ✅ (Con validación)
 router.patch(
 	'/properties/:propertyId',
 	authUserMiddleware,
@@ -58,7 +58,7 @@ router.patch(
 	propertyStatusController
 );
 
-// 16 Modificar una propiedad (solo dueño) ✅ (Con validación)
+// 2.16 Modificar una propiedad (solo dueño) ✅ (Con validación)
 router.put(
 	'/properties/:propertyId',
 	authUserMiddleware,
@@ -70,7 +70,7 @@ router.put(
 /* YA NO SE NECESITA PARA SUBIR IMÁGENES CUANDO SE CREA UNA PROPIEDAD
 PERO LO DEJO POR SI ACASO SE NECESITA PARA SUBIR IMAGENES DE PROPIEDADES YA EXISTENTES
 
-// 17 Ruta para subir imágenes y videos asociados a una propiedad ✅
+// 2.17 Ruta para subir imágenes y videos asociados a una propiedad ✅
 router.post(
 	'/properties/:propertyId/upload',
 	authUserMiddleware,
