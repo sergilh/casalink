@@ -1,10 +1,8 @@
 import multer from 'multer';
 import path from 'path';
 
-// Almacenamiento en memoria temporal
 const storage = multer.memoryStorage();
 
-// Filtro para aceptar solo imágenes y videos
 const fileFilter = (req, file, cb) => {
 	const formatosPermitidos = /jpeg|jpg|png|gif|mp4|mov|avi|mkv/;
 	const esValido =
@@ -17,18 +15,32 @@ const fileFilter = (req, file, cb) => {
 	} else {
 		cb(
 			new Error(
-				'Formato no permitido. Solo se aceptan imágenes (JPEG, PNG, GIF) y videos (MP4, MOV, AVI, MKV).'
+				'Formato no permitido. Solo se aceptan imágenes y videos.'
 			)
 		);
 	}
 };
 
-// Configuración de multer
 const upload = multer({
 	storage,
 	limits: { fileSize: 50 * 1024 * 1024 }, // Límite de 50MB
 	fileFilter,
 });
 
-// Middleware para subir múltiples archivos
-export const fileUploadMiddleware = upload.array('images', 10);
+export const fileUploadMiddleware = (req, res, next) => {
+	upload.array('files', 10)(req, res, (err) => {
+		console.log('📂 Archivos recibidos en el middleware:', req.files);
+		if (err) {
+			return res.status(400).json({ error: err.message });
+		}
+
+		console.log(
+			'✅ fileUploadMiddleware ejecutado correctamente, llamando a next()'
+		);
+
+		// Guardamos los archivos en una nueva variable en req para evitar que se pierdan
+		req.uploadedFiles = req.files;
+
+		next();
+	});
+};

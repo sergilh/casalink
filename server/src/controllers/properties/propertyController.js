@@ -1,5 +1,6 @@
 import createPropertyModel from '../../models/properties/createPropertyModel.js';
-// import generateErrorUtil from '../../utils/generateErrorUtil.js';
+import insertFileModel from '../../models/properties/insertFileModel.js';
+import saveFileUtil from '../../utils/saveFileUtil.js';
 
 const propertyController = async (req, res, next) => {
 	try {
@@ -12,7 +13,7 @@ const propertyController = async (req, res, next) => {
 			street,
 			number,
 			floor,
-			hasEnergyCert, // ahora sí es un boolean real (true o false), gracias a Joi
+			hasEnergyCert,
 			zipCode,
 			location,
 			squareMeters,
@@ -21,9 +22,12 @@ const propertyController = async (req, res, next) => {
 			price,
 		} = req.body;
 
-		// Convertimos el boolean a 1 o 0
-		const certValue = hasEnergyCert === true ? 1 : 0;
+		console.log(
+			'📸 Imágenes recibidas en la creación de propiedad:',
+			req.files
+		);
 
+		// 1️⃣ Crear la propiedad en la base de datos y obtener su ID
 		const propertyId = await createPropertyModel({
 			userId,
 			title,
@@ -33,7 +37,7 @@ const propertyController = async (req, res, next) => {
 			street,
 			number,
 			floor,
-			hasEnergyCert: certValue, // le pasamos 0 o 1 al modelo
+			hasEnergyCert,
 			zipCode,
 			location,
 			squareMeters,
@@ -42,10 +46,39 @@ const propertyController = async (req, res, next) => {
 			price,
 		});
 
+		console.log(`🏠 Propiedad creada con ID: ${propertyId.insertId}`);
+
+		// 2️⃣ Guardar las imágenes en disco y asociarlas a la propiedad
+		const savedFiles = [];
+		if (req.files && req.files.length > 0) {
+			for (let i = 0; i < req.files.length; i++) {
+				const file = req.files[i];
+				const isImage = /jpeg|jpg|png|gif/.test(file.mimetype);
+				const isVideo = /mp4|mov|avi|mkv/.test(file.mimetype);
+
+				if (!isImage && !isVideo) {
+					return res
+						.status(400)
+						.json({ error: 'Formato de archivo no permitido.' });
+				}
+
+				const fileType = isImage ? 'image' : 'video';
+				const fileName = await saveFileUtil(file.buffer, fileType);
+				await insertFileModel(
+					propertyId.insertId,
+					fileName,
+					fileType,
+					i + 1
+				);
+				savedFiles.push({ name: fileName, type: fileType });
+			}
+		}
+
 		res.status(201).json({
 			success: true,
-			message: `Propiedad '${title}' creada exitosamente`,
+			message: `Propiedad '${title}' creada exitosamente con imágenes`,
 			propertyId: propertyId.insertId,
+			files: savedFiles,
 		});
 	} catch (error) {
 		next(error);
