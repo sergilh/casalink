@@ -37,7 +37,7 @@ const Footer = () => {
 
 				<div className="container mx-auto px-4 flex justify-end">
 					<div className="text-2xl font-bold">
-						<p className="text-sm font-normal text-center">
+						<p className="text-xs font-normal text-center">
 							&copy; Casalink 2025
 						</p>
 					</div>

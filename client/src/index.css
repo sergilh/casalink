@@ -1,8 +1,18 @@
 @import url(./assets/fonts/fonts.css);
 @import 'tailwindcss';
 
-laber {
-	display: block;
+/* Plain CSS */
+
+body {
+	font-family: 'Open Sans', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+	font-family: ArtLab, Montserrat, 'Open Sans', sans-serif;
 }
 
 /*

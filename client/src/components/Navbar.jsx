@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import casalinkMainLogo from '../assets/images/brand/casalink-logotipo-main-1080x400.svg';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
 
 const Navbar = () => {
 	const [isOpen, setIsOpen] = useState(false);
+	const { authUser, authLoginState } = useContext(AuthContext);
 
 	// Efecto para cerrar el menú si la pantalla se agranda
 	useEffect(() => {
@@ -16,6 +18,12 @@ const Navbar = () => {
 		window.addEventListener('resize', handleResize);
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
+
+	const logout = () => {
+		localStorage.clear('token');
+		authLoginState(null);
+		authUser(null);
+	};
 
 	return (
 		<nav className="bg-[#eeeeee] py-4 px-6 flex items-center justify-between gap-3">
@@ -77,20 +85,27 @@ const Navbar = () => {
 							Publicar
 						</Link>
 					</li>
-					<li>
+					<li className={`${authUser ? 'hidden' : ''}`}>
 						<Link to="/login" className="text-gray-600">
 							Login
 						</Link>
 					</li>
-					<li>
+					<li className={`${authUser ? 'hidden' : ''}`}>
 						<Link to="/register" className="text-gray-600">
 							Register
 						</Link>
 					</li>
+					<li className={`${authUser ? '' : 'hidden'}`}>
+						<a onClick={logout} className="text-gray-600">
+							Logout
+						</a>
+					</li>
 				</ul>
-
 				{/* User Section */}
-				<div id="user-section" className="flex max-w-10 mx">
+				<div
+					id="user-section"
+					className={`${authUser ? 'flex max-w-10 mx' : 'hidden'}`}
+				>
 					<div
 						id="user-avatar"
 						className="flex items-center justify-center"
@@ -116,7 +131,7 @@ const Navbar = () => {
 								id="notification-count"
 								className="text-white block font-bold text-center text-xs"
 							>
-								9
+								?
 							</span>
 						</div>
 					</div>

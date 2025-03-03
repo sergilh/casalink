@@ -9,6 +9,7 @@ import CreateRentWithImages from './pages/CreateRentWithImages'; // Variante con
 import ContactPage from './pages/ContactPage';
 import AboutPage from './pages/AboutPage';
 import HelpPage from './pages/HelpPage';
+import NotFoundPage from './pages/NotFoundPage';
 import './index.css';
 
 const App = () => {
@@ -29,6 +30,8 @@ const App = () => {
 						path="/create-rent"
 						element={<CreateRentWithImages />}
 					/>
+					{/* Otras rutas */}
+					<Route path="*" element={<NotFoundPage />} />
 				</Routes>
 
 				<Footer />
