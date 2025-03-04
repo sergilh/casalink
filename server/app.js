@@ -21,9 +21,11 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
-app.use(jsonMiddleware);
+app.use('/static', express.static(path.join(process.cwd(), 'public')));
+
+// ⚠️ NO aplicar express.json() antes de Multer, podría bloquear la subida de archivos
 app.use(express.json());
-app.use('/static', express.static(path.join(process.cwd(), 'public'))); // Middleware para servir archivos estáticos
+app.use(jsonMiddleware);
 
 // Rutas
 app.use('/api', usersRoutes); // Rutas de usuarios

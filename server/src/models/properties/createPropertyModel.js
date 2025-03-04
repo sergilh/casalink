@@ -21,10 +21,11 @@ const createPropertyModel = async (propertyData) => {
 		bathrooms,
 		price,
 	} = propertyData;
+
 	/*
     `ownerId`         INT UNSIGNED NOT NULL,
     `propertyTitle`   VARCHAR(255) NOT NULL,
-    `propertyType`    ENUM (`apartamento`, `casa`, `piso`, `duplex`, `otro`) NOT NULL,
+    `propertyType`    ENUM ('apartamento', 'casa', 'piso', 'duplex', 'otro') NOT NULL,
     `description`     TEXT NOT NULL,
     `addressLocality` VARCHAR(255),
     `addressStreet`   VARCHAR(255),
@@ -32,17 +33,25 @@ const createPropertyModel = async (propertyData) => {
     `addressFloor`    VARCHAR(10),
     `hasEnergyCert`   BOOLEAN DEFAULT false,
     `zipCode`         VARCHAR(5) NOT NULL,
+    `location`        POINT,
     `squareMeters`    SMALLINT,
     `bedrooms`        TINYINT NOT NULL,
     `bathrooms`       TINYINT NOT NULL,
     `price`           DECIMAL(10,2) NOT NULL,
-    `status`          ENUM (`available`,`unavailable`, `rented`, `pending`) DEFAULT `pending`,
+    `status`          ENUM ('available','unavailable', 'rented', 'pending') DEFAULT 'pending',
     `createdAt`       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updatedAt`       TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   */
 
 	// Convertir location a formato geométrico POINT
-	const [lat, lng] = location.split(',').map(Number);
+	let lat, lng;
+	if (location && location.trim() !== '') {
+		[lat, lng] = location.split(',').map(Number);
+	} else {
+		// Si no se proporciona location, usamos valores por defecto (0,0)
+		lat = 0;
+		lng = 0;
+	}
 
 	const [result] = await pool.query(
 		`

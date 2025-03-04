@@ -2,12 +2,13 @@ import { Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
+
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import UpdateProductPage from './pages/UpdateProductPage';
 import RentalRequestsPage from './pages/RentalRequestsPage';
-import CreateRentWithImages from './pages/CreateRentWithImages'; // Variante con imágenes
+import CreateRent from "./pages/CreateRent"; 
 import ContactPage from './pages/ContactPage';
 import AboutPage from './pages/AboutPage';
 import HelpPage from './pages/HelpPage';
@@ -35,9 +36,9 @@ const App = () => {
 
 					{/* Rutas de Gestión */}
 					<Route
-						path="/create-rent"
-						element={<CreateRentWithImages />}
-					/>
+            path="/create-rent" 
+            element={<CreateRent />} />
+
 					<Route
 						path="/properties/:id/update"
 						element={<UpdateProductPage />}
@@ -54,5 +55,6 @@ const App = () => {
 		</>
 	);
 };
+
 
 export default App;
