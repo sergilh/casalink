@@ -1,25 +1,35 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
+import toast from 'react-hot-toast';
+
+const { VITE_API_URL } = import.meta.env;
 
 const UpdateProductPage = () => {
-	const { id } = useParams(); // Obtener el ID del producto desde la URL
+	const { id } = useParams(); // Obtener el ID desde la URL
 	const navigate = useNavigate();
-	const token = localStorage.getItem('token'); // Obtener token de autenticación
+	const { authUser } = useContext(AuthContext); // Obtener usuario autenticado
+	const token = authUser?.token || localStorage.getItem('token'); // Obtener token
 
-	const [product, setProduct] = useState({
-		title: '',
-		description: '',
-		price: '',
-	});
+	const [product, setProduct] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
-	// Obtener los datos actuales del producto
+	console.log('ID recibido desde useParams():', id);
+
+	// Validamos antes de hacer la petición
 	useEffect(() => {
 		const fetchProduct = async () => {
+			if (!id || id === ':id') {
+				console.error('Error: ID no válido en useParams()');
+				setError('Error: No se ha recibido un ID válido.');
+				setLoading(false);
+				return;
+			}
+
 			try {
 				const res = await fetch(
-					`${import.meta.env.VITE_API_URL}/api/products/${id}`,
+					`${VITE_API_URL}/api/properties/${id}`,
 					{
 						method: 'GET',
 						headers: {
@@ -30,15 +40,11 @@ const UpdateProductPage = () => {
 				);
 
 				if (!res.ok) {
-					throw new Error('Error al obtener el producto');
+					throw new Error('Error al obtener la propiedad');
 				}
 
 				const data = await res.json();
-				setProduct({
-					title: data.title,
-					description: data.description,
-					price: data.price,
-				});
+				setProduct(data);
 			} catch (err) {
 				setError(err.message);
 			} finally {
@@ -54,6 +60,24 @@ const UpdateProductPage = () => {
 		}
 	}, [id, token]);
 
+	// **Verificar si el usuario tiene permisos**
+	useEffect(() => {
+		if (!loading && product) {
+			const esAdmin = authUser?.role === 'admin';
+			const esOwner = authUser?.id === product?.ownerId; // Aseguramos que exista ownerId
+
+			console.log('esAdmin:', esAdmin);
+			console.log('esOwner:', esOwner);
+
+			if (!esAdmin && !esOwner) {
+				toast.error(
+					'No tienes permisos para modificar esta propiedad.'
+				);
+				setError('No tienes permisos para modificar esta propiedad.');
+			}
+		}
+	}, [product, loading, authUser]);
+
 	// Manejar cambios en los inputs
 	const handleChange = (e) => {
 		setProduct({ ...product, [e.target.name]: e.target.value });
@@ -64,24 +88,21 @@ const UpdateProductPage = () => {
 		e.preventDefault();
 
 		try {
-			const res = await fetch(
-				`${import.meta.env.VITE_API_URL}/api/products/${id}`,
-				{
-					method: 'PUT',
-					headers: {
-						Authorization: `Bearer ${token}`,
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify(product),
-				}
-			);
+			const res = await fetch(`${VITE_API_URL}/api/properties/${id}`, {
+				method: 'PUT',
+				headers: {
+					Authorization: `Bearer ${token}`,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(product),
+			});
 
 			if (!res.ok) {
-				throw new Error('Error al actualizar el producto');
+				throw new Error('Error al actualizar la propiedad');
 			}
 
-			alert('Producto actualizado con éxito');
-			navigate('/products'); // Redirigir a la lista de productos
+			toast.success('Propiedad actualizada con éxito');
+			navigate(`/properties/${id}`); // Corrección en navigate()
 		} catch (err) {
 			setError(err.message);
 		}
@@ -92,7 +113,7 @@ const UpdateProductPage = () => {
 
 	return (
 		<main>
-			<h2>Actualizar Producto</h2>
+			<h2>Actualizar Propiedad</h2>
 
 			<form onSubmit={handleSubmit}>
 				<label>
@@ -100,7 +121,7 @@ const UpdateProductPage = () => {
 					<input
 						type="text"
 						name="title"
-						value={product.title}
+						value={product?.title || ''}
 						onChange={handleChange}
 						required
 					/>
@@ -110,7 +131,7 @@ const UpdateProductPage = () => {
 					<span>Descripción:</span>
 					<textarea
 						name="description"
-						value={product.description}
+						value={product?.description || ''}
 						onChange={handleChange}
 						required
 					/>
@@ -121,13 +142,13 @@ const UpdateProductPage = () => {
 					<input
 						type="number"
 						name="price"
-						value={product.price}
+						value={product?.price || ''}
 						onChange={handleChange}
 						required
 					/>
 				</label>
 
-				<button type="submit">Actualizar Producto</button>
+				<button type="submit">Actualizar Propiedad</button>
 			</form>
 		</main>
 	);

@@ -19,24 +19,24 @@ const CreateRent = () => {
     description: "",
     locality: "",
     street: "",
-    number: 0,
+    number: "",       
     floor: "",
     zipCode: "",
     location: "",
-    squareMeters: 0,
-    bedrooms: 0,
-    bathrooms: 0,
-    price: 0,
-    hasEnergyCert: 0,  // <-- Aquí iniciamos en 0 (no marcado)
+    squareMeters: "", 
+    bedrooms: "",     
+    bathrooms: "",    
+    price: "",        
+    hasEnergyCert: false,
     images: [],
   });
+  
 
   // Manejo de inputs
   const handleChange = (e) => {
     const { name, type, checked, value } = e.target;
     if (type === "checkbox") {
-      // Enviar cadena "true" o "false"
-      setFormValues({ ...formValues, [name]: checked ? "true" : "false" });
+      setFormValues({ ...formValues, [name]: checked });
     } else {
       setFormValues({ ...formValues, [name]: value });
     }
@@ -46,10 +46,8 @@ const CreateRent = () => {
   // Múltiples archivos
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    console.log("📸 Archivos seleccionados:", files); // <-- Verifica en la consola
     setFormValues({ ...formValues, images: files });
-};
-
+  };
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -90,7 +88,7 @@ const handleSubmit = async (e) => {
 
   return (
     <main>
-      <h2>Crear Propiedad (con imágenes)</h2>
+      <h2>Crear Propiedad</h2>
 
       <form onSubmit={handleSubmit}>
         <label>
@@ -130,6 +128,7 @@ const handleSubmit = async (e) => {
           Número:
           <input
             type="number"
+            className="no-spinner"
             name="number"
             value={formValues.number}
             onChange={handleChange}
@@ -177,7 +176,6 @@ const handleSubmit = async (e) => {
             name="location"
             value={formValues.location}
             onChange={handleChange}
-            required
           />
         </label>
 
@@ -195,6 +193,7 @@ const handleSubmit = async (e) => {
           Precio:
           <input
             type="number"
+            className="no-spinner"
             name="price"
             value={formValues.price}
             onChange={handleChange}
@@ -228,6 +227,7 @@ const handleSubmit = async (e) => {
           Metros cuadrados:
           <input
             type="number"
+            className="no-spinner"
             name="squareMeters"
             value={formValues.squareMeters}
             onChange={handleChange}
@@ -239,13 +239,14 @@ const handleSubmit = async (e) => {
           <input
             type="checkbox"
             name="hasEnergyCert"
-            checked={formValues.hasEnergyCert === 1}
+            checked={formValues.hasEnergyCert}  // directamente el booleano
             onChange={handleChange}
           />
           Certificado Energético
         </label>
 
         <label>
+
           Imágenes:
           <input
             type="file"

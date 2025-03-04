@@ -79,9 +79,15 @@ const contractsController = async (req, res, next) => {
 			[userId, statusFilter, Number(limit), Number(offset)]
 		);
 
+		console.log('Contratos como inquilino:', contractsAsTenant);
+		console.log('Contratos como dueño:', contractsAsOwner);
+
+		res.setHeader('Content-Type', 'application/json');
+
 		res.json({
-			contractsAsTenant, // Slicitudes que el usuario hizo para alquilar propiedades
-			contractsAsOwner, // Solicitudes que el usuario recibió como dueño de propiedades
+			status: 'ok',
+			contractsAsTenant: contractsAsTenant || [], // Slicitudes que el usuario hizo para alquilar propiedades
+			contractsAsOwner: contractsAsOwner || [], // Solicitudes que el usuario recibió como dueño de propiedades
 		});
 	} catch (error) {
 		next(error);

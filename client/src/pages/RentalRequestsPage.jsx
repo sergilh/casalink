@@ -12,8 +12,14 @@ const RentalRequestsPage = () => {
 	useEffect(() => {
 		const fetchRentalRequests = async () => {
 			try {
+				console.log(
+					'Haciendo petición a:',
+					`${import.meta.env.VITE_API_URL}/api/contracts/`
+				);
+				console.log('Token enviado:', token);
+
 				const res = await fetch(
-					`${import.meta.env.VITE_API_URL}/contracts/`,
+					`${import.meta.env.VITE_API_URL}/api/contracts/`,
 					{
 						method: 'GET',
 						credentials: 'include',
@@ -24,18 +30,22 @@ const RentalRequestsPage = () => {
 					}
 				);
 
+				// **Aquí verificamos si la respuesta es HTML en lugar de JSON**
+				const text = await res.text();
+				console.log('Respuesta de la API:', text);
+
 				if (!res.ok) {
 					throw new Error(
 						'Error al obtener las solicitudes de alquiler'
 					);
 				}
 
-				const data = await res.json();
+				const data = JSON.parse(text); // Convertir a JSON
 				console.log('Datos recibidos de la API:', data); // Mostrar en consola
 				// Unir las dos listas de contratos
 				setRentalRequests([
-					...data.contractsAsTenant,
-					...data.contractsAsOwner,
+					...(data.contractsAsTenant || []),
+					...(data.contractsAsOwner || []),
 				]);
 			} catch (err) {
 				console.error('Error en la API:', err.message);
