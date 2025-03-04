@@ -2,7 +2,6 @@ import path from 'path';
 import fs from 'fs/promises';
 import sharp from 'sharp';
 import crypto from 'crypto';
-import generateErrorUtil from './generateErrorUtil.js';
 
 // Función para guardar archivos en el servidor
 const saveFileUtil = async (fileBuffer, fileType, width = 500) => {
@@ -35,7 +34,7 @@ const saveFileUtil = async (fileBuffer, fileType, width = 500) => {
 				);
 				break;
 			default:
-				throw generateErrorUtil('Tipo de archivo no reconocido.', 400);
+				throw new Error('Tipo de archivo no reconocido.');
 		}
 
 		// Verificar si la carpeta existe, si no, crearla
@@ -53,22 +52,18 @@ const saveFileUtil = async (fileBuffer, fileType, width = 500) => {
 		console.log(`Guardando archivo en: ${filePath}`);
 
 		if (fileType === 'image' || fileType === 'avatar') {
-			// Procesar y guardar imagen con Sharp
 			await sharp(fileBuffer)
 				.resize(width)
 				.toFormat('png')
 				.toFile(filePath);
 		} else {
-			// Guardar video sin modificar
 			await fs.writeFile(filePath, fileBuffer);
 		}
 
-		return fileName; // Retornar el nombre del archivo guardado
+		return fileName;
 	} catch (err) {
-		throw generateErrorUtil(
-			`Error al guardar el archivo en disco: ${err.message}`,
-			400
-		);
+		console.error('Error al guardar el archivo en disco:', err);
+		throw new Error(`Error al guardar el archivo en disco: ${err.message}`);
 	}
 };
 

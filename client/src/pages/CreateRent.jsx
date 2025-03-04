@@ -1,4 +1,3 @@
-// CreatePropertyWithImages.jsx
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -8,7 +7,7 @@ import useFetch from "../hooks/useFetch"; // Tu hook personalizado
 
 const { VITE_API_URL } = import.meta.env;
 
-const CreatePropertyWithImages = () => {
+const CreateRent = () => {
   const { authToken } = useContext(AuthContext);
   const navigate = useNavigate();
   const { fetchData, loading } = useFetch();
@@ -20,24 +19,24 @@ const CreatePropertyWithImages = () => {
     description: "",
     locality: "",
     street: "",
-    number: 0,
+    number: "",       
     floor: "",
     zipCode: "",
     location: "",
-    squareMeters: 0,
-    bedrooms: 0,
-    bathrooms: 0,
-    price: 0,
-    hasEnergyCert: 0,  // <-- Aquí iniciamos en 0 (no marcado)
+    squareMeters: "", 
+    bedrooms: "",     
+    bathrooms: "",    
+    price: "",        
+    hasEnergyCert: false,
     images: [],
   });
+  
 
   // Manejo de inputs
   const handleChange = (e) => {
     const { name, type, checked, value } = e.target;
     if (type === "checkbox") {
-      // Enviar cadena "true" o "false"
-      setFormValues({ ...formValues, [name]: checked ? "true" : "false" });
+      setFormValues({ ...formValues, [name]: checked });
     } else {
       setFormValues({ ...formValues, [name]: value });
     }
@@ -46,43 +45,50 @@ const CreatePropertyWithImages = () => {
 
   // Múltiples archivos
   const handleImageChange = (e) => {
-    setFormValues({ ...formValues, images: [...e.target.files] });
+    const files = Array.from(e.target.files);
+    setFormValues({ ...formValues, images: files });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    // Construimos FormData
-    const fd = new FormData();
-    for (const [key, value] of Object.entries(formValues)) {
+  // Construimos FormData
+  const fd = new FormData();
+  for (const [key, value] of Object.entries(formValues)) {
       if (key === "images") {
-        value.forEach((file) => {
-          fd.append("images", file);
-        });
+          value.forEach((file) => {
+              fd.append("files", file);
+          });
       } else {
-        fd.append(key, value);
+          fd.append(key, value);
       }
-    }
+  }
 
-    try {
+  // Verificar qué se está enviando
+  for (let pair of fd.entries()) {
+      console.log(`FormData -> ${pair[0]}:`, pair[1]);
+  }
+
+  try {
       const data = await fetchData({
-        url: `${VITE_API_URL}/api/properties`,
-        method: "POST",
-        body: fd,
-        isFormData: true,
-        token: authToken,
+          url: `${VITE_API_URL}/api/properties`,
+          method: "POST",
+          body: fd,
+          isFormData: true,
+          token: authToken,
       });
 
       toast.success(data.message || "Propiedad creada con éxito");
       navigate("/dashboard");
-    } catch (error) {
+  } catch (error) {
       toast.error(error.message || "Error al crear la propiedad");
-    }
-  };
+  }
+};
+
 
   return (
     <main>
-      <h2>Crear Propiedad (con imágenes)</h2>
+      <h2>Crear Propiedad</h2>
 
       <form onSubmit={handleSubmit}>
         <label>
@@ -122,6 +128,7 @@ const CreatePropertyWithImages = () => {
           Número:
           <input
             type="number"
+            className="no-spinner"
             name="number"
             value={formValues.number}
             onChange={handleChange}
@@ -169,7 +176,6 @@ const CreatePropertyWithImages = () => {
             name="location"
             value={formValues.location}
             onChange={handleChange}
-            required
           />
         </label>
 
@@ -187,6 +193,7 @@ const CreatePropertyWithImages = () => {
           Precio:
           <input
             type="number"
+            className="no-spinner"
             name="price"
             value={formValues.price}
             onChange={handleChange}
@@ -220,6 +227,7 @@ const CreatePropertyWithImages = () => {
           Metros cuadrados:
           <input
             type="number"
+            className="no-spinner"
             name="squareMeters"
             value={formValues.squareMeters}
             onChange={handleChange}
@@ -231,13 +239,14 @@ const CreatePropertyWithImages = () => {
           <input
             type="checkbox"
             name="hasEnergyCert"
-            checked={formValues.hasEnergyCert === 1}
+            checked={formValues.hasEnergyCert}  // directamente el booleano
             onChange={handleChange}
           />
           Certificado Energético
         </label>
 
         <label>
+
           Imágenes:
           <input
             type="file"
@@ -255,4 +264,4 @@ const CreatePropertyWithImages = () => {
   );
 };
 
-export default CreatePropertyWithImages;
+export default CreateRent;

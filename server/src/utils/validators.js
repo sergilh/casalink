@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-// ✅ Esquema para crear una propiedad (con location)
+// ✅ Esquema para crear una propiedad
 export const propertySchema = Joi.object({
 	title: Joi.string().max(255).required(),
 	type: Joi.string()
@@ -27,15 +27,16 @@ export const propertySchema = Joi.object({
 
 	// Campo location nuevamente presente
 	location: Joi.string()
-		.pattern(/^(-?\d{1,2}(\.\d+)?),\s*(-?\d{1,3}(\.\d+)?)$/)
+		.allow('') // Permite cadena vacía
+		.optional()
 		.custom((value, helpers) => {
+			if (!value) return value; // Si está vacío, lo permite sin validación adicional
 			const [lat, lon] = value.split(',').map(Number);
 			if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {
 				return helpers.error('any.invalid');
 			}
 			return value;
-		}, 'Latitude and Longitude validation')
-		.required(),
+		}, 'Latitude and Longitude validation'),
 
 	squareMeters: Joi.number().integer().positive().required(),
 	bedrooms: Joi.number().integer().positive().required(),

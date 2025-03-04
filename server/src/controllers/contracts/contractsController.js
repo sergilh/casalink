@@ -3,11 +3,18 @@ import getPool from '../../db/getPool.js';
 const contractsController = async (req, res, next) => {
 	try {
 		const pool = await getPool();
-		const { status = null } = req.body; // Estado opcional desde la URL000
+		const { status = null } = req.query; // Estado opcional desde la URL000
 		const { page = 1, limit = 10 } = req.query; // Parámetros de paginación
 		const userId = req.user.id; // ID del usuario autenticado
 		const offset = (page - 1) * limit;
 
+		console.log('Usuario autenticado:', userId);
+		console.log('Estado recibido:', status);
+
+		// Si status no está definido, asignamos NULL
+		const statusFilter = status || null;
+
+		/* //NO DA DATOS EN POSTMAN
 		console.log('status', status);
 
 		// Consultar solicitudes hechas (donde el usuario es inquilino)
@@ -28,6 +35,7 @@ const contractsController = async (req, res, next) => {
 				[userId, status, Number(limit), Number(offset)]
 			)
 		);
+		*/
 		const [contractsAsTenant] = await pool.query(
 			`
 				SELECT
@@ -46,7 +54,7 @@ const contractsController = async (req, res, next) => {
 				ORDER BY c.createdAt DESC
 				LIMIT ? OFFSET ?
 			 `,
-			[userId, status, Number(limit), Number(offset)]
+			[userId, statusFilter, Number(limit), Number(offset)]
 		);
 
 		// Consultar solicitudes recibidas (donde el usuario es dueño)
@@ -68,12 +76,18 @@ const contractsController = async (req, res, next) => {
 				ORDER BY c.createdAt DESC
 				LIMIT ? OFFSET ?
 			 `,
-			[userId, status, Number(limit), Number(offset)]
+			[userId, statusFilter, Number(limit), Number(offset)]
 		);
 
+		console.log('Contratos como inquilino:', contractsAsTenant);
+		console.log('Contratos como dueño:', contractsAsOwner);
+
+		res.setHeader('Content-Type', 'application/json');
+
 		res.json({
-			contractsAsTenant, // Slicitudes que el usuario hizo para alquilar propiedades
-			contractsAsOwner, // Solicitudes que el usuario recibió como dueño de propiedades
+			status: 'ok',
+			contractsAsTenant: contractsAsTenant || [], // Slicitudes que el usuario hizo para alquilar propiedades
+			contractsAsOwner: contractsAsOwner || [], // Solicitudes que el usuario recibió como dueño de propiedades
 		});
 	} catch (error) {
 		next(error);
