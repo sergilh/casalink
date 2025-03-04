@@ -4,14 +4,19 @@ import generateErrorUtil from '../utils/generateErrorUtil.js';
 
 const checkPropertyOwnerOrAdmin = (req, res, next) => {
 	try {
-		// propertyExistsMiddleware debe haber adjuntado la propiedad en req.property
-		// con al menos la info de ownerId
 		const currentUserRole = req.user.role;
+		const currentUserId = req.user.id;
+		const propertyOwnerId = req.property?.ownerId; // Ahora ya se define correctamente
 
 		console.log('currentUserRole', currentUserRole);
+		console.log('currentUserId', currentUserId);
+		console.log('propertyOwnerId', propertyOwnerId);
 
-		if (currentUserRole === 'admin' || currentUserRole === 'superadmin') {
-			// Si es superadmin, también puede pasar
+		if (
+			currentUserRole === 'admin' ||
+			currentUserRole === 'superadmin' ||
+			currentUserId === propertyOwnerId // Permite acceso al dueño de la propiedad
+		) {
 			return next();
 		} else {
 			throw generateErrorUtil(

@@ -12,9 +12,7 @@ const propertyExistsMiddleware = async (req, res, next) => {
 
 		const pool = await getPool();
 		const [properties] = await pool.query(
-			`
-				SELECT id FROM properties WHERE id=?
-			`,
+			`SELECT id, ownerId FROM properties WHERE id=?`,
 			[propertyId]
 		);
 
