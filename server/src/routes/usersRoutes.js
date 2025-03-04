@@ -53,7 +53,7 @@ router.put(
 
 // 09 GET	/api/users/:id/reviews	Histórico de reseñas
 router.get(
-	'/users/:userId/reviews',
+	'/users/:id/reviews',
 	authUserMiddleware,
 	userExistsMiddleware,
 	usersPreviousRatingController
