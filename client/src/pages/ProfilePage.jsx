@@ -47,7 +47,8 @@ const ProfilePage = () => {
 
             <section>
                 <div>
-                    <h2>{userReviews.reviewedId}</h2>
+                    <h2>{userReviews.name}</h2>
+                    <p>{userReviews.bio}</p>
                 </div>
             </section>
 
