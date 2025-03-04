@@ -2,15 +2,16 @@ import selectUserReviewsModel from '../../models/users/selectUserReviewsModel.js
 
 const usersPreviousRatingController = async (req, res, next) => {
 	try {
-		const { userId } = req.params;
+		const { id } = req.params;
 
-		const review = await selectUserReviewsModel(userId);
+		const { reviews, averageRating } = await selectUserReviewsModel(id);
 
 		res.send({
 			status: 'ok',
 			message: 'Estas son las valoraciones del usuario seleccionado',
 			data: {
-				review,
+				reviews,
+				averageRating,
 			},
 		});
 	} catch (err) {

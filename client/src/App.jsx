@@ -13,6 +13,7 @@ import ContactPage from './pages/ContactPage';
 import AboutPage from './pages/AboutPage';
 import HelpPage from './pages/HelpPage';
 import ContractDetailPage from './pages/ContractDetailPage';
+import ProfilePage from './pages/ProfilePage';
 
 import './index.css';
 
@@ -31,6 +32,7 @@ const App = () => {
 					<Route path="/contact" element={<ContactPage />} />
 					<Route path="/help" element={<HelpPage />} />
 					<Route path="/contracts/:contractId" element={<ContractDetailPage />} /> {/* ✅ Nueva ruta */}
+					<Route path="/profile/:userId" element={<ProfilePage/>}/>
 
 					{/* Rutas de Gestión */}
 					<Route
