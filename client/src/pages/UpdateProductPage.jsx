@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
+import toast from 'react-hot-toast';
+
+const { VITE_API_URL } = import.meta.env;
 
 const UpdateProductPage = () => {
 	const { id } = useParams(); // Obtener el ID del producto desde la URL
-	console.log('ID recibido en la URL:', id);
 	const navigate = useNavigate();
-	const token = localStorage.getItem('token'); // Obtener token de autenticación
+	const { authUser } = useContext(AuthContext); // Obtener usuario autenticado
+	const token = authUser?.token || localStorage.getItem('token'); // Obtener token
 
-	const [product, setProduct] = useState({
-		title: '',
-		description: '',
-		price: '',
-	});
+	const [product, setProduct] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
@@ -20,7 +20,7 @@ const UpdateProductPage = () => {
 		const fetchProduct = async () => {
 			try {
 				const res = await fetch(
-					`${import.meta.env.VITE_API_URL}/api/products/${id}`,
+					`${VITE_API_URL}/api/properties/${id}`,
 					{
 						method: 'GET',
 						headers: {
@@ -35,11 +35,7 @@ const UpdateProductPage = () => {
 				}
 
 				const data = await res.json();
-				setProduct({
-					title: data.title,
-					description: data.description,
-					price: data.price,
-				});
+				setProduct(data);
 			} catch (err) {
 				setError(err.message);
 			} finally {
@@ -55,6 +51,17 @@ const UpdateProductPage = () => {
 		}
 	}, [id, token]);
 
+	// **Verificar si el usuario tiene permisos**
+	if (!loading && product) {
+		const esAdmin = authUser?.role === 'admin';
+		const esOwner = authUser?.id === product.ownerId;
+
+		if (!esAdmin && !esOwner) {
+			toast.error('No tienes permisos para modificar este producto.');
+			return <p>No tienes permisos para modificar este producto.</p>;
+		}
+	}
+
 	// Manejar cambios en los inputs
 	const handleChange = (e) => {
 		setProduct({ ...product, [e.target.name]: e.target.value });
@@ -65,23 +72,20 @@ const UpdateProductPage = () => {
 		e.preventDefault();
 
 		try {
-			const res = await fetch(
-				`${import.meta.env.VITE_API_URL}/api/products/${id}`,
-				{
-					method: 'PUT',
-					headers: {
-						Authorization: `Bearer ${token}`,
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify(product),
-				}
-			);
+			const res = await fetch(`${VITE_API_URL}/api/properties/${id}`, {
+				method: 'PUT',
+				headers: {
+					Authorization: `Bearer ${token}`,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(product),
+			});
 
 			if (!res.ok) {
 				throw new Error('Error al actualizar el producto');
 			}
 
-			alert('Producto actualizado con éxito');
+			toast.success('Producto actualizado con éxito');
 			navigate('/products'); // Redirigir a la lista de productos
 		} catch (err) {
 			setError(err.message);
