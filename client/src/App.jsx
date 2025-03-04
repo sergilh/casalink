@@ -37,6 +37,7 @@ const App = () => {
 						path="/properties/:id/update"
 						element={<UpdateProductPage />}
 					/>
+
 					<Route
 						path="/rental-requests"
 						element={<RentalRequestsPage />}
