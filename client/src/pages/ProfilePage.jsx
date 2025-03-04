@@ -9,6 +9,8 @@ const ProfilePage = () => {
     const { authUser } = useContext(AuthContext);
     const token = authUser?.token || localStorage.getItem('token'); // Obtener token
     const [userReviews, setUserReviews] = useState([]);
+    const [userInfo, setUserInfo] = useState({});
+
     const [ loading, setLoading ] = useState(true);
 
     useEffect(() => {
@@ -24,9 +26,11 @@ const ProfilePage = () => {
                 if (!res.ok) {
                     throw new Error('Error al obtener los datos del usuario')
                 }
-                const data = await res.json();
-                console.log('datos recibidos', data)
-                setUserReviews(data);
+                const body = await res.json();
+                console.log('datos recibidos', body)
+                setUserReviews(body.data.reviews);
+                setUserInfo(body.data)
+                
             } catch (error) {
                 console.error(error);
                 toast.error('Error al obtener los datos del usuario')
@@ -34,12 +38,12 @@ const ProfilePage = () => {
                 setLoading(false);
             }
         }
-
+        
         if (token) {
             getUserReviews();
         }
     }, [userId,token])
-
+    
     
     return (
         <main>
@@ -48,7 +52,7 @@ const ProfilePage = () => {
             <section>
                 <div>
                     <h2>{userReviews.name}</h2>
-                    <p>{userReviews.bio}</p>
+                    <p>{userInfo.averageRating}</p>
                 </div>
             </section>
 
