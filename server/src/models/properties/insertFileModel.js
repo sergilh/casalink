@@ -10,9 +10,9 @@ const insertFileModel = async (
 		const db = await getPool();
 		await db.query(
 			`
-				INSERT INTO images (propertyId, imageUrl, sortIndex)
-				VALUES (?, ?, ?)`,
-			[propertyId, fileUrl, sortIndex]
+			INSERT INTO images (propertyId, imageUrl, fileType, sortIndex) 
+			VALUES (?, ?, ?, ?)`,
+			[propertyId, fileUrl, fileType, sortIndex]
 		);
 	} catch (err) {
 		console.error('Error en insertFileModel:', err);
