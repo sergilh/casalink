@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import casalinkMainLogo from '../assets/images/brand/casalink-logotipo-main-1080x400.svg';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
+import AvatarIcon from './AvatarIcon';
 
 const Header = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -117,10 +118,10 @@ const Header = () => {
 					<li className={`${authUser ? 'hidden' : ''}`}>
 						<Link
 							to="/register"
-							className="text-[#000033] hover:underline transition-all duration-300"
+							className="bg-[#000033] md:bg-[#ff6666] md:hover:bg-[#66ffff] transition-all duration-300 w-full text-[#eeeeee] md:hover:text-[#000033] px-6 py-2 rounded-full transform hover:scale-105 text-3xl md:text-base"
 							onClick={() => setIsOpen(!isOpen)}
 						>
-							Register
+							Registro
 						</Link>
 					</li>
 					<li className={`${authUser ? '' : 'hidden'}`}>
@@ -128,7 +129,7 @@ const Header = () => {
 							onClick={logout}
 							className="text-[#000033] hover:underline transition-all duration-300"
 						>
-							Logout
+							Cerra sesión
 						</a>
 					</li>
 				</ul>
@@ -140,19 +141,7 @@ const Header = () => {
 						id="user-avatar"
 						className="flex items-center justify-center"
 					>
-						<div
-							id="avatar-wrapper"
-							className="relative overflow-clip size-12 bg-[#e6dada] rounded-full"
-						>
-							<div
-								id="avatar-head"
-								className="size-4 bg-[#000033] rounded-full mx-auto m-2"
-							></div>
-							<div
-								id="avatar-body"
-								className="size-12 bg-[#000033] rounded-full"
-							></div>
-						</div>
+						<AvatarIcon />
 						<div
 							id="notification-circle"
 							className="relative size-4 bg-[#ff6666] rounded-full -translate-x-1/2 mb-6"

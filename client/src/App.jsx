@@ -10,6 +10,8 @@ import ContactPage from './pages/ContactPage';
 import AboutPage from './pages/AboutPage';
 import HelpPage from './pages/HelpPage';
 import NotFoundPage from './pages/NotFoundPage';
+import TestPage from './pages/TestPage';
+import SearchPage from './pages/SearchPage';
 import './index.css';
 
 const App = () => {
@@ -20,11 +22,13 @@ const App = () => {
 
 				<Routes>
 					<Route path="/" element={<HomePage />} />
+					<Route path="/test" element={<TestPage />} />
 					<Route path="/login" element={<LoginPage />} />
 					<Route path="/register" element={<RegisterPage />} />
 					<Route path="/about" element={<AboutPage />} />
 					<Route path="/contact" element={<ContactPage />} />
 					<Route path="/help" element={<HelpPage />} />
+					<Route path="/search" element={<SearchPage />} />
 					{/* Ruta para probar la creación de alquiler con imágenes */}
 					<Route
 						path="/create-rent"

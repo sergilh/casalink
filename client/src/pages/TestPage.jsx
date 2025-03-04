@@ -1,6 +1,6 @@
-const HowToSection = () => {
+const TestPage = () => {
 	return (
-		<div>
+		<>
 			{/* Property Listings */}
 			<div className="py-8 px-4">
 				<div className="grid grid-cols-3 gap-4 max-w-5xl mx-auto">
@@ -56,7 +56,8 @@ const HowToSection = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
-export default HowToSection;
+
+export default TestPage;
