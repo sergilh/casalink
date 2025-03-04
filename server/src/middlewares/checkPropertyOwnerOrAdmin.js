@@ -5,7 +5,7 @@ import generateErrorUtil from '../utils/generateErrorUtil.js';
 const checkPropertyOwnerOrAdmin = (req, res, next) => {
 	try {
 		const currentUserRole = req.user.role;
-		const currentUserId = req.user.id;
+		const currentUserId = req.user?.id;
 		const propertyOwnerId = req.property?.ownerId; // Ahora ya se define correctamente
 
 		console.log('currentUserRole', currentUserRole);
