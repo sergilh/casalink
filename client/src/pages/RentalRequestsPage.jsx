@@ -1,9 +1,10 @@
 import { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../contexts/AuthContext'; // Importa el contexto de autenticación
+import { AuthContext } from '../contexts/AuthContext';
+import RequestsList from '../components/RequestsList';
 
 const RentalRequestsPage = () => {
-	const { authUser } = useContext(AuthContext); // Obtener el usuario autenticado
-	const token = authUser?.token || localStorage.getItem('token'); // Obtener el token del contexto o localStorage
+	const { authUser } = useContext(AuthContext);
+	const token = authUser?.token || localStorage.getItem('token');
 
 	const [rentalRequests, setRentalRequests] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -12,12 +13,6 @@ const RentalRequestsPage = () => {
 	useEffect(() => {
 		const fetchRentalRequests = async () => {
 			try {
-				console.log(
-					'Haciendo petición a:',
-					`${import.meta.env.VITE_API_URL}/api/contracts/`
-				);
-				console.log('Token enviado:', token);
-
 				const res = await fetch(
 					`${import.meta.env.VITE_API_URL}/api/contracts/`,
 					{
@@ -25,30 +20,22 @@ const RentalRequestsPage = () => {
 						credentials: 'include',
 						headers: {
 							'Content-Type': 'application/json',
-							Authorization: token ? `Bearer ${token}` : '', // Usar el token si existe
+							Authorization: token ? `Bearer ${token}` : '',
 						},
 					}
 				);
 
-				// **Aquí verificamos si la respuesta es HTML en lugar de JSON**
-				const text = await res.text();
-				console.log('Respuesta de la API:', text);
-
-				if (!res.ok) {
+				if (!res.ok)
 					throw new Error(
 						'Error al obtener las solicitudes de alquiler'
 					);
-				}
 
-				const data = JSON.parse(text); // Convertir a JSON
-				console.log('Datos recibidos de la API:', data); // Mostrar en consola
-				// Unir las dos listas de contratos
+				const data = await res.json();
 				setRentalRequests([
 					...(data.contractsAsTenant || []),
 					...(data.contractsAsOwner || []),
 				]);
 			} catch (err) {
-				console.error('Error en la API:', err.message);
 				setError(err.message);
 			} finally {
 				setLoading(false);
@@ -56,41 +43,27 @@ const RentalRequestsPage = () => {
 		};
 
 		if (token) {
-			// Solo hacer la petición si hay un token
 			fetchRentalRequests();
 		} else {
-			console.warn('⚠️ No hay token disponible');
 			setError('No hay token disponible, inicia sesión.');
 			setLoading(false);
 		}
 	}, [token]);
 
 	return (
-		<main className="rental-container">
-			<h2>Lista de Solicitudes de Alquiler</h2>
-			{loading && <p>Cargando solicitudes...</p>}
-			{error && <p className="error">{error}</p>}
+		<main className="min-h-screen bg-gray-100 flex flex-col items-center py-10 px-4">
+			<h2 className="text-3xl font-bold text-gray-800 mb-6">
+				Lista de Solicitudes de Alquiler
+			</h2>
 
-			<ul className="rental-list">
-				{rentalRequests?.length === 0 && !loading && (
-					<p>No hay solicitudes de alquiler</p>
-				)}
-				{Array.isArray(rentalRequests) &&
-					rentalRequests.map((request) => (
-						<li key={request.id} className="rental-item">
-							<p>
-								<strong>Inquilino:</strong> {request.tenantName}
-							</p>
-							<p>
-								<strong>Propiedad:</strong>{' '}
-								{request.propertyTitle}
-							</p>
-							<p>
-								<strong>Estado:</strong> {request.status}
-							</p>
-						</li>
-					))}
-			</ul>
+			{loading && (
+				<p className="text-gray-600">Cargando solicitudes...</p>
+			)}
+			{error && <p className="text-red-500">{error}</p>}
+
+			{!loading && !error && (
+				<RequestsList rentalRequests={rentalRequests} />
+			)}
 		</main>
 	);
 };
