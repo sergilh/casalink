@@ -1,7 +1,8 @@
 import HeroSection from '../components/HeroSection';
 import FeaturedListingsSection from '../components/FeaturedListingsSection';
 import PublishPropertySection from '../components/PublishPropertySection';
-//import { Search } from 'lucide-react';
+import HowToSection from '../components/HowToSection';
+import ReviewsSection from '../components/ReviewsSection';
 
 const HomePage = () => {
 	return (
@@ -9,7 +10,7 @@ const HomePage = () => {
 			{/* Hero Section with Red Overlay */}
 			<HeroSection />
 
-			{/* About Section */}
+			{/* About Section * /}
 			<section className="bg-red-400">
 				<div className="container mx-auto grid md:grid-cols-2">
 					<div className="p-12 md:p-16">
@@ -33,12 +34,19 @@ const HomePage = () => {
 					</div>
 				</div>
 			</section>
+			*/}
 
 			{/* Feature Section */}
 			<PublishPropertySection />
 
+			{/* How To Section */}
+			<HowToSection />
+
 			{/* Listings Section */}
 			<FeaturedListingsSection />
+
+			{/* Reviews Section */}
+			<ReviewsSection />
 		</div>
 	);
 };

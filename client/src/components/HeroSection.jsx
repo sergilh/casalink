@@ -1,4 +1,5 @@
 import heroImage from '../assets/images/hero-image-town-2160x1440-01.jpg';
+//import { Search } from 'lucide-react';
 
 const HeroSection = () => {
 	return (

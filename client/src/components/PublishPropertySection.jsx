@@ -1,26 +1,48 @@
+import oscarGarciaHabla from '../assets/images/casalink-oscar-garcia-hablando.png';
+import oscarGarciaSelfie from '../assets/images/casalink-oscar-garcia-selfie.png';
+import oscarGarciaajustes from '../assets/images/casalink-oscar-garcia-ajustes.png';
 const PublishPropertySection = () => {
 	return (
 		<section>
-			<div className="mx-auto grid md:grid-cols-2">
-				<div className="h-96">
-					{/* <Image
-					src="/placeholder.svg?height=400&width=600"
-					alt="Modern interior"
-					width={600}
-					height={400}
-					className="object-cover w-full h-full"
-				/> */}
-				</div>
-				<div className="bg-navy-900 h-96 flex items-center justify-center p-8 bg-[#0a0a4a]">
-					<div className="relative">
-						<div className="absolute -top-24 left-1/2 transform -translate-x-1/2">
-							<div className="w-16 h-16 bg-cyan-400 rounded-full relative">
-								<div className="w-8 h-8 bg-[#0a0a4a] rounded-full absolute -top-12 -right-4"></div>
-								<div className="w-6 h-6 bg-[#0a0a4a] rounded-full absolute top-16 right-8"></div>
-							</div>
+			{/* Steps Section */}
+			<div className="bg-[#ff6666] py-8 px-16">
+				<div className="md:flex space-y-16 justify-between items-center gap-4 mx-auto">
+					<div className="flex flex-col items-center md:gap-4">
+						<div className="flex items-center justify-center mb-2">
+							<img
+								src={oscarGarciaajustes}
+								alt="Describe tu Propiedad a detalle"
+							/>
 						</div>
-						<button className="bg-cyan-400 text-gray-900 font-medium py-3 px-8 rounded-full mt-16">
-							Publicar un anuncio gratis
+						<span className="text-white">
+							Configura tu Propiedad
+						</span>
+					</div>
+
+					<div className="flex flex-col items-center">
+						<div className="flex items-center justify-center mb-2">
+							<img
+								src={oscarGarciaSelfie}
+								alt="Agrega fotos de tu Propiedad"
+							/>
+						</div>
+						<span className="text-white">Agrega Fotos</span>
+					</div>
+
+					<div className="flex flex-col items-center">
+						<div className="flex items-center justify-center mb-2">
+							<img
+								src={oscarGarciaHabla}
+								alt="Habla con usuarios y alquila yu propiedad"
+							/>
+						</div>
+						<span className="text-white">
+							Alquila con Seguridad
+						</span>
+					</div>
+					<div className="flex flex-col items-center w-full">
+						<button className="bg-[#000033] hover:bg-[#66ffff] transition-all duration-300 w-full m-16 text-[#eeeeee] hover:text-[#000033] px-6 py-2 rounded-full transform hover:scale-105 ">
+							¡Publica tu anuncio!
 						</button>
 					</div>
 				</div>
