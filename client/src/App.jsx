@@ -11,6 +11,8 @@ import CreateRentWithImages from './pages/CreateRentWithImages'; // Variante con
 import ContactPage from './pages/ContactPage';
 import AboutPage from './pages/AboutPage';
 import HelpPage from './pages/HelpPage';
+import ContractDetailPage from './pages/ContractDetailPage';
+
 import './index.css';
 
 const App = () => {
@@ -27,6 +29,7 @@ const App = () => {
 					<Route path="/about" element={<AboutPage />} />
 					<Route path="/contact" element={<ContactPage />} />
 					<Route path="/help" element={<HelpPage />} />
+					<Route path="/contracts/:contractId" element={<ContractDetailPage />} /> {/* ✅ Nueva ruta */}
 
 					{/* Rutas de Gestión */}
 					<Route
