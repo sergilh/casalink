@@ -129,7 +129,7 @@ const Header = () => {
 							onClick={logout}
 							className="text-[#000033] hover:underline transition-all duration-300"
 						>
-							Cerra sesión
+							Cerrar sesión
 						</a>
 					</li>
 				</ul>
