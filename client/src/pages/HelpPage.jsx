@@ -4,7 +4,7 @@ import { FaSearch, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 const faqs = [
 	{
 		question: '¿Cómo puedo buscar una propiedad?',
-		answer: 'Puedes usar los filtros de búsqueda en la página de inicio para encontrar propiedades según tu preferencia.',
+		answer: 'Puedes usar los filtros de búsqueda en la página de inicio o la pagina de resultados de búsqueda,para encontrar propiedades según tu preferencia.',
 	},
 	{
 		question: '¿Cómo contacto al propietario?',
@@ -28,7 +28,7 @@ export default function HelpPage() {
 	};
 
 	return (
-		<div className="max-w-4xl p-6">
+		<div className="flex flex-col flex-grow mx-auto container min-h-[75vh] p-6">
 			<h1 className="text-3xl font-bold text-center mb-6">
 				¿Necesitas ayuda?
 			</h1>
@@ -44,7 +44,7 @@ export default function HelpPage() {
 			</div>
 
 			{/* Sección de FAQ */}
-			<div>
+			<div className="mx-auto container">
 				<h2 className="text-2xl font-semibold mb-4">
 					Preguntas Frecuentes
 				</h2>
