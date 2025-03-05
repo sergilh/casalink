@@ -4,14 +4,13 @@ const usersPreviousRatingController = async (req, res, next) => {
 	try {
 		const { id } = req.params;
 
-		const { reviews, averageRating } = await selectUserReviewsModel(id);
+		const userRatingInfo = await selectUserReviewsModel(id);
 
 		res.send({
 			status: 'ok',
 			message: 'Estas son las valoraciones del usuario seleccionado',
 			data: {
-				reviews,
-				averageRating,
+				userRatingInfo,
 			},
 		});
 	} catch (err) {
