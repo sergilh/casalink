@@ -16,6 +16,8 @@ import TestPage from './pages/TestPage';
 import SearchPage from './pages/SearchPage';
 import ContractDetailPage from './pages/ContractDetailPage';
 import ProfilePage from './pages/ProfilePage';
+import RecoverPasswordPage from './pages/RecoverPasswordPage';
+import ChangePasswordPage from './pages/ChangePasswordPage';
 import './index.css';
 
 const App = () => {
@@ -53,6 +55,8 @@ const App = () => {
 					/>
 					{/* Otras rutas */}
 					<Route path="*" element={<NotFoundPage />} />
+					<Route path="/recover-password" element={<RecoverPasswordPage />} />
+  					<Route path="/change-password" element={<ChangePasswordPage />} />
 				</Routes>
 
 				<Footer />
