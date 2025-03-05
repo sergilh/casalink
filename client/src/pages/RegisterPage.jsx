@@ -1,185 +1,209 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
-import useFetch from '../hooks/useFetch';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import useFetch from "../hooks/useFetch";
 
 const { VITE_API_URL } = import.meta.env;
 
 const RegisterPage = () => {
-	const navigate = useNavigate();
-	const { fetchData, loading } = useFetch();
+  const navigate = useNavigate();
+  const { fetchData, loading } = useFetch();
 
-	const [formValues, setFormValues] = useState({
-		name: '',
-		lastName: '',
-		email: '',
-		password: '',
-		repeatedPass: '',
-		phone: '',
-		legalId: '',
-	});
+  const [formValues, setFormValues] = useState({
+    name: "",
+    lastName: "",
+    email: "",
+    password: "",
+    repeatedPass: "",
+    phone: "",
+    legalId: "",
+  });
 
-	const handleChange = (e) => {
-		setFormValues({ ...formValues, [e.target.name]: e.target.value });
-	};
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRepeatedPassword, setShowRepeatedPassword] = useState(false);
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  const toggleRepeatedPasswordVisibility = () =>
+    setShowRepeatedPassword(!showRepeatedPassword);
 
-		if (formValues.password !== formValues.repeatedPass) {
-			toast.error('Las contraseñas no coinciden');
-			return;
-		}
+  const handleChange = (e) => {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value });
+  };
 
-		const userData = { ...formValues };
-		delete userData.repeatedPass;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-		const response = await fetchData({
-			url: `${VITE_API_URL}/api/users/register`,
-			method: 'POST',
-			body: userData,
-		});
+    if (formValues.password !== formValues.repeatedPass) {
+      toast.error("Las contraseñas no coinciden");
+      return;
+    }
 
-		if (response) {
-			toast.success('Registro exitoso. Revisa tu correo.');
-			navigate('/login');
-		} else {
-			toast.error('Error en el registro');
-		}
-	};
+    const userData = { ...formValues };
+    delete userData.repeatedPass;
 
-	return (
-		<main className="flex justify-center items-center min-h-screen bg-gray-100">
-			<div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-md">
-				<h2 className="text-2xl font-semibold text-gray-700 text-center mb-4">
-					Registro
-				</h2>
+    const response = await fetchData({
+      url: `${VITE_API_URL}/api/users/register`,
+      method: "POST",
+      body: userData,
+    });
 
-				<form onSubmit={handleSubmit} className="space-y-4">
-					{/* Campo Nombre */}
-					<div>
-						<label className="block text-gray-600 font-medium">
-							Nombre:
-						</label>
-						<input
-							type="text"
-							name="name"
-							value={formValues.name}
-							onChange={handleChange}
-							required
-							className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-							placeholder="Tu nombre"
-						/>
-					</div>
+    if (response) {
+      toast.success("Registro exitoso. Revisa tu correo.");
+      navigate("/login");
+    } else {
+      toast.error("Error en el registro");
+    }
+  };
 
-					{/* Campo Apellidos */}
-					<div>
-						<label className="block text-gray-600 font-medium">
-							Apellidos:
-						</label>
-						<input
-							type="text"
-							name="lastName"
-							value={formValues.lastName}
-							onChange={handleChange}
-							required
-							className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-							placeholder="Tus apellidos"
-						/>
-					</div>
+  return (
+    <div className="flex-grow flex justify-center items-center bg-gray-100 px-4 max-h-[1280px]">
+      <div className="bg-white shadow-lg rounded-xl p-4 w-full max-w-md">
+        <h2 className="text-xl font-semibold text-gray-700 text-center mb-3">
+          Registro
+        </h2>
 
-					{/* Campo Email */}
-					<div>
-						<label className="block text-gray-600 font-medium">
-							Email:
-						</label>
-						<input
-							type="email"
-							name="email"
-							value={formValues.email}
-							onChange={handleChange}
-							required
-							className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-							placeholder="tucorreo@email.com"
-						/>
-					</div>
+        <form onSubmit={handleSubmit} className="space-y-9 p-9">
+          {/* Nombre y Apellidos en una línea */}
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <label className="block text-gray-600 text-sm font-medium">
+                Nombre:
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={formValues.name}
+                onChange={handleChange}
+                required
+                className="w-full p-2 border border-gray-300 rounded-md text-gray-900 bg-white text-sm"
+                placeholder="Nombre"
+              />
+            </div>
 
-					{/* Campo Contraseña */}
-					<div>
-						<label className="block text-gray-600 font-medium">
-							Contraseña:
-						</label>
-						<input
-							type="password"
-							name="password"
-							value={formValues.password}
-							onChange={handleChange}
-							required
-							className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-							placeholder="********"
-						/>
-					</div>
+            <div>
+              <label className="block text-gray-600 text-sm font-medium">
+                Apellidos:
+              </label>
+              <input
+                type="text"
+                name="lastName"
+                value={formValues.lastName}
+                onChange={handleChange}
+                required
+                className="w-full p-2 border border-gray-300 rounded-md text-gray-900 bg-white text-sm"
+                placeholder="Apellidos"
+              />
+            </div>
+          </div>
 
-					{/* Campo Repetir Contraseña */}
-					<div>
-						<label className="block text-gray-600 font-medium">
-							Repetir Contraseña:
-						</label>
-						<input
-							type="password"
-							name="repeatedPass"
-							value={formValues.repeatedPass}
-							onChange={handleChange}
-							required
-							className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-							placeholder="********"
-						/>
-					</div>
+          {/* Email */}
+          <div>
+            <label className="block text-gray-600 text-sm font-medium">
+              Email:
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={formValues.email}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border border-gray-300 rounded-md text-gray-900 bg-white text-sm"
+              placeholder="tucorreo@email.com"
+            />
+          </div>
 
-					{/* Campo Teléfono */}
-					<div>
-						<label className="block text-gray-600 font-medium">
-							Teléfono:
-						</label>
-						<input
-							type="tel"
-							name="phone"
-							value={formValues.phone}
-							onChange={handleChange}
-							required
-							className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-							placeholder="Tu teléfono"
-						/>
-					</div>
+          {/* Teléfono y DNI/NIE en una línea */}
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <label className="block text-gray-600 text-sm font-medium">
+                Teléfono:
+              </label>
+              <input
+                type="tel"
+                name="phone"
+                value={formValues.phone}
+                onChange={handleChange}
+                required
+                className="w-full p-2 border border-gray-300 rounded-md text-gray-900 bg-white text-sm"
+                placeholder="Teléfono"
+              />
+            </div>
 
-					{/* Campo DNI/NIE */}
-					<div>
-						<label className="block text-gray-600 font-medium">
-							DNI/NIE:
-						</label>
-						<input
-							type="text"
-							name="legalId"
-							value={formValues.legalId}
-							onChange={handleChange}
-							required
-							className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-							placeholder="Tu DNI/NIE"
-						/>
-					</div>
+            <div>
+              <label className="block text-gray-600 text-sm font-medium">
+                DNI/NIE:
+              </label>
+              <input
+                type="text"
+                name="legalId"
+                value={formValues.legalId}
+                onChange={handleChange}
+                required
+                className="w-full p-2 border border-gray-300 rounded-md text-gray-900 bg-white text-sm"
+                placeholder="DNI/NIE"
+              />
+            </div>
+          </div>
 
-					{/* Botón de envío */}
-					<button
-						type="submit"
-						disabled={loading}
-						className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 rounded-lg transition duration-300"
-					>
-						{loading ? 'Registrando...' : 'Registrarse'}
-					</button>
-				</form>
-			</div>
-		</main>
-	);
+          {/* Contraseña */}
+          <div className="relative">
+            <label className="block text-gray-600 text-sm font-medium">
+              Contraseña:
+            </label>
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formValues.password}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border border-gray-300 rounded-md text-gray-900 bg-white pr-8 text-sm"
+              placeholder="********"
+            />
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute right-2 top-8 text-gray-500 hover:text-gray-700"
+            >
+              {showPassword ? <EyeSlashIcon className="h-4 w-4" /> : <EyeIcon className="h-4 w-4" />}
+            </button>
+          </div>
+
+          {/* Repetir Contraseña */}
+          <div className="relative">
+            <label className="block text-gray-600 text-sm font-medium">
+              Repetir Contraseña:
+            </label>
+            <input
+              type={showRepeatedPassword ? "text" : "password"}
+              name="repeatedPass"
+              value={formValues.repeatedPass}
+              onChange={handleChange}
+              required
+              className="w-full p-2 border border-gray-300 rounded-md text-gray-900 bg-white pr-8 text-sm"
+              placeholder="********"
+            />
+            <button
+              type="button"
+              onClick={toggleRepeatedPasswordVisibility}
+              className="absolute right-2 top-8 text-gray-500 hover:text-gray-700"
+            >
+              {showRepeatedPassword ? <EyeSlashIcon className="h-4 w-4" /> : <EyeIcon className="h-4 w-4" />}
+            </button>
+          </div>
+
+          {/* Botón de envío */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 rounded-md transition duration-300 text-sm"
+          >
+            {loading ? "Registrando..." : "Registrarse"}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default RegisterPage;
