@@ -63,7 +63,7 @@ const RegisterPage = () => {
           Registro
         </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-9 p-9">s
+        <form onSubmit={handleSubmit} className="space-y-9 p-9">
           {/* Nombre y Apellidos en una línea */}
           <div className="grid grid-cols-2 gap-2">
             <div>

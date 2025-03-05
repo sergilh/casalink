@@ -10,15 +10,12 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-<<<<<<< HEAD
-		"@heroicons/react": "^2.2.0",
-=======
-		"@fortawesome/fontawesome-svg-core": "^6.7.2",
-		"@fortawesome/free-brands-svg-icons": "^6.7.2",
-		"@fortawesome/free-regular-svg-icons": "^6.7.2",
-		"@fortawesome/free-solid-svg-icons": "^6.7.2",
-		"@fortawesome/react-fontawesome": "^0.2.2",
->>>>>>> e7ba13880ca73e6ce5891cc4b63589b5c7ef82ff
+"@heroicons/react": "^2.2.0",
+"@fortawesome/fontawesome-svg-core": "^6.7.2",
+"@fortawesome/free-brands-svg-icons": "^6.7.2",
+"@fortawesome/free-regular-svg-icons": "^6.7.2",
+"@fortawesome/free-solid-svg-icons": "^6.7.2",
+"@fortawesome/react-fontawesome": "^0.2.2",
 		"@tailwindcss/postcss": "^4.0.9",
 		"@tailwindcss/vite": "^4.0.9",
 		"axios": "^1.8.1",
