@@ -13,7 +13,7 @@ const selectUserReviewsModel = async (userId) => {
 				u.bio AS biography,
 				u2.avatarUrl AS reviewerAvatar,
 				r.reviewedId,
-				r.contracId,
+				r.contractId,
 				r.rating,
 				r.comment,
 				c.id AS contractId,
@@ -23,11 +23,11 @@ const selectUserReviewsModel = async (userId) => {
 				c.endDate,
 				ROUND(AVG(r.rating), 0) AS averageRating
 			FROM contracts c
-			LEFT JOIN reviews r ON c.id = r.contracId
+			LEFT JOIN reviews r ON c.id = r.contractId
 			LEFT JOIN users u ON r.reviewedId= u.id
 			LEFT JOIN users u2 ON r.reviewerId= u2.id
 			WHERE c.tenantId=?
-			GROUP BY r.id, r.reviewerId, u.name, u.lastName, u.bio, r.reviewedId, r.contracId, r.rating, r.comment, c.id, c.tenantId, c.propertyId, c.startDate, c.endDate
+			GROUP BY r.id, r.reviewerId, u.name, u.lastName, u.bio, r.reviewedId, r.contractId, r.rating, r.comment, c.id, c.tenantId, c.propertyId, c.startDate, c.endDate
 		`,
 		[userId]
 	);
