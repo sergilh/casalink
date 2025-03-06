@@ -59,6 +59,7 @@ const AuthProvider = ({ children }) => {
 
 	const authLogoutState = () => {
 		setAuthToken(null);
+		setAuthUser(null); // Limpiamos el estado del usuario
 		cookies.remove(VITE_AUTH_TOKEN);
 	};
 
