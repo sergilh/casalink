@@ -65,8 +65,9 @@ const ProfilePage = () => {
 	console.log('Datos del usuario autenticado:', authUser);
 
 	return (
-		<main>
-			<h2>Mi perfil</h2>
+		<main className="flex justify-center items-center min-h-screen bg-gray-100">
+			<div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-2xl">
+			<h2 className="text-2xl font-semibold text-gray-700 text-center mb-8">Mi perfil</h2>
 
 			{usernotFound ? (
 				<p>El usuario no existe</p>
@@ -75,29 +76,34 @@ const ProfilePage = () => {
 					<section id="profile-info-section" className="m-4">
 						<div
 							id="profile-info-container"
-							className="flex justify-evenly items-center w-full"
+							className="flex-col justify-evenly items-center w-full"
 						>
-							<div className="flex justify-center items-center gap-4 w-auto h-auto">
+							<div className="flex justify-center items-center gap-4 w-auto h-auto mb-6">
 								<AvatarIcon />
 								<h2>{userInfo.reviewedName}</h2>
-							</div>
-							<div className="flex gap-6">
-								<div className="flex-col justify-center border-2 border-[#eeeeee] border-opacity-100 rounded-xl p-1.5">
-									<div className="flex justify-center">
-										<FontAwesomeIcon
-											icon={faStar}
-											fixedWidth
-											className="text-yellow-500"
-										/>
-									</div>
-									<p className="text-center text-xs pt-1 pb-0.5 font-bold">
-										Promedio
-									</p>
-									<p className="text-center font-bold ">
-										{userInfo.averageRating}
-									</p>
 								</div>
-								<div className="flex items-center justify-center">
+								
+							<div className="flex gap-6 items-center justify-center">
+									{userReviews.length > 0 && (
+										<>
+											<div className="flex-col justify-center border-2 border-[#eeeeee] border-opacity-100 rounded-xl p-1.5 transition duration-300 bg-white hover:bg-[#eeeeee]">
+												<div className="flex justify-center">
+													<FontAwesomeIcon
+														icon={faStar}
+														fixedWidth
+														className="text-yellow-500"
+													/>
+												</div>
+												<p className="text-center text-xs pt-1 pb-0.5 font-bold">
+													Promedio
+												</p>
+												<p className="text-center font-bold ">
+													{userInfo.averageRating}
+												</p>
+											</div>
+										</>
+									)}
+								<div className="flex items-center justify-center border-2 border-[#eeeeee] border-opacity-100 rounded-xl p-2">
 									<p>{userInfo.biography}</p>
 								</div>
 							</div>
@@ -137,7 +143,8 @@ const ProfilePage = () => {
 					{loading ? (
 						<p>Cargando...</p>
 					) : userReviews.length > 0 ? (
-						<section id="profile-reviews-section" className="m-8">
+									<section id="profile-reviews-section" className="m-8 flex-grow">
+										<h2 className="text-2xl font-semibold text-gray-700 text-center mb-4">Mis valoraciones</h2>
 							{userReviews.map((review) => (
 								<Review
 									key={review.id}
@@ -149,10 +156,11 @@ const ProfilePage = () => {
 							))}
 						</section>
 					) : (
-						<p>No hay reseñas disponibles para este usuario</p>
+						<p className='text-center p-4'>No hay reseñas disponibles para este usuario</p>
 					)}
 				</>
-			)}
+				)}
+				</div>
 		</main>
 	);
 };
