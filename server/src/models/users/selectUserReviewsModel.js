@@ -1,7 +1,23 @@
 import getPool from '../../db/getPool.js';
+import generateErrorUtil from '../../utils/generateErrorUtil.js';
 const selectUserReviewsModel = async (userId) => {
 	const pool = await getPool();
 	console.log(userId);
+
+	const [userDetails] = await pool.query(
+		`SELECT
+		name,
+		lastName,
+		bio,
+		avatarUrl
+		FROM users
+		WHERE id=?`,
+		[userId]
+	);
+
+	if (userDetails.length === 0) {
+		generateErrorUtil('No se ha encontrado el usuario', 400);
+	}
 
 	const [reviews] = await pool.query(
 		`
@@ -32,15 +48,14 @@ const selectUserReviewsModel = async (userId) => {
 		[userId]
 	);
 
-	const averageRating = reviews.length > 0 ? reviews[0].averageRating : null;
-	const reviewedName = reviews.length > 0 ? reviews[0].reviewedName : null;
-	const biography = reviews.length > 0 ? reviews[0].biography : null;
+	const averageRating = reviews.length > 0 ? reviews[0].averageRating : 0;
 
 	return {
 		user: {
-			reviewedName,
-			biography,
+			reviewedName: `${userDetails[0].name} ${userDetails[0].lastName}`,
+			biography: userDetails[0].bio || 'Biografía no disponible',
 			averageRating,
+			avatarUrl: userDetails[0].avatarUrl || 'DefaultAvatarUrl',
 		},
 		reviews,
 	};
