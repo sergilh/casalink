@@ -1,6 +1,8 @@
 import oscarGarciaHabla from '../assets/images/casalink-oscar-garcia-hablando.png';
 import oscarGarciaSelfie from '../assets/images/casalink-oscar-garcia-selfie.png';
 import oscarGarciaAjustes from '../assets/images/casalink-oscar-garcia-ajustes.png';
+import { Link } from 'react-router-dom';
+
 const PublishPropertySection = () => {
 	return (
 		<section>
@@ -43,9 +45,12 @@ const PublishPropertySection = () => {
 						</span>
 					</div>
 					<div className="flex flex-col items-center w-full">
-						<button className="bg-[#000033] hover:bg-[#66ffff] transition-all duration-300 w-full text-[#eeeeee] hover:text-[#000033] px-6 py-2 rounded-full transform hover:scale-105 text-3xl md:text-base">
+						<Link
+							to="/create-rent"
+							className="bg-[#000033] hover:bg-[#66ffff] transition-all duration-300 text-center text-[#eeeeee] hover:text-[#000033] px-6 py-2 rounded-full transform hover:scale-105 text-3xl md:text-base"
+						>
 							¡Publica tu anuncio!
-						</button>
+						</Link>
 					</div>
 				</div>
 			</div>

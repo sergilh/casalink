@@ -5,7 +5,7 @@ import generateErrorUtil from '../../utils/generateErrorUtil.js';
 const updatePropertyController = async (req, res, next) => {
 	try {
 		const { propertyId } = req.params;
-		const userId = req.user.id; // Usuario autenticado
+		//const userId = req.user.id; // Usuario autenticado
 		const userRole = req.user.role; // Rol del usuario
 
 		if (!propertyId) {
@@ -26,6 +26,8 @@ const updatePropertyController = async (req, res, next) => {
 			});
 		}
 
+		/*
+		YA EXISTEN LOS MIDDLEWARES PARA ESTO
 		const ownerId = property.ownerId;
 		const esAdmin = userRole === 'admin' || userRole === 'superadmin';
 		const esOwner = userId === ownerId;
@@ -37,6 +39,7 @@ const updatePropertyController = async (req, res, next) => {
 				message: 'No tienes permisos para modificar esta propiedad.',
 			});
 		}
+		*/
 
 		// ACTUALIZAR LA PROPIEDAD
 		const {
@@ -71,6 +74,7 @@ const updatePropertyController = async (req, res, next) => {
 			bedrooms,
 			bathrooms,
 			price,
+			status: userRole === 'user' ? 'pending' : 'available',
 		});
 
 		return res.status(200).json({

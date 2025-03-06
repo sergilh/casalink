@@ -20,7 +20,9 @@ const HomePage = () => {
 			<FeaturedListingsSection />
 
 			{/* Reviews Section */}
-			<ReviewsSection />
+			<div className="hidden">
+				<ReviewsSection />
+			</div>
 		</div>
 	);
 };
