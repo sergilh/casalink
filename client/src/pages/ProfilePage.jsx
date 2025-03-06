@@ -1,26 +1,30 @@
 import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../contexts/AuthContext';
 import AvatarIcon from '../components/AvatarIcon';
 import Review from '../components/Review';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { Navigate } from 'react-router-dom';
 
 const { VITE_API_URL } = import.meta.env;
 
 const ProfilePage = () => {
 	const { userId } = useParams();
 	const { authUser } = useContext(AuthContext);
-
-	if (!authUser) return <Navigate to="/login" />; // Redirigir si no está autenticado
-
+	const navigate = useNavigate();
 	const token = authUser?.token || localStorage.getItem('token'); // Obtener token
 	const [userReviews, setUserReviews] = useState([]);
 	const [userInfo, setUserInfo] = useState({});
 	const [usernotFound, setUserNotFound] = useState(false);
 	const [loading, setLoading] = useState(true);
+
+	// Redirigir al usuario al login si no está autenticado
+	useEffect(() => {
+		if (!authUser) {
+			navigate('/login');
+		}
+	}, [authUser, navigate]); // Esto evita el error de hooks condicionales
 
 	useEffect(() => {
 		const getUserReviews = async () => {
