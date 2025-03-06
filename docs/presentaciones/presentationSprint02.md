@@ -27,36 +27,9 @@ name: que-es
 
 background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
-name: objetivos
-
 .left-column[
 
 ## Que es
-
-## Objetivos
-
-]
-
-.right-column[
-
-## 🎯 Objetivos del Proyecto
-
--   Crear e implementar una **base de datos MySQL**.
--   Construir una **API** con Express.js y conectar la API a la base de datos.
--   Crear un **Front End** moderno y usable.
--   Respetar buenas prácticas de desarrollo.
--   Ejecutar un plan de pruebas para garantizar calidad.
-    ]
-
----
-
-background-image: url(..//media/casalink_casa-graphic_600x200.png)
-
-.left-column[
-
-## Que es
-
-## Objetivos
 
 ## Tecnologías
 
@@ -82,150 +55,7 @@ background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 ## Que es
 
-## Objetivos
-
 ## Tecnologías
-
-## Funciones
-
-]
-
-.right-column[
-
-## 📌 Funcionalidades Clave
-
-### ✅ Registro y Autenticación
-
--   Registro de usuarios (inquilinos y propietarios)
--   Inicio de sesión con JWT
--   Verificación de identidad mediante documentación
-
-]
-
----
-
-background-image: url(..//media/casalink_casa-graphic_600x200.png)
-
-.left-column[
-
-## Que es
-
-## Objetivos
-
-## Tecnologías
-
-## Funciones
-
-]
-
-.right-column[
-
-## 📌 Funcionalidades Clave
-
-### 🏠 Gestión de Propiedades
-
--   Publicación de anuncios de alquiler
--   Modificación y eliminación de propiedades
--   Gestión del estado de las propiedades (disponible, alquilado, pendiente)
-
-]
-
----
-
-background-image: url(..//media/casalink_casa-graphic_600x200.png)
-
-.left-column[
-
-## Que es
-
-## Objetivos
-
-## Tecnologías
-
-## Funciones
-
-]
-
-.right-column[
-
-## 📌 Funcionalidades Clave
-
-### 📜 Contratos y Seguridad
-
--   Creación y almacenamiento de contratos de alquiler
--   Descarga de contratos en formato PDF
--   Historial de contratos anteriores
-
-]
-
----
-
-background-image: url(..//media/casalink_casa-graphic_600x200.png)
-
-.left-column[
-
-## Que es
-
-## Objetivos
-
-## Tecnologías
-
-## Funciones
-
-]
-
-.right-column[
-
-## 📌 Funcionalidades Clave
-
-### ⭐ Reseñas y Valoraciones
-
--   Evaluaciones de inquilinos y propietarios
--   Sistema de calificación basado en experiencias reales
-
-]
-
----
-
-background-image: url(..//media/casalink_casa-graphic_600x200.png)
-
-.left-column[
-
-## Que es
-
-## Objetivos
-
-## Tecnologías
-
-## Funciones
-
-]
-
-.right-column[
-
-## 📌 Funcionalidades Clave
-
-### 🔔 Notificaciones
-
--   Alertas sobre solicitudes de visita
--   Confirmaciones y rechazos de alquiler
--   Recordatorios de contratos
-
-]
-
----
-
-background-image: url(..//media/casalink_casa-graphic_600x200.png)
-
-.left-column[
-
-## Que es
-
-## Objetivos
-
-## Tecnologías
-
-## Funciones
 
 ## Estructura
 
@@ -255,11 +85,7 @@ background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 ## Que es
 
-## Objetivos
-
 ## Tecnologías
-
-## Funciones
 
 ## Estructura
 
@@ -288,11 +114,7 @@ background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 ## Que es
 
-## Objetivos
-
 ## Tecnologías
-
-## Funciones
 
 ## Estructura
 
@@ -324,11 +146,7 @@ background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 ## Que es
 
-## Objetivos
-
 ## Tecnologías
-
-## Funciones
 
 ## Estructura
 
@@ -358,11 +176,7 @@ background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 ## Que es
 
-## Objetivos
-
 ## Tecnologías
-
-## Funciones
 
 ## Estructura
 
@@ -384,53 +198,11 @@ background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 ---
 
-background-image: url(..//media/casalink_casa-graphic_600x200.png)
-
-.left-column[
-
-## Que es
-
-## Objetivos
-
-## Tecnologías
-
-## Funciones
-
-## Estructura
-
-## Instalación
-
-## Equipo
-
-## Licencia
-
-]
-
-.right-column[
-
-## 📄 Licencia
-
-Este proyecto está bajo la licencia MIT.
-
-**"Donde inquilinos y propietarios se encuentran."**
-
-]
-
----
-
 name: cliente
 class: center, middle, red-bg
 background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 ## Cliente <a href='http://localhost:4000/' alt="Ver en el navegador" target="_blank">🔗</a>
-
----
-
-name: preguntas
-class: center, middle, red-bg
-background-image: url(..//media/casalink_casa-graphic_600x200.png)
-
-.center[.text-size-h4[***"Ninguna pregunta es una pregunta tonta. La creatividad nace de la curiosidad."***]] .center[.text-size-h4[ —— Tony Robbins]]
 
 ---
 
