@@ -10,7 +10,7 @@ import validateRequest from '../middlewares/validateRequest.js';
 // Controladores
 import propertyDetailsController from '../controllers/properties/propertyDetailsController.js';
 import propertyController from '../controllers/properties/propertyController.js';
-//import fileUploadController from '../controllers/properties/fileUploadController.js';
+import fileUploadController from '../controllers/properties/fileUploadController.js';
 import propertyStatusController from '../controllers/properties/propertyStatusController.js';
 import getPropertiesController from '../controllers/properties/getPropertiesController.js';
 import updatePropertyController from '../controllers/properties/updatePropertyController.js';
@@ -67,8 +67,9 @@ router.put(
 	validateRequest(updatePropertySchema),
 	updatePropertyController
 );
+
 /* YA NO SE NECESITA PARA SUBIR IMÁGENES CUANDO SE CREA UNA PROPIEDAD
-PERO LO DEJO POR SI ACASO SE NECESITA PARA SUBIR IMAGENES DE PROPIEDADES YA EXISTENTES
+PERO LO DEJO POR SI ACASO SE NECESITA PARA SUBIR IMAGENES DE PROPIEDADES YA EXISTENTES*/
 
 // 2.17 Ruta para subir imágenes y videos asociados a una propiedad ✅
 router.post(
@@ -82,6 +83,6 @@ router.post(
 		setTimeout(() => next(), 100); // Agregamos un pequeño retraso antes de llamar a next()
 	},
 	fileUploadController
-); */
+);
 
 export default router;

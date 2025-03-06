@@ -111,6 +111,7 @@ CREATE TABLE images (
 	createdAt              TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updatedAt              TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	removedAt              TIMESTAMP DEFAULT NULL,
+	fileType               ENUM ('image', 'video') NOT NULL,
 	-- Llaves foráneas
 	FOREIGN KEY (propertyId) REFERENCES properties (id),
 	-- Indices

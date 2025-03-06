@@ -19,10 +19,10 @@ const FeaturedListingsSection = () => {
 				);
 
 				const data = await response.json();
-				console.log('Fetched properties:', data);
+				//console.log('Fetched properties:', data);
 
-				if (Array.isArray(data)) {
-					setFeatureProperties(data);
+				if (Array.isArray(data.properties)) {
+					setFeatureProperties(data.properties);
 				} else {
 					console.error('Unexpected data format:', data);
 				}
@@ -38,7 +38,10 @@ const FeaturedListingsSection = () => {
 
 	return (
 		<section className="bg-gray-100 py-12">
-			<h2 className="text-4xl font-bold text-center text-[#000033] mb-8">
+			<h2
+				key="ultimasPropiedades"
+				className="text-4xl font-bold text-center text-[#000033] mb-8"
+			>
 				Últimas Propiedades
 			</h2>
 			<div className="container mx-auto px-4">
@@ -64,6 +67,7 @@ const FeaturedListingsSection = () => {
 													: noImage
 											}
 											alt={property.propertyTitle}
+											className="w-full aspect-square object-cover bg-[#e6dada]"
 										/>
 									</div>
 

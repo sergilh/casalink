@@ -23,6 +23,7 @@ const updatePropertyModel = async (propertyId, updateData) => {
 		bedrooms,
 		bathrooms,
 		price,
+		status,
 	} = updateData;
 
 	const fields = [];
@@ -95,7 +96,7 @@ const updatePropertyModel = async (propertyId, updateData) => {
 
 	const updateQuery = `
 			UPDATE properties
-			SET ${fields.join(', ')}, status = 'pending'
+			SET ${fields.join(', ')}, status = '${status}'
 			WHERE id = ?
 		`;
 	values.push(propertyId);
