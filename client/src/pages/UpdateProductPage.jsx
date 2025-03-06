@@ -15,19 +15,24 @@ const UpdateProductPage = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
-	console.log('ID recibido desde useParams():', id);
+	console.log('ID recibido desde useParams():', id); // Debugging
+
+	// Verificar si el ID es válido antes de hacer la petición
+	if (!id || id === ':id') {
+		console.error('Error: ID no válido en useParams()');
+		return (
+			<p className="text-red-500 text-center">
+				No se ha recibido un ID válido.
+			</p>
+		);
+	}
 
 	// Fetch de la propiedad
 	useEffect(() => {
 		const fetchProperty = async () => {
-			if (!id || id === ':id') {
-				console.error('Error: ID no válido en useParams()');
-				setError('No se ha recibido un ID válido.');
-				setLoading(false);
-				return;
-			}
-
 			try {
+				console.log(`Consultando propiedad con ID: ${id}`);
+
 				const res = await fetch(
 					`${VITE_API_URL}/api/properties/${id}`,
 					{
@@ -42,6 +47,7 @@ const UpdateProductPage = () => {
 				if (!res.ok) throw new Error('Error al obtener la propiedad');
 
 				const data = await res.json();
+				console.log('Propiedad recibida:', data);
 
 				if (!data || !data.property) {
 					throw new Error('No se encontró la propiedad');
@@ -49,6 +55,7 @@ const UpdateProductPage = () => {
 
 				setProperty(data.property);
 			} catch (err) {
+				console.error(err.message);
 				setError(err.message);
 			} finally {
 				setLoading(false);
@@ -112,8 +119,9 @@ const UpdateProductPage = () => {
 		}
 	};
 
-	if (loading) return <p>Cargando...</p>;
-	if (error) return <p className="text-red-500">{error}</p>;
+	if (loading)
+		return <p className="text-gray-600 text-center">Cargando...</p>;
+	if (error) return <p className="text-red-500 text-center">{error}</p>;
 
 	return (
 		<main className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">

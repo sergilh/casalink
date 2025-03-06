@@ -122,13 +122,10 @@ const ProfilePage = () => {
 					{/* BOTÓN PARA EDITAR PROPIEDAD */}
 					<div className="flex justify-center mt-6">
 						<button
-							onClick={() => navigate(`/properties/:id/update`)}
+							onClick={() =>
+								navigate(`/properties/${property.id}/update`)
+							}
 							className="py-3 px-4 text-white font-bold rounded cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
-							style={{
-								width: 'auto',
-								minWidth: '200px',
-								maxWidth: '300px',
-							}}
 						>
 							Editar Propiedad
 						</button>
