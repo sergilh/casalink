@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa';
 
 const RequestCard = ({ request }) => {
+	const navigate = useNavigate();
 	const getStatusColor = (status) => {
 		switch (status.toLowerCase()) {
 			case 'approved':
@@ -29,7 +31,10 @@ const RequestCard = ({ request }) => {
 			</div>
 
 			{/* Botón para ver la propiedad */}
-			<button className="text-white bg-blue-500 p-3 rounded-full hover:bg-blue-600 transition">
+			<button
+				onClick={() => navigate(`/properties/${request.propertyId}`)}
+				className="text-white bg-blue-500 p-3 rounded-full hover:bg-blue-600 transition"
+			>
 				<FaEye size={20} />
 			</button>
 		</div>
