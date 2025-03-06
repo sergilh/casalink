@@ -176,6 +176,7 @@ const getPropertiesController = async (req, res, next) => {
 				p.bedrooms,
 				p.bathrooms,
 				p.price,
+				p.squareMeters,
 				p.addressLocality,
 				p.hasEnergyCert,
 				p.createdAt AS propertyCreatedAt,
