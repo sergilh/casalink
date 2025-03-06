@@ -102,6 +102,22 @@ const ProfilePage = () => {
 							</div>
 						</div>
 					</section>
+
+					{/* BOTÓN PARA IR A SOLICITUDES DE ALQUILER */}
+					<div className="flex justify-center mt-6">
+						<button
+							onClick={() => navigate('/rental-requests')}
+							className="py-3 px-4 text-white font-bold rounded cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
+							style={{
+								width: 'auto',
+								minWidth: '200px',
+								maxWidth: '300px',
+							}}
+						>
+							Ver Solicitudes de Alquiler
+						</button>
+					</div>
+
 					{loading ? (
 						<p>Cargando...</p>
 					) : userReviews.length > 0 ? (

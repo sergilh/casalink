@@ -49,7 +49,7 @@ function Input({
 // Formulario de Login
 function LoginForm({ formValues, handleChange, handleLoginUser, loading }) {
 	return (
-		<section className="flex h-screen items-center justify-center bg-gray-100 px-4 overflow-hidden">
+		<section className="flex flex-grow items-center justify-center bg-gray-100 px-4">
 			<div className="w-full max-w-md p-6 space-y-6 bg-white shadow-lg rounded-lg">
 				<h2 className="text-2xl font-bold text-center text-gray-700">
 					Iniciar Sesión
