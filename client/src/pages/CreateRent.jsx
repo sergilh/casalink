@@ -300,10 +300,13 @@ const CreateRent = () => {
           <button
             type="submit"
             disabled={loading}
-            className="col-span-2 bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 rounded-lg"
+            className={`col-span-2 text-white font-medium py-3 rounded-lg transition duration-300 ${
+              loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#ff6666] hover:bg-[#E05555]'
+            }`}
           >
             {loading ? "Creando..." : "Crear Propiedad"}
           </button>
+
         </form>
       </div>
     </main>
