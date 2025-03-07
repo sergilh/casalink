@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../contexts/AuthContext';
-import AvatarIcon from '../components/AvatarIcon';
+import AvatarIconProfile from '../components/AvatarIconProfile';
 import Review from '../components/Review';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
@@ -78,9 +78,19 @@ const ProfilePage = () => {
 							id="profile-info-container"
 							className="flex-col justify-evenly items-center w-full"
 						>
-							<div className="flex justify-center items-center gap-4 w-auto h-auto mb-6">
-								<AvatarIcon />
-								<h2>{userInfo.reviewedName}</h2>
+									<div className="flex justify-center items-center gap-4 w-auto h-auto mb-6">
+										{authUser?.avatarUrl ? (
+											<div className="relative overflow-clip size-30 bg-[#fffff] rounded-full cursor-pointer">
+											<img
+												src={`${VITE_API_URL}/static/uploads/avatars/${authUser.avatarUrl}`}
+												alt="avatar"
+												className="w-30 h-30 rounded-full"
+											/>
+											</div>
+										) : (
+											<AvatarIconProfile />
+										)}
+								<h2 className="font-bold text-gray-700">{userInfo.reviewedName}</h2>
 								</div>
 								
 							<div className="flex gap-6 items-center justify-center">
