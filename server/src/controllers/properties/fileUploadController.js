@@ -9,10 +9,12 @@ const fileUploadController = async (req, res, next) => {
 		'Archivos recibidos en el backend:',
 		req.uploadedFiles || req.files
 	);
+	/*
 	console.log(
 		'Contenido exacto de req.uploadedFiles:',
 		JSON.stringify(req.uploadedFiles || req.files, null, 2)
 	);
+	*/
 
 	try {
 		const db = await getPool();
@@ -26,7 +28,7 @@ const fileUploadController = async (req, res, next) => {
 		const { propertyId } = req.params;
 
 		// Consultar la propiedad en la base de datos
-		const [property] = await db.query(
+		const [[property]] = await db.query(
 			'SELECT ownerId FROM properties WHERE id = ?',
 			[propertyId]
 		);
@@ -34,8 +36,12 @@ const fileUploadController = async (req, res, next) => {
 		// Validar si el usuario tiene permisos para modificar la propiedad
 		if (
 			!property ||
-			(req.user.role !== 'admin' && property.ownerId !== req.user.id)
+			(!['admin', 'superadmin'].includes(req.user.role) &&
+				property.ownerId !== req.user.id)
 		) {
+			console.log('User role:', req.user.role);
+			console.log('Property ownerId:', property.ownerId);
+			console.log('Property', property);
 			return res.status(403).json({
 				error: 'No tienes permisos para modificar esta propiedad.',
 			});

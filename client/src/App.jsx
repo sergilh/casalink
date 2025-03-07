@@ -18,6 +18,7 @@ import ContractDetailPage from './pages/ContractDetailPage';
 import ProfilePage from './pages/ProfilePage';
 import RecoverPasswordPage from './pages/RecoverPasswordPage';
 import ChangePasswordPage from './pages/ChangePasswordPage';
+import PropertyDetailsPage from './pages/PropertyDetailsPage';
 import './index.css';
 
 const App = () => {
@@ -36,6 +37,10 @@ const App = () => {
 					<Route path="/contact" element={<ContactPage />} />
 					<Route path="/help" element={<HelpPage />} />
 					<Route path="/search" element={<SearchPage />} />
+					<Route
+						path="/properties/:propertyId"
+						element={<PropertyDetailsPage />}
+					/>
 					{/* Ruta para probar la creación de alquiler con imágenes */}
 					<Route
 						path="/contracts/:contractId"
@@ -55,8 +60,14 @@ const App = () => {
 					/>
 					{/* Otras rutas */}
 					<Route path="*" element={<NotFoundPage />} />
-					<Route path="/recover-password" element={<RecoverPasswordPage />} />
-  					<Route path="/change-password" element={<ChangePasswordPage />} />
+					<Route
+						path="/recover-password"
+						element={<RecoverPasswordPage />}
+					/>
+					<Route
+						path="/change-password"
+						element={<ChangePasswordPage />}
+					/>
 				</Routes>
 
 				<Footer />

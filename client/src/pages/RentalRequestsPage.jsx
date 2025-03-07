@@ -1,11 +1,13 @@
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import RequestsList from '../components/RequestsList';
+import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const RentalRequestsPage = () => {
 	const { authUser } = useContext(AuthContext);
 	const token = authUser?.token || localStorage.getItem('token');
-
+	const navigate = useNavigate();
 	const [rentalRequests, setRentalRequests] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -51,11 +53,18 @@ const RentalRequestsPage = () => {
 	}, [token]);
 
 	return (
-		<main className="min-h-screen bg-gray-100 flex flex-col items-center py-10 px-4">
+		<main className="min-h-screen bg-gray-100 flex flex-col items-center py-10 px-4 relative">
+			<div className="fixed top left-4 z-40">
+				<button
+					onClick={() => navigate(-1)}
+					className="flex items-center justify-center w-8 h-8 text-white bg-[#ff6666] hover:bg-[#E05555] rounded-full shadow-md transition duration-300"
+				>
+					<FaArrowLeft className="text-lg" /> {/* Icono de flecha */}
+				</button>
+			</div>
 			<h2 className="text-3xl font-bold text-gray-800 mb-6">
 				Lista de Solicitudes de Alquiler
 			</h2>
-
 			{loading && (
 				<p className="text-gray-600">Cargando solicitudes...</p>
 			)}

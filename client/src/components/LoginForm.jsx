@@ -1,12 +1,11 @@
 // Componente de Botón reutilizable
 // eslint-disable-next-line react/prop-types
-function Button({ value, disabled, onClick }) {
+function Button({ value, disabled }) {
 	return (
 		<button
 			type="submit"
 			disabled={disabled}
-			onClick={onClick}
-			className={`w-full py-3 px-4 text-white font-bold rounded cursor-pointer transition duration-300 ${
+			className={`w-full py-2 text-white font-semibold rounded-full transition duration-300 ${
 				disabled
 					? 'bg-gray-400 cursor-not-allowed'
 					: 'bg-[#ff6666] hover:bg-[#E05555]'
@@ -29,17 +28,17 @@ function Input({
 	autofocus,
 }) {
 	return (
-		<label className="block text-gray-500 mt-3">
+		<label className="block text-gray-500">
 			{label}
 			<input
 				autoFocus={autofocus}
 				type={type}
 				id={id}
 				name={name}
-				placeholder={placeholder}
 				value={value}
 				onChange={onChange}
-				className="w-full px-4 py-3 mt-1 border border-gray-300 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 placeholder:text-gray-500"
+				placeholder={placeholder}
+				className="w-full px-4 py-2 mt-1 border border-gray-300 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 placeholder:text-gray-500"
 				required
 			/>
 		</label>
@@ -49,8 +48,8 @@ function Input({
 // Formulario de Login
 function LoginForm({ formValues, handleChange, handleLoginUser, loading }) {
 	return (
-		<section className="flex h-screen items-center justify-center bg-gray-100 px-4 overflow-hidden">
-			<div className="w-full max-w-md p-6 space-y-6 bg-white shadow-lg rounded-lg">
+		<section className="flex min-h-screen items-center justify-center bg-gray-100 px-4">
+			<article className="w-full max-w-md p-6 space-y-6 bg-white shadow-lg rounded-lg">
 				<h2 className="text-2xl font-bold text-center text-gray-700">
 					Iniciar Sesión
 				</h2>
@@ -96,7 +95,7 @@ function LoginForm({ formValues, handleChange, handleLoginUser, loading }) {
 						Regístrate
 					</a>
 				</p>
-			</div>
+			</article>
 		</section>
 	);
 }

@@ -122,6 +122,7 @@ const initDb = async () => {
 					id                     INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
 					propertyId             INT UNSIGNED,
 					imageUrl               VARCHAR(255) NOT NULL,
+					fileType               ENUM ('image', 'video') NOT NULL,
 					sortIndex              TINYINT,
 					createdAt              TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 					updatedAt              TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

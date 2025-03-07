@@ -6,23 +6,23 @@ import toast from 'react-hot-toast';
 const { VITE_API_URL } = import.meta.env;
 
 const UpdateProductPage = () => {
-	const { id } = useParams(); // Obtener el ID desde la URL
+	const { id } = useParams(); // ID de la propiedad desde la URL
 	const navigate = useNavigate();
-	const { authUser } = useContext(AuthContext); // Obtener usuario autenticado
-	const token = authUser?.token || localStorage.getItem('token'); // Obtener token
+	const { authUser } = useContext(AuthContext);
+	const token = authUser?.token || localStorage.getItem('token');
 
-	const [product, setProduct] = useState(null);
+	const [property, setProperty] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
 	console.log('ID recibido desde useParams():', id);
 
-	// Validamos antes de hacer la petición
+	// Fetch de la propiedad
 	useEffect(() => {
-		const fetchProduct = async () => {
+		const fetchProperty = async () => {
 			if (!id || id === ':id') {
 				console.error('Error: ID no válido en useParams()');
-				setError('Error: No se ha recibido un ID válido.');
+				setError('No se ha recibido un ID válido.');
 				setLoading(false);
 				return;
 			}
@@ -39,12 +39,15 @@ const UpdateProductPage = () => {
 					}
 				);
 
-				if (!res.ok) {
-					throw new Error('Error al obtener la propiedad');
-				}
+				if (!res.ok) throw new Error('Error al obtener la propiedad');
 
 				const data = await res.json();
-				setProduct(data);
+
+				if (!data || !data.property) {
+					throw new Error('No se encontró la propiedad');
+				}
+
+				setProperty(data.property);
 			} catch (err) {
 				setError(err.message);
 			} finally {
@@ -53,7 +56,7 @@ const UpdateProductPage = () => {
 		};
 
 		if (token) {
-			fetchProduct();
+			fetchProperty();
 		} else {
 			setError('No hay token disponible, inicia sesión.');
 			setLoading(false);
@@ -62,9 +65,9 @@ const UpdateProductPage = () => {
 
 	// **Verificar si el usuario tiene permisos**
 	useEffect(() => {
-		if (!loading && product) {
+		if (!loading && property) {
 			const esAdmin = authUser?.role === 'admin';
-			const esOwner = authUser?.id === product?.ownerId; // Aseguramos que exista ownerId
+			const esOwner = authUser?.id === property?.ownerId;
 
 			console.log('esAdmin:', esAdmin);
 			console.log('esOwner:', esOwner);
@@ -74,13 +77,14 @@ const UpdateProductPage = () => {
 					'No tienes permisos para modificar esta propiedad.'
 				);
 				setError('No tienes permisos para modificar esta propiedad.');
+				navigate('/profile'); // Redirige al perfil si no tiene permisos
 			}
 		}
-	}, [product, loading, authUser]);
+	}, [property, loading, authUser, navigate]);
 
 	// Manejar cambios en los inputs
 	const handleChange = (e) => {
-		setProduct({ ...product, [e.target.name]: e.target.value });
+		setProperty({ ...property, [e.target.name]: e.target.value });
 	};
 
 	// Manejar envío del formulario
@@ -94,7 +98,7 @@ const UpdateProductPage = () => {
 					Authorization: `Bearer ${token}`,
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(product),
+				body: JSON.stringify(property),
 			});
 
 			if (!res.ok) {
@@ -102,53 +106,64 @@ const UpdateProductPage = () => {
 			}
 
 			toast.success('Propiedad actualizada con éxito');
-			navigate(`/properties/${id}`); // Corrección en navigate()
+			navigate(`/properties/${id}`); // Redirige a la propiedad actualizada
 		} catch (err) {
 			setError(err.message);
 		}
 	};
 
 	if (loading) return <p>Cargando...</p>;
-	if (error) return <p>{error}</p>;
+	if (error) return <p className="text-red-500">{error}</p>;
 
 	return (
-		<main>
-			<h2>Actualizar Propiedad</h2>
+		<main className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
+			<h2 className="text-3xl font-bold mb-6">Actualizar Propiedad</h2>
 
-			<form onSubmit={handleSubmit}>
-				<label>
-					<span>Título:</span>
+			<form
+				onSubmit={handleSubmit}
+				className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg"
+			>
+				<label className="block mb-4">
+					<span className="block font-semibold">Título:</span>
 					<input
 						type="text"
-						name="title"
-						value={product?.title || ''}
+						name="propertyTitle"
+						value={property?.propertyTitle || ''}
 						onChange={handleChange}
 						required
+						className="w-full border px-3 py-2 rounded-lg"
 					/>
 				</label>
 
-				<label>
-					<span>Descripción:</span>
+				<label className="block mb-4">
+					<span className="block font-semibold">Descripción:</span>
 					<textarea
 						name="description"
-						value={product?.description || ''}
+						value={property?.description || ''}
 						onChange={handleChange}
 						required
+						className="w-full border px-3 py-2 rounded-lg"
 					/>
 				</label>
 
-				<label>
-					<span>Precio:</span>
+				<label className="block mb-4">
+					<span className="block font-semibold">Precio:</span>
 					<input
 						type="number"
 						name="price"
-						value={product?.price || ''}
+						value={property?.price || ''}
 						onChange={handleChange}
 						required
+						className="w-full border px-3 py-2 rounded-lg"
 					/>
 				</label>
 
-				<button type="submit">Actualizar Propiedad</button>
+				<button
+					type="submit"
+					className="w-full py-3 px-4 text-white font-bold rounded cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
+				>
+					Actualizar Propiedad
+				</button>
 			</form>
 		</main>
 	);
