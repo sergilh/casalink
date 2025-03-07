@@ -109,7 +109,7 @@ const initDb = async () => {
 					removedAt              TIMESTAMP DEFAULT NULL,
 					FOREIGN KEY (reviewerId) REFERENCES users (id) ON DELETE CASCADE,
 					FOREIGN KEY (reviewedId) REFERENCES users (id) ON DELETE CASCADE,
-					FOREIGN KEY (contracId) REFERENCES contracts (id) ON DELETE CASCADE,
+					FOREIGN KEY (contractId) REFERENCES contracts (id) ON DELETE CASCADE,
 					KEY reviewsIdx (reviewerId, reviewedId, contractId, rating)
 				);
 			`
