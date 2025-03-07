@@ -150,7 +150,7 @@ const ProfilePage = () => {
 									key={review.id}
 									score={review.rating}
 									nameReviewer={review.reviewerName}
-									avatar={review.reviewerAvatar}
+									avatar={review.reviewerAvatar || 'null'}
 									reviewText={review.comment}
 								/>
 							))}
