@@ -80,11 +80,11 @@ const ProfilePage = () => {
 						>
 									<div className="flex justify-center items-center gap-4 w-auto h-auto mb-6">
 										{authUser?.avatarUrl ? (
-											<div className="relative overflow-clip size-30 bg-[#fffff] rounded-full cursor-pointer">
+											<div className="relative overflow-clip w-30 h-30 bg-[#fffff] rounded-full cursor-pointer">
 											<img
 												src={`${VITE_API_URL}/static/uploads/avatars/${authUser.avatarUrl}`}
 												alt="avatar"
-												className="w-30 h-30 rounded-full"
+												className="w-full h-full object-cover rounded-full"
 											/>
 											</div>
 										) : (
