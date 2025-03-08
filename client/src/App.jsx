@@ -31,7 +31,7 @@ const App = () => {
 		<>
 			<div className="flex min-h-screen flex-col">
 				<Header />
-
+				{/* renderiza mensajes que queremos mostrar */}
 				<Toaster
 					position="top-center"
 					toastOptions={{
