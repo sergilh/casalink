@@ -34,7 +34,7 @@ function Input({
 				autoFocus={autofocus}
 				type={type}
 				id={id}
-				name={name}
+				prefix={name}
 				value={value}
 				onChange={onChange}
 				placeholder={placeholder}

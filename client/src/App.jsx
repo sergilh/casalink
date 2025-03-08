@@ -23,6 +23,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import AdminPage from './pages/AdminPage';
 
 import './index.css';
+import EditProfileForm from './components/EditProfileForm';
 
 const App = () => {
 	return (
@@ -50,8 +51,11 @@ const App = () => {
 							path="/contracts/:contractId"
 							element={<ContractDetailPage />}
 						/>
-						{/* ✅ Nueva ruta */}
+						{/* ✅ Ruta de Perfil */}
 						<Route path="/profile/:userId" element={<ProfilePage />} />
+						<Route path="/profile/edit" element={<EditProfileForm />} />
+
+
 						{/* Rutas de Gestión */}
 						<Route path="/create-rent" element={<CreateRent />} />
 						<Route

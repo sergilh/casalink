@@ -6,6 +6,7 @@ import AvatarIconProfile from '../components/AvatarIconProfile';
 import Review from '../components/Review';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import EditProfileForm from '../components/EditProfileForm';
 
 const { VITE_API_URL } = import.meta.env;
 
@@ -90,7 +91,22 @@ const ProfilePage = () => {
 										) : (
 											<AvatarIconProfile />
 										)}
-								<h2 className="font-bold text-gray-700">{userInfo.reviewedName}</h2>
+										<h2 className="font-bold text-gray-700">{userInfo.reviewedName}</h2>
+										
+										{/* BOTÓN PARA Modificar el perfil */}
+									<div className="flex justify-center mt-6">
+										<button
+											onClick={() => navigate('/profile/edit')}
+											className="py-3 px-4 text-white font-bold rounded cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
+											style={{
+												width: 'auto',
+												minWidth: '200px',
+												maxWidth: '300px',
+											}}
+										>
+											Editar perfil
+										</button>
+									</div>
 								</div>
 								
 							<div className="flex gap-6 items-center justify-center">
