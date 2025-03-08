@@ -10,6 +10,13 @@ const PropertiesListPage = () => {
 	const { userId } = useParams(); // ID del usuario
 	const navigate = useNavigate();
 	const { authUser } = useContext(AuthContext);
+	// Redirigir a login si el usuario no está autenticado
+	useEffect(() => {
+		if (!authUser) {
+			toast.error('Debes iniciar sesión para acceder a esta página.');
+			navigate('/login');
+		}
+	}, [authUser, navigate]);
 	const token = authUser?.token || localStorage.getItem('token');
 
 	const [properties, setProperties] = useState([]);

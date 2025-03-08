@@ -11,6 +11,13 @@ const UpdateProductPage = () => {
 	const navigate = useNavigate();
 	const { authUser } = useContext(AuthContext);
 	const token = authUser?.token || localStorage.getItem('token');
+	// Redirigir a login si el usuario no está autenticado
+	useEffect(() => {
+		if (!authUser) {
+			toast.error('Debes iniciar sesión para acceder a esta página.');
+			navigate('/login');
+		}
+	}, [authUser, navigate]);
 
 	const [property, setProperty] = useState(null);
 	const [loading, setLoading] = useState(true);
