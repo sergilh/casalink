@@ -42,7 +42,7 @@ const HeroSection = () => {
 				>
 					<input
 						id="locality"
-						prefix="locality"
+						name="locality"
 						type="text"
 						placeholder="Localidad"
 						className="py-2 px-4 outline-none rounded-l-full w-full"
@@ -51,7 +51,7 @@ const HeroSection = () => {
 					/>
 					<input
 						id="bathrooms"
-						prefix="bathrooms"
+						name="bathrooms"
 						type="number"
 						placeholder="🚽"
 						className="hidden py-2 px-4 outline-none md:w-16 md:block"
@@ -60,7 +60,7 @@ const HeroSection = () => {
 					/>
 					<input
 						id="bedrooms"
-						prefix="bedrooms"
+						name="bedrooms"
 						type="number"
 						placeholder="🛏️"
 						className="hidden md:block py-2 px-4 outline-none md:w-16"

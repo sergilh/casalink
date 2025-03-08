@@ -127,7 +127,7 @@ const UpdateProductPage = () => {
 					<span className="block font-semibold">Título:</span>
 					<input
 						type="text"
-						prefix="propertyTitle"
+						name="propertyTitle"
 						value={property?.propertyTitle || ''}
 						onChange={handleChange}
 						required
@@ -150,7 +150,7 @@ const UpdateProductPage = () => {
 					<span className="block font-semibold">Precio:</span>
 					<input
 						type="number"
-						prefix="price"
+						name="price"
 						value={property?.price || ''}
 						onChange={handleChange}
 						required

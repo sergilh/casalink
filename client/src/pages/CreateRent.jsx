@@ -112,7 +112,7 @@ const CreateRent = () => {
             <label className="block text-gray-600 font-medium">Título:</label>
             <input
               type="text"
-              prefix="title"
+              name="title"
               value={formValues.title}
               onChange={handleChange}
               required
@@ -140,7 +140,7 @@ const CreateRent = () => {
             <label className="block text-gray-600 font-medium">Calle:</label>
             <input
               type="text"
-              prefix="street"
+              name="street"
               value={formValues.street}
               onChange={handleChange}
               required
@@ -152,7 +152,7 @@ const CreateRent = () => {
             <label className="block text-gray-600 font-medium">Número:</label>
             <input
               type="text"
-              prefix="number"
+              name="number"
               value={formValues.number}
               onChange={handleNumberChange}
               className="w-full p-3 border border-gray-300 rounded-lg"
@@ -164,7 +164,7 @@ const CreateRent = () => {
             <label className="block text-gray-600 font-medium">Piso:</label>
             <input
               type="text"
-              prefix="floor"
+              name="floor"
               value={formValues.floor}
               onChange={handleChange}
               required
@@ -177,7 +177,7 @@ const CreateRent = () => {
             <label className="block text-gray-600 font-medium">Localidad:</label>
             <input
               type="text"
-              prefix="locality"
+              name="locality"
               value={formValues.locality}
               onChange={handleChange}
               required
@@ -190,7 +190,7 @@ const CreateRent = () => {
             <label className="block text-gray-600 font-medium">Código Postal:</label>
             <input
               type="text"
-              prefix="zipCode"
+              name="zipCode"
               value={formValues.zipCode}
               onChange={handleChange}
               required
@@ -203,7 +203,7 @@ const CreateRent = () => {
             <label className="block text-gray-600 font-medium">Location (lat,lon):</label>
             <input
               type="text"
-              prefix="location"
+              name="location"
               value={formValues.location}
               onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-lg"
@@ -214,7 +214,7 @@ const CreateRent = () => {
             <label className="block text-gray-600 font-medium">Precio (€):</label>
             <input
               type="text"
-              prefix="price"
+              name="price"
               value={formValues.price}
               onChange={handlePriceChange}
               className="w-full p-3 border border-gray-300 rounded-lg"
@@ -226,7 +226,7 @@ const CreateRent = () => {
             <label className="block text-gray-600 font-medium">Habitaciones:</label>
             <input
               type="number"
-              prefix="bedrooms"
+              name="bedrooms"
               value={formValues.bedrooms}
               onChange={handleChange}
               required
@@ -239,7 +239,7 @@ const CreateRent = () => {
             <label className="block text-gray-600 font-medium">Baños:</label>
             <input
               type="number"
-              prefix="bathrooms"
+              name="bathrooms"
               value={formValues.bathrooms}
               onChange={handleChange}
               required
@@ -252,7 +252,7 @@ const CreateRent = () => {
             <label className="block text-gray-600 font-medium">Metros cuadrados:</label>
             <input
               type="text"
-              prefix="squareMeters"
+              name="squareMeters"
               value={formValues.squareMeters}
               onChange={handleSquareMetersChange}
               className="w-full p-3 border border-gray-300 rounded-lg"
@@ -264,7 +264,7 @@ const CreateRent = () => {
           <div className="col-span-2 flex items-center gap-2">
             <input
               type="checkbox"
-              prefix="hasEnergyCert"
+              name="hasEnergyCert"
               checked={formValues.hasEnergyCert}
               onChange={handleChange}
               className="w-5 h-5"

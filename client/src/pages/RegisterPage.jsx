@@ -76,7 +76,7 @@ const RegisterPage = () => {
 							</label>
 							<input
 								type="text"
-								prefix="name"
+								name="name"
 								value={formValues.name}
 								onChange={handleChange}
 								required
@@ -91,7 +91,7 @@ const RegisterPage = () => {
 							</label>
 							<input
 								type="text"
-								prefix="lastName"
+								name="lastName"
 								value={formValues.lastName}
 								onChange={handleChange}
 								required
@@ -108,7 +108,7 @@ const RegisterPage = () => {
 						</label>
 						<input
 							type="email"
-							prefix="email"
+							name="email"
 							value={formValues.email}
 							onChange={handleChange}
 							required
@@ -125,7 +125,7 @@ const RegisterPage = () => {
 							</label>
 							<input
 								type="tel"
-								prefix="phone"
+								name="phone"
 								value={formValues.phone}
 								onChange={handleChange}
 								required
@@ -140,7 +140,7 @@ const RegisterPage = () => {
 							</label>
 							<input
 								type="text"
-								prefix="legalId"
+								name="legalId"
 								value={formValues.legalId}
 								onChange={handleChange}
 								required
@@ -157,7 +157,7 @@ const RegisterPage = () => {
 						</label>
 						<input
 							type={showPassword ? 'text' : 'password'}
-							prefix="password"
+							name="password"
 							value={formValues.password}
 							onChange={handleChange}
 							required
@@ -184,7 +184,7 @@ const RegisterPage = () => {
 						</label>
 						<input
 							type={showRepeatedPassword ? 'text' : 'password'}
-							prefix="repeatedPass"
+							name="repeatedPass"
 							value={formValues.repeatedPass}
 							onChange={handleChange}
 							required

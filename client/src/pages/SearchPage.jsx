@@ -137,7 +137,7 @@ const SearchResults = () => {
 				/>
 				<input
 					type="number"
-					prefix="minOwnerRating"
+					name="minOwnerRating"
 					value={searchParams.minOwnerRating}
 					onChange={(e) =>
 						setSearchParams({
@@ -150,7 +150,7 @@ const SearchResults = () => {
 				/>
 				<input
 					type="number"
-					prefix="minPrice"
+					name="minPrice"
 					value={searchParams.minPrice}
 					onChange={(e) =>
 						setSearchParams({
@@ -163,7 +163,7 @@ const SearchResults = () => {
 				/>
 				<input
 					type="number"
-					prefix="maxPrice"
+					name="maxPrice"
 					value={searchParams.maxPrice}
 					onChange={(e) =>
 						setSearchParams({
