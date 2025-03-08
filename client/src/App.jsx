@@ -24,6 +24,7 @@ import AdminPage from './pages/AdminPage';
 
 import './index.css';
 import EditProfilePage from './pages/EditProfilePage';
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
 	return (
@@ -31,7 +32,14 @@ const App = () => {
 			<div className="flex min-h-screen flex-col">
 				<Header />
 
-				<ErrorBoundary>				
+				<Toaster
+					position="top-center"
+					toastOptions={{
+						duration: 5000,
+					}}
+				/>
+
+				<ErrorBoundary>
 					<Routes>
 						{/* Rutas Públicas */}
 						<Route path="/" element={<HomePage />} />
@@ -52,9 +60,14 @@ const App = () => {
 							element={<ContractDetailPage />}
 						/>
 						{/* ✅ Ruta de Perfil */}
-						<Route path="/profile/:userId" element={<ProfilePage />} />
-						<Route path="/profile/edit" element={<EditProfilePage />} />
-
+						<Route
+							path="/profile/:userId"
+							element={<ProfilePage />}
+						/>
+						<Route
+							path="/profile/edit"
+							element={<EditProfilePage />}
+						/>
 
 						{/* Rutas de Gestión */}
 						<Route path="/create-rent" element={<CreateRent />} />
@@ -77,10 +90,10 @@ const App = () => {
 							element={<ChangePasswordPage />}
 						/>
 						{/* Rutas de administración */}
-					<Route path="/admin" element={<AdminPage />} />
+						<Route path="/admin" element={<AdminPage />} />
 					</Routes>
-				</ErrorBoundary>		
-				
+				</ErrorBoundary>
+
 				<Footer />
 			</div>
 		</>
