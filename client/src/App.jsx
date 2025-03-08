@@ -19,6 +19,7 @@ import ProfilePage from './pages/ProfilePage';
 import RecoverPasswordPage from './pages/RecoverPasswordPage';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 import PropertyDetailsPage from './pages/PropertyDetailsPage';
+import AdminPage from './pages/AdminPage';
 import './index.css';
 
 const App = () => {
@@ -41,6 +42,7 @@ const App = () => {
 						path="/properties/:propertyId"
 						element={<PropertyDetailsPage />}
 					/>
+
 					{/* Ruta para probar la creación de alquiler con imágenes */}
 					<Route
 						path="/contracts/:contractId"
@@ -48,6 +50,7 @@ const App = () => {
 					/>
 					{/* ✅ Nueva ruta */}
 					<Route path="/profile/:userId" element={<ProfilePage />} />
+
 					{/* Rutas de Gestión */}
 					<Route path="/create-rent" element={<CreateRent />} />
 					<Route
@@ -58,8 +61,6 @@ const App = () => {
 						path="/rental-requests"
 						element={<RentalRequestsPage />}
 					/>
-					{/* Otras rutas */}
-					<Route path="*" element={<NotFoundPage />} />
 					<Route
 						path="/recover-password"
 						element={<RecoverPasswordPage />}
@@ -68,6 +69,12 @@ const App = () => {
 						path="/change-password"
 						element={<ChangePasswordPage />}
 					/>
+
+					{/* Rutas de administración */}
+					<Route path="/admin" element={<AdminPage />} />
+
+					{/* Otras rutas */}
+					<Route path="*" element={<NotFoundPage />} />
 				</Routes>
 
 				<Footer />
