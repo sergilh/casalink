@@ -23,7 +23,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import AdminPage from './pages/AdminPage';
 
 import './index.css';
-import EditProfileForm from './components/EditProfileForm';
+import EditProfilePage from './pages/EditProfilePage';
 
 const App = () => {
 	return (
@@ -53,7 +53,7 @@ const App = () => {
 						/>
 						{/* ✅ Ruta de Perfil */}
 						<Route path="/profile/:userId" element={<ProfilePage />} />
-						<Route path="/profile/edit" element={<EditProfileForm />} />
+						<Route path="/profile/edit" element={<EditProfilePage />} />
 
 
 						{/* Rutas de Gestión */}

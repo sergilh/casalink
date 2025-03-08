@@ -19,6 +19,12 @@ const EditProfileForm = () => {
     legalId: "Z 123456 Y",
     bio: "Lorem ipsum odor amet, consectetuer adipiscing elit. Lacinia interdum phasellus enim molestie ipsum commodo. Elementum vestibulum consectetur nostra parturient nullam vivamus mollis. At in faucibus etiam nullam dolor consectetur fringilla scelerisque egestas. Primis scelerisque torquent nostra, natoque sodales sociosqu augue. Placerat purus sagittis; malesuada cubilia fusce eros at arcu. Purus justo litora luctus a ipsum a penatibus.",
       });
+    // Redirigir al usuario al login si no está autenticado
+	useEffect(() => {
+		if (!authUser) {
+			navigate('/login');
+		}
+	}, [authUser, navigate]); // Esto evita el error de hooks condicionales
     //Establecemos los datos que ya tiene el usuario para que vea cuál quiere cambiar
     useEffect(() => {
         if (authUser) {
