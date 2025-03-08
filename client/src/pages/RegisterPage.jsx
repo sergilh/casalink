@@ -33,7 +33,7 @@ const RegisterPage = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
+		
 		if (formValues.password !== formValues.repeatedPass) {
 			toast.error('Las contraseñas no coinciden');
 			return;
@@ -48,6 +48,7 @@ const RegisterPage = () => {
 			body: userData,
 		});
 
+
 		if (response) {
 			toast.success('Registro exitoso. Revisa tu correo.');
 			navigate('/login');
@@ -55,6 +56,9 @@ const RegisterPage = () => {
 			toast.error('Error en el registro');
 		}
 	};
+
+	/*if (formValues.email) throw new Error('Probando Error Boundary');*/// Escribe algo en el campo email del registro para ver la página de error boundary
+
 
 	return (
 		<div className="flex-grow flex justify-center items-center bg-gray-100 px-4 max-h-[1280px]">
@@ -204,10 +208,13 @@ const RegisterPage = () => {
 					<button
 						type="submit"
 						disabled={loading}
-						className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 rounded-md transition duration-300 text-sm"
+						className={`w-full py-2 text-white font-semibold rounded-full transition duration-300 ${
+							loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#ff6666] hover:bg-[#66ffff] hover:text-[#000033]'
+						}`}
 					>
 						{loading ? 'Registrando...' : 'Registrarse'}
 					</button>
+
 				</form>
 			</div>
 		</div>

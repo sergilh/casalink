@@ -97,9 +97,9 @@ CREATE TABLE reviews (
 	-- Llaves foráneas
 	FOREIGN KEY (reviewerId) REFERENCES users (id) ON DELETE CASCADE,
 	FOREIGN KEY (reviewedId) REFERENCES users (id) ON DELETE CASCADE,
-	FOREIGN KEY (contracId) REFERENCES contracts (id) ON DELETE CASCADE,
+	FOREIGN KEY (contractId) REFERENCES contracts (id) ON DELETE CASCADE,
 	-- Indices
-	KEY reviewsIdx (reviewerId, reviewedId, contracId, rating)
+	KEY reviewsIdx (reviewerId, reviewedId, contractId, rating)
 );
 
 -- Tabla de Imágenes de Propiedades

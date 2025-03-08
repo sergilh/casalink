@@ -121,7 +121,7 @@ Table "reviews" {
   "removedAt" TIMESTAMP [default: NULL]
 
   Indexes {
-    (reviewerId, reviewedId, contracId, rating) [name: "reviewsIdx"]
+    (reviewerId, reviewedId, contractId, rating) [name: "reviewsIdx"]
   }
 }
 
@@ -189,7 +189,7 @@ Ref:"users"."id" < "reviews"."reviewerId" [delete: cascade]
 
 Ref:"users"."id" < "reviews"."reviewedId" [delete: cascade]
 
-Ref:"contracts"."id" < "reviews"."contracId" [delete: cascade]
+Ref:"contracts"."id" < "reviews"."contractId" [delete: cascade]
 
 Ref:"properties"."id" < "images"."propertyId"
 
