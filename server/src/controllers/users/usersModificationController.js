@@ -60,14 +60,18 @@ const usersModificationController = async (req, res, next) => {
 			}
 		}
 		if (legalId) {
-			if (actualUserData.isDocsVerified) {
-				generateErrorUtil(
-					'Una vez verificado el Documento de identidad, no se puede modificar',
-					406
-				);
+			if (actualUserData.legalId !== legalId) {
+				if (actualUserData.isDocsVerified) {
+					generateErrorUtil(
+						'Una vez verificado el Documento de identidad, no se puede modificar',
+						406
+					);
+				} else {
+					updates.push('legalId = ?');
+					values.push(legalId);
+				}
 			} else {
-				updates.push('legalId = ?');
-				values.push(legalId);
+				console.log('El legalId no ha cambiado');
 			}
 		}
 		if (bio) {
