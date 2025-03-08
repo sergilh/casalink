@@ -25,12 +25,20 @@ import PropertiesListPage from './pages/PropertiesListPage';
 
 import './index.css';
 import EditProfilePage from './pages/EditProfilePage';
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
 	return (
 		<>
 			<div className="flex min-h-screen flex-col">
 				<Header />
+				{/* renderiza mensajes que queremos mostrar */}
+				<Toaster
+					position="top-center"
+					toastOptions={{
+						duration: 5000,
+					}}
+				/>
 
 				<ErrorBoundary>
 					<Routes>
