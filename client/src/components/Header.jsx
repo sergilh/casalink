@@ -67,7 +67,7 @@ const Header = () => {
 				</button>
 				{/*<ul className="flex space-x-6 mr-4">*/}
 				<ul
-					className={`space-y-8 md:space-y-0 md:text-sm md:top-0 absolute left-0 w-full text-center p-8 transition-all duration-300 ease-in-out z-50
+					className={`space-y-8 items-center md:space-y-0 md:text-sm md:top-0 absolute left-0 w-full text-center p-8 transition-all duration-300 ease-in-out z-50
 					${isOpen ? 'opacity-100 text-2xl bg-[#ff6666] top-20 h-full' : 'opacity-0 pointer-events-none'}
 					md:opacity-100 md:pointer-events-auto md:flex md:relative md:space-x-6 md:bg-transparent md:text-1 md:p-0`}
 				>
@@ -128,7 +128,7 @@ const Header = () => {
 					<li className={`${authUser ? '' : 'hidden'}`}>
 						<a
 							onClick={logout}
-							className="text-[#000033] hover:underline transition-all duration-300"
+							className="text-[#000033] hover:underline transition-all duration-300 cursor-pointer"
 						>
 							Cerrar sesión
 						</a>
@@ -138,36 +138,42 @@ const Header = () => {
 					id="user-section"
 					className={`${authUser ? 'relative ml-8' : 'hidden'}`}
 				>
+					{authUser && (
+
+					<Link to={`/profile/${authUser.id}`}>
 					<div
 						id="user-avatar"
 						className="flex items-center justify-center"
 					>
+						
 						{authUser?.avatarUrl ? (
 							<div
 								id="avatar-wrapper"
-								className="relative overflow-clip size-12 bg-[#e6dada] rounded-full"
+								className="relative overflow-clip size-12 bg-[#e6dada] rounded-full cursor-pointer"
 							>
 								<img
 									src={`${VITE_API_URL}/static/uploads/avatars/${authUser.avatarUrl}`}
 									alt="Avatar del usuario"
 									className="size-12 rounded-full object-cover"
 								/>
-							</div>
+								</div>
 						) : (
 							<AvatarIcon />
 						)}
 						<div
 							id="notification-circle"
 							className="relative size-4 bg-[#ff6666] rounded-full -translate-x-1/2 mb-6"
-						>
+							>
 							<span
 								id="notification-count"
 								className="text-white block font-bold text-center text-xs"
-							>
+								>
 								?
 							</span>
 						</div>
 					</div>
+									</Link>
+					)}
 				</div>
 			</nav>
 		</header>
