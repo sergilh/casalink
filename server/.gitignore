@@ -4,3 +4,5 @@ hashPassword.js
 
 # Imágenes cargadas
 public/uploads/
+
+public/seed/
