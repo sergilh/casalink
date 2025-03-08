@@ -21,6 +21,7 @@ import ChangePasswordPage from './pages/ChangePasswordPage';
 import PropertyDetailsPage from './pages/PropertyDetailsPage';
 import ErrorBoundary from './components/ErrorBoundary';
 import AdminPage from './pages/AdminPage';
+import PropertiesListPage from './pages/PropertiesListPage';
 
 import './index.css';
 import EditProfilePage from './pages/EditProfilePage';
@@ -31,7 +32,7 @@ const App = () => {
 			<div className="flex min-h-screen flex-col">
 				<Header />
 
-				<ErrorBoundary>				
+				<ErrorBoundary>
 					<Routes>
 						{/* Rutas Públicas */}
 						<Route path="/" element={<HomePage />} />
@@ -52,9 +53,14 @@ const App = () => {
 							element={<ContractDetailPage />}
 						/>
 						{/* ✅ Ruta de Perfil */}
-						<Route path="/profile/:userId" element={<ProfilePage />} />
-						<Route path="/profile/edit" element={<EditProfilePage />} />
-
+						<Route
+							path="/profile/:userId"
+							element={<ProfilePage />}
+						/>
+						<Route
+							path="/profile/edit"
+							element={<EditProfilePage />}
+						/>
 
 						{/* Rutas de Gestión */}
 						<Route path="/create-rent" element={<CreateRent />} />
@@ -62,6 +68,11 @@ const App = () => {
 							path="/properties/:id/update"
 							element={<UpdateProductPage />}
 						/>
+						<Route
+							path="/properties/user/:userId"
+							element={<PropertiesListPage />}
+						/>
+
 						<Route
 							path="/rental-requests"
 							element={<RentalRequestsPage />}
@@ -77,10 +88,10 @@ const App = () => {
 							element={<ChangePasswordPage />}
 						/>
 						{/* Rutas de administración */}
-					<Route path="/admin" element={<AdminPage />} />
+						<Route path="/admin" element={<AdminPage />} />
 					</Routes>
-				</ErrorBoundary>		
-				
+				</ErrorBoundary>
+
 				<Footer />
 			</div>
 		</>
