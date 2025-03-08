@@ -47,7 +47,7 @@ const ProfilePage = () => {
 					setUserNotFound(true);
 				} else {
 					setUserReviews(body.data.userRatingInfo.reviews);
-					setUserInfo(body.data.userRatingInfo.user);
+					setUserInfo(body.data.userRatingInfo.userDetails);
 				}
 			} catch (error) {
 				console.error(error);
@@ -62,7 +62,6 @@ const ProfilePage = () => {
 			getUserReviews();
 		}
 	}, [userId, token]);
-	console.log('Datos del usuario autenticado:', authUser);
 
 	return (
 		<main className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -80,7 +79,7 @@ const ProfilePage = () => {
 						>
 									<div className="flex justify-center items-center gap-4 w-auto h-auto mb-6">
 										{authUser?.avatarUrl ? (
-											<div className="relative overflow-clip w-30 h-30 bg-[#fffff] rounded-full cursor-pointer">
+											<div className="relative overflow-clip w-30 h-30 bg-white rounded-full cursor-pointer">
 											<img
 												src={`${VITE_API_URL}/static/uploads/avatars/${authUser.avatarUrl}`}
 												alt="avatar"
@@ -90,7 +89,7 @@ const ProfilePage = () => {
 										) : (
 											<AvatarIconProfile />
 										)}
-										<h2 className="font-bold text-gray-700">{userInfo.reviewedName}</h2>
+										<h2 className="font-bold text-gray-700">{userInfo.fullName}</h2>
 
 										{/* BOTÓN PARA Modificar el perfil */}
 									<div className="flex justify-center ml-4">
@@ -128,8 +127,8 @@ const ProfilePage = () => {
 											</div>
 										</>
 									)}
-								<div className="flex items-center justify-center border-2 border-[#eeeeee] border-opacity-100 rounded-xl p-2">
-									<p>{userInfo.biography}</p>
+								<div className="flex items-center justify-center border-2 border-[#eeeeee] border-opacity-100 rounded-xl p-2 ">
+									<p className="text-center">{userInfo.bio}</p>
 								</div>
 							</div>
 						</div>
@@ -170,15 +169,20 @@ const ProfilePage = () => {
 					) : userReviews.length > 0 ? (
 									<section id="profile-reviews-section" className="m-8 flex-grow">
 										<h2 className="text-2xl font-semibold text-gray-700 text-center mb-4">Mis valoraciones</h2>
-							{userReviews.map((review) => (
-								<Review
-									key={review.id}
-									score={review.rating}
-									nameReviewer={review.reviewerName}
-									avatar={review.reviewerAvatar || 'null'}
-									reviewText={review.comment}
-								/>
-							))}
+										{userReviews.map((review) => {
+											if (!review.id) {
+												return null
+											}
+												return (
+													<Review
+														key={review.id}
+														score={review.rating}
+														nameReviewer={review.reviewerName}
+														avatar={review.reviewerAvatar || 'null'}
+														reviewText={review.comment}
+													/>
+												)
+										})}
 						</section>
 					) : (
 						<p className='text-center p-4'>No hay reseñas disponibles para este usuario</p>

@@ -1,15 +1,19 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState, useRef } from "react"
 import { AuthContext } from "../contexts/AuthContext";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import AvatarIconProfile from '../components/AvatarIconProfile';
 
 const { VITE_API_URL } = import.meta.env;
 
 const EditProfileForm = () => {
+    
+    const inputFileRef = useRef();
     const navigate = useNavigate();
     const { authUser,authUpdateProfileState } = useContext(AuthContext);
     const token = authUser?.token || localStorage.getItem('token'); // Obtener token
-    const [loading,setLoading]=useState(false)
+    const [loading, setLoading] = useState(false)
+    const [avatar,setAvatar]=useState(null)
       const [formValues, setFormValues] = useState({
     name: "Nombre",
     lastName: "Completo",
@@ -49,12 +53,59 @@ const EditProfileForm = () => {
             [name]:value
         }))
     }
+
+    //Función que maneja el cambio de avatar
+    const handleAvatarChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setAvatar(file);
+        }
+    }
+
+    //Función que actualiza el avatar
+    const avatarChangeProfile = async (e) => {
+        try {
+            e.preventDefault();
+            setLoading(true)
+            const formData = new FormData();
+
+            formData.append('avatar', avatar);
+
+            const res = await fetch(`${VITE_API_URL}/api/users/avatar`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+                body:formData,
+            })
+            const body = await res.json();
+            authUpdateProfileState({ ...authUser, avatarUrl: body.avatar, });
+
+            if (!res.ok) {
+                throw new Error('Ha habido un error al subir la imagen')
+            }
+
+            toast.success('La foto de perfil se ha cambiado correctamente')
+
+            navigate(-1)
+        } catch (error) {
+            toast.error(error.message||'No se ha podido subir la imagen')
+            
+        } finally {
+            setLoading(false);
+            inputFileRef.current.value=''
+        }
+        e.preventDefault(e);
+        
+    }
     
     //Función que actualiza los datos del usuario
     const handleChangeProfile = async (e) => {
         try {
             e.preventDefault();
             setLoading(true);
+
+            
             const res = await fetch(`${VITE_API_URL}/api/users/`, {
                 method: 'PUT',
                 headers:{
@@ -64,7 +115,7 @@ const EditProfileForm = () => {
                 body: JSON.stringify(formValues),
             })
             if (!res.ok) {
-                throw new Error('Error al actualizar los datos del perfil')
+                throw new Error('No se ha hecho ningún cambio')
             }
 
             const body = await res.json();
@@ -86,6 +137,65 @@ const EditProfileForm = () => {
         <main className="flex justify-center items-center min-h-screen bg-gray-100">
 			<div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-2xl">
                 <h2 className="text-2xl font-semibold text-gray-700 text-center mb-8">Editar perfil</h2>
+                <div className="flex flex-col justify-center items-center gap-4 w-auto h-auto mb-6">
+                    {avatar ? (
+                    <div className="relative overflow-clip w-30 h-30 bg-white rounded-full cursor-pointer">
+											<img
+												src={`${VITE_API_URL}/static/uploads/avatars/${authUser.avatarUrl}`}
+												alt="avatar"
+												className="w-full h-full object-cover rounded-full"
+                            />
+                        </div>
+                                        ):authUser?.avatarUrl?(
+											<div className="relative overflow-clip w-30 h-30 bg-white rounded-full cursor-pointer">
+											<img
+												src={`${VITE_API_URL}/static/uploads/avatars/${authUser.avatarUrl}`}
+												alt="avatar"
+												className="w-full h-full object-cover rounded-full"
+                            />
+                        </div>
+										) : (
+											<AvatarIconProfile />
+                    )}
+                    {/* FORMULARIO PARA CAMBIAR AVATAR */}
+                    <form onSubmit={avatarChangeProfile}>
+                            {/* Botón "Cambiar foto" que activa el input de archivo */}
+                            <button
+                                type="button"
+                                onClick={() => inputFileRef.current.click()} 
+                                disabled={loading} 
+                            className={`text-white font-semibold rounded-full transition duration-300 p-1 ${
+                                    loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#ff6666] hover:bg-[#66ffff] hover:text-[#000033] cursor-pointer"
+                                }`}
+                            >
+                                Cambiar foto
+                            </button>
+
+                            {/* Input de archivo oculto */}
+                            <input
+                                type="file"
+                                id="avatar"
+                                ref={inputFileRef}
+                                onChange={handleAvatarChange} 
+                                accept="image/png,image/jpeg"
+                                required
+                                className="hidden" 
+                            />
+
+                            {/* Botón "Enviar", visible solo si se ha seleccionado una foto */}
+                            {avatar && (
+                                <button
+                                    type="submit"
+                                    disabled={loading} 
+                                className={`mt-4 text-white font-semibold rounded-full transition duration-300 p-1 ml-3 ${
+                                        loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#ff6666] hover:bg-[#66ffff] hover:text-[#000033] cursor-pointer"
+                                    }`}
+                                >
+                                    Enviar
+                                </button>
+                            )}
+                        </form>
+                    </div>
                 {/* Formulario de edición de perfil */}
                 <form onSubmit={handleChangeProfile} className="grid grid-cols-2 gap-4">
                     {/* Nombre */}
