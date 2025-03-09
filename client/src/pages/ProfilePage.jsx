@@ -60,7 +60,7 @@ const ProfilePage = () => {
 		
 		return (
 		<main className="flex justify-center items-center min-h-screen bg-gray-100">
-			<div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-2xl">
+			<div className="bg-white shadow-lg rounded-xl p-6 w-full w-full min-h-screen">
 				<h2 className="text-2xl font-semibold text-gray-700 text-center mb-8">
 					Mi perfil
 				</h2>
@@ -167,6 +167,23 @@ const ProfilePage = () => {
 								}}
 							>
 								Editar Propiedades
+							</button>
+								</div>
+								
+								{/* BOTÓN DASHBOARD*/}
+						<div className="flex justify-center mt-6">
+							<button
+								onClick={() =>
+									navigate(`/dashboard/${userId}`)
+								}
+								className="py-3 px-4 text-white font-bold rounded cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
+								style={{
+									width: 'auto',
+									minWidth: '200px',
+									maxWidth: '300px',
+								}}
+							>
+								Dashboard
 							</button>
 						</div>
 
