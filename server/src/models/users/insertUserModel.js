@@ -41,8 +41,7 @@ const insertUserModel = async (
 		);
 	}
 
-	// Hash del email, phone y password
-	const hashedPhone = await bcrypt.hash(phone, 10);
+	// Hash del password
 	const hashedPassword = await bcrypt.hash(password, 10);
 
 	// Generar un código de validación de 4 caracteres
@@ -387,15 +386,7 @@ const insertUserModel = async (
 	const [result] = await pool.query(
 		`INSERT INTO users (name, lastName, email, password, phone, legalId, recoveryCode, isEmailVerified)
 				VALUES (?, ?, ?, ?, ?, ?, ?, false)`,
-		[
-			name,
-			lastName,
-			email,
-			hashedPassword,
-			hashedPhone,
-			legalId,
-			validationCode,
-		]
+		[name, lastName, email, hashedPassword, phone, legalId, validationCode]
 	);
 
 	return result.insertId;

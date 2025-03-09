@@ -19,7 +19,7 @@ const FeaturedListingsSection = () => {
 				);
 
 				const data = await response.json();
-				//console.log('Fetched properties:', data);
+				console.log('Fetched properties:', data);
 
 				if (Array.isArray(data.properties)) {
 					setFeatureProperties(data.properties);
@@ -73,20 +73,20 @@ const FeaturedListingsSection = () => {
 
 									<div className="p-4">
 										<div className="flex justify-between items-start">
-											<div>
+											<div className="flex flex-col justify-between mt-1">
 												<h3 className="font-bold text-gray-900">
 													{property.propertyTitle}
 												</h3>
 												<p className="text-sm text-gray-600">
-													{property.location}
+													{property.addressLocality}
 												</p>
 											</div>
-											<div className="text-right">
+											<div className="flex flex-col items-end justify-between mt-1">
 												<p className="text-xs text-gray-500">
-													{property.location}
+													{property.squareMeters}m²
 												</p>
 												<p className="font-bold text-gray-900">
-													{property.squareMeters}m²
+													{property.price}€
 												</p>
 											</div>
 										</div>

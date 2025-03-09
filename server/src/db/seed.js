@@ -1,6 +1,10 @@
 import 'dotenv/config';
 import getPool from './getPool.js';
 import bcrypt from 'bcrypt';
+import readline from 'readline/promises';
+import { stdin as input, stdout as output } from 'process';
+
+const rl = readline.createInterface({ input, output });
 
 const {
 	SUPERADMIN_NAME,
@@ -119,7 +123,9 @@ const seedUsers = async () => {
 			(6, 'Estudio en el centro histórico', 'apartamento', 'Estudio completamente reformado en zona peatonal', 'Palma', 'Calle de la Almudaina', '5', '07001' , POINT(39.5693, 2.6492), 48, 1, 1, 1300.00, 'available');
 		`;
 		await pool.execute(querySeed);
-		console.log('32 usuarios de SEED insertados correctamente.');
+		console.log(
+			"32 usuarios de SEED insertados correctamente.\nLas contraseña es la misma para todos los usuario 'Password123'."
+		);
 		querySeed = `
 		INSERT INTO contracts (tenantId, propertyId, startDate, endDate, status) VALUES
 			(7, 1, '2023-01-15', '2024-01-14', 'ongoing'),
@@ -361,4 +367,15 @@ const seedUsers = async () => {
 	}
 };
 
-seedUsers();
+const answer = await rl.question(
+	"Este proceso creará una serie de registros en la base de datos, te recomendamos antes de esto hacer un 'npm run initdb'\n\n⚠️ - ¿Estás seguro de que quieres ejecutar el script SEED? (s/n):\n"
+);
+rl.close();
+
+if (answer.toLowerCase() === 's') {
+	console.log('✅ Ejecutando script...');
+	seedUsers();
+} else {
+	console.log('❌ Operación cancelada.');
+	process.exit(1);
+}

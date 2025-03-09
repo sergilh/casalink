@@ -6,6 +6,7 @@ import authUserMiddleware from '../middlewares/authUserMiddleware.js';
 import checkPropertyOwnerOrAdmin from '../middlewares/checkPropertyOwnerOrAdmin.js';
 import { fileUploadMiddleware } from '../middlewares/fileUploadMiddleware.js';
 import validateRequest from '../middlewares/validateRequest.js';
+import isNotMyPropertyMiddleware from '../middlewares/isNotMyPropertyMiddleware.js';
 
 // Controladores
 import propertyDetailsController from '../controllers/properties/propertyDetailsController.js';
@@ -14,6 +15,8 @@ import fileUploadController from '../controllers/properties/fileUploadController
 import propertyStatusController from '../controllers/properties/propertyStatusController.js';
 import getPropertiesController from '../controllers/properties/getPropertiesController.js';
 import updatePropertyController from '../controllers/properties/updatePropertyController.js';
+import favController from '../controllers/properties/favController.js';
+import getFavsController from '../controllers/properties/getFavsController.js';
 
 // Validadores Joi
 import {
@@ -36,7 +39,7 @@ router.get(
 router.post(
 	'/properties',
 	authUserMiddleware,
-	fileUploadMiddleware, // 1) Parsea multipart/form-data (campos + archivos)
+	fileUploadMiddleware, // 1) Analiza multipart/form-data (campos + archivos)
 	validateRequest(propertySchema), // 2) Valida req.body con Joi
 	propertyController // 3) Controlador final
 );
@@ -69,7 +72,7 @@ router.put(
 );
 
 /* YA NO SE NECESITA PARA SUBIR IMÁGENES CUANDO SE CREA UNA PROPIEDAD
-PERO LO DEJO POR SI ACASO SE NECESITA PARA SUBIR IMAGENES DE PROPIEDADES YA EXISTENTES*/
+PERO LO DEJO POR SI ACASO SE NECESITA PARA SUBIR IMÁGENES DE PROPIEDADES YA EXISTENTES*/
 
 // 2.17 Ruta para subir imágenes y videos asociados a una propiedad ✅
 router.post(
@@ -84,5 +87,17 @@ router.post(
 	},
 	fileUploadController
 );
+
+// Ruta para marcar o desmarcar una propiedad como favorita
+router.patch(
+	'/properties/fav/:propertyId',
+	authUserMiddleware,
+	propertyExistsMiddleware,
+	isNotMyPropertyMiddleware,
+	favController
+);
+
+// Ruta para obtener los favoritos de un usuario
+router.get('/favs/', authUserMiddleware, getFavsController);
 
 export default router;
