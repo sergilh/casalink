@@ -20,7 +20,7 @@ const HomePage = () => {
 			<FeaturedListingsSection />
 
 			{/* Reviews Section */}
-			<div className="hidden">
+			<div >
 				<ReviewsSection />
 			</div>
 		</div>

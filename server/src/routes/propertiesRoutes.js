@@ -1,4 +1,5 @@
 import express from 'express';
+import getPool from '../db/getPool.js';
 
 // Middlewares
 import propertyExistsMiddleware from '../middlewares/propertyExistsMiddleware.js';
@@ -24,6 +25,7 @@ import {
 } from '../utils/validators.js';
 
 const router = express.Router();
+const db = await getPool();
 
 // 2.12 Listado de propiedades ✅ (Con validación)
 router.get(
@@ -83,6 +85,35 @@ router.post(
 		setTimeout(() => next(), 100); // Agregamos un pequeño retraso antes de llamar a next()
 	},
 	fileUploadController
+);
+
+// 2.18 Obtener todas las propiedades de un usuario
+router.get(
+	'/users/:userId/properties',
+	authUserMiddleware,
+	async (req, res) => {
+		const { userId } = req.params;
+
+		try {
+			const [properties] = await db.query(
+				'SELECT * FROM properties WHERE ownerId = ?',
+				[userId]
+			);
+
+			if (properties.length === 0) {
+				return res.status(404).json({
+					error: 'No se encontraron propiedades para este usuario',
+				});
+			}
+
+			res.json({ properties });
+		} catch (error) {
+			console.error(error);
+			res.status(500).json({
+				error: 'Error obteniendo propiedades del usuario',
+			});
+		}
+	}
 );
 
 export default router;

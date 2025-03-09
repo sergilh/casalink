@@ -21,6 +21,7 @@ import ChangePasswordPage from './pages/ChangePasswordPage';
 import PropertyDetailsPage from './pages/PropertyDetailsPage';
 import ErrorBoundary from './components/ErrorBoundary';
 import AdminPage from './pages/AdminPage';
+import PropertiesListPage from './pages/PropertiesListPage';
 
 import './index.css';
 import EditProfilePage from './pages/EditProfilePage';
@@ -75,6 +76,11 @@ const App = () => {
 							path="/properties/:id/update"
 							element={<UpdateProductPage />}
 						/>
+						<Route
+							path="/properties/user/:userId"
+							element={<PropertiesListPage />}
+						/>
+
 						<Route
 							path="/rental-requests"
 							element={<RentalRequestsPage />}
