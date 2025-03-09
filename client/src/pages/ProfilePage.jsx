@@ -103,20 +103,6 @@ const ProfilePage = () => {
 					Mi perfil
 				</h2>
 
-<<<<<<< HEAD
-			{usernotFound ? (
-				<p>El usuario no existe</p>
-			) : (
-				<>
-					<section id="profile-info-section" className="m-4">
-						<div
-							id="profile-info-container"
-							className="flex-col justify-evenly items-center w-full"
-						>
-									<div className="flex justify-center items-center gap-4 w-auto h-auto mb-6">
-										{authUser?.avatarUrl ? (
-											<div className="relative overflow-clip w-30 h-30 bg-white rounded-full cursor-pointer">
-=======
 				{usernotFound ? (
 					<p>El usuario no existe</p>
 				) : (
@@ -129,27 +115,18 @@ const ProfilePage = () => {
 								<div className="flex justify-center items-center gap-4 w-auto h-auto mb-6">
 									{authUser?.avatarUrl ? (
 										<div className="relative overflow-clip w-30 h-30 bg-[#fffff] rounded-full cursor-pointer">
->>>>>>> df851c57e60359dccc2b3e0ae7611683b8d08673
 											<img
 												src={`${VITE_API_URL}/static/uploads/avatars/${authUser.avatarUrl}`}
 												alt="avatar"
 												className="w-full h-full object-cover rounded-full"
 											/>
-<<<<<<< HEAD
-											</div>
-										) : (
-											<AvatarIconProfile />
-										)}
-										<h2 className="font-bold text-gray-700">{userInfo.fullName}</h2>
-=======
 										</div>
 									) : (
 										<AvatarIconProfile />
 									)}
 									<h2 className="font-bold text-gray-700">
-										{userInfo.reviewedName}
+										{userInfo.fullName}
 									</h2>
->>>>>>> df851c57e60359dccc2b3e0ae7611683b8d08673
 
 									{/* BOTÓN PARA Modificar el perfil */}
 									<div className="flex justify-center ml-4">
@@ -188,71 +165,15 @@ const ProfilePage = () => {
 												</p>
 											</div>
 										</>
-									)}
-<<<<<<< HEAD
-								<div className="flex items-center justify-center border-2 border-[#eeeeee] border-opacity-100 rounded-xl p-2 ">
-									<p className="text-center">{userInfo.bio}</p>
-								</div>
-							</div>
-						</div>
-					</section>
+										)}
+										{userInfo.bio && (
 
-					{/* BOTÓN PARA IR A SOLICITUDES DE ALQUILER */}
-					<div className="flex justify-center mt-6">
-						<button
-							onClick={() => navigate('/rental-requests')}
-							className="py-3 px-4 text-white font-bold rounded cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
-							style={{
-								width: 'auto',
-								minWidth: '200px',
-								maxWidth: '300px',
-							}}
-						>
-							Ver Solicitudes de Alquiler
-						</button>
-					</div>
-
-					{/* BOTÓN PARA EDITAR PROPIEDAD */}
-					<div className="flex justify-center mt-6">
-						<button
-							onClick={() => navigate(`/properties/:id/update`)}
-							className="py-3 px-4 text-white font-bold rounded cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
-							style={{
-								width: 'auto',
-								minWidth: '200px',
-								maxWidth: '300px',
-							}}
-						>
-							Editar Propiedad
-						</button>
-					</div>
-
-					{loading ? (
-						<p>Cargando...</p>
-					) : userReviews.length > 0 ? (
-									<section id="profile-reviews-section" className="m-8 flex-grow">
-										<h2 className="text-2xl font-semibold text-gray-700 text-center mb-4">Mis valoraciones</h2>
-										{userReviews.map((review) => {
-											if (!review.id) {
-												return null
-											}
-												return (
-													<Review
-														key={review.id}
-														score={review.rating}
-														nameReviewer={review.reviewerName}
-														avatar={review.reviewerAvatar || 'null'}
-														reviewText={review.comment}
-													/>
-												)
-										})}
-=======
 									<div className="flex items-center justify-center border-2 border-[#eeeeee] border-opacity-100 rounded-xl p-2">
-										<p>{userInfo.biography}</p>
+										<p>{userInfo.bio}</p>
 									</div>
-								</div>
+										)}	
+										</div>
 							</div>
->>>>>>> df851c57e60359dccc2b3e0ae7611683b8d08673
 						</section>
 
 						{/* BOTÓN PARA IR A SOLICITUDES DE ALQUILER */}

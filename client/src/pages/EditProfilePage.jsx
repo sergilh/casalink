@@ -283,8 +283,6 @@ const EditProfileForm = () => {
               name="bio"
                     value={formValues.bio}
                     onChange={handleChange}
-                            
-              required
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 hover:border-gray-700 transition duration-300 "
             />
                     </div>
