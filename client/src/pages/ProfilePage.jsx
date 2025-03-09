@@ -18,6 +18,9 @@ const ProfilePage = () => {
 	const [userInfo, setUserInfo] = useState({});
 	const [usernotFound, setUserNotFound] = useState(false);
 	const [loading, setLoading] = useState(true);
+	const [userProperties, setUserProperties] = useState([]);
+
+	console.log('userId recibido desde useParams():', userId);
 
 	// Redirigir al usuario al login si no está autenticado
 	useEffect(() => {
@@ -63,6 +66,36 @@ const ProfilePage = () => {
 		}
 	}, [userId, token]);
 	console.log('Datos del usuario autenticado:', authUser);
+
+	// Obtener propiedades del usuario
+	useEffect(() => {
+		const fetchUserProperties = async () => {
+			try {
+				console.log(' Solicitando propiedades para el userId:', userId);
+				const res = await fetch(
+					`${VITE_API_URL}/api/users/${userId}/properties`,
+					{
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+					}
+				);
+				if (!res.ok) {
+					throw new Error('Error al obtener propiedades del usuario');
+				}
+				const data = await res.json();
+				console.log('Propiedades del usuario:', data.properties); // Debug
+				setUserProperties(data.properties); // Guardamos las propiedades
+			} catch (error) {
+				console.error(error);
+				toast.error('Error al obtener las propiedades');
+			}
+		};
+
+		if (token) {
+			fetchUserProperties();
+		}
+	}, [userId, token]);
 
 	return (
 		<main className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -156,17 +189,20 @@ const ProfilePage = () => {
 							</button>
 						</div>
 
-						{/* BOTÓN PARA EDITAR PROPIEDAD */}
+						{/* BOTÓN PARA EDITAR PROPIEDADES */}
 						<div className="flex justify-center mt-6">
 							<button
 								onClick={() =>
-									navigate(
-										`/properties/${property.id}/update`
-									)
+									navigate(`/properties/user/${userId}`)
 								}
 								className="py-3 px-4 text-white font-bold rounded cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
+								style={{
+									width: 'auto',
+									minWidth: '200px',
+									maxWidth: '300px',
+								}}
 							>
-								Editar Propiedad
+								Editar Propiedades
 							</button>
 						</div>
 
