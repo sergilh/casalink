@@ -174,7 +174,7 @@ const AdminDashboard = () => {
 														'approve'
 													)
 												}
-												className="text-white bg-green-500 px-4 py-1 rounded-full mx-2"
+												className="text-white bg-green-500 px-4 py-1 rounded-full mx-2 cursor-pointer"
 											>
 												<FontAwesomeIcon
 													icon={faCheck}
@@ -188,7 +188,7 @@ const AdminDashboard = () => {
 														'reject'
 													)
 												}
-												className="bg-red-500 text-white px-4 py-1 rounded-full mx-2"
+												className="bg-red-500 text-white px-4 py-1 rounded-full mx-2 cursor-pointer"
 											>
 												<FontAwesomeIcon
 													icon={faTimes}
@@ -223,7 +223,7 @@ const AdminDashboard = () => {
 														user.role
 													)
 												}
-												className={`px-4 py-1 rounded-full ${user.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-400 text-white'}`}
+												className={`cursor-pointer px-4 py-1 rounded-full ${user.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-400 text-white'}`}
 											>
 												<FontAwesomeIcon
 													icon={faUserShield}
