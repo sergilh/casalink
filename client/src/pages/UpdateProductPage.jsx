@@ -257,7 +257,7 @@ const UpdateProductPage = () => {
 
 				<button
 					type="submit"
-					className="w-full py-3 px-4 text-white font-bold rounded cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
+					className="w-full py-3 px-4 text-white font-bold rounded-full cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
 				>
 					Actualizar Propiedad
 				</button>
