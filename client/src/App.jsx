@@ -22,6 +22,7 @@ import PropertyDetailsPage from './pages/PropertyDetailsPage';
 import ErrorBoundary from './components/ErrorBoundary';
 import AdminPage from './pages/AdminPage';
 import PropertiesListPage from './pages/PropertiesListPage';
+import UserProfilePage from './pages/UserProfilePage';
 
 import './index.css';
 import EditProfilePage from './pages/EditProfilePage';
@@ -69,6 +70,7 @@ const App = () => {
 							path="/profile/edit"
 							element={<EditProfilePage />}
 						/>
+						<Route path="/user/:userId" element={<UserProfilePage/>}/>
 
 						{/* Rutas de Gestión */}
 						<Route path="/create-rent" element={<CreateRent />} />

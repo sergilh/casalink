@@ -10,6 +10,12 @@ const PropertiesListPage = () => {
 	const { userId } = useParams(); // ID del usuario
 	const navigate = useNavigate();
 	const { authUser } = useContext(AuthContext);
+	const token = authUser?.token || localStorage.getItem('token');
+	
+	const [properties, setProperties] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
+	
 	// Redirigir a login si el usuario no está autenticado
 	useEffect(() => {
 		if (!authUser) {
@@ -17,12 +23,6 @@ const PropertiesListPage = () => {
 			navigate('/login');
 		}
 	}, [authUser, navigate]);
-	const token = authUser?.token || localStorage.getItem('token');
-
-	const [properties, setProperties] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
-
 	console.log('userId recibido desde useParams():', userId);
 
 	useEffect(() => {
@@ -42,8 +42,8 @@ const PropertiesListPage = () => {
 				if (!res.ok) {
 					throw new Error('Error al obtener propiedades del usuario');
 				}
-
 				const data = await res.json();
+
 				console.log(' Propiedades recibidas:', data.properties);
 				setProperties(data.properties);
 			} catch (error) {
@@ -61,6 +61,7 @@ const PropertiesListPage = () => {
 
 	if (loading) return <p>Cargando propiedades...</p>;
 	if (error) return <p className="text-red-500">{error}</p>;
+	
 
 	return (
 		<main className="min-h-screen flex flex-col items-center bg-gray-100 p-6">
@@ -84,14 +85,26 @@ const PropertiesListPage = () => {
 							{property.propertyTitle}
 						</h3>
 						<p className="text-gray-600">{property.description}</p>
-						<button
-							onClick={() =>
-								navigate(`/properties/${property.id}/update`)
-							}
-							className="mt-3 py-2 px-4 text-white font-bold rounded cursor-pointer bg-[#ff6666] hover:bg-[#E05555]"
-						>
-							Editar Propiedad
-						</button>
+						{Number(userId) === authUser.id ? (
+							<button
+								onClick={() =>
+									navigate(`/properties/${property.id}/update`)
+								}
+								className="mt-3 py-2 px-4 text-white font-bold rounded cursor-pointer bg-[#ff6666] hover:bg-[#E05555]"
+							>
+								Editar Propiedad
+							</button>
+						) : (
+							<button
+								onClick={() =>
+									navigate(`/properties/${property.id}`)
+								}
+								className="mt-3 py-2 px-4 text-white font-bold rounded cursor-pointer bg-[#ff6666] hover:bg-[#E05555]"
+							>
+								Ver Propiedad
+							</button>
+						)}
+							
 					</div>
 				))
 			) : (
