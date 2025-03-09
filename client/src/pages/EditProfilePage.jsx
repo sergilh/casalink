@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState, useRef } from "react"
+import { Link } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +14,9 @@ const EditProfileForm = () => {
     const { authUser,authUpdateProfileState } = useContext(AuthContext);
     const token = authUser?.token || localStorage.getItem('token'); // Obtener token
     const [loading, setLoading] = useState(false)
-    const [avatar,setAvatar]=useState(null)
+    const [avatar, setAvatar] = useState(null)
+    const [avatarPreview,setAvatarPreview]=useState(null)
+    
       const [formValues, setFormValues] = useState({
     name: "Nombre",
     lastName: "Completo",
@@ -44,6 +47,8 @@ const EditProfileForm = () => {
             })
         }
     }, [authUser])
+    console.log(authUser);
+    
     
     //Función que actualiza formValues con los cambios introducidos
     const handleChange = (e) => {
@@ -57,9 +62,20 @@ const EditProfileForm = () => {
     //Función que maneja el cambio de avatar
     const handleAvatarChange = (e) => {
         const file = e.target.files[0];
-        if (file) {
+        if (file.length > 1) {
+            throw new Error('Solo puedes seleccionar una foto');
+        } else {
+            const avatarURL = URL.createObjectURL(file)
+            setAvatarPreview(avatarURL)
             setAvatar(file);
         }
+        
+    }
+
+    //Función que elimina un avatar
+    const removeAvatar = () => {
+        setAvatar(null);
+        setAvatarPreview(null);
     }
 
     //Función que actualiza el avatar
@@ -138,13 +154,13 @@ const EditProfileForm = () => {
 			<div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-2xl">
                 <h2 className="text-2xl font-semibold text-gray-700 text-center mb-8">Editar perfil</h2>
                 <div className="flex flex-col justify-center items-center gap-4 w-auto h-auto mb-6">
-                    {avatar ? (
+                    {avatarPreview ? (
                     <div className="relative overflow-clip w-30 h-30 bg-white rounded-full cursor-pointer">
 											<img
-												src={`${VITE_API_URL}/static/uploads/avatars/${authUser.avatarUrl}`}
-												alt="avatar"
-												className="w-full h-full object-cover rounded-full"
-                            />
+            src={avatarPreview} // Si avatar tiene una imagen seleccionada, muestra esa imagen
+            alt="avatar"
+            className="w-full h-full object-cover rounded-full"
+          />
                         </div>
                                         ):authUser?.avatarUrl?(
 											<div className="relative overflow-clip w-30 h-30 bg-white rounded-full cursor-pointer">
@@ -168,7 +184,7 @@ const EditProfileForm = () => {
                                     loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#ff6666] hover:bg-[#66ffff] hover:text-[#000033] cursor-pointer"
                                 }`}
                             >
-                                Cambiar foto
+                                {avatar ?  "Seleccionar otro archivo" : "Cambiar foto"}
                             </button>
 
                             {/* Input de archivo oculto */}
@@ -180,19 +196,26 @@ const EditProfileForm = () => {
                                 accept="image/png,image/jpeg"
                                 required
                                 className="hidden" 
-                            />
+                        />
+                        
 
                             {/* Botón "Enviar", visible solo si se ha seleccionado una foto */}
                             {avatar && (
                                 <button
-                                    type="submit"
-                                    disabled={loading} 
+                                type="submit"
+                                disabled={loading} 
                                 className={`mt-4 text-white font-semibold rounded-full transition duration-300 p-1 ml-3 ${
-                                        loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#ff6666] hover:bg-[#66ffff] hover:text-[#000033] cursor-pointer"
-                                    }`}
+                                    loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#ff6666] hover:bg-[#66ffff] hover:text-[#000033] cursor-pointer"
+                                }`}
                                 >
                                     Enviar
                                 </button>
+                            )}
+                            {/* BOTON DE PAPELERA PARA ELIMINAR AVATAR */}
+                            {authUser?.avatarUrl === null ?(
+                                null
+                            ):(
+                                <button type="button" onClick={removeAvatar}>Eliminar</button>
                             )}
                         </form>
                     </div>
@@ -296,6 +319,8 @@ const EditProfileForm = () => {
             {loading ? "Creando..." : "Guardar cambios"}
           </button>
                 </form>
+
+                <Link to="/change-password" className="flex justify-center text-center mt-2 underline hover:text-[#ff6666] transition duration-300">Cambiar contraseña</Link>
             </div>
             </main>
     )
