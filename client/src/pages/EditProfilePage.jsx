@@ -72,12 +72,6 @@ const EditProfileForm = () => {
         
     }
 
-    //Función que elimina un avatar
-    const removeAvatar = () => {
-        setAvatar(null);
-        setAvatarPreview(null);
-    }
-
     //Función que actualiza el avatar
     const avatarChangeProfile = async (e) => {
         try {
@@ -211,12 +205,7 @@ const EditProfileForm = () => {
                                     Enviar
                                 </button>
                             )}
-                            {/* BOTON DE PAPELERA PARA ELIMINAR AVATAR */}
-                            {authUser?.avatarUrl === null ?(
-                                null
-                            ):(
-                                <button type="button" onClick={removeAvatar}>Eliminar</button>
-                            )}
+                            
                         </form>
                     </div>
                 {/* Formulario de edición de perfil */}
