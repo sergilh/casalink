@@ -54,6 +54,9 @@ const AdminDashboard = () => {
 				const usersData = await usersRes.json();
 				const propertiesData = await propertiesRes.json();
 
+				//console.log('usersData', usersData);
+				//console.log('propertiesData', propertiesData);
+
 				setUsers(usersData.data || []);
 				setProperties(propertiesData.properties || []);
 			} catch (error) {
@@ -61,6 +64,7 @@ const AdminDashboard = () => {
 					'Error al cargar los datos de administración',
 					error
 				);
+
 				toast.error('Error al cargar los datos de administración');
 			} finally {
 				setLoading(false);
@@ -70,73 +74,20 @@ const AdminDashboard = () => {
 		if (token) fetchData();
 	}, [token]);
 
-	// Aprobar o rechazar una propiedad
-	const handlePropertyAction = async (propertyId, action) => {
-		try {
-			const res = await fetch(
-				`${VITE_API_URL}/api/admin/properties/${propertyId}/${action}`,
-				{
-					method: 'PATCH',
-					headers: {
-						Authorization: `${token}`,
-						'Content-Type': 'application/json',
-					},
-				}
-			);
-
-			if (!res.ok)
-				throw new Error(
-					`Error al ${action === 'approve' ? 'aprobar' : 'rechazar'} la propiedad`
-				);
-
-			toast.success(
-				`Propiedad ${action === 'approve' ? 'aprobada' : 'rechazada'} con éxito`
-			);
-
-			// Actualizar lista de propiedades
-			setProperties(
-				properties.filter(
-					(property) => property.propertyId !== propertyId
-				)
-			);
-		} catch (error) {
-			console.error(error);
-			toast.error('Error al actualizar la propiedad');
-		}
-	};
-
-	// Cambiar el rol de un usuario entre "user" y "admin"
-	const toggleUserRole = async (userId, currentRole) => {
+	const updateUserRole = async (userId, newRole) => {
 		if (authUser.role !== 'superadmin') return;
-
-		const newRole = currentRole === 'user' ? 'admin' : 'user';
-
 		try {
-			const res = await fetch(
+			await fetch(
 				`${VITE_API_URL}/api/admin/users/${userId}/${newRole}`,
 				{
 					method: 'PATCH',
-					headers: {
-						Authorization: `${token}`,
-						'Content-Type': 'application/json',
-					},
+					headers: { Authorization: `Bearer ${token}` },
 				}
 			);
-
-			if (!res.ok)
-				throw new Error('Error al actualizar el rol del usuario');
-
-			toast.success(`Rol actualizado a ${newRole}`);
-
-			// Actualizar lista de usuarios
-			setUsers(
-				users.map((user) =>
-					user.id === userId ? { ...user, role: newRole } : user
-				)
-			);
+			toast.success('Rol actualizado');
 		} catch (error) {
-			console.error(error);
-			toast.error('Error al actualizar el rol del usuario');
+			console.log('Error al actualizar el rol', error);
+			toast.error('Error al actualizar el rol');
 		}
 	};
 
@@ -156,6 +107,7 @@ const AdminDashboard = () => {
 								Propiedades Pendientes de Aprobación
 							</h3>
 							<ul>
+								{console.log('properties', properties)}
 								{properties.map((property) => (
 									<li
 										key={property.propertyId}
@@ -167,29 +119,14 @@ const AdminDashboard = () => {
 											{property.propertyTitle}
 										</a>
 										<div>
-											<button
-												onClick={() =>
-													handlePropertyAction(
-														property.propertyId,
-														'approve'
-													)
-												}
-												className="text-white bg-green-500 px-4 py-1 rounded-full mx-2"
-											>
+											<button className="text-white bg-green-500 px-4 py-1 rounded-full mx-2">
 												<FontAwesomeIcon
 													icon={faCheck}
-												/>{' '}
+												/>
+												{'  '}
 												Aprobar
 											</button>
-											<button
-												onClick={() =>
-													handlePropertyAction(
-														property.propertyId,
-														'reject'
-													)
-												}
-												className="bg-red-500 text-white px-4 py-1 rounded-full mx-2"
-											>
+											<button className="bg-red-500 text-white px-4 py-1 rounded-full mx-2">
 												<FontAwesomeIcon
 													icon={faTimes}
 												/>{' '}
@@ -216,22 +153,22 @@ const AdminDashboard = () => {
 											<span>
 												{user.email} ({user.role})
 											</span>
-											<button
-												onClick={() =>
-													toggleUserRole(
-														user.id,
-														user.role
-													)
-												}
-												className={`px-4 py-1 rounded-full ${user.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-400 text-white'}`}
-											>
-												<FontAwesomeIcon
-													icon={faUserShield}
-												/>{' '}
-												{user.role === 'user'
-													? 'Hacer Admin'
-													: 'Hacer Usuario'}
-											</button>
+											{user.role === 'user' && (
+												<button
+													onClick={() =>
+														updateUserRole(
+															user.id,
+															'admin'
+														)
+													}
+													className="text-blue-600"
+												>
+													<FontAwesomeIcon
+														icon={faUserShield}
+													/>{' '}
+													Hacer Admin
+												</button>
+											)}
 										</li>
 									))}
 								</ul>
