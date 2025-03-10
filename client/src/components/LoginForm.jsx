@@ -1,6 +1,7 @@
 // Componente de Botón reutilizable
 // eslint-disable-next-line react/prop-types
 import { useState } from 'react';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
 // Componente de Botón reutilizable
 function Button({ value, disabled }) {
@@ -31,6 +32,7 @@ function Input({
 	autofocus,
 	showPasswordToggle,
 }) {
+	const isPasswordField = name === 'password'; // Verifica si el input es de tipo contraseña
 	return (
 		<label className="block text-gray-500 relative">
 			{label}
@@ -47,13 +49,17 @@ function Input({
 					required
 				/>
 				{/* Botón para mostrar/ocultar contraseña */}
-				{showPasswordToggle && (
+				{isPasswordField && showPasswordToggle && (
 					<button
 						type="button"
 						onClick={showPasswordToggle}
-						className="absolute inset-y-0 right-2 flex items-center text-gray-600 hover:text-gray-800"
+						className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
 					>
-						{type === 'password' ? '👁️' : '🙈'}
+						{type === 'password' ? (
+							<EyeIcon className="h-5 w-5" />
+						) : (
+							<EyeSlashIcon className="h-5 w-5" />
+						)}
 					</button>
 				)}
 			</div>
@@ -97,6 +103,7 @@ function LoginForm({ formValues, handleChange, handleLoginUser, loading }) {
 						showPasswordToggle={() =>
 							setShowPassword(!showPassword)
 						}
+						isPassword={true}
 					/>
 
 					{/* Botón de Login */}
