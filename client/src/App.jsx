@@ -15,6 +15,10 @@ import AdminPage from './pages/AdminPage';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 import ContractDetailPage from './pages/ContractDetailPage';
 import CreateRent from './pages/CreateRent';
+
+// E
+import EditProfilePage from './pages/EditProfilePage';
+
 // H
 import HelpPage from './pages/HelpPage';
 import HomePage from './pages/HomePage';
@@ -25,6 +29,7 @@ import NotFoundPage from './pages/NotFoundPage';
 // P
 import ProfilePage from './pages/ProfilePage';
 import PropertyDetailsPage from './pages/PropertyDetailsPage';
+import PropertiesListPage from './pages/PropertiesListPage';
 // R
 import RecoverPasswordPage from './pages/RecoverPasswordPage';
 import RegisterPage from './pages/RegisterPage';
@@ -46,6 +51,7 @@ const App = () => {
 		<>
 			<div className="flex min-h-screen flex-col">
 				<Header />
+
 				<ErrorBoundary>
 					<Routes>
 						{/* Rutas de inicio */}
@@ -70,6 +76,16 @@ const App = () => {
 							path="/contracts/:contractId"
 							element={<ContractDetailPage />}
 						/>
+						{/* ✅ Ruta de Perfil */}
+						<Route
+							path="/profile/:userId"
+							element={<ProfilePage />}
+						/>
+						<Route
+							path="/profile/edit"
+							element={<EditProfilePage />}
+						/>
+
 						{/* ✅ Nueva ruta */}
 						<Route
 							path="/profile/:userId"
@@ -81,6 +97,11 @@ const App = () => {
 							path="/properties/:id/update"
 							element={<UpdateProductPage />}
 						/>
+						<Route
+							path="/properties/user/:userId"
+							element={<PropertiesListPage />}
+						/>
+
 						<Route
 							path="/rental-requests"
 							element={<RentalRequestsPage />}
@@ -105,6 +126,7 @@ const App = () => {
 					position="top-center"
 					toastOptions={{ duration: 10000 }}
 				/>
+
 				<Footer />
 			</div>
 		</>

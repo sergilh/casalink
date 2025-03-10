@@ -32,73 +32,79 @@ const CreateRent = () => {
 
   const handleChange = (e) => {
     const { name, type, checked, value } = e.target;
-    if (type === "checkbox") {
-      setFormValues({ ...formValues, [name]: checked });
-    } else {
-      setFormValues({ ...formValues, [name]: value });
-    }
+    setFormValues((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
   const handleNumberChange = (e) => {
-    let value = e.target.value;
+    const value = e.target.value;
     if (value === "" || (Number(value) > 0 && Number.isInteger(Number(value)))) {
-      setFormValues({ ...formValues, number: value });
+      setFormValues((prev) => ({ ...prev, number: value }));
     }
   };
 
   const handlePriceChange = (e) => {
-    let value = e.target.value;
+    const value = e.target.value;
     if (value === "" || (Number(value) > 0 && !isNaN(value))) {
-      setFormValues({ ...formValues, price: value });
+      setFormValues((prev) => ({ ...prev, price: value }));
     }
   };
-  
+
   const handleSquareMetersChange = (e) => {
-    let value = e.target.value;
+    const value = e.target.value;
     if (value === "" || (Number(value) > 0 && !isNaN(value))) {
-      setFormValues({ ...formValues, squareMeters: value });
+      setFormValues((prev) => ({ ...prev, squareMeters: value }));
     }
   };
-  
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      images: [...prevValues.images, ...files], // Agregar nuevas imágenes sin reemplazar las anteriores
+    setFormValues((prev) => ({
+      ...prev,
+      images: [...prev.images, ...files],
+    }));
+    // Reiniciamos el input para poder seleccionar nuevamente los mismos archivos si fuera necesario
+    e.target.value = null;
+  };
+
+  // Función para eliminar una imagen de la previsualización
+  const removeImage = (indexToRemove) => {
+    setFormValues((prev) => ({
+      ...prev,
+      images: prev.images.filter((_, index) => index !== indexToRemove),
     }));
   };
-  
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const fd = new FormData();
-    for (const [key, value] of Object.entries(formValues)) {
-      if (key === "images") {
-        value.forEach((file) => {
-          fd.append("files", file);
-        });
-      } else {
-        fd.append(key, value);
-      }
+  e.preventDefault();
+  const fd = new FormData();
+  Object.entries(formValues).forEach(([key, value]) => {
+    if (key === "images") {
+      value.forEach((file) => fd.append("files", file));
+    } else {
+      fd.append(key, value);
     }
+  });
 
-    try {
-      const data = await fetchData({
-        url: `${VITE_API_URL}/api/properties`,
-        method: "POST",
-        body: fd,
-        isFormData: true,
-        token: authToken,
-      });
+  try {
+    const data = await fetchData({
+      url: `${VITE_API_URL}/api/properties`,
+      method: "POST",
+      body: fd,
+      isFormData: true,
+      token: authToken,
+    });
 
-      toast.success(data.message || "Propiedad creada con éxito");
-      navigate("/dashboard");
-    } catch (error) {
-      toast.error(error.message || "Error al crear la propiedad");
-    }
-  };
+    // Muestra el toast de éxito y redirige usando el id de la propiedad creada
+    toast.success("Propiedad creada con exito");
+    navigate(`/properties/${data}:id/update`);
+  } catch (error) {
+    toast.error(error.message || "Error al crear la propiedad");
+  }
+};
+
 
   return (
     <main className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -106,8 +112,8 @@ const CreateRent = () => {
         <h2 className="text-2xl font-semibold text-gray-700 text-center mb-4">
           Crear Propiedad
         </h2>
-
         <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
+          {/* Campo Título */}
           <div className="col-span-2">
             <label className="block text-gray-600 font-medium">Título:</label>
             <input
@@ -120,6 +126,7 @@ const CreateRent = () => {
             />
           </div>
 
+          {/* Campo Tipo */}
           <div className="col-span-2">
             <label className="block text-gray-600 font-medium">Tipo:</label>
             <select
@@ -136,6 +143,7 @@ const CreateRent = () => {
             </select>
           </div>
 
+          {/* Otros campos del formulario */}
           <div>
             <label className="block text-gray-600 font-medium">Calle:</label>
             <input
@@ -148,18 +156,18 @@ const CreateRent = () => {
             />
           </div>
 
-           <div>
+          <div>
             <label className="block text-gray-600 font-medium">Número:</label>
             <input
               type="text"
               name="number"
               value={formValues.number}
               onChange={handleNumberChange}
-              className="w-full p-3 border border-gray-300 rounded-lg"
               placeholder="Número (opcional)"
+              className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
-          
+
           <div>
             <label className="block text-gray-600 font-medium">Piso:</label>
             <input
@@ -168,8 +176,8 @@ const CreateRent = () => {
               value={formValues.floor}
               onChange={handleChange}
               required
-              className="w-full p-3 border border-gray-300 rounded-lg"
               placeholder="Número de piso"
+              className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
 
@@ -181,8 +189,8 @@ const CreateRent = () => {
               value={formValues.locality}
               onChange={handleChange}
               required
-              className="w-full p-3 border border-gray-300 rounded-lg"
               placeholder="Localidad"
+              className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
 
@@ -194,11 +202,13 @@ const CreateRent = () => {
               value={formValues.zipCode}
               onChange={handleChange}
               required
-              className="w-full p-3 border border-gray-300 rounded-lg"
               placeholder="Código Postal"
+              className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
-
+          
+          {/* Coordenadas, quizás más adelante si metemos un mapa
+          
           <div>
             <label className="block text-gray-600 font-medium">Location (lat,lon):</label>
             <input
@@ -208,7 +218,7 @@ const CreateRent = () => {
               onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
-          </div>
+          </div> */}
 
           <div>
             <label className="block text-gray-600 font-medium">Precio (€):</label>
@@ -217,36 +227,39 @@ const CreateRent = () => {
               name="price"
               value={formValues.price}
               onChange={handlePriceChange}
-              className="w-full p-3 border border-gray-300 rounded-lg"
               placeholder="Precio mensual"
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-600 font-medium">Habitaciones:</label>
-            <input
-              type="number"
-              name="bedrooms"
-              value={formValues.bedrooms}
-              onChange={handleChange}
-              required
               className="w-full p-3 border border-gray-300 rounded-lg"
-              placeholder="Número de habitaciones"
             />
           </div>
-
+          
           <div>
-            <label className="block text-gray-600 font-medium">Baños:</label>
-            <input
-              type="number"
-              name="bathrooms"
-              value={formValues.bathrooms}
-              onChange={handleChange}
-              required
-              className="w-full p-3 border border-gray-300 rounded-lg"
-              placeholder="Número de baños"
-            />
-          </div>
+          <label className="block text-gray-600 font-medium">Habitaciones:</label>
+          <input
+            type="number"
+            name="bedrooms"
+            value={formValues.bedrooms}
+            onChange={handleChange}
+            required
+            placeholder="Número de habitaciones"
+            min="0"
+            className="w-full p-3 border border-gray-300 rounded-lg"
+          />
+        </div>
+
+        <div>
+          <label className="block text-gray-600 font-medium">Baños:</label>
+          <input
+            type="number"
+            name="bathrooms"
+            value={formValues.bathrooms}
+            onChange={handleChange}
+            required
+            placeholder="Número de baños"
+            min="0"
+            className="w-full p-3 border border-gray-300 rounded-lg"
+          />
+        </div>
+
 
           <div>
             <label className="block text-gray-600 font-medium">Metros cuadrados:</label>
@@ -255,11 +268,10 @@ const CreateRent = () => {
               name="squareMeters"
               value={formValues.squareMeters}
               onChange={handleSquareMetersChange}
-              className="w-full p-3 border border-gray-300 rounded-lg"
               placeholder="Metros cuadrados"
+              className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
-
 
           <div className="col-span-2 flex items-center gap-2">
             <input
@@ -271,7 +283,7 @@ const CreateRent = () => {
             />
             <label className="text-gray-600">Certificado Energético</label>
           </div>
-          
+
           <div className="col-span-2">
             <label className="block text-gray-600 font-medium">Descripción:</label>
             <textarea
@@ -280,11 +292,10 @@ const CreateRent = () => {
               onChange={handleChange}
               required
               maxLength={500}
-              className="w-full p-3 border border-gray-300 rounded-lg resize-none h-32"
               placeholder="Describe la propiedad (máx. 500 caracteres)"
+              className="w-full p-3 border border-gray-300 rounded-lg resize-none h-32"
             />
           </div>
-
 
           <div className="col-span-2">
             <label className="block text-gray-600 font-medium">Imágenes:</label>
@@ -296,17 +307,44 @@ const CreateRent = () => {
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
-          
+
+          {formValues.images.length > 0 && (
+            <div className="col-span-2">
+              <p className="text-gray-600 font-medium mb-2">
+                Previsualización de imágenes:
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {formValues.images.map((image, index) => (
+                  <div key={index} className="relative">
+                    <img
+                      src={URL.createObjectURL(image)}
+                      alt={`preview-${index}`}
+                      className="w-24 h-24 object-cover rounded-lg border"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removeImage(index)}
+                      className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           <button
             type="submit"
             disabled={loading}
             className={`col-span-2 text-white font-semibold rounded-full transition duration-300 py-3 ${
-        loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#ff6666] hover:bg-[#66ffff] hover:text-[#000033]'
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-[#ff6666] hover:bg-[#66ffff] hover:text-[#000033]"
             }`}
           >
             {loading ? "Creando..." : "Crear Propiedad"}
           </button>
-
         </form>
       </div>
     </main>
@@ -314,7 +352,3 @@ const CreateRent = () => {
 };
 
 export default CreateRent;
-
-
-
-

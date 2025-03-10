@@ -6,7 +6,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 function Review({ score, nameReviewer, avatar, reviewText }) {
 	return (
 		<>
-			<div className="flex bg-[#ff6666] p-3 md:w-[32%] hover:shadow-md transition-all duration-300">
+			<div className="flex bg-[#ff6666] p-3 mb-1 md:w-full hover:shadow-md transition-all duration-300 "> {/*Hice un cambio en md: si da problemas poner md:w-[32%]*/}
 				<div className="mr-3">
 					<div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center">
 						{avatar === 'null' ? (

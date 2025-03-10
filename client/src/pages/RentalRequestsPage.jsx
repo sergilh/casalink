@@ -3,11 +3,19 @@ import { AuthContext } from '../contexts/AuthContext';
 import RequestsList from '../components/RequestsList';
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
+import toast from 'react-hot-toast';
 
 const RentalRequestsPage = () => {
 	const { authUser } = useContext(AuthContext);
 	const token = authUser?.token || localStorage.getItem('token');
 	const navigate = useNavigate();
+	// Redirigir a login si el usuario no está autenticado
+	useEffect(() => {
+		if (!authUser) {
+			toast.error('Debes iniciar sesión para acceder a esta página.');
+			navigate('/login');
+		}
+	}, [authUser, navigate]);
 	const [rentalRequests, setRentalRequests] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
