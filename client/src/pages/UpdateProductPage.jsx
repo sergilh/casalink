@@ -10,6 +10,7 @@ const UpdateProductPage = () => {
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const { authUser } = useContext(AuthContext);
+	const userId = authUser?.id;
 	const [token, setToken] = useState(
 		authUser?.token || localStorage.getItem('token')
 	);
@@ -174,7 +175,7 @@ const UpdateProductPage = () => {
 			}
 
 			toast.success('Propiedad actualizada con éxito');
-			navigate(`/users/${authUser.id}/properties`, { replace: true });
+			navigate(`/properties/user/${userId}`);
 		} catch (err) {
 			console.error('Error en la actualización:', err);
 			setError(err.message);

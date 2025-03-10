@@ -114,18 +114,40 @@ const PropertiesListPage = () => {
 				</button>
 			</div>
 
-			{/* Contenido de la página */}
+			{/* Título */}
 			<h2 className="text-3xl font-bold mb-6">Mis Propiedades</h2>
-			<div className="w-full max-w-lg">
+
+			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
 				{properties.map((property) => (
 					<div
 						key={property.id}
-						className="bg-white p-4 mb-4 rounded-lg shadow-md w-full max-w-lg"
+						className="bg-white p-4 rounded-lg shadow-md"
 					>
-						<h3 className="text-xl font-semibold">
+						{/* Imagen con fallback si no hay imagen */}
+						<img
+							src={
+								property.imageUrl ||
+								'/images/default-property.jpg'
+							}
+							alt={property.propertyTitle}
+							className="w-full h-48 object-cover rounded-lg"
+						/>
+
+						{/* Información de la propiedad */}
+						<h3 className="text-xl font-semibold mt-3">
 							{property.propertyTitle}
 						</h3>
 						<p className="text-gray-600">{property.description}</p>
+
+						{/* Dirección */}
+						<p className="text-gray-500">
+							{property.street || 'Calle desconocida'},{' '}
+							{property.number || 'S/N'},{' '}
+							{property.city || 'Ciudad desconocida'},{' '}
+							{property.zipCode || '00000'}
+						</p>
+
+						{/* Botón de acción */}
 						{Number(userId) === authUser.id ? (
 							<button
 								onClick={() =>
