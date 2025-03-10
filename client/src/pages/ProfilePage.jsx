@@ -70,7 +70,8 @@ const ProfilePage = () => {
 	useEffect(() => {
 		const fetchUserProperties = async () => {
 			try {
-				console.log(' Solicitando propiedades para el userId:', userId);
+				console.log('Solicitando propiedades para userId:', userId);
+
 				const res = await fetch(
 					`${VITE_API_URL}/api/users/${userId}/properties`,
 					{
@@ -79,15 +80,35 @@ const ProfilePage = () => {
 						},
 					}
 				);
+
+				// Manejar caso donde el usuario no tiene propiedades (evitar lanzar error)
 				if (!res.ok) {
+					if (res.status === 404) {
+						console.warn(
+							`No se encontraron propiedades para el usuario ${userId}`
+						);
+						setUserProperties([]); // Asignar un array vacío
+						return;
+					}
 					throw new Error('Error al obtener propiedades del usuario');
 				}
+
 				const data = await res.json();
-				console.log('Propiedades del usuario:', data.properties); // Debug
-				setUserProperties(data.properties); // Guardamos las propiedades
+				console.log('Propiedades del usuario:', data.properties);
+
+				// Si la API devuelve un array vacío, asignarlo correctamente
+				if (data.properties.length === 0) {
+					console.warn(
+						` Usuario ${userId} no tiene propiedades registradas.`
+					);
+					setUserProperties([]);
+				} else {
+					setUserProperties(data.properties);
+				}
 			} catch (error) {
-				console.error(error);
+				console.error('Error al obtener propiedades:', error.message);
 				toast.error('Error al obtener las propiedades');
+				setUserProperties([]); // Evita que quede `undefined`
 			}
 		};
 

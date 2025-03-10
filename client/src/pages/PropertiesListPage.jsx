@@ -40,14 +40,30 @@ const PropertiesListPage = () => {
 				);
 
 				if (!res.ok) {
+					if (res.status === 404) {
+						console.warn(
+							` No se encontraron propiedades para el usuario ${userId}`
+						);
+						setProperties([]); // Asignar un array vacío en lugar de lanzar un error
+						return;
+					}
 					throw new Error('Error al obtener propiedades del usuario');
 				}
 
 				const data = await res.json();
 				console.log(' Propiedades recibidas:', data.properties);
-				setProperties(data.properties);
+
+				// Si la API devuelve un array vacío, mostramos un mensaje en la UI
+				if (data.properties.length === 0) {
+					console.warn(
+						` Usuario ${userId} no tiene propiedades registradas.`
+					);
+					setProperties([]);
+				} else {
+					setProperties(data.properties);
+				}
 			} catch (error) {
-				console.error(error);
+				console.error(' Error al obtener propiedades:', error.message);
 				setError('Error al obtener las propiedades.');
 			} finally {
 				setLoading(false);
@@ -61,6 +77,13 @@ const PropertiesListPage = () => {
 
 	if (loading) return <p>Cargando propiedades...</p>;
 	if (error) return <p className="text-red-500">{error}</p>;
+
+	// Si el usuario no tiene propiedades, mostramos un mensaje amigable en la UI
+	if (properties.length === 0) {
+		return (
+			<p className="text-gray-500">No tienes propiedades registradas.</p>
+		);
+	}
 
 	return (
 		<main className="min-h-screen flex flex-col items-center bg-gray-100 p-6">
