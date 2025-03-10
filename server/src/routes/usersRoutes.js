@@ -13,6 +13,7 @@ import addReviewController from '../controllers/reviews/addReviewController.js';
 import usersByIdController from '../controllers/users/usersByIdController.js';
 import usersModificationController from '../controllers/users/usersModificationController.js';
 import usersAvatarController from '../controllers/users/usersAvatarController.js';
+import usersNotificationsController from '../controllers/users/usersNotificationsController.js';
 
 // middlewares
 import authUserMiddleware from '../middlewares/authUserMiddleware.js';
@@ -75,5 +76,8 @@ router.patch(
 	avatarUploadMiddleware,
 	usersAvatarController
 );
+
+// 12 GET	/api/users/notifications		Notificaciones del usuario
+router.get('/notifications', authUserMiddleware, usersNotificationsController);
 
 export default router;

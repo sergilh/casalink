@@ -96,7 +96,7 @@ const ProfilePage = () => {
 											onClick={() =>
 												navigate('/profile/edit')
 											}
-											className="py-3 px-4 text-white font-bold rounded cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
+											className="py-3 px-4 text-white font-bold rounded-full cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
 											style={{
 												width: 'auto',
 												minWidth: '200px',
@@ -127,14 +127,13 @@ const ProfilePage = () => {
 												</p>
 											</div>
 										</>
-										)}
-										{userInfo.bio && (
-
-									<div className="flex items-center justify-center border-2 border-[#eeeeee] border-opacity-100 rounded-xl p-2">
-										<p>{userInfo.bio}</p>
-									</div>
-										)}	
+									)}
+									{userInfo.bio && (
+										<div className="flex items-center justify-center border-2 border-[#eeeeee] border-opacity-100 rounded-xl p-2">
+											<p>{userInfo.bio}</p>
 										</div>
+									)}
+								</div>
 							</div>
 						</section>
 
@@ -142,7 +141,7 @@ const ProfilePage = () => {
 						<div className="flex justify-center mt-6">
 							<button
 								onClick={() => navigate('/rental-requests')}
-								className="py-3 px-4 text-white font-bold rounded cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
+								className="py-3 px-4 text-white font-bold rounded-full cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
 								style={{
 									width: 'auto',
 									minWidth: '200px',
@@ -159,7 +158,7 @@ const ProfilePage = () => {
 								onClick={() =>
 									navigate(`/properties/user/${userId}`)
 								}
-								className="py-3 px-4 text-white font-bold rounded cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
+								className="py-3 px-4 text-white font-bold rounded-full cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
 								style={{
 									width: 'auto',
 									minWidth: '200px',

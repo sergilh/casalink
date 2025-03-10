@@ -22,25 +22,27 @@ const ImageGallery = ({ images }) => {
 
 	return (
 		<>
-			<div className="relative h-[50vh]">
-				<div className="h-full flex flex-col items-center justify-center bg-gray-100">
+			<div className="relative md:h-[50vh]">
+				<div className="h-full flex flex-col items-center bg-gray-100">
 					<img
 						src={`${VITE_API_URL}/static/uploads/images/${images[currentIndex].imageUrl}`}
 						alt={`Imagen ${currentIndex + 1}`}
 						className="w-auto h-full object-cover overflow-clip "
 					/>
-					<button
-						onClick={prevImage}
-						className="absolute left-2 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow hover:shadow-md transition-shadow"
-					>
-						<FaAngleLeft className="text-gray-500" />
-					</button>
-					<button
-						onClick={nextImage}
-						className="absolute right-2 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow hover:shadow-md transition-shadow"
-					>
-						<FaAngleRight className="text-gray-500" />
-					</button>
+					<div className="md:absolute bottom-0 flex gap-6">
+						<button
+							onClick={prevImage}
+							className="absolute  md:relative left-2 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow hover:shadow-md transition-shadow"
+						>
+							<FaAngleLeft className="text-gray-500" />
+						</button>
+						<button
+							onClick={nextImage}
+							className="absolute md:relative right-2 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow hover:shadow-md transition-shadow"
+						>
+							<FaAngleRight className="text-gray-500" />
+						</button>
+					</div>
 
 					<p className="text-center mt-2">
 						{currentIndex + 1} / {images.length}

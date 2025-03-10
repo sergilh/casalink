@@ -7,6 +7,7 @@ import authUserMiddleware from '../middlewares/authUserMiddleware.js';
 import checkPropertyOwnerOrAdmin from '../middlewares/checkPropertyOwnerOrAdmin.js';
 import { fileUploadMiddleware } from '../middlewares/fileUploadMiddleware.js';
 import validateRequest from '../middlewares/validateRequest.js';
+import isNotMyPropertyMiddleware from '../middlewares/isNotMyPropertyMiddleware.js';
 
 // Controladores
 import propertyDetailsController from '../controllers/properties/propertyDetailsController.js';
@@ -15,6 +16,8 @@ import fileUploadController from '../controllers/properties/fileUploadController
 import propertyStatusController from '../controllers/properties/propertyStatusController.js';
 import getPropertiesController from '../controllers/properties/getPropertiesController.js';
 import updatePropertyController from '../controllers/properties/updatePropertyController.js';
+import favController from '../controllers/properties/favController.js';
+import getFavsController from '../controllers/properties/getFavsController.js';
 
 // Validadores Joi
 import {
@@ -66,6 +69,7 @@ router.put(
 	authUserMiddleware,
 	propertyExistsMiddleware,
 	checkPropertyOwnerOrAdmin,
+	fileUploadMiddleware, // Permitir actualizar imagen
 	validateRequest(updatePropertySchema),
 	updatePropertyController
 );
@@ -87,6 +91,18 @@ router.post(
 	fileUploadController
 );
 
+// Ruta para marcar o desmarcar una propiedad como favorita
+router.patch(
+	'/properties/fav/:propertyId',
+	authUserMiddleware,
+	propertyExistsMiddleware,
+	isNotMyPropertyMiddleware,
+	favController
+);
+
+// Ruta para obtener los favoritos de un usuario
+router.get('/favs/', authUserMiddleware, getFavsController);
+
 // 2.18 Obtener todas las propiedades de un usuario
 router.get(
 	'/users/:userId/properties',
@@ -100,16 +116,24 @@ router.get(
 				[userId]
 			);
 
+			//  Si el usuario no tiene propiedades, devolver un array vacío en lugar de `404`
 			if (properties.length === 0) {
-				return res.status(404).json({
-					error: 'No se encontraron propiedades para este usuario',
+				return res.status(200).json({
+					success: true,
+					properties: [],
+					message: 'El usuario no tiene propiedades registradas.',
 				});
 			}
 
-			res.json({ properties });
+			//  Enviar las propiedades correctamente
+			res.status(200).json({
+				success: true,
+				properties,
+			});
 		} catch (error) {
-			console.error(error);
+			console.error(' Error obteniendo propiedades del usuario:', error);
 			res.status(500).json({
+				success: false,
 				error: 'Error obteniendo propiedades del usuario',
 			});
 		}

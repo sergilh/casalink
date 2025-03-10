@@ -4,7 +4,7 @@ import oscarGarciaSelfie from '../assets/images/casalink-oscar-garcia-selfie.png
 import oscarGarciaAjustes from '../assets/images/casalink-oscar-garcia-ajustes.png';
 
 const PublishPropertySection = () => {
-  const navigate = useNavigate();
+	const navigate = useNavigate();
 
 	return (
 		<section>
@@ -46,15 +46,15 @@ const PublishPropertySection = () => {
 							Alquila con Seguridad
 						</span>
 					</div>
-					
-          <div className="flex flex-col items-center w-full">
-            <button
-              onClick={() => navigate('/create-rent')}
-              className="bg-[#000033] hover:bg-[#66ffff] transition-all duration-300 w-full text-[#eeeeee] hover:text-[#000033] px-6 py-2 rounded-full transform hover:scale-105 text-3xl md:text-base"
-            >
-              ¡Publica tu anuncio!
-            </button>
-          </div>
+
+					<div className="flex flex-col items-center w-full">
+						<button
+							onClick={() => navigate('/create-rent')}
+							className="bg-[#000033] hover:bg-[#66ffff] transition-all duration-300 text-[#eeeeee] hover:text-[#000033] px-6 py-2 rounded-full transform hover:scale-105 text-3xl md:text-base"
+						>
+							¡Publica tu anuncio!
+						</button>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -62,4 +62,3 @@ const PublishPropertySection = () => {
 };
 
 export default PublishPropertySection;
-

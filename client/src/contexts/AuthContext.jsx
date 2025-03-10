@@ -14,6 +14,7 @@ const AuthProvider = ({ children }) => {
 	);
 	const [authUser, setAuthUser] = useState(null);
 
+	// eslint-disable-next-line no-unused-vars
 	const [authLoading, setAuthLoading] = useState(true);
 
 	useEffect(() => {

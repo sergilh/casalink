@@ -65,7 +65,7 @@ const RentalRequestsPage = () => {
 			<div className="fixed top left-4 z-40">
 				<button
 					onClick={() => navigate(-1)}
-					className="flex items-center justify-center w-8 h-8 text-white bg-[#ff6666] hover:bg-[#E05555] rounded-full shadow-md transition duration-300"
+					className="flex items-center justify-center w-10 h-10 text-white bg-[#ff6666] hover:bg-[#E05555] rounded-full shadow-md transition duration-300"
 				>
 					<FaArrowLeft className="text-lg" /> {/* Icono de flecha */}
 				</button>
