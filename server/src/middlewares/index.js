@@ -9,6 +9,7 @@ import { fileUploadMiddleware } from './fileUploadMiddleware.js';
 import validateRequest from './validateRequest.js';
 import noReviewExistsFromUser from './noReviewExistsFromUser.js';
 import reviewExistMiddleware from './reviewExistMiddleware.js';
+import authAPIMiddleware from './authAPIMiddleware.js';
 
 export {
 	jsonMiddleware,
@@ -22,4 +23,5 @@ export {
 	validateRequest,
 	noReviewExistsFromUser,
 	reviewExistMiddleware,
+	authAPIMiddleware,
 };

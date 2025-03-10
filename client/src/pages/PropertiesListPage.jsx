@@ -10,6 +10,12 @@ const PropertiesListPage = () => {
 	const { userId } = useParams(); // ID del usuario
 	const navigate = useNavigate();
 	const { authUser } = useContext(AuthContext);
+	const token = authUser?.token || localStorage.getItem('token');
+
+	const [properties, setProperties] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
+
 	// Redirigir a login si el usuario no está autenticado
 	useEffect(() => {
 		if (!authUser) {
@@ -66,8 +72,8 @@ const PropertiesListPage = () => {
 					}
 					throw new Error('Error al obtener propiedades del usuario');
 				}
-
 				const data = await res.json();
+
 				console.log(' Propiedades recibidas:', data.properties);
 				setProperties(data.properties.length ? data.properties : []);
 			} catch (error) {
@@ -117,41 +123,40 @@ const PropertiesListPage = () => {
 
 			{/* Contenido de la página */}
 			<h2 className="text-3xl font-bold mb-6">Mis Propiedades</h2>
-
-			{/* Si el usuario no tiene propiedades, mostrar mensaje */}
-			{properties.length === 0 ? (
-				<div className="flex flex-col items-center justify-center h-full">
-					<p className="text-gray-500 text-lg text-center">
-						No tienes propiedades registradas.
-					</p>
-				</div>
-			) : (
-				<div className="w-full max-w-lg">
-					{properties.map((property) => (
-						<div
-							key={property.id}
-							className="bg-white p-4 mb-4 rounded-lg shadow-md w-full"
-						>
-							<h3 className="text-xl font-semibold">
-								{property.propertyTitle}
-							</h3>
-							<p className="text-gray-600">
-								{property.description}
-							</p>
+			<div className="w-full max-w-lg">
+				{properties.map((property) => (
+					<div
+						key={property.id}
+						className="bg-white p-4 mb-4 rounded-lg shadow-md w-full max-w-lg"
+					>
+						<h3 className="text-xl font-semibold">
+							{property.propertyTitle}
+						</h3>
+						<p className="text-gray-600">{property.description}</p>
+						{Number(userId) === authUser.id ? (
 							<button
 								onClick={() =>
 									navigate(
 										`/properties/${property.id}/update`
 									)
 								}
-								className="mt-3 py-2 px-4 text-white font-bold rounded-full cursor-pointer bg-[#ff6666] hover:bg-[#E05555]"
+								className="mt-3 py-2 px-4 text-white font-bold rounded cursor-pointer bg-[#ff6666] hover:bg-[#E05555]"
 							>
 								Editar Propiedad
 							</button>
-						</div>
-					))}
-				</div>
-			)}
+						) : (
+							<button
+								onClick={() =>
+									navigate(`/properties/${property.id}`)
+								}
+								className="mt-3 py-2 px-4 text-white font-bold rounded cursor-pointer bg-[#ff6666] hover:bg-[#E05555]"
+							>
+								Ver Propiedad
+							</button>
+						)}
+					</div>
+				))}
+			</div>
 		</main>
 	);
 };

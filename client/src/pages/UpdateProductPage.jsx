@@ -324,9 +324,8 @@ const UpdateProductPage = () => {
 						</select>
 					</label>
 
-					{/* Campo: Certificado Energético */}
-					<label className="block flex items-center gap-2">
-						<span className="block font-semibold">
+					<label className="mb-4 flex items-center">
+						<span className="block font-semibold mr-2">
 							¿Tiene certificado energético?
 						</span>
 						<input

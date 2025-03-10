@@ -7,6 +7,8 @@ import removeReviewController from '../controllers/reviews/removeReviewControlle
 import usersListController from '../controllers/admin/usersListController.js';
 import updateUserRoleController from '../controllers/admin/updateUserRoleController;.js';
 import updatePropertyController from '../controllers/properties/updatePropertyController.js';
+import sendEmailController from '../controllers/admin/sendEmailController.js';
+import getReportedReviewsController from '../controllers/admin/getReportedReviewsController.js';
 
 // middlewares
 import {
@@ -15,6 +17,7 @@ import {
 	propertyExistsMiddleware,
 	validateRequest,
 	reviewExistMiddleware,
+	authAPIMiddleware,
 } from '../middlewares/index.js';
 
 // Validadores Joi
@@ -54,6 +57,16 @@ router.patch(
 	authAdminMiddleware,
 	reviewExistMiddleware,
 	removeReviewController
+);
+
+// 	POST 	/api/admin/send-email	Enviar correo electrónico a usuarios ✅
+router.post('/admin/send-email', authAPIMiddleware, sendEmailController);
+
+//  GET     /api/admin/reported-reviews	Obtener reseñas reportadas ✅
+router.get(
+	'/admin/reported-reviews',
+	authAdminMiddleware,
+	getReportedReviewsController
 );
 
 export default router;

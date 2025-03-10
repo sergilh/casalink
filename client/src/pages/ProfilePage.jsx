@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../contexts/AuthContext';
 import AvatarIconProfile from '../components/AvatarIconProfile';
 import Review from '../components/Review';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import useUserReviews from '../hooks/userReviews';
 
 const { VITE_API_URL } = import.meta.env;
 
@@ -14,10 +15,6 @@ const ProfilePage = () => {
 	const { authUser } = useContext(AuthContext);
 	const navigate = useNavigate();
 	const token = authUser?.token || localStorage.getItem('token'); // Obtener token
-	const [userReviews, setUserReviews] = useState([]);
-	const [userInfo, setUserInfo] = useState({});
-	const [usernotFound, setUserNotFound] = useState(false);
-	const [loading, setLoading] = useState(true);
 	const [userProperties, setUserProperties] = useState([]);
 
 	console.log('userId recibido desde useParams():', userId);
@@ -44,49 +41,11 @@ const ProfilePage = () => {
 		}
 	}, [authUser, token, navigate]);
 
-	useEffect(() => {
-		const getUserReviews = async () => {
-			try {
-				const res = await fetch(
-					`${VITE_API_URL}/api/users/${userId}/reviews`,
-					{
-						headers: {
-							Authorization: `Bearer ${token}`,
-						},
-					}
-				);
-				if (!res.ok) {
-					throw new Error('Error al obtener los datos del usuario');
-				}
-				const body = await res.json();
-				console.log('datos recibidos', body);
-
-				if (!body.data || !body.data.userRatingInfo) {
-					setUserNotFound(true);
-				} else {
-					setUserReviews(body.data.userRatingInfo.reviews);
-					setUserInfo(body.data.userRatingInfo.userDetails);
-				}
-			} catch (error) {
-				console.error(error);
-				toast.error('Error al obtener los datos del usuario');
-				setUserNotFound(true);
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		if (token) {
-			getUserReviews();
-		}
-	}, [userId, token]);
-
 	// Obtener propiedades del usuario
 	useEffect(() => {
 		const fetchUserProperties = async () => {
 			try {
-				console.log('Solicitando propiedades para userId:', userId);
-
+				console.log(' Solicitando propiedades para el userId:', userId);
 				const res = await fetch(
 					`${VITE_API_URL}/api/users/${userId}/properties`,
 					{
@@ -95,35 +54,15 @@ const ProfilePage = () => {
 						},
 					}
 				);
-
-				// Manejar caso donde el usuario no tiene propiedades (evitar lanzar error)
 				if (!res.ok) {
-					if (res.status === 404) {
-						console.warn(
-							`No se encontraron propiedades para el usuario ${userId}`
-						);
-						setUserProperties([]); // Asignar un array vacío
-						return;
-					}
 					throw new Error('Error al obtener propiedades del usuario');
 				}
-
 				const data = await res.json();
-				console.log('Propiedades del usuario:', data.properties);
-
-				// Si la API devuelve un array vacío, asignarlo correctamente
-				if (data.properties.length === 0) {
-					console.warn(
-						` Usuario ${userId} no tiene propiedades registradas.`
-					);
-					setUserProperties([]);
-				} else {
-					setUserProperties(data.properties);
-				}
+				console.log('Propiedades del usuario:', data.properties); // Debug
+				setUserProperties(data.properties); // Guardamos las propiedades
 			} catch (error) {
-				console.error('Error al obtener propiedades:', error.message);
+				console.error(error);
 				toast.error('Error al obtener las propiedades');
-				setUserProperties([]); // Evita que quede `undefined`
 			}
 		};
 
@@ -131,15 +70,19 @@ const ProfilePage = () => {
 			fetchUserProperties();
 		}
 	}, [userId, token]);
+	const { userInfo, userNotFound, userReviews, loading } = useUserReviews(
+		userId,
+		token
+	);
 
 	return (
 		<main className="flex justify-center items-center min-h-screen bg-gray-100">
-			<div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-2xl">
+			<div className="bg-white shadow-lg rounded-xl p-6 w-full w-full min-h-screen">
 				<h2 className="text-2xl font-semibold text-gray-700 text-center mb-8">
 					Mi perfil
 				</h2>
 
-				{usernotFound ? (
+				{userNotFound ? (
 					<p>El usuario no existe</p>
 				) : (
 					<>
@@ -243,6 +186,21 @@ const ProfilePage = () => {
 							</button>
 						</div>
 
+						{/* BOTÓN DASHBOARD*/}
+						<div className="flex justify-center mt-6">
+							<button
+								onClick={() => navigate(`/dashboard/${userId}`)}
+								className="py-3 px-4 text-white font-bold rounded cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
+								style={{
+									width: 'auto',
+									minWidth: '200px',
+									maxWidth: '300px',
+								}}
+							>
+								Dashboard
+							</button>
+						</div>
+
 						{loading ? (
 							<p>Cargando...</p>
 						) : userReviews.length > 0 ? (
@@ -257,7 +215,14 @@ const ProfilePage = () => {
 									<Review
 										key={review.id}
 										score={review.rating}
-										nameReviewer={review.reviewerName}
+										nameReviewer={
+											<Link
+												to={`/user/${review.reviewerId}`}
+												className="text-white-500 hover:underline transition duration-200"
+											>
+												{review.reviewerName}
+											</Link>
+										}
 										avatar={review.reviewerAvatar || 'null'}
 										reviewText={review.comment}
 									/>
