@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import useUserReviews from "../hooks/userReviews";
 import { FaArrowLeft } from 'react-icons/fa';
+import RentalsList from "../components/RentalsList";
 
 const { VITE_API_URL } = import.meta.env;
 
@@ -28,7 +29,7 @@ const UserProfilePage =  () => {
             }
         }, [authUser, navigate]); // Esto evita el error de hooks condicionales
     
-    const{userReviews,userNotFound,setUserNotFound,loading,setLoading}=useUserReviews(userId,token)
+    const{userReviews,userNotFound,userContracts,setUserNotFound,loading,setLoading}=useUserReviews(userId,token)
     useEffect(() => {
 		const getUserInfo = async () => {
 			try {
@@ -180,7 +181,15 @@ const UserProfilePage =  () => {
                                         </button>
                                     </div>
                             </div>
-                        </section>{loading ? (
+							</section>
+							{/* MOSTRAR ALQUILERES */}
+								<section>
+								<h2 className="text-2xl font-semibold text-gray-700 text-center mb-4 mt-8">Alquileres</h2>
+								<RentalsList contracts={userContracts.contracts} loading={loading} navigate={navigate} />
+							</section>
+							
+						{/* MOSTRAR REVIEWS */}
+							{loading ? (
 							<p>Cargando...</p>
 						) : userReviews.length > 0 ? (
 							<section
@@ -188,7 +197,7 @@ const UserProfilePage =  () => {
 								className="m-8 flex-grow"
 							>
 								<h2 className="text-2xl font-semibold text-gray-700 text-center mb-4">
-									Mis valoraciones
+									Valoraciones
 								</h2>
 								{userReviews.map((review) => (
 									<Review

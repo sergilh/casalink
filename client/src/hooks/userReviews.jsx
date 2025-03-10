@@ -8,6 +8,7 @@ const useUserReviews = (userId, token) => {
   const [userInfo, setUserInfo] = useState({});
   const [userReviews, setUserReviews] = useState([]);
   const [userNotFound, setUserNotFound] = useState(false);
+  const [userContracts,setUserContracts]=useState({contracts:[]})
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -32,6 +33,7 @@ const useUserReviews = (userId, token) => {
         } else {
           setUserReviews(body.data.userRatingInfo.reviews);
           setUserInfo(body.data.userRatingInfo.userDetails);
+          setUserContracts(body.data.userContractsInfo)
         }
       } catch (error) {
         console.error(error);
@@ -47,7 +49,7 @@ const useUserReviews = (userId, token) => {
     }
   }, [userId, token]);
 
-  return { userInfo,setUserInfo, userReviews,setUserReviews, userNotFound,setUserNotFound, loading,setLoading };
+  return { userInfo,setUserInfo, userContracts,setUserContracts, userReviews,setUserReviews, userNotFound,setUserNotFound, loading,setLoading };
 };
 
 export default useUserReviews;

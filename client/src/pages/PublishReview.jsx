@@ -1,13 +1,24 @@
-import { useState } from "react"
+import { useState, useEffect, useContext } from "react"
+import { AuthContext } from "../contexts/AuthContext"
 import StarRating from "../components/StarRating"
+import { useNavigate } from "react-router-dom"
 
 const PublishReview = () => {
+    const { authUser } = useContext(AuthContext)
+    const navigate= useNavigate()
     const [formValues, setFormValues] = useState({
         reviewedId: "",
         contractId: "",
         rating: "Valoración del 1 al 5",
         comment:""
     })
+
+    // Redirigir al usuario al login si no está autenticado
+        useEffect(() => {
+            if (!authUser) {
+                navigate('/login');
+            }
+        }, [authUser, navigate]); // Esto evita el error de hooks condicionales
 
     return (
          <main className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -16,10 +27,10 @@ const PublishReview = () => {
                  <form  className="grid grid-cols-2 gap-4 w-full">
           {/* Campo ReviewedId  */}
           <div className="col-span-2">
-            <label className="block text-gray-600 font-medium">Nombre del propietario:</label>
+            <label htmlFor="reviewed" className="block text-gray-600 font-medium">Nombre del propietario:</label>
             <input
               type="text"
-              name="title"
+              name="reviewed"
               value={formValues.reviewedId}
               required
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -28,9 +39,9 @@ const PublishReview = () => {
 
           {/* Campo Alquiler */}
           <div className="col-span-2">
-            <label className="block text-gray-600 font-medium">Propiedad</label>
+            <label htmlFor="property" className="block text-gray-600 font-medium">Propiedad</label>
             <select
-              name="type"
+              name="property"
               value={formValues.contractId}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
@@ -43,18 +54,24 @@ const PublishReview = () => {
                     </div>
                     {/* Campo Comment */}
           <div className="col-span-2 text-center">
-            <label className="block text-gray-600 font-medium">Comentario:</label>
+            <label htmlFor="comment" className="block text-gray-600 font-medium">Comentario:</label>
             <textarea
               type="text"
-              name="number"
+              name="comment"
               value={formValues.comment}
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
                         </div>
           {/* Campo Rating */}
-          <div className="col-span-2 flex justify-center pb-5">
+          <div className="col-span-2 text-center justify-center pb-5">
             <StarRating formValues={formValues} setFormValues={setFormValues}/>
-          </div>
+                    <button type="submit" className="mt-5 py-3 px-4 text-white font-bold rounded-full cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
+											style={{
+												width: 'auto',
+												minWidth: '200px',
+												maxWidth: '300px',
+											}}>Enviar</button>
+                    </div>
         </form>
 
         </div>

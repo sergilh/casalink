@@ -7,6 +7,7 @@ import Review from '../components/Review';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import useUserReviews from "../hooks/userReviews";
+import RentalsList from "../components/RentalsList";
 
 
 const { VITE_API_URL } = import.meta.env;
@@ -56,7 +57,7 @@ const ProfilePage = () => {
 				fetchUserProperties();
 			}
 		}, [userId, token]);
-		const{userInfo,userNotFound,userReviews,loading}=useUserReviews(userId,token)
+		const{userInfo,userNotFound,userReviews,userContracts,loading}=useUserReviews(userId,token)
 		
 		return (
 		<main className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -184,8 +185,13 @@ const ProfilePage = () => {
 							>
 								Dashboard
 							</button>
-						</div>
-
+								</div>
+						{/* MOSTRAR ALQUILERES */}
+									
+								<section>
+								<h2 className="text-2xl font-semibold text-gray-700 text-center mb-4 mt-8">Alquileres</h2>
+								<RentalsList contracts={userContracts.contracts} loading={loading} navigate={navigate} />
+							</section>
 						{loading ? (
 							<p>Cargando...</p>
 						) : userReviews.length > 0 ? (
