@@ -101,16 +101,24 @@ router.get(
 				[userId]
 			);
 
+			//  Si el usuario no tiene propiedades, devolver un array vacío en lugar de `404`
 			if (properties.length === 0) {
-				return res.status(404).json({
-					error: 'No se encontraron propiedades para este usuario',
+				return res.status(200).json({
+					success: true,
+					properties: [],
+					message: 'El usuario no tiene propiedades registradas.',
 				});
 			}
 
-			res.json({ properties });
+			//  Enviar las propiedades correctamente
+			res.status(200).json({
+				success: true,
+				properties,
+			});
 		} catch (error) {
-			console.error(error);
+			console.error(' Error obteniendo propiedades del usuario:', error);
 			res.status(500).json({
+				success: false,
 				error: 'Error obteniendo propiedades del usuario',
 			});
 		}
