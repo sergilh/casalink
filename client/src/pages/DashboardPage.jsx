@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse } from '@fortawesome/free-solid-svg-icons';
 import { faFileSignature } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faHand} from '@fortawesome/free-solid-svg-icons';
+
 
 import useUserReviews from "../hooks/userReviews";
 
@@ -110,6 +112,16 @@ const ProfilePage = () => {
                                                                             size="4x"
                                                                         />
 							<h2>Publicar reseña</h2>
+							</Link>
+						</div>
+
+						<div className='flex-col items-center justify-center text-center '>
+							<Link to={`/rental-requests`}>
+							<FontAwesomeIcon
+                                                                            icon={faHand}
+                                                                            size="4x"
+                                                                        />
+							<h2>Solicitudes de alquiler</h2>
 							</Link>
 						</div>
                         </div>
