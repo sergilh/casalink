@@ -5,6 +5,7 @@ const selectPropertyByIdModel = async (propertyId) => {
 	const [properties] = await pool.query(
 		`
 			SELECT p.id,
+			ownerId,
 			p.propertyTitle,
 			p.propertyType,
 			p.description,
