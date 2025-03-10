@@ -7,6 +7,7 @@ import authUserMiddleware from '../middlewares/authUserMiddleware.js';
 import checkPropertyOwnerOrAdmin from '../middlewares/checkPropertyOwnerOrAdmin.js';
 import { fileUploadMiddleware } from '../middlewares/fileUploadMiddleware.js';
 import validateRequest from '../middlewares/validateRequest.js';
+import isNotMyPropertyMiddleware from '../middlewares/isNotMyPropertyMiddleware.js';
 
 // Controladores
 import propertyDetailsController from '../controllers/properties/propertyDetailsController.js';
@@ -15,6 +16,8 @@ import fileUploadController from '../controllers/properties/fileUploadController
 import propertyStatusController from '../controllers/properties/propertyStatusController.js';
 import getPropertiesController from '../controllers/properties/getPropertiesController.js';
 import updatePropertyController from '../controllers/properties/updatePropertyController.js';
+import favController from '../controllers/properties/favController.js';
+import getFavsController from '../controllers/properties/getFavsController.js';
 
 // Validadores Joi
 import {
@@ -87,6 +90,18 @@ router.post(
 	},
 	fileUploadController
 );
+
+// Ruta para marcar o desmarcar una propiedad como favorita
+router.patch(
+	'/properties/fav/:propertyId',
+	authUserMiddleware,
+	propertyExistsMiddleware,
+	isNotMyPropertyMiddleware,
+	favController
+);
+
+// Ruta para obtener los favoritos de un usuario
+router.get('/favs/', authUserMiddleware, getFavsController);
 
 // 2.18 Obtener todas las propiedades de un usuario
 router.get(

@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FaHeart, FaStar, FaRulerCombined } from 'react-icons/fa';
+import { FaHeart, FaStar } from 'react-icons/fa';
 import noResultsImage from '../assets/images/casalink-oscar-garcia-buscando.png';
 import noImage from '../assets/images/casalink-oscar-garcia-selfie.png';
+import toast from 'react-hot-toast';
+
 const { VITE_API_URL } = import.meta.env;
 
 const SearchResults = () => {
-	const location = useLocation();
-	const navigate = useNavigate();
-	const [properties, setProperties] = useState([]);
+	const [favoriteProperties, setFavoriteProperties] = useState(new Set());
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [loading, setLoading] = useState(true);
-	const [totalPages, setTotalPages] = useState(1); // Estado para almacenar el total de páginas
+	const [loadingFavorites, setLoadingFavorites] = useState(false);
+	const [properties, setProperties] = useState([]);
+	const [totalPages, setTotalPages] = useState(1);
 	const [searchParams, setSearchParams] = useState({
 		locality: '',
 		bathrooms: '',
@@ -24,54 +27,134 @@ const SearchResults = () => {
 		page: 1,
 	});
 
+	const location = useLocation();
+	const navigate = useNavigate();
+
 	useEffect(() => {
-		const params = new URLSearchParams(location.search);
-		const requestBody = {
-			locality: params.get('locality') || '',
-			bathrooms: params.get('bathrooms') || '',
-			bedrooms: params.get('bedrooms') || '',
-			minOwnerRating: params.get('minOwnerRating') || '',
-			minPrice: params.get('minPrice') || '',
-			maxPrice: params.get('maxPrice') || '',
-			sortBy: params.get('orderBy') || 'createdAt',
-			order: params.get('orderDirection') || 'desc',
-			limit: params.get('limit') || 12,
-			page: params.get('page') || 1,
-		};
-
-		setSearchParams(requestBody);
-
-		const fetchProperties = async () => {
+		const fetchData = async () => {
 			try {
-				const response = await fetch(
+				setLoading(true);
+
+				// 1. Cargar propiedades
+				const params = new URLSearchParams(location.search);
+				const propertiesResponse = await fetch(
 					`${VITE_API_URL}/api/properties?${params.toString()}`,
-					{
-						method: 'GET',
-						headers: { 'Content-Type': 'application/json' },
+					{ headers: { 'Content-Type': 'application/json' } }
+				);
+				const propertiesData = await propertiesResponse.json();
+
+				setProperties(propertiesData.properties || []);
+				setTotalPages(
+					Math.ceil(
+						(propertiesData.totalProperties || 0) /
+							searchParams.limit
+					)
+				);
+
+				// 2. Verificar autenticación y cargar favoritos
+				const token = localStorage.getItem('token');
+				const authStatus = !!token;
+				setIsAuthenticated(authStatus);
+
+				if (authStatus) {
+					setLoadingFavorites(true);
+					const favoritesResponse = await fetch(
+						`${VITE_API_URL}/api/favs`,
+						{
+							headers: { Authorization: `${token}` },
+						}
+					);
+
+					if (favoritesResponse.ok) {
+						const favoritesData = await favoritesResponse.json();
+						if (Array.isArray(favoritesData.data)) {
+							// Verificación de seguridad
+							setFavoriteProperties(
+								new Set(
+									favoritesData.data.map(
+										(fav) => fav.propertyId
+									)
+								)
+							);
+						} else {
+							console.error(
+								'Formato de favoritos inválido:',
+								favoritesData
+							);
+							setFavoriteProperties(new Set());
+						}
 					}
-				);
-
-				const data = await response.json();
-
-				// Suponiendo que el backend devuelve totalProperties
-				const totalProperties = data.totalProperties || 0;
-				const totalPages = Math.ceil(
-					totalProperties / requestBody.limit
-				);
-
-				setProperties(data.properties || []);
-				setTotalPages(totalPages);
+				}
 			} catch (error) {
-				console.error('Error fetching properties:', error);
+				console.error('Error:', error);
+				toast.error('Error al cargar datos');
 			} finally {
 				setLoading(false);
+				setLoadingFavorites(false);
 			}
 		};
 
-		fetchProperties();
+		fetchData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [location.search]);
 
-	// Función para cambiar de página
+	const toggleFavorite = async (propertyId, e) => {
+		e.preventDefault();
+		e.stopPropagation();
+
+		if (!isAuthenticated) {
+			navigate('/login');
+			return;
+		}
+
+		const token = localStorage.getItem('token');
+		const newFavorites = new Set(favoriteProperties);
+		const isFavorite = newFavorites.has(propertyId);
+
+		// Actualización optimista
+		if (isFavorite) {
+			newFavorites.delete(propertyId);
+			toast.error('Favorito eliminado');
+		} else {
+			newFavorites.add(propertyId);
+			toast.success('Favorito agregado');
+		}
+		setFavoriteProperties(newFavorites);
+
+		try {
+			const response = await fetch(
+				`${VITE_API_URL}/api/properties/fav/${propertyId}/`,
+				{
+					method: 'PATCH',
+					headers: { Authorization: `${token}` },
+				}
+			);
+
+			if (!response.ok) throw new Error('Error al actualizar favoritos');
+
+			// Recargar favoritos para sincronización con el servidor
+			const refreshResponse = await fetch(`${VITE_API_URL}/api/favs`, {
+				headers: { Authorization: `${token}` },
+			});
+			const newData = await refreshResponse.json();
+			setFavoriteProperties(
+				new Set(newData.data.map((fav) => fav.propertyId))
+			);
+		} catch (error) {
+			// Revertir cambios en caso de error
+			setFavoriteProperties(new Set(favoriteProperties));
+			toast.error(error.message);
+		}
+	};
+
+	const formatPrice = (price) => {
+		return new Intl.NumberFormat('es-ES', {
+			style: 'currency',
+			currency: 'EUR',
+			maximumFractionDigits: price % 1 === 0 ? 0 : 2,
+		}).format(price);
+	};
+
 	const goToPage = (newPage) => {
 		if (newPage > 0 && newPage <= totalPages) {
 			const query = new URLSearchParams({
@@ -249,45 +332,85 @@ const SearchResults = () => {
 								className="bg-white rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition-transform"
 							>
 								<a href={`/properties/${property.propertyId}`}>
-									<img
-										src={
-											property.mainImage
-												? VITE_API_URL +
-													'/static/uploads/images/' +
-													property.mainImage
-												: noImage
-										}
-										alt={property.propertyTitle}
-										className="w-full aspect-square object-cover bg-[#e6dada]"
-									/>
-									<div className="p-4">
-										<p>
-											<FaHeart />
-										</p>
-										<h2 className="text-lg font-semibold text-gray-900">
-											{property.propertyTitle}
-										</h2>
-										<p className="text-gray-700">
-											{property.addressLocality}
-										</p>
-										<p className="text-gray-600">
-											🛏️ {property.bedrooms} 🚽{' '}
-											{property.bathrooms}
-										</p>
-										<p className="text-gray-600">
-											{property.price}€
-										</p>
-										<p className="text-gray-600">
-											<FaRulerCombined />
-											{property.squareMeters}m²
-										</p>
-										<p className="text-gray-600 hidden">
-											{property.propertyType}
-										</p>
-										<p className="text-gray-600">
-											{property.ownerInfo.averageRating}{' '}
-											<FaStar />
-										</p>
+									<div>
+										<img
+											src={
+												property.mainImage
+													? VITE_API_URL +
+														'/static/uploads/images/' +
+														property.mainImage
+													: noImage
+											}
+											alt={property.propertyTitle}
+											className="w-full aspect-square object-cover bg-[#e6dada]"
+										/>
+
+										{/* Botón de favoritos */}
+										<button
+											onClick={(e) =>
+												toggleFavorite(
+													property.propertyId,
+													e
+												)
+											}
+											className={`transition-colors ${
+												favoriteProperties.has(
+													property.propertyId
+												)
+													? 'text-[#ff6666] hover:text-red-500'
+													: 'text-gray-100/50 hover:text-gray-300'
+											} top-2 right-2 absolute size-8 ${loadingFavorites ? 'opacity-50 cursor-not-allowed' : ''}`}
+											disabled={loadingFavorites}
+										>
+											<FaHeart className="w-full h-auto" />
+										</button>
+									</div>
+
+									<div className="p-2 grid grid-cols-12 gap-2">
+										<div className="col-span-2 flex flex-col gap-2 border-2 border-gray-300 rounded-lg h-fit w-full items-center content-center">
+											<p className="text-gray-300 p-2 text-center">
+												<FaStar className="inline-block" />
+												{
+													property.ownerInfo
+														.averageRating
+												}
+											</p>
+										</div>
+										<div className="col-span-8 flex flex-col">
+											<h2 className="text-lg font-bold text-gray-900">
+												{property.propertyTitle}
+											</h2>
+											<div className="flex flex-row items-center gap-2 text-xs">
+												<span className="text-gray-600">
+													{property.addressLocality}
+												</span>
+												<span className="text-gray-600 inline-block">
+													{property.squareMeters}
+													m²
+												</span>
+											</div>
+										</div>
+										<div className="col-span-2 flex flex-col h-full justify-between items-end">
+											<div className="flex flex-row items-center gap-2 text-xs">
+												<span className="text-gray-600 inline-block">
+													🛏️
+												</span>
+												<span className="text-gray-600 inline-block">
+													{property.bedrooms}
+												</span>
+											</div>
+											<div className="flex flex-row items-center gap-2 text-xs">
+												<span className="text-gray-600 flex-row items-center gap-2">
+													🚽
+												</span>
+												<span className="text-gray-600 inline-block">
+													{property.bathrooms}
+												</span>
+											</div>
+											<p className="text-gray-600 text-lg font-bold">
+												{formatPrice(property.price)}
+											</p>
+										</div>
 									</div>
 								</a>
 							</div>

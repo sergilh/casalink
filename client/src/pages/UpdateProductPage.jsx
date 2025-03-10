@@ -316,7 +316,7 @@ const UpdateProductPage = () => {
 						</select>
 					</label>
 
-					<label className="block mb-4 flex items-center">
+					<label className="mb-4 flex items-center">
 						<span className="block font-semibold mr-2">
 							¿Tiene certificado energético?
 						</span>
