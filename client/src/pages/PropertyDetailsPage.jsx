@@ -110,26 +110,25 @@ export default PropertyDetailsPage;
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import FeaturedListingsSection from '../components/FeaturedListingsSection';
-import { FaHeart } from 'react-icons/fa';
+import { FaHeart, FaStar } from 'react-icons/fa';
 import ImageGallery from '../components/ImageGallery';
 import toast from 'react-hot-toast';
 
 const { VITE_API_URL } = import.meta.env;
 
 const PropertyDetailsPage = () => {
+	const [favoriteProperties, setFavoriteProperties] = useState(new Set());
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [loading, setLoading] = useState(true);
+	const [loadingFavorites, setLoadingFavorites] = useState(false);
+	const [property, setProperty] = useState(null);
 	const { propertyId } = useParams();
 	const navigate = useNavigate();
-	const [property, setProperty] = useState(null);
-	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-	const [isAuthenticated, setIsAuthenticated] = useState(false);
-	const [favoriteProperties, setFavoriteProperties] = useState(new Set());
-	const [loadingFavorites, setLoadingFavorites] = useState(false);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				// Cargar detalles de la propiedad
 				const propertyResponse = await fetch(
 					`${VITE_API_URL}/api/properties/${propertyId}`
 				);
@@ -148,20 +147,21 @@ const PropertyDetailsPage = () => {
 				if (token) {
 					setLoadingFavorites(true);
 					const favoritesResponse = await fetch(
-						`${VITE_API_URL}/api/favs`,
-						{ headers: { Authorization: `${token}` } }
+						`${VITE_API_URL}/api/favs?propertyId=${propertyId}`,
+						{
+							headers: { Authorization: `${token}` },
+						}
 					);
 
 					if (favoritesResponse.ok) {
 						const favoritesData = await favoritesResponse.json();
-						if (Array.isArray(favoritesData.data)) {
+						console.log('Favoritos:', favoritesData.data);
+						if (favoritesData.data) {
 							setFavoriteProperties(
-								new Set(
-									favoritesData.data.map(
-										(fav) => fav.propertyId
-									)
-								)
+								new Set([favoritesData.data.propertyId])
 							);
+						} else {
+							setFavoriteProperties(new Set());
 						}
 					}
 				}
@@ -186,17 +186,18 @@ const PropertyDetailsPage = () => {
 		}
 
 		const token = localStorage.getItem('token');
-		const newFavorites = new Set(favoriteProperties.data);
-		const isFavorite = newFavorites.has(propertyId);
+		const newFavorites = new Set(favoriteProperties);
+		const isFavorite = newFavorites.has(Number(propertyId));
 
-		// Actualización optimista
+		// Actualización optimista: cambia el estado antes de la petición
 		if (isFavorite) {
-			newFavorites.delete(propertyId);
-			toast.success('Eliminado de favoritos');
+			newFavorites.delete(Number(propertyId));
+			toast.error('Eliminado de favoritos');
 		} else {
-			newFavorites.add(propertyId);
+			newFavorites.add(Number(propertyId));
 			toast.success('Agregado a favoritos');
 		}
+
 		setFavoriteProperties(newFavorites);
 
 		try {
@@ -211,13 +212,19 @@ const PropertyDetailsPage = () => {
 			if (!response.ok) throw new Error('Error al actualizar favoritos');
 
 			// Recargar favoritos para sincronización con el servidor
-			const refreshResponse = await fetch(`${VITE_API_URL}/api/favs`, {
-				headers: { Authorization: `${token}` },
-			});
-			const newData = await refreshResponse.json();
-			setFavoriteProperties(
-				new Set(newData.data.map((fav) => fav.propertyId))
+			const refreshResponse = await fetch(
+				`${VITE_API_URL}/api/favs?propertyId=${propertyId}`,
+				{
+					headers: { Authorization: `${token}` },
+				}
 			);
+
+			const newData = await refreshResponse.json();
+			if (newData.data) {
+				setFavoriteProperties(new Set([newData.data.propertyId]));
+			} else {
+				setFavoriteProperties(new Set());
+			}
 		} catch (error) {
 			// Revertir cambios en caso de error
 			setFavoriteProperties(new Set(favoriteProperties));
@@ -241,6 +248,12 @@ const PropertyDetailsPage = () => {
 			<div className="p-4">
 				<div className="flex justify-between items-start">
 					<div>
+						<div className="col-span-2 flex flex-col gap-2 border-2 border-gray-300 rounded-lg h-fit w-full items-center content-center">
+							<p className="text-gray-300 p-2 text-center">
+								<FaStar className="inline-block" />
+								{property.avgRating}
+							</p>
+						</div>
 						<div className="flex items-center gap-2">
 							{/* Botón de favoritos */}
 							<button
