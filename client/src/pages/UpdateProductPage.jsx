@@ -174,7 +174,7 @@ const UpdateProductPage = () => {
 			}
 
 			toast.success('Propiedad actualizada con éxito');
-			navigate(`/properties/${id}`);
+			navigate(`/users/${authUser.id}/properties`, { replace: true });
 		} catch (err) {
 			console.error('Error en la actualización:', err);
 			setError(err.message);
@@ -208,7 +208,6 @@ const UpdateProductPage = () => {
 							name="title" // Antes era propertyTitle
 							value={property?.title || ''}
 							onChange={handleChange}
-							required
 							className="w-full border px-3 py-2 rounded-lg"
 						/>
 					</label>
@@ -222,7 +221,6 @@ const UpdateProductPage = () => {
 							name="description"
 							value={property?.description || ''}
 							onChange={handleChange}
-							required
 							className="w-full border px-3 py-2 rounded-lg"
 						/>
 					</label>
@@ -236,7 +234,6 @@ const UpdateProductPage = () => {
 							name="type" // ✅ Antes era propertyType
 							value={property?.type || ''}
 							onChange={handleChange}
-							required
 							className="w-full border px-3 py-2 rounded-lg"
 						>
 							<option value="apartamento">Apartamento</option>
@@ -255,7 +252,6 @@ const UpdateProductPage = () => {
 							name="street"
 							value={property?.street || ''}
 							onChange={handleChange}
-							required
 							className="w-full border px-3 py-2 rounded-lg"
 						/>
 					</label>
@@ -268,7 +264,6 @@ const UpdateProductPage = () => {
 							name="number"
 							value={property?.number || ''}
 							onChange={handleChange}
-							required
 							className="w-full border px-3 py-2 rounded-lg"
 						/>
 					</label>
@@ -281,7 +276,6 @@ const UpdateProductPage = () => {
 							name="floor"
 							value={property?.floor || ''}
 							onChange={handleChange}
-							required
 							className="w-full border px-3 py-2 rounded-lg"
 						/>
 					</label>
@@ -296,7 +290,6 @@ const UpdateProductPage = () => {
 							name="zipCode"
 							value={property?.zipCode || ''}
 							onChange={handleChange}
-							required
 							className="w-full border px-3 py-2 rounded-lg"
 						/>
 					</label>
@@ -311,7 +304,6 @@ const UpdateProductPage = () => {
 							name="squareMeters"
 							value={property?.squareMeters ?? ''}
 							onChange={handleChange}
-							required
 							className="w-full border px-3 py-2 rounded-lg"
 						/>
 					</label>
@@ -326,7 +318,6 @@ const UpdateProductPage = () => {
 							name="bedrooms"
 							value={property?.bedrooms || ''}
 							onChange={handleChange}
-							required
 							className="w-full border px-3 py-2 rounded-lg"
 						/>
 					</label>
@@ -339,7 +330,6 @@ const UpdateProductPage = () => {
 							name="bathrooms"
 							value={property?.bathrooms || ''}
 							onChange={handleChange}
-							required
 							className="w-full border px-3 py-2 rounded-lg"
 						/>
 					</label>
@@ -352,7 +342,6 @@ const UpdateProductPage = () => {
 							name="price"
 							value={property?.price || ''}
 							onChange={handleChange}
-							required
 							className="w-full border px-3 py-2 rounded-lg"
 						/>
 					</label>
