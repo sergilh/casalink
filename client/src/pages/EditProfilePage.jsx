@@ -40,8 +40,8 @@ const EditProfileForm = () => {
                 lastName:authUser.lastName || 'No hay datos',
                 email:authUser.email || 'No hay datos',
                 phone: authUser.phone || 'No hay datos',
-                legalId: authUser.legalId || 'No hay datos',
-                bio: authUser.bio || 'No hay datos',
+                legalId: authUser.legalId ,
+                bio: authUser.bio ,
 
                 
             })
@@ -58,6 +58,7 @@ const EditProfileForm = () => {
             [name]:value
         }))
     }
+    
 
     //Función que maneja el cambio de avatar
     const handleAvatarChange = (e) => {
@@ -123,6 +124,7 @@ const EditProfileForm = () => {
                 'Content-Type': 'application/json',
             },
                 body: JSON.stringify(formValues),
+                
             })
             if (!res.ok) {
                 throw new Error('No se ha hecho ningún cambio')
@@ -218,7 +220,6 @@ const EditProfileForm = () => {
               name="name"
                     value={formValues.name}
                     onChange={handleChange}
-              required
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 hover:border-gray-700 transition duration-300"
             />
                     </div>
@@ -231,7 +232,6 @@ const EditProfileForm = () => {
                 value={formValues.lastName}
                 onChange={handleChange}
                             
-              required
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 hover:border-gray-700 transition duration-300"
             />
                     </div>
@@ -244,7 +244,6 @@ const EditProfileForm = () => {
                     value={formValues.email}
                     onChange={handleChange}
                             
-              required
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 hover:border-gray-700 transition duration-300"
             />
                     </div>
@@ -270,7 +269,6 @@ const EditProfileForm = () => {
                     value={formValues.phone}
                     onChange={handleChange}
                             
-              required
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 hover:border-gray-700 transition duration-300"
             />
                     </div>
