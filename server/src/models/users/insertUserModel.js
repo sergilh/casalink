@@ -46,7 +46,8 @@ const insertUserModel = async (
 
 	// Generar un código de validación de 4 caracteres
 	const validationCode = crypto.randomBytes(2).toString('hex');
-	const validationLink = `href="${process.env.CLIENT_URL}/users/password/${validationCode}"`;
+	const validationLink = `${process.env.CLIENT_URL}validate-email?email=${email}&validationCode=${validationCode}`;
+	//console.log('validationLink', validationLink);
 
 	// Crear datos de correo para el correo de validación
 	const bccMail = process.env.SUPERADMIN_EMAIL;
@@ -305,6 +306,9 @@ const insertUserModel = async (
 											>
 										</p>
 										<br /><br />
+										<p style="text-align: center">
+											Si no funciona el enlace, puedes copiar y pegar el siguiente enlace en tu navegador: ${validationLink}
+										</p>
 										<p style="text-align: center">
 											<small>
 												Si no solicitaste este código,

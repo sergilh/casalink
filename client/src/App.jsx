@@ -15,10 +15,8 @@ import AdminPage from './pages/AdminPage';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 import ContractDetailPage from './pages/ContractDetailPage';
 import CreateRent from './pages/CreateRent';
-
 // E
 import EditProfilePage from './pages/EditProfilePage';
-
 // H
 import HelpPage from './pages/HelpPage';
 import HomePage from './pages/HomePage';
@@ -121,7 +119,7 @@ const App = () => {
 					</Routes>
 				</ErrorBoundary>
 
-				{/* Agregamos Toaster para manejar las notificaciones */}
+				{/* Toaster para manejar las notificaciones */}
 				<Toaster
 					position="top-center"
 					toastOptions={{ duration: 10000 }}
