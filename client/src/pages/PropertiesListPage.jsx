@@ -17,13 +17,30 @@ const PropertiesListPage = () => {
 			navigate('/login');
 		}
 	}, [authUser, navigate]);
-	const token = authUser?.token || localStorage.getItem('token');
+	const [token, setToken] = useState(
+		authUser?.token || localStorage.getItem('token')
+	);
 
 	const [properties, setProperties] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
 	console.log('userId recibido desde useParams():', userId);
+
+	// 1. Verificación de Autenticación**
+	useEffect(() => {
+		let storedToken = localStorage.getItem('token');
+
+		if (!token && storedToken) {
+			console.log('Token actualizado desde localStorage');
+			setToken(storedToken);
+		}
+
+		if (!authUser && !storedToken) {
+			toast.error('Tu sesión ha expirado, inicia sesión nuevamente.');
+			navigate('/login');
+		}
+	}, [authUser, token, navigate]);
 
 	useEffect(() => {
 		const fetchProperties = async () => {
@@ -52,18 +69,9 @@ const PropertiesListPage = () => {
 
 				const data = await res.json();
 				console.log(' Propiedades recibidas:', data.properties);
-
-				// Si la API devuelve un array vacío, mostramos un mensaje en la UI
-				if (data.properties.length === 0) {
-					console.warn(
-						` Usuario ${userId} no tiene propiedades registradas.`
-					);
-					setProperties([]);
-				} else {
-					setProperties(data.properties);
-				}
+				setProperties(data.properties.length ? data.properties : []);
 			} catch (error) {
-				console.error(' Error al obtener propiedades:', error.message);
+				console.error('Error al obtener propiedades:', error.message);
 				setError('Error al obtener las propiedades.');
 			} finally {
 				setLoading(false);
@@ -81,7 +89,17 @@ const PropertiesListPage = () => {
 	// Si el usuario no tiene propiedades, mostramos un mensaje amigable en la UI
 	if (properties.length === 0) {
 		return (
-			<p className="text-gray-500">No tienes propiedades registradas.</p>
+			<div className="flex flex-col items-center mt-10">
+				<p className="text-gray-500">
+					No tienes propiedades registradas.
+				</p>
+				<button
+					onClick={() => navigate(-1)}
+					className="mt-4 py-2 px-4 text-white font-bold rounded-full bg-[#ff6666] hover:bg-[#E05555]"
+				>
+					Volver atrás
+				</button>
+			</div>
 		);
 	}
 

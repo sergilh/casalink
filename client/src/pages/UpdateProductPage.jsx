@@ -7,43 +7,62 @@ import { FaArrowLeft } from 'react-icons/fa';
 const { VITE_API_URL } = import.meta.env;
 
 const UpdateProductPage = () => {
-	const { id } = useParams(); // ID de la propiedad desde la URL
+	const { id } = useParams();
 	const navigate = useNavigate();
 	const { authUser } = useContext(AuthContext);
-	const token = authUser?.token || localStorage.getItem('token');
-	// Redirigir a login si el usuario no está autenticado
-	useEffect(() => {
-		if (!authUser) {
-			toast.error('Debes iniciar sesión para acceder a esta página.');
-			navigate('/login');
-		}
-	}, [authUser, navigate]);
+	const [token, setToken] = useState(
+		authUser?.token || localStorage.getItem('token')
+	);
 
+	// Estados para la propiedad y la versión original
 	const [property, setProperty] = useState(null);
+	const [originalProperty, setOriginalProperty] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [image, setImage] = useState(null);
 
-	console.log('ID recibido desde useParams():', id);
-
-	// **Verificar si el usuario tiene permisos**
+	// Redirigir si el usuario no está autenticado
 	useEffect(() => {
+		if (!token) {
+			const storedToken = localStorage.getItem('token');
+			if (storedToken) {
+				setToken(storedToken);
+			} else {
+				toast.error('Tu sesión ha expirado, inicia sesión nuevamente.');
+				navigate('/login');
+			}
+		}
+	}, [authUser, token, navigate]);
+	// Verificar permisos
+	useEffect(() => {
+		// Verificar que authUser está definido antes de validar permisos
 		if (!loading && property) {
-			const esAdmin = authUser?.role === 'admin';
-			const esOwner = authUser?.id === property?.ownerId;
+			console.log('Verificando permisos...');
+			console.log('Usuario autenticado:', authUser);
+			console.log('Propiedad cargada:', property);
 
-			console.log(
-				' Verificando permisos - esAdmin:',
-				esAdmin,
-				'esOwner:',
-				esOwner
-			);
+			if (!authUser) {
+				toast.error('Error: Usuario no autenticado.');
+				navigate('/login');
+				return;
+			}
+
+			if (!property?.ownerId) {
+				console.error('No se pudo obtener el ownerId de la propiedad.');
+				return;
+			}
+
+			// Verificar permisos
+			const esAdmin = authUser?.role === 'admin';
+			const esOwner = authUser?.id == property?.ownerId;
+
+			console.log(`esAdmin: ${esAdmin}, esOwner: ${esOwner}`);
 
 			if (!esAdmin && !esOwner) {
 				toast.error(
 					'No tienes permisos para modificar esta propiedad.'
 				);
-				navigate('/profile'); // Redirige al perfil si no tiene permisos
+				navigate('/profile');
 			}
 		}
 	}, [property, loading, authUser, navigate]);
@@ -52,24 +71,29 @@ const UpdateProductPage = () => {
 	useEffect(() => {
 		const fetchProperty = async () => {
 			try {
-				console.log(`Buscando propiedad con ID: ${id}`);
-
 				const res = await fetch(
 					`${VITE_API_URL}/api/properties/${id}`,
 					{
-						headers: {
-							Authorization: `Bearer ${token}`,
-						},
+						headers: { Authorization: `Bearer ${token}` },
 					}
 				);
+				const data = await res.json();
+
+				console.log('Respuesta de la API (Debug):', data); // Verifica que ownerId exista
 
 				if (!res.ok) {
 					throw new Error('Error al obtener la propiedad');
 				}
 
-				const data = await res.json();
-				console.log(' Propiedad recibida:', data.property);
-				setProperty(data.property);
+				if (!data.data.ownerId) {
+					console.error(
+						'⚠️ Error: La propiedad recibida no tiene ownerId:',
+						data.data
+					);
+				}
+
+				setProperty(data.data);
+				setOriginalProperty(data.data);
 			} catch (error) {
 				console.error(error);
 				setError('Error al obtener la propiedad.');
@@ -95,7 +119,7 @@ const UpdateProductPage = () => {
 		});
 	};
 
-	// Manejar cambios en la selección de imagen
+	// Manejar cambios en la imagen
 	const handleImageChange = (e) => {
 		setImage(e.target.files[0]);
 	};
@@ -103,6 +127,11 @@ const UpdateProductPage = () => {
 	// Manejar envío del formulario
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		if (!originalProperty) {
+			console.error('No se ha cargado la propiedad original.');
+			return;
+		}
 
 		// Filtrar solo los campos que han cambiado
 		const updatedFields = {};
@@ -112,70 +141,42 @@ const UpdateProductPage = () => {
 			}
 		});
 
-		// Si no hay cambios, no hacemos la petición
-		if (Object.keys(updatedFields).length === 0) {
+		// Si no hay cambios, no hacer petición
+		if (Object.keys(updatedFields).length === 0 && !image) {
 			toast('No hay cambios para actualizar.');
 			return;
 		}
-		// Si hay una nueva imagen, usar FormData para enviarla junto con los cambios
-		if (image) {
+
+		try {
 			const formData = new FormData();
 			Object.keys(updatedFields).forEach((key) => {
 				formData.append(key, updatedFields[key]);
 			});
-			formData.append('image', image);
 
-			try {
-				const res = await fetch(
-					`${VITE_API_URL}/api/properties/${id}`,
-					{
-						method: 'PUT',
-						headers: {
-							Authorization: `Bearer ${token}`,
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify(updatedFields), // Enviamos solo los cambios
-					}
-				);
-
-				if (!res.ok) {
-					throw new Error('Error al actualizar la propiedad');
-				}
-
-				toast.success('Propiedad actualizada con éxito');
-				navigate(`/properties/${id}`);
-			} catch (err) {
-				setError(err.message);
+			if (image) {
+				formData.append('image', image);
 			}
-		} else {
-			// Si NO hay imagen nueva, usar JSON normal
-			try {
-				const res = await fetch(
-					`${VITE_API_URL}/api/properties/${id}`,
-					{
-						method: 'PUT',
-						headers: {
-							Authorization: `Bearer ${token}`,
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify(updatedFields), // Enviamos solo los cambios sin imagen
-					}
-				);
 
-				if (!res.ok)
-					throw new Error('Error al actualizar la propiedad');
+			const res = await fetch(`${VITE_API_URL}/api/properties/${id}`, {
+				method: 'PUT',
+				headers: { Authorization: `Bearer ${token}` },
+				body: formData,
+			});
 
-				toast.success('Propiedad actualizada con éxito');
-				navigate(`/properties/${id}`);
-			} catch (err) {
-				setError(err.message);
+			if (!res.ok) {
+				throw new Error('Error al actualizar la propiedad');
 			}
+
+			toast.success('Propiedad actualizada con éxito');
+			navigate(`/properties/${id}`);
+		} catch (err) {
+			setError(err.message);
 		}
 	};
 
 	return (
 		<main className="relative min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
-			{/* Botón de volver atrás en la parte superior izquierda */}
+			{/* Botón de volver atrás */}
 			<div className="absolute top-6 left-6 z-50">
 				<button
 					onClick={() => navigate(-1)}
@@ -185,14 +186,15 @@ const UpdateProductPage = () => {
 				</button>
 			</div>
 
-			{/* Contenedor del formulario para centrarlo */}
+			{/* Contenedor del formulario */}
 			<div className="flex flex-col items-center w-full max-w-lg bg-white p-8 rounded-lg shadow-lg">
 				<h2 className="text-3xl font-bold mb-6 text-center">
 					Actualizar Propiedad
 				</h2>
 
-				<form onSubmit={handleSubmit} className="w-full">
-					<label className="block mb-4">
+				<form onSubmit={handleSubmit} className="w-full space-y-4">
+					{/* Campo: Título */}
+					<label className="block">
 						<span className="block font-semibold">Título:</span>
 						<input
 							type="text"
@@ -204,7 +206,8 @@ const UpdateProductPage = () => {
 						/>
 					</label>
 
-					<label className="block mb-4">
+					{/* Campo: Descripción */}
+					<label className="block">
 						<span className="block font-semibold">
 							Descripción:
 						</span>
@@ -217,7 +220,8 @@ const UpdateProductPage = () => {
 						/>
 					</label>
 
-					<label className="block mb-4">
+					{/* Campo: Tipo de Propiedad */}
+					<label className="block">
 						<span className="block font-semibold">
 							Tipo de propiedad:
 						</span>
@@ -237,21 +241,21 @@ const UpdateProductPage = () => {
 					</label>
 
 					{/* Imagen actual */}
-					<label className="block mb-4">
-						<span className="block font-semibold">
-							Imagen actual:
-						</span>
-						{property?.imageUrl && (
+					{property?.imageUrl && (
+						<div className="block">
+							<span className="block font-semibold">
+								Imagen actual:
+							</span>
 							<img
 								src={property.imageUrl}
 								alt="Imagen de la propiedad"
 								className="w-full h-40 object-cover rounded-lg shadow-md"
 							/>
-						)}
-					</label>
+						</div>
+					)}
 
 					{/* Subir nueva imagen */}
-					<label className="block mb-4">
+					<label className="block">
 						<span className="block font-semibold">
 							Subir nueva imagen:
 						</span>
@@ -263,7 +267,8 @@ const UpdateProductPage = () => {
 						/>
 					</label>
 
-					<label className="block mb-4">
+					{/* Campo: Precio */}
+					<label className="block">
 						<span className="block font-semibold">Precio:</span>
 						<input
 							type="number"
@@ -275,7 +280,8 @@ const UpdateProductPage = () => {
 						/>
 					</label>
 
-					<label className="block mb-4">
+					{/* Campo: Metros cuadrados */}
+					<label className="block">
 						<span className="block font-semibold">
 							Metros cuadrados:
 						</span>
@@ -289,7 +295,8 @@ const UpdateProductPage = () => {
 						/>
 					</label>
 
-					<label className="block mb-4">
+					{/* Campo: Código Postal */}
+					<label className="block">
 						<span className="block font-semibold">
 							Código postal:
 						</span>
@@ -303,7 +310,8 @@ const UpdateProductPage = () => {
 						/>
 					</label>
 
-					<label className="block mb-4">
+					{/* Campo: Estado */}
+					<label className="block">
 						<span className="block font-semibold">Estado:</span>
 						<select
 							name="status"
@@ -316,8 +324,9 @@ const UpdateProductPage = () => {
 						</select>
 					</label>
 
-					<label className="block mb-4 flex items-center">
-						<span className="block font-semibold mr-2">
+					{/* Campo: Certificado Energético */}
+					<label className="block flex items-center gap-2">
+						<span className="block font-semibold">
 							¿Tiene certificado energético?
 						</span>
 						<input
@@ -329,7 +338,7 @@ const UpdateProductPage = () => {
 						/>
 					</label>
 
-					{/* Botón de actualización */}
+					{/* Botón de Actualización */}
 					<button
 						type="submit"
 						className="w-full py-3 px-4 text-white font-bold rounded-full cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
@@ -341,5 +350,4 @@ const UpdateProductPage = () => {
 		</main>
 	);
 };
-
 export default UpdateProductPage;

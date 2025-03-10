@@ -29,6 +29,21 @@ const ProfilePage = () => {
 		}
 	}, [authUser, navigate]); // Esto evita el error de hooks condicionales
 
+	// Validar el token y actualizarlo si es necesario
+	useEffect(() => {
+		let storedToken = localStorage.getItem('token');
+
+		if (!authUser && !storedToken) {
+			toast.error('Tu sesión ha expirado, inicia sesión nuevamente.');
+			navigate('/login');
+		}
+
+		if (!token && storedToken) {
+			console.log('Actualizando token desde localStorage');
+			setUserProperties(storedToken);
+		}
+	}, [authUser, token, navigate]);
+
 	useEffect(() => {
 		const getUserReviews = async () => {
 			try {
