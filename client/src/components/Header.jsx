@@ -133,7 +133,7 @@ const Header = () => {
 									className="bg-[#000033] md:bg-[#ff6666] md:hover:bg-[#66ffff] transition-all duration-300 w-full text-[#eeeeee] md:hover:text-[#000033] px-6 py-2 rounded-full transform hover:scale-105 text-3xl md:text-base"
 									onClick={() => setIsOpen(!isOpen)}
 								>
-									Zona de Administración 🔧
+									Admin 🔧
 								</Link>
 							</li>
 						)}

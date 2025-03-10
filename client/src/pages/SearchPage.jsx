@@ -370,10 +370,10 @@ const SearchResults = () => {
 										<div className="col-span-2 flex flex-col gap-2 border-2 border-gray-300 rounded-lg h-fit w-full items-center content-center">
 											<p className="text-gray-300 p-2 text-center">
 												<FaStar className="inline-block" />
-												{
+												{Math.floor(
 													property.ownerInfo
 														.averageRating
-												}
+												)}
 											</p>
 										</div>
 										<div className="col-span-8 flex flex-col">

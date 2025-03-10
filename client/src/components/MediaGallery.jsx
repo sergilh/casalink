@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FaAngleRight, FaAngleLeft } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Thumbs, Keyboard } from 'swiper/modules';
@@ -13,6 +13,10 @@ const { VITE_API_URL } = import.meta.env;
 const GallerySlider = ({ media }) => {
 	const [activeIndex, setActiveIndex] = useState(0);
 	const videoRefs = useRef([]);
+
+	const swiperRef = useRef(null);
+	const prevRef = useRef(null);
+	const nextRef = useRef(null);
 
 	// Cambia el índice activo cuando se desliza
 	const handleSlideChange = (swiper) => {
@@ -33,12 +37,21 @@ const GallerySlider = ({ media }) => {
 		});
 	};
 
+	useEffect(() => {
+		if (swiperRef.current && swiperRef.current.swiper) {
+			swiperRef.current.swiper.params.navigation.prevEl = prevRef.current;
+			swiperRef.current.swiper.params.navigation.nextEl = nextRef.current;
+			swiperRef.current.swiper.navigation.init();
+			swiperRef.current.swiper.navigation.update();
+		}
+	}, []);
+
 	if (!media || media.length === 0) return <p>No hay medios disponibles.</p>;
 
 	return (
-		<div className="relative w-full max-w-2xl mx-auto">
+		<div className="container relative w-full max-w-8xl mx-auto">
 			{/* Indicador de slide actual */}
-			<div className="absolute top-2 right-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-md text-sm z-10">
+			<div className="absolute top-2 right-4 bg-black/50 bg-opacity-50 text-white px-3 py-1 rounded-md text-sm z-10">
 				{activeIndex + 1} / {media.length}
 			</div>
 
@@ -90,7 +103,7 @@ const GallerySlider = ({ media }) => {
 			</button>
 
 			{/* Estilos para personalizar la paginación */}
-			<style jsx>{`
+			<style>{`
 				.swiper-pagination-bullet {
 					background-color: white !important;
 					width: 10px;
