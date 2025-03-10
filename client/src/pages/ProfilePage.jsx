@@ -50,7 +50,7 @@ const ProfilePage = () => {
 					setUserNotFound(true);
 				} else {
 					setUserReviews(body.data.userRatingInfo.reviews);
-					setUserInfo(body.data.userRatingInfo.user);
+					setUserInfo(body.data.userRatingInfo.userDetails);
 				}
 			} catch (error) {
 				console.error(error);
@@ -65,13 +65,13 @@ const ProfilePage = () => {
 			getUserReviews();
 		}
 	}, [userId, token]);
-	console.log('Datos del usuario autenticado:', authUser);
 
 	// Obtener propiedades del usuario
 	useEffect(() => {
 		const fetchUserProperties = async () => {
 			try {
-				console.log(' Solicitando propiedades para el userId:', userId);
+				console.log('Solicitando propiedades para userId:', userId);
+
 				const res = await fetch(
 					`${VITE_API_URL}/api/users/${userId}/properties`,
 					{
@@ -80,15 +80,35 @@ const ProfilePage = () => {
 						},
 					}
 				);
+
+				// Manejar caso donde el usuario no tiene propiedades (evitar lanzar error)
 				if (!res.ok) {
+					if (res.status === 404) {
+						console.warn(
+							`No se encontraron propiedades para el usuario ${userId}`
+						);
+						setUserProperties([]); // Asignar un array vacío
+						return;
+					}
 					throw new Error('Error al obtener propiedades del usuario');
 				}
+
 				const data = await res.json();
-				console.log('Propiedades del usuario:', data.properties); // Debug
-				setUserProperties(data.properties); // Guardamos las propiedades
+				console.log('Propiedades del usuario:', data.properties);
+
+				// Si la API devuelve un array vacío, asignarlo correctamente
+				if (data.properties.length === 0) {
+					console.warn(
+						` Usuario ${userId} no tiene propiedades registradas.`
+					);
+					setUserProperties([]);
+				} else {
+					setUserProperties(data.properties);
+				}
 			} catch (error) {
-				console.error(error);
+				console.error('Error al obtener propiedades:', error.message);
 				toast.error('Error al obtener las propiedades');
+				setUserProperties([]); // Evita que quede `undefined`
 			}
 		};
 
@@ -126,7 +146,7 @@ const ProfilePage = () => {
 										<AvatarIconProfile />
 									)}
 									<h2 className="font-bold text-gray-700">
-										{userInfo.reviewedName}
+										{userInfo.fullName}
 									</h2>
 
 									{/* BOTÓN PARA Modificar el perfil */}
@@ -135,7 +155,7 @@ const ProfilePage = () => {
 											onClick={() =>
 												navigate('/profile/edit')
 											}
-											className="py-3 px-4 text-white font-bold rounded cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
+											className="py-3 px-4 text-white font-bold rounded-full cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
 											style={{
 												width: 'auto',
 												minWidth: '200px',
@@ -167,9 +187,11 @@ const ProfilePage = () => {
 											</div>
 										</>
 									)}
-									<div className="flex items-center justify-center border-2 border-[#eeeeee] border-opacity-100 rounded-xl p-2">
-										<p>{userInfo.biography}</p>
-									</div>
+									{userInfo.bio && (
+										<div className="flex items-center justify-center border-2 border-[#eeeeee] border-opacity-100 rounded-xl p-2">
+											<p>{userInfo.bio}</p>
+										</div>
+									)}
 								</div>
 							</div>
 						</section>
@@ -178,7 +200,7 @@ const ProfilePage = () => {
 						<div className="flex justify-center mt-6">
 							<button
 								onClick={() => navigate('/rental-requests')}
-								className="py-3 px-4 text-white font-bold rounded cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
+								className="py-3 px-4 text-white font-bold rounded-full cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
 								style={{
 									width: 'auto',
 									minWidth: '200px',
@@ -195,7 +217,7 @@ const ProfilePage = () => {
 								onClick={() =>
 									navigate(`/properties/user/${userId}`)
 								}
-								className="py-3 px-4 text-white font-bold rounded cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
+								className="py-3 px-4 text-white font-bold rounded-full cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
 								style={{
 									width: 'auto',
 									minWidth: '200px',

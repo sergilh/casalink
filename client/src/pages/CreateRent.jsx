@@ -206,7 +206,9 @@ const CreateRent = () => {
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
-
+          
+          {/* Coordenadas, quizás más adelante si metemos un mapa
+          
           <div>
             <label className="block text-gray-600 font-medium">Location (lat,lon):</label>
             <input
@@ -216,7 +218,7 @@ const CreateRent = () => {
               onChange={handleChange}
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
-          </div>
+          </div> */}
 
           <div>
             <label className="block text-gray-600 font-medium">Precio (€):</label>
