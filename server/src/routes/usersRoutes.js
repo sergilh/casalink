@@ -52,7 +52,7 @@ router.put(
 	changePasswordController
 );
 
-// 09 GET	/api/users/:id/reviews	Histórico de reseñas
+// 09 GET	/api/users/:id/reviews	Histórico de reseñas y alquileres
 router.get(
 	'/users/:id/reviews',
 	authUserMiddleware,
