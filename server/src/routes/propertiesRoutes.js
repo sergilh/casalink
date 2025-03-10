@@ -1,4 +1,5 @@
 import express from 'express';
+import getPool from '../db/getPool.js';
 
 // Middlewares
 import propertyExistsMiddleware from '../middlewares/propertyExistsMiddleware.js';
@@ -27,6 +28,7 @@ import {
 } from '../utils/validators.js';
 
 const router = express.Router();
+const db = await getPool();
 
 // 2.12 Listado de propiedades ✅ (Con validación)
 router.get(
@@ -39,7 +41,7 @@ router.get(
 router.post(
 	'/properties',
 	authUserMiddleware,
-	fileUploadMiddleware, // 1) Analiza multipart/form-data (campos + archivos)
+	fileUploadMiddleware, // 1) Parsea multipart/form-data (campos + archivos)
 	validateRequest(propertySchema), // 2) Valida req.body con Joi
 	propertyController // 3) Controlador final
 );
@@ -67,12 +69,13 @@ router.put(
 	authUserMiddleware,
 	propertyExistsMiddleware,
 	checkPropertyOwnerOrAdmin,
+	fileUploadMiddleware, // Permitir actualizar imagen
 	validateRequest(updatePropertySchema),
 	updatePropertyController
 );
 
 /* YA NO SE NECESITA PARA SUBIR IMÁGENES CUANDO SE CREA UNA PROPIEDAD
-PERO LO DEJO POR SI ACASO SE NECESITA PARA SUBIR IMÁGENES DE PROPIEDADES YA EXISTENTES*/
+PERO LO DEJO POR SI ACASO SE NECESITA PARA SUBIR IMAGENES DE PROPIEDADES YA EXISTENTES*/
 
 // 2.17 Ruta para subir imágenes y videos asociados a una propiedad ✅
 router.post(
@@ -99,5 +102,42 @@ router.patch(
 
 // Ruta para obtener los favoritos de un usuario
 router.get('/favs/', authUserMiddleware, getFavsController);
+
+// 2.18 Obtener todas las propiedades de un usuario
+router.get(
+	'/users/:userId/properties',
+	authUserMiddleware,
+	async (req, res) => {
+		const { userId } = req.params;
+
+		try {
+			const [properties] = await db.query(
+				'SELECT * FROM properties WHERE ownerId = ?',
+				[userId]
+			);
+
+			//  Si el usuario no tiene propiedades, devolver un array vacío en lugar de `404`
+			if (properties.length === 0) {
+				return res.status(200).json({
+					success: true,
+					properties: [],
+					message: 'El usuario no tiene propiedades registradas.',
+				});
+			}
+
+			//  Enviar las propiedades correctamente
+			res.status(200).json({
+				success: true,
+				properties,
+			});
+		} catch (error) {
+			console.error(' Error obteniendo propiedades del usuario:', error);
+			res.status(500).json({
+				success: false,
+				error: 'Error obteniendo propiedades del usuario',
+			});
+		}
+	}
+);
 
 export default router;

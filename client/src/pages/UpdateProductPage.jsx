@@ -22,6 +22,7 @@ const UpdateProductPage = () => {
 	const [property, setProperty] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+	const [image, setImage] = useState(null);
 
 	console.log('ID recibido desde useParams():', id);
 
@@ -32,7 +33,7 @@ const UpdateProductPage = () => {
 			const esOwner = authUser?.id === property?.ownerId;
 
 			console.log(
-				'🔍 Verificando permisos - esAdmin:',
+				' Verificando permisos - esAdmin:',
 				esAdmin,
 				'esOwner:',
 				esOwner
@@ -51,7 +52,7 @@ const UpdateProductPage = () => {
 	useEffect(() => {
 		const fetchProperty = async () => {
 			try {
-				console.log(`📡 Buscando propiedad con ID: ${id}`);
+				console.log(`Buscando propiedad con ID: ${id}`);
 
 				const res = await fetch(
 					`${VITE_API_URL}/api/properties/${id}`,
@@ -67,7 +68,7 @@ const UpdateProductPage = () => {
 				}
 
 				const data = await res.json();
-				console.log('📌 Propiedad recibida:', data.property);
+				console.log(' Propiedad recibida:', data.property);
 				setProperty(data.property);
 			} catch (error) {
 				console.error(error);
@@ -94,6 +95,11 @@ const UpdateProductPage = () => {
 		});
 	};
 
+	// Manejar cambios en la selección de imagen
+	const handleImageChange = (e) => {
+		setImage(e.target.files[0]);
+	};
+
 	// Manejar envío del formulario
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -111,157 +117,227 @@ const UpdateProductPage = () => {
 			toast('No hay cambios para actualizar.');
 			return;
 		}
-
-		try {
-			const res = await fetch(`${VITE_API_URL}/api/properties/${id}`, {
-				method: 'PUT',
-				headers: {
-					Authorization: `Bearer ${token}`,
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(updatedFields), // Enviamos solo los cambios
+		// Si hay una nueva imagen, usar FormData para enviarla junto con los cambios
+		if (image) {
+			const formData = new FormData();
+			Object.keys(updatedFields).forEach((key) => {
+				formData.append(key, updatedFields[key]);
 			});
+			formData.append('image', image);
 
-			if (!res.ok) {
-				throw new Error('Error al actualizar la propiedad');
+			try {
+				const res = await fetch(
+					`${VITE_API_URL}/api/properties/${id}`,
+					{
+						method: 'PUT',
+						headers: {
+							Authorization: `Bearer ${token}`,
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(updatedFields), // Enviamos solo los cambios
+					}
+				);
+
+				if (!res.ok) {
+					throw new Error('Error al actualizar la propiedad');
+				}
+
+				toast.success('Propiedad actualizada con éxito');
+				navigate(`/properties/${id}`);
+			} catch (err) {
+				setError(err.message);
 			}
+		} else {
+			// Si NO hay imagen nueva, usar JSON normal
+			try {
+				const res = await fetch(
+					`${VITE_API_URL}/api/properties/${id}`,
+					{
+						method: 'PUT',
+						headers: {
+							Authorization: `Bearer ${token}`,
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(updatedFields), // Enviamos solo los cambios sin imagen
+					}
+				);
 
-			toast.success('Propiedad actualizada con éxito');
-			navigate(`/properties/${id}`);
-		} catch (err) {
-			setError(err.message);
+				if (!res.ok)
+					throw new Error('Error al actualizar la propiedad');
+
+				toast.success('Propiedad actualizada con éxito');
+				navigate(`/properties/${id}`);
+			} catch (err) {
+				setError(err.message);
+			}
 		}
 	};
 
 	return (
 		<main className="relative min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
-			<div className="absolute top-4 left-4 z-40">
+			{/* Botón de volver atrás en la parte superior izquierda */}
+			<div className="absolute top-6 left-6 z-50">
 				<button
 					onClick={() => navigate(-1)}
 					className="flex items-center justify-center w-10 h-10 text-white bg-[#ff6666] hover:bg-[#E05555] rounded-full shadow-md transition duration-300"
 				>
-					<FaArrowLeft className="text-lg" />
+					<FaArrowLeft className="text-xl" />
 				</button>
 			</div>
-			<h2 className="text-3xl font-bold mb-6">Actualizar Propiedad</h2>
 
-			<form
-				onSubmit={handleSubmit}
-				className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg"
-			>
-				<label className="block mb-4">
-					<span className="block font-semibold">Título:</span>
-					<input
-						type="text"
-						name="propertyTitle"
-						value={property?.propertyTitle || ''}
-						onChange={handleChange}
-						required
-						className="w-full border px-3 py-2 rounded-lg"
-					/>
-				</label>
-
-				<label className="block mb-4">
-					<span className="block font-semibold">Descripción:</span>
-					<textarea
-						name="description"
-						value={property?.description || ''}
-						onChange={handleChange}
-						required
-						className="w-full border px-3 py-2 rounded-lg"
-					/>
-				</label>
-
-				<label className="block mb-4">
-					<span className="block font-semibold">
-						Tipo de propiedad:
-					</span>
-					<select
-						name="propertyType"
-						value={property?.propertyType || ''}
-						onChange={handleChange}
-						required
-						className="w-full border px-3 py-2 rounded-lg"
-					>
-						<option value="apartamento">Apartamento</option>
-						<option value="casa">Casa</option>
-						<option value="duplex">Dúplex</option>
-						<option value="piso">Piso</option>
-						<option value="otro">Otro</option>
-					</select>
-				</label>
-
-				<label className="block mb-4">
-					<span className="block font-semibold">Precio:</span>
-					<input
-						type="number"
-						name="price"
-						value={property?.price || ''}
-						onChange={handleChange}
-						required
-						className="w-full border px-3 py-2 rounded-lg"
-					/>
-				</label>
-
-				<label className="block mb-4">
-					<span className="block font-semibold">
-						Metros cuadrados:
-					</span>
-					<input
-						type="number"
-						name="squareMeter"
-						value={property?.squareMeter || ''}
-						onChange={handleChange}
-						required
-						className="w-full border px-3 py-2 rounded-lg"
-					/>
-				</label>
-
-				<label className="block mb-4">
-					<span className="block font-semibold">Código postal:</span>
-					<input
-						type="text"
-						name="zipCode"
-						value={property?.zipCode || ''}
-						onChange={handleChange}
-						required
-						className="w-full border px-3 py-2 rounded-lg"
-					/>
-				</label>
-
-				<label className="block mb-4">
-					<span className="block font-semibold">Estado:</span>
-					<select
-						name="status"
-						value={property?.status || 'disponible'}
-						onChange={handleChange}
-						className="w-full border px-3 py-2 rounded-lg"
-					>
-						<option value="disponible">Disponible</option>
-						<option value="no disponible">No Disponible</option>
-					</select>
-				</label>
-
-				<label className="block mb-4">
-					<span className="block font-semibold">
-						¿Tiene certificado energético?
-					</span>
-					<input
-						type="checkbox"
-						name="hasEnergyCert"
-						checked={property?.hasEnergyCert || false}
-						onChange={handleChange}
-						className="ml-2"
-					/>
-				</label>
-
-				<button
-					type="submit"
-					className="w-full py-3 px-4 text-white font-bold rounded-full cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
-				>
+			{/* Contenedor del formulario para centrarlo */}
+			<div className="flex flex-col items-center w-full max-w-lg bg-white p-8 rounded-lg shadow-lg">
+				<h2 className="text-3xl font-bold mb-6 text-center">
 					Actualizar Propiedad
-				</button>
-			</form>
+				</h2>
+
+				<form onSubmit={handleSubmit} className="w-full">
+					<label className="block mb-4">
+						<span className="block font-semibold">Título:</span>
+						<input
+							type="text"
+							name="propertyTitle"
+							value={property?.propertyTitle || ''}
+							onChange={handleChange}
+							required
+							className="w-full border px-3 py-2 rounded-lg"
+						/>
+					</label>
+
+					<label className="block mb-4">
+						<span className="block font-semibold">
+							Descripción:
+						</span>
+						<textarea
+							name="description"
+							value={property?.description || ''}
+							onChange={handleChange}
+							required
+							className="w-full border px-3 py-2 rounded-lg"
+						/>
+					</label>
+
+					<label className="block mb-4">
+						<span className="block font-semibold">
+							Tipo de propiedad:
+						</span>
+						<select
+							name="propertyType"
+							value={property?.propertyType || ''}
+							onChange={handleChange}
+							required
+							className="w-full border px-3 py-2 rounded-lg"
+						>
+							<option value="apartamento">Apartamento</option>
+							<option value="casa">Casa</option>
+							<option value="duplex">Dúplex</option>
+							<option value="piso">Piso</option>
+							<option value="otro">Otro</option>
+						</select>
+					</label>
+
+					{/* Imagen actual */}
+					<label className="block mb-4">
+						<span className="block font-semibold">
+							Imagen actual:
+						</span>
+						{property?.imageUrl && (
+							<img
+								src={property.imageUrl}
+								alt="Imagen de la propiedad"
+								className="w-full h-40 object-cover rounded-lg shadow-md"
+							/>
+						)}
+					</label>
+
+					{/* Subir nueva imagen */}
+					<label className="block mb-4">
+						<span className="block font-semibold">
+							Subir nueva imagen:
+						</span>
+						<input
+							type="file"
+							accept="image/*"
+							onChange={handleImageChange}
+							className="w-full border px-3 py-2 rounded-lg"
+						/>
+					</label>
+
+					<label className="block mb-4">
+						<span className="block font-semibold">Precio:</span>
+						<input
+							type="number"
+							name="price"
+							value={property?.price || ''}
+							onChange={handleChange}
+							required
+							className="w-full border px-3 py-2 rounded-lg"
+						/>
+					</label>
+
+					<label className="block mb-4">
+						<span className="block font-semibold">
+							Metros cuadrados:
+						</span>
+						<input
+							type="number"
+							name="squareMeter"
+							value={property?.squareMeter || ''}
+							onChange={handleChange}
+							required
+							className="w-full border px-3 py-2 rounded-lg"
+						/>
+					</label>
+
+					<label className="block mb-4">
+						<span className="block font-semibold">
+							Código postal:
+						</span>
+						<input
+							type="text"
+							name="zipCode"
+							value={property?.zipCode || ''}
+							onChange={handleChange}
+							required
+							className="w-full border px-3 py-2 rounded-lg"
+						/>
+					</label>
+
+					<label className="block mb-4">
+						<span className="block font-semibold">Estado:</span>
+						<select
+							name="status"
+							value={property?.status || 'disponible'}
+							onChange={handleChange}
+							className="w-full border px-3 py-2 rounded-lg"
+						>
+							<option value="disponible">Disponible</option>
+							<option value="no disponible">No Disponible</option>
+						</select>
+					</label>
+
+					<label className="block mb-4 flex items-center">
+						<span className="block font-semibold mr-2">
+							¿Tiene certificado energético?
+						</span>
+						<input
+							type="checkbox"
+							name="hasEnergyCert"
+							checked={property?.hasEnergyCert || false}
+							onChange={handleChange}
+							className="w-5 h-5"
+						/>
+					</label>
+
+					{/* Botón de actualización */}
+					<button
+						type="submit"
+						className="w-full py-3 px-4 text-white font-bold rounded-full cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
+					>
+						Actualizar Propiedad
+					</button>
+				</form>
+			</div>
 		</main>
 	);
 };
