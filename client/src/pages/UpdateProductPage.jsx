@@ -22,6 +22,7 @@ const UpdateProductPage = () => {
 	const [property, setProperty] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+	const [image, setImage] = useState(null);
 
 	console.log('ID recibido desde useParams():', id);
 
@@ -51,7 +52,7 @@ const UpdateProductPage = () => {
 	useEffect(() => {
 		const fetchProperty = async () => {
 			try {
-				console.log(`📡 Buscando propiedad con ID: ${id}`);
+				console.log(`Buscando propiedad con ID: ${id}`);
 
 				const res = await fetch(
 					`${VITE_API_URL}/api/properties/${id}`,
@@ -67,7 +68,7 @@ const UpdateProductPage = () => {
 				}
 
 				const data = await res.json();
-				console.log('📌 Propiedad recibida:', data.property);
+				console.log(' Propiedad recibida:', data.property);
 				setProperty(data.property);
 			} catch (error) {
 				console.error(error);
@@ -94,6 +95,11 @@ const UpdateProductPage = () => {
 		});
 	};
 
+	// Manejar cambios en la selección de imagen
+	const handleImageChange = (e) => {
+		setImage(e.target.files[0]);
+	};
+
 	// Manejar envío del formulario
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -111,25 +117,59 @@ const UpdateProductPage = () => {
 			toast('No hay cambios para actualizar.');
 			return;
 		}
-
-		try {
-			const res = await fetch(`${VITE_API_URL}/api/properties/${id}`, {
-				method: 'PUT',
-				headers: {
-					Authorization: `Bearer ${token}`,
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(updatedFields), // Enviamos solo los cambios
+		// Si hay una nueva imagen, usar FormData para enviarla junto con los cambios
+		if (image) {
+			const formData = new FormData();
+			Object.keys(updatedFields).forEach((key) => {
+				formData.append(key, updatedFields[key]);
 			});
+			formData.append('image', image);
 
-			if (!res.ok) {
-				throw new Error('Error al actualizar la propiedad');
+			try {
+				const res = await fetch(
+					`${VITE_API_URL}/api/properties/${id}`,
+					{
+						method: 'PUT',
+						headers: {
+							Authorization: `Bearer ${token}`,
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(updatedFields), // Enviamos solo los cambios
+					}
+				);
+
+				if (!res.ok) {
+					throw new Error('Error al actualizar la propiedad');
+				}
+
+				toast.success('Propiedad actualizada con éxito');
+				navigate(`/properties/${id}`);
+			} catch (err) {
+				setError(err.message);
 			}
+		} else {
+			// Si NO hay imagen nueva, usar JSON normal
+			try {
+				const res = await fetch(
+					`${VITE_API_URL}/api/properties/${id}`,
+					{
+						method: 'PUT',
+						headers: {
+							Authorization: `Bearer ${token}`,
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(updatedFields), // Enviamos solo los cambios sin imagen
+					}
+				);
 
-			toast.success('Propiedad actualizada con éxito');
-			navigate(`/properties/${id}`);
-		} catch (err) {
-			setError(err.message);
+				if (!res.ok)
+					throw new Error('Error al actualizar la propiedad');
+
+				toast.success('Propiedad actualizada con éxito');
+				navigate(`/properties/${id}`);
+			} catch (err) {
+				setError(err.message);
+			}
 		}
 	};
 
@@ -190,7 +230,28 @@ const UpdateProductPage = () => {
 						<option value="otro">Otro</option>
 					</select>
 				</label>
+				<label className="block mb-4">
+					<span className="block font-semibold">Imagen actual:</span>
+					{property?.imageUrl && (
+						<img
+							src={property.imageUrl}
+							alt="Imagen de la propiedad"
+							className="w-full h-40 object-cover rounded-lg"
+						/>
+					)}
+				</label>
 
+				<label className="block mb-4">
+					<span className="block font-semibold">
+						Subir nueva imagen:
+					</span>
+					<input
+						type="file"
+						accept="image/*"
+						onChange={handleImageChange}
+						className="w-full border px-3 py-2 rounded-lg"
+					/>
+				</label>
 				<label className="block mb-4">
 					<span className="block font-semibold">Precio:</span>
 					<input
