@@ -32,6 +32,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import ProfilePage from './pages/ProfilePage';
 import PropertyDetailsPage from './pages/PropertyDetailsPage';
 import PropertiesListPage from './pages/PropertiesListPage';
+import PublishReview from './pages/PublishReview';
 // R
 import RecoverPasswordPage from './pages/RecoverPasswordPage';
 import RegisterPage from './pages/RegisterPage';
@@ -93,6 +94,9 @@ const App = () => {
 						
 						{/* Ruta Dashboard */}
 						<Route path="/dashboard/:userId" element={<DashboardPage />} />
+
+						{/* Ruta Publicar review */}
+						<Route path="/review" element={<PublishReview />} />
 
 
 						{/* ✅ Nueva ruta */}
