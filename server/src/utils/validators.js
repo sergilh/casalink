@@ -49,32 +49,37 @@ export const propertySchema = Joi.object({
 
 // ✅ Esquema para actualizar una propiedad (pueden enviarse campos opcionales)
 export const updatePropertySchema = Joi.object({
-	title: Joi.string().max(255),
-	type: Joi.string().valid('apartamento', 'casa', 'piso', 'duplex', 'otro'),
-	description: Joi.string(),
-	locality: Joi.string().max(255),
-	street: Joi.string().max(255),
-	number: Joi.string().max(10),
-	floor: Joi.string().max(10),
-	hasEnergyCert: Joi.boolean(),
+	title: Joi.string().max(255).optional(),
+	type: Joi.string()
+		.valid('apartamento', 'casa', 'piso', 'duplex', 'otro')
+		.optional(),
+	description: Joi.string().optional(),
+	locality: Joi.string().max(255).optional(),
+	street: Joi.string().max(255).optional(),
+	number: Joi.string().max(10).optional(),
+	floor: Joi.string().max(10).optional(),
+	hasEnergyCert: Joi.boolean().optional(),
 	zipCode: Joi.string()
 		.pattern(/^\d{5}$/)
 		.messages({
 			'string.pattern.base': 'El código postal debe tener 5 dígitos.',
-		}),
+		})
+		.optional(),
 	location: Joi.string()
 		.pattern(/^(-?\d{1,2}(\.\d+)?),\s*(-?\d{1,3}(\.\d+)?)$/)
+		.optional()
 		.custom((value, helpers) => {
+			if (!value) return value;
 			const [lat, lon] = value.split(',').map(Number);
 			if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {
 				return helpers.error('any.invalid');
 			}
 			return value;
 		}, 'Latitude and Longitude validation'),
-	squareMeters: Joi.number().integer().positive(),
-	bedrooms: Joi.number().integer().positive(),
-	bathrooms: Joi.number().integer().positive(),
-	price: Joi.number().positive(),
+	squareMeters: Joi.number().integer().positive().optional(),
+	bedrooms: Joi.number().integer().positive().optional(),
+	bathrooms: Joi.number().integer().positive().optional(),
+	price: Joi.number().positive().optional(),
 });
 
 // Esquema para buscar una propiedad con mensajes personalizados
