@@ -1,5 +1,8 @@
 // Componente de Botón reutilizable
 // eslint-disable-next-line react/prop-types
+import { useState } from 'react';
+
+// Componente de Botón reutilizable
 function Button({ value, disabled }) {
 	return (
 		<button
@@ -26,27 +29,42 @@ function Input({
 	value,
 	onChange,
 	autofocus,
+	showPasswordToggle,
 }) {
 	return (
-		<label className="block text-gray-500">
+		<label className="block text-gray-500 relative">
 			{label}
-			<input
-				autoFocus={autofocus}
-				type={type}
-				id={id}
-				name={name}
-				value={value}
-				onChange={onChange}
-				placeholder={placeholder}
-				className="w-full px-4 py-2 mt-1 border border-gray-300 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 placeholder:text-gray-500"
-				required
-			/>
+			<div className="relative">
+				<input
+					autoFocus={autofocus}
+					type={type}
+					id={id}
+					name={name}
+					value={value}
+					onChange={onChange}
+					placeholder={placeholder}
+					className="w-full px-4 py-2 mt-1 border border-gray-300 bg-white text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 placeholder:text-gray-500 pr-10"
+					required
+				/>
+				{/* Botón para mostrar/ocultar contraseña */}
+				{showPasswordToggle && (
+					<button
+						type="button"
+						onClick={showPasswordToggle}
+						className="absolute inset-y-0 right-2 flex items-center text-gray-600 hover:text-gray-800"
+					>
+						{type === 'password' ? '👁️' : '🙈'}
+					</button>
+				)}
+			</div>
 		</label>
 	);
 }
 
-// Formulario de Login
+// Formulario de Login con opción de mostrar contraseña
 function LoginForm({ formValues, handleChange, handleLoginUser, loading }) {
+	const [showPassword, setShowPassword] = useState(false);
+
 	return (
 		<section className="flex min-h-screen items-center justify-center bg-gray-100 px-4">
 			<article className="w-full max-w-md p-6 space-y-6 bg-white shadow-lg rounded-lg">
@@ -67,15 +85,18 @@ function LoginForm({ formValues, handleChange, handleLoginUser, loading }) {
 						autofocus={true}
 					/>
 
-					{/* Contraseña */}
+					{/* Contraseña con opción de mostrar */}
 					<Input
-						type="password"
+						type={showPassword ? 'text' : 'password'}
 						id="password"
 						name="password"
 						label="Contraseña"
 						placeholder="********"
 						value={formValues.password}
 						onChange={handleChange}
+						showPasswordToggle={() =>
+							setShowPassword(!showPassword)
+						}
 					/>
 
 					{/* Botón de Login */}
