@@ -66,6 +66,7 @@ router.put(
 	authUserMiddleware,
 	propertyExistsMiddleware,
 	checkPropertyOwnerOrAdmin,
+	fileUploadMiddleware, // Permitir actualizar imagen
 	validateRequest(updatePropertySchema),
 	updatePropertyController
 );
