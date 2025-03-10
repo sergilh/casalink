@@ -1,3 +1,4 @@
+
 // Librerías
 import { Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
@@ -15,6 +16,9 @@ import AdminPage from './pages/AdminPage';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 import ContractDetailPage from './pages/ContractDetailPage';
 import CreateRent from './pages/CreateRent';
+//D
+import DashboardPage from './pages/DashboardPage';
+
 // E
 import EditProfilePage from './pages/EditProfilePage';
 // H
@@ -38,6 +42,8 @@ import SearchPage from './pages/SearchPage';
 import TestPage from './pages/TestPage';
 // U
 import UpdateProductPage from './pages/UpdateProductPage';
+import UserProfilePage from './pages/UserProfilePage';
+
 // V
 import ValidateEmailPage from './pages/ValidateEmailPage';
 
@@ -83,6 +89,11 @@ const App = () => {
 							path="/profile/edit"
 							element={<EditProfilePage />}
 						/>
+						<Route path="/user/:userId" element={<UserProfilePage />} />
+						
+						{/* Ruta Dashboard */}
+						<Route path="/dashboard/:userId" element={<DashboardPage />} />
+
 
 						{/* ✅ Nueva ruta */}
 						<Route
