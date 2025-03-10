@@ -125,6 +125,7 @@ const UpdateProductPage = () => {
 	};
 
 	// Manejar envío del formulario
+	// Manejar envío del formulario
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -133,15 +134,20 @@ const UpdateProductPage = () => {
 			return;
 		}
 
-		// Filtrar solo los campos que han cambiado
+		// Filtrar solo los campos que han cambiado y no están vacíos
 		const updatedFields = {};
 		Object.keys(property).forEach((key) => {
-			if (property[key] !== originalProperty[key]) {
+			if (
+				property[key] !== originalProperty[key] &&
+				property[key] !== '' &&
+				property[key] !== null &&
+				property[key] !== undefined
+			) {
 				updatedFields[key] = property[key];
 			}
 		});
 
-		// Si no hay cambios, no hacer petición
+		// Si no hay cambios, no hacer la petición
 		if (Object.keys(updatedFields).length === 0 && !image) {
 			toast('No hay cambios para actualizar.');
 			return;
@@ -170,6 +176,7 @@ const UpdateProductPage = () => {
 			toast.success('Propiedad actualizada con éxito');
 			navigate(`/properties/${id}`);
 		} catch (err) {
+			console.error('Error en la actualización:', err);
 			setError(err.message);
 		}
 	};
@@ -193,13 +200,13 @@ const UpdateProductPage = () => {
 				</h2>
 
 				<form onSubmit={handleSubmit} className="w-full space-y-4">
-					{/* Campo: Título */}
+					{/* Campo: Título (Corregido) */}
 					<label className="block">
 						<span className="block font-semibold">Título:</span>
 						<input
 							type="text"
-							name="propertyTitle"
-							value={property?.propertyTitle || ''}
+							name="title" // Antes era propertyTitle
+							value={property?.title || ''}
 							onChange={handleChange}
 							required
 							className="w-full border px-3 py-2 rounded-lg"
@@ -226,8 +233,8 @@ const UpdateProductPage = () => {
 							Tipo de propiedad:
 						</span>
 						<select
-							name="propertyType"
-							value={property?.propertyType || ''}
+							name="type" // ✅ Antes era propertyType
+							value={property?.type || ''}
 							onChange={handleChange}
 							required
 							className="w-full border px-3 py-2 rounded-lg"
@@ -237,6 +244,130 @@ const UpdateProductPage = () => {
 							<option value="duplex">Dúplex</option>
 							<option value="piso">Piso</option>
 							<option value="otro">Otro</option>
+						</select>
+					</label>
+
+					{/* Campo: Calle */}
+					<label className="block">
+						<span className="block font-semibold">Calle:</span>
+						<input
+							type="text"
+							name="street"
+							value={property?.street || ''}
+							onChange={handleChange}
+							required
+							className="w-full border px-3 py-2 rounded-lg"
+						/>
+					</label>
+
+					{/* Campo: Número */}
+					<label className="block">
+						<span className="block font-semibold">Número:</span>
+						<input
+							type="number"
+							name="number"
+							value={property?.number || ''}
+							onChange={handleChange}
+							required
+							className="w-full border px-3 py-2 rounded-lg"
+						/>
+					</label>
+
+					{/* Campo: Piso */}
+					<label className="block">
+						<span className="block font-semibold">Piso:</span>
+						<input
+							type="text"
+							name="floor"
+							value={property?.floor || ''}
+							onChange={handleChange}
+							required
+							className="w-full border px-3 py-2 rounded-lg"
+						/>
+					</label>
+
+					{/* Campo: Código Postal */}
+					<label className="block">
+						<span className="block font-semibold">
+							Código postal:
+						</span>
+						<input
+							type="text"
+							name="zipCode"
+							value={property?.zipCode || ''}
+							onChange={handleChange}
+							required
+							className="w-full border px-3 py-2 rounded-lg"
+						/>
+					</label>
+
+					{/* Campo: Metros cuadrados */}
+					<label className="block">
+						<span className="block font-semibold">
+							Metros cuadrados:
+						</span>
+						<input
+							type="number"
+							name="squareMeters"
+							value={property?.squareMeters ?? ''}
+							onChange={handleChange}
+							required
+							className="w-full border px-3 py-2 rounded-lg"
+						/>
+					</label>
+
+					{/* Campo: Habitaciones */}
+					<label className="block">
+						<span className="block font-semibold">
+							Habitaciones:
+						</span>
+						<input
+							type="number"
+							name="bedrooms"
+							value={property?.bedrooms || ''}
+							onChange={handleChange}
+							required
+							className="w-full border px-3 py-2 rounded-lg"
+						/>
+					</label>
+
+					{/* Campo: Baños */}
+					<label className="block">
+						<span className="block font-semibold">Baños:</span>
+						<input
+							type="number"
+							name="bathrooms"
+							value={property?.bathrooms || ''}
+							onChange={handleChange}
+							required
+							className="w-full border px-3 py-2 rounded-lg"
+						/>
+					</label>
+
+					{/* Campo: Precio */}
+					<label className="block">
+						<span className="block font-semibold">Precio:</span>
+						<input
+							type="number"
+							name="price"
+							value={property?.price || ''}
+							onChange={handleChange}
+							required
+							className="w-full border px-3 py-2 rounded-lg"
+						/>
+					</label>
+
+					{/* Campo: Estado */}
+					<label className="block">
+						<span className="block font-semibold">Estado:</span>
+						<select
+							name="status"
+							value={property?.status || 'disponible'}
+							onChange={handleChange}
+							className="w-full border px-3 py-2 rounded-lg"
+						>
+							<option value="disponible">Disponible</option>
+							<option value="no disponible">No Disponible</option>
 						</select>
 					</label>
 
@@ -267,63 +398,7 @@ const UpdateProductPage = () => {
 						/>
 					</label>
 
-					{/* Campo: Precio */}
-					<label className="block">
-						<span className="block font-semibold">Precio:</span>
-						<input
-							type="number"
-							name="price"
-							value={property?.price || ''}
-							onChange={handleChange}
-							required
-							className="w-full border px-3 py-2 rounded-lg"
-						/>
-					</label>
-
-					{/* Campo: Metros cuadrados */}
-					<label className="block">
-						<span className="block font-semibold">
-							Metros cuadrados:
-						</span>
-						<input
-							type="number"
-							name="squareMeter"
-							value={property?.squareMeter || ''}
-							onChange={handleChange}
-							required
-							className="w-full border px-3 py-2 rounded-lg"
-						/>
-					</label>
-
-					{/* Campo: Código Postal */}
-					<label className="block">
-						<span className="block font-semibold">
-							Código postal:
-						</span>
-						<input
-							type="text"
-							name="zipCode"
-							value={property?.zipCode || ''}
-							onChange={handleChange}
-							required
-							className="w-full border px-3 py-2 rounded-lg"
-						/>
-					</label>
-
-					{/* Campo: Estado */}
-					<label className="block">
-						<span className="block font-semibold">Estado:</span>
-						<select
-							name="status"
-							value={property?.status || 'disponible'}
-							onChange={handleChange}
-							className="w-full border px-3 py-2 rounded-lg"
-						>
-							<option value="disponible">Disponible</option>
-							<option value="no disponible">No Disponible</option>
-						</select>
-					</label>
-
+					{/* Campo: Certificado Energético */}
 					<label className="mb-4 flex items-center">
 						<span className="block font-semibold mr-2">
 							¿Tiene certificado energético?

@@ -23,13 +23,6 @@ const PropertiesListPage = () => {
 			navigate('/login');
 		}
 	}, [authUser, navigate]);
-	const [token, setToken] = useState(
-		authUser?.token || localStorage.getItem('token')
-	);
-
-	const [properties, setProperties] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
 
 	console.log('userId recibido desde useParams():', userId);
 
