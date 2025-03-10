@@ -1,5 +1,4 @@
 import express from 'express';
-import getPool from '../db/getPool.js';
 
 // Middlewares
 import propertyExistsMiddleware from '../middlewares/propertyExistsMiddleware.js';
@@ -28,7 +27,6 @@ import {
 } from '../utils/validators.js';
 
 const router = express.Router();
-const db = await getPool();
 
 // 2.12 Listado de propiedades ✅ (Con validación)
 router.get(
