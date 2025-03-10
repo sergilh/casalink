@@ -11,7 +11,7 @@ const usersInfoController = async (req, res, next) => {
 
 		// Obtener los datos del usuario desde la base de datos
 		const [user] = await pool.query(
-			`SELECT id, name, lastName, role, email, phone, avatarUrl, isEmailVerified, isDocsVerified, createdAt 
+			`SELECT id, name, lastName, role, bio, legalId, email, phone, avatarUrl, isEmailVerified, isDocsVerified, createdAt 
 			FROM users WHERE id = ?`,
 			[id]
 		);
