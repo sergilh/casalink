@@ -33,7 +33,7 @@ const UpdateProductPage = () => {
 			const esOwner = authUser?.id === property?.ownerId;
 
 			console.log(
-				'🔍 Verificando permisos - esAdmin:',
+				' Verificando permisos - esAdmin:',
 				esAdmin,
 				'esOwner:',
 				esOwner
