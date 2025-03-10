@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import FeaturedListingsSection from '../components/FeaturedListingsSection';
 import { FaHeart, FaStar } from 'react-icons/fa';
-import ImageGallery from '../components/ImageGallery';
+import MediaGallery from '../components/MediaGallery.jsx';
 import toast from 'react-hot-toast';
 
 const { VITE_API_URL } = import.meta.env;
@@ -132,7 +132,7 @@ const PropertyDetailsPage = () => {
 	return (
 		<>
 			<div className="mb-6">
-				<ImageGallery images={property.images} />
+				<MediaGallery media={property.images} />
 			</div>
 
 			{/* Property Details */}
