@@ -151,7 +151,7 @@ const PropertiesListPage = () => {
 				{properties.map((property) => (
 					<div
 						key={property.id}
-						className="bg-white p-4 rounded-lg shadow-md"
+						className="bg-white p-4 rounded-lg shadow-md flex flex-col flex-grow justify-between"
 					>
 						{/* Imagen con fallback si no hay imagen */}
 						<img
@@ -175,10 +175,12 @@ const PropertiesListPage = () => {
 						>
 							<strong>Estado:</strong> {property.status}
 						</p>
-						<p className="text-gray-600">{property.description}</p>
+						<p className="text-gray-600 pb-2 border-b-1 border-gray-200">
+							{property.description}
+						</p>
 
 						{/* Dirección */}
-						<p className="text-gray-500">
+						<p className="text-gray-500 pt-2 text-sm">
 							{property.addressStreet || 'Calle desconocida'},{' '}
 							{property.addressNumber || 'S/N'},{' '}
 							{property.addressLocality || 'Ciudad desconocida'}.{' '}
