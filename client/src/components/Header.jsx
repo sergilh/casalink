@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import casalinkMainLogo from '../assets/images/brand/casalink-logotipo-main-1080x400.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import AvatarIcon from './AvatarIcon';
 const { VITE_API_URL } = import.meta.env;
@@ -8,6 +8,7 @@ const { VITE_API_URL } = import.meta.env;
 const Header = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const { authUser, authLoginState } = useContext(AuthContext);
+	const navigate = useNavigate(); // Redirige después del login
 
 	// Efecto para cerrar el menú si la pantalla se agranda
 	useEffect(() => {
@@ -22,6 +23,7 @@ const Header = () => {
 	}, []);
 
 	const logout = () => {
+		navigate(`/`);
 		localStorage.clear('token');
 		authLoginState(null);
 		authUser(null);
