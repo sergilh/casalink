@@ -4,7 +4,26 @@ import { AuthContext } from '../contexts/AuthContext';
 import toast from 'react-hot-toast';
 import { FaArrowLeft } from 'react-icons/fa';
 
+import noImage from '../assets/images/casalink-oscar-garcia-selfie.png';
+
 const { VITE_API_URL } = import.meta.env;
+
+const getStatusColor = (status) => {
+	switch (status.toLowerCase()) {
+		case 'available':
+			return 'text-green-600';
+		case 'pending':
+			return 'text-yellow-600';
+		case 'rented':
+			return 'text-blue-600';
+		case 'unavailable':
+			return 'text-gray-300';
+		case 'rejected':
+			return 'text-red-600';
+		default:
+			return 'text-gray-600';
+	}
+};
 
 const PropertiesListPage = () => {
 	const { userId } = useParams(); // ID del usuario
@@ -46,8 +65,19 @@ const PropertiesListPage = () => {
 			try {
 				console.log(`Buscando propiedades de userId: ${userId}`);
 
+				/*
 				const res = await fetch(
 					`${VITE_API_URL}/api/users/${userId}/properties`,
+					{
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+					}
+				);
+				*/
+
+				const res = await fetch(
+					`${VITE_API_URL}/api/properties?ownerId=${userId}&status=all`,
 					{
 						headers: {
 							Authorization: `Bearer ${token}`,
@@ -126,8 +156,11 @@ const PropertiesListPage = () => {
 						{/* Imagen con fallback si no hay imagen */}
 						<img
 							src={
-								property.imageUrl ||
-								'/images/default-property.jpg'
+								property.mainImage
+									? VITE_API_URL +
+										'/static/uploads/images/' +
+										property.mainImage
+									: noImage
 							}
 							alt={property.propertyTitle}
 							className="w-full h-48 object-cover rounded-lg"
@@ -137,6 +170,11 @@ const PropertiesListPage = () => {
 						<h3 className="text-xl font-semibold mt-3">
 							{property.propertyTitle}
 						</h3>
+						<p
+							className={`mt-2 font-medium ${getStatusColor(property.status)}`}
+						>
+							<strong>Estado:</strong> {property.status}
+						</p>
 						<p className="text-gray-600">{property.description}</p>
 
 						{/* Dirección */}
