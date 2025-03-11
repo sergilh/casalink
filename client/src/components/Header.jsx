@@ -133,7 +133,7 @@ const Header = () => {
 									className="bg-[#000033] md:bg-[#ff6666] md:hover:bg-[#66ffff] transition-all duration-300 w-full text-[#eeeeee] md:hover:text-[#000033] px-6 py-2 rounded-full transform hover:scale-105 text-3xl md:text-base"
 									onClick={() => setIsOpen(!isOpen)}
 								>
-									Zona de Administración 🔧
+									Admin 🔧
 								</Link>
 							</li>
 						)}
@@ -164,7 +164,7 @@ const Header = () => {
 								)}
 								<div
 									id="notification-circle"
-									className="absolute -top-1 -right-1 h-4 w-4 bg-[#ff6666] rounded-full flex items-center justify-center text-white text-xs"
+									className="absolute -top-1 -right-1 h-4 w-4 bg-[#ff6666] rounded-full flex items-center justify-center text-white text-xs hidden"
 								>
 									<span
 										id="notification-count"

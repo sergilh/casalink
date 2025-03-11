@@ -35,7 +35,7 @@ const selectPropertyByIdModel = async (propertyId) => {
 
 	const [images] = await pool.query(
 		`
-			SELECT imageUrl,sortIndex FROM images WHERE propertyId=?
+			SELECT imageUrl,sortIndex,fileType FROM images WHERE propertyId=?
 		`,
 		[propertyId]
 	);
