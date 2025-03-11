@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 
+const { VITE_API_URL } = import.meta.env;
+console.log(VITE_API_URL);
+
 const RentalRequestsPage = () => {
 	const { authUser } = useContext(AuthContext);
 	const token = authUser?.token || localStorage.getItem('token');
@@ -23,17 +26,13 @@ const RentalRequestsPage = () => {
 	useEffect(() => {
 		const fetchRentalRequests = async () => {
 			try {
-				const res = await fetch(
-					`${import.meta.env.VITE_API_URL}/api/contracts/`,
-					{
-						method: 'GET',
-						credentials: 'include',
-						headers: {
-							'Content-Type': 'application/json',
-							Authorization: token ? `Bearer ${token}` : '',
-						},
-					}
-				);
+				const res = await fetch(`${VITE_API_URL}/api/contracts/`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: token ? `Bearer ${token}` : '',
+					},
+				});
 
 				if (!res.ok)
 					throw new Error(
