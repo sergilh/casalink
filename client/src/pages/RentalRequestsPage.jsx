@@ -19,7 +19,8 @@ const RentalRequestsPage = () => {
 			navigate('/login');
 		}
 	}, [authUser, navigate]);
-	const [rentalRequests, setRentalRequests] = useState([]);
+	const [rentalRequestsTenant, setRentalRequestsTenant] = useState([]);
+	const [rentalRequestsOwner, setRentalRequestsOwner] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
@@ -40,10 +41,8 @@ const RentalRequestsPage = () => {
 					);
 
 				const data = await res.json();
-				setRentalRequests([
-					...(data.contractsAsTenant || []),
-					...(data.contractsAsOwner || []),
-				]);
+				setRentalRequestsTenant([...(data.contractsAsTenant || [])]);
+				setRentalRequestsOwner([...(data.contractsAsOwner || [])]);
 			} catch (err) {
 				setError(err.message);
 			} finally {
@@ -78,7 +77,10 @@ const RentalRequestsPage = () => {
 			{error && <p className="text-red-500">{error}</p>}
 
 			{!loading && !error && (
-				<RequestsList rentalRequests={rentalRequests} />
+				<RequestsList
+					rentalRequestsOwner={rentalRequestsOwner}
+					rentalRequestsTenant={rentalRequestsTenant}
+				/>
 			)}
 		</main>
 	);
