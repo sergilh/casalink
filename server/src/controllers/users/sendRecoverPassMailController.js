@@ -7,16 +7,29 @@ import crypto from 'crypto';
 
 const sendRecoverPassMailController = async (req, res, next) => {
 	try {
-		const { email } = req.body;
+		const { email, resend = false } = req.query;
 
 		if (!email) {
 			generateErrorUtil('Faltan campos', 400);
 		}
+
 		const user = await selectUserByEmailModel(email);
 
 		if (!user) {
 			generateErrorUtil(
 				'El email proporcionado no está asociado a ninguna cuenta'
+			);
+		}
+
+		if (!resend && user.recovery_code !== null) {
+			res.send({
+				status: 'error',
+				message:
+					'El usuario ya ha solicitado una nueva contraseña. Por favor, solicita un nuevo correo si necesitas cambiar tu contraseña.',
+			});
+			generateErrorUtil(
+				'El usuario ya ha solicitado una nueva contraseña. Por favor, solicita un nuevo correo si necesitas cambiar tu contraseña.',
+				403
 			);
 		}
 
@@ -27,7 +40,16 @@ const sendRecoverPassMailController = async (req, res, next) => {
 		//Aquí el código ya está metido en la BBDD del usuario.
 
 		const emailSubject = 'Recuperación de contraseña - Casalink';
-		const textContent = `¡Hola!\n\nHemos recibido una solicitud para recuperar tu contraseña.\nSi no realizaste esta solicitud, por favor ignora este mensaje.\n\nPara restablecer tu contraseña, por favor, haz click en el siguiente enlace:\n\n${process.env.CLIENT_URL}users/password/${recoveryCode}\n\nSi necesitas más ayuda o tienes problemas, no dudes en ponerte en contacto con nosotros.\n\n¡Gracias por ser parte de nuestra comunidad!\n\nSaludos,\n\nEl equipo de Casalink\n`;
+		const textContent = `¡Hola!\n\nHemos recibido una solicitud para recuperar tu contraseña.
+Si no realizaste esta solicitud, por favor ignora este mensaje.
+
+Para restablecer tu contraseña, por favor, haz click en el siguiente enlace:
+
+${process.env.CLIENT_URL}users/password/${recoveryCode}
+
+Si necesitas más ayuda o tienes problemas, no dudes en ponerte en contacto con nosotros.
+
+¡Gracias por ser parte de nuestra comunidad!\n\nSaludos,\n\nEl equipo de Casalink\n`;
 		const bccMail = process.env.SUPERADMIN_EMAIL;
 
 		const htmlContent = `
@@ -255,7 +277,7 @@ const sendRecoverPassMailController = async (req, res, next) => {
 																class="button-td"
 															>
 																<a
-																	href="${process.env.CLIENT_URL}users/password/${recoveryCode}"
+																	href="${process.env.CLIENT_URL}change-password?${recoveryCode}&${user.id}"
 																	style="
 																		background: #ff6666;
 																		border: 30px solid #ff6666;
@@ -290,15 +312,18 @@ const sendRecoverPassMailController = async (req, res, next) => {
 														navegador:
 													</p>
 													<p
-														style="
-															word-break: break-all;
-															color: #ff6666;
-															text-align: center;
-														"
+													style="
+													word-break: break-all;
+													color: #ff6666;
+													text-align: center;
+													"
 													>
-														<small
-															>${process.env.CLIENT_URL}/users/password/${recoveryCode}</small
-														>
+													<small
+													>${process.env.CLIENT_URL}users/password/${recoveryCode}&${user.id}</small
+													>
+													<p>
+														O utiliza el código: ${recoveryCode}
+													</p>
 													</p>
 
 													<p>

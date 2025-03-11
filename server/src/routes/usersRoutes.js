@@ -14,6 +14,7 @@ import usersByIdController from '../controllers/users/usersByIdController.js';
 import usersModificationController from '../controllers/users/usersModificationController.js';
 import usersAvatarController from '../controllers/users/usersAvatarController.js';
 import usersNotificationsController from '../controllers/users/usersNotificationsController.js';
+import resetPasswordController from '../controllers/users/resetPasswordController.js';
 
 // middlewares
 import authUserMiddleware from '../middlewares/authUserMiddleware.js';
@@ -51,6 +52,9 @@ router.put(
 	authUserMiddleware,
 	changePasswordController
 );
+
+// 08b Endpoint para resetear contraseña
+router.put('/users/reset-password/', resetPasswordController);
 
 // 09 GET	/api/users/:id/reviews	Histórico de reseñas
 router.get(
