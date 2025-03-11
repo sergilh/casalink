@@ -106,7 +106,7 @@ const ProfilePage = () => {
                     <h2>Contratos</h2>
 						</div>
 						<div className='flex-col items-center justify-center text-center '>
-							<Link to={`/review`}>
+							<Link to={`/review/${userId}`}>
 							<FontAwesomeIcon
                                                                             icon={faStar}
                                                                             size="4x"

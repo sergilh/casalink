@@ -1,7 +1,6 @@
 import { useParams, useNavigate,Link } from "react-router-dom"
 import { useEffect, useContext, useState } from "react";
 import toast from "react-hot-toast";
-import Review from '../components/Review';
 import AvatarIconProfile from '../components/AvatarIconProfile';
 import { AuthContext } from '../contexts/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,6 +8,10 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import useUserReviews from "../hooks/userReviews";
 import { FaArrowLeft } from 'react-icons/fa';
 import RentalsList from "../components/RentalsList";
+import ProfileReviews from '../components/ProfileReviews';
+import RatingAverageIcon from '../components/RatingAverageIcon';
+
+
 
 const { VITE_API_URL } = import.meta.env;
 
@@ -140,21 +143,7 @@ const UserProfilePage =  () => {
                                 <div className="flex gap-6 items-center justify-center">
                                     {userReviews.length > 0 && (
                                         <>
-                                            <div className="flex-col justify-center border-2 border-[#eeeeee] border-opacity-100 rounded-xl p-1.5 transition duration-300 bg-white hover:bg-[#eeeeee]">
-                                                <div className="flex justify-center">
-                                                    <FontAwesomeIcon
-                                                        icon={faStar}
-                                                        fixedWidth
-                                                        className="text-yellow-500"
-                                                    />
-                                                </div>
-                                                <p className="text-center text-xs pt-1 pb-0.5 font-bold">
-                                                    Promedio
-                                                </p>
-                                                <p className="text-center font-bold ">
-                                                    {userInfo.averageRating}
-                                                </p>
-                                            </div>
+                                            <RatingAverageIcon averageRating={userInfo.averageRating} />
                                         </>
                                         )}
                                         {userInfo.bio && (
@@ -188,35 +177,8 @@ const UserProfilePage =  () => {
 								<RentalsList contracts={userContracts.contracts} loading={loading} navigate={navigate} />
 							</section>
 							
-						{/* MOSTRAR REVIEWS */}
-							{loading ? (
-							<p>Cargando...</p>
-						) : userReviews.length > 0 ? (
-							<section
-								id="profile-reviews-section"
-								className="m-8 flex-grow"
-							>
-								<h2 className="text-2xl font-semibold text-gray-700 text-center mb-4">
-									Valoraciones
-								</h2>
-								{userReviews.map((review) => (
-									<Review
-										key={review.id}
-										score={review.rating}
-                                        nameReviewer={<Link to={`/user/${review.reviewerId}`}
-                                            className="text-white-500 hover:underline transition duration-200">{review.reviewerName}
-                                        </Link>
-                                        }
-										avatar={review.reviewerAvatar || 'null'}
-										reviewText={review.comment}
-									/>
-								))}
-							</section>
-						) : (
-							<p className="text-center p-4">
-								No hay reseñas disponibles para este usuario
-							</p>
-						)}
+							{/* MOSTRAR REVIEWS */}
+								<ProfileReviews userReviews={userReviews} loading={loading} VITE_API_URL={VITE_API_URL}/>
 					</>
 				)}
 			</div>
