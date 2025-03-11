@@ -277,7 +277,7 @@ Si necesitas más ayuda o tienes problemas, no dudes en ponerte en contacto con 
 																class="button-td"
 															>
 																<a
-																	href="${process.env.CLIENT_URL}change-password?${recoveryCode}&${user.id}"
+																	href="${process.env.CLIENT_URL}change-password?recoveryCode=${recoveryCode}&email=${email}"
 																	style="
 																		background: #ff6666;
 																		border: 30px solid #ff6666;
@@ -307,23 +307,22 @@ Si necesitas más ayuda o tienes problemas, no dudes en ponerte en contacto con 
 													<!-- Button : END -->
 													<br /><br />
 													<p>
-														Si el botón no funciona, copia y
-														pega el siguiente enlace en tu
-														navegador:
-													</p>
-													<p
-													style="
-													word-break: break-all;
-													color: #ff6666;
-													text-align: center;
-													"
-													>
-													<small
-													>${process.env.CLIENT_URL}users/password/${recoveryCode}&${user.id}</small
-													>
-													<p>
-														O utiliza el código: ${recoveryCode}
-													</p>
+														Si el botón no funciona, puedes copiar y pegar el siguiente código en el formulario de cambio de contraseña:</p>
+													<p style="
+															background: #e6dada;
+															border-width: 10px;
+															border-style: solid;
+															border-color: #e6dada;
+															padding: 0;
+															color: #000033;
+															font-family: monospace;
+															font-size: 24px;
+															line-height: 1.1;
+															text-align: center;
+															text-decoration: none;
+															display: block;
+															border-radius: 10px;
+															font-weight: bold;">${recoveryCode}</p>
 													</p>
 
 													<p>
