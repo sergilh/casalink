@@ -25,6 +25,8 @@ const SearchResults = () => {
 		order: 'desc',
 		limit: 12,
 		page: 1,
+		userId: null,
+		status: 'available',
 	});
 
 	const location = useLocation();
