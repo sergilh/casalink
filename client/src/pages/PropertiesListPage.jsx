@@ -11,11 +11,11 @@ const PropertiesListPage = () => {
 	const navigate = useNavigate();
 	const { authUser } = useContext(AuthContext);
 	const token = authUser?.token || localStorage.getItem('token');
-	
+
 	const [properties, setProperties] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-	
+
 	// Redirigir a login si el usuario no está autenticado
 	useEffect(() => {
 		if (!authUser) {
@@ -23,7 +23,23 @@ const PropertiesListPage = () => {
 			navigate('/login');
 		}
 	}, [authUser, navigate]);
+
 	console.log('userId recibido desde useParams():', userId);
+
+	// 1. Verificación de Autenticación**
+	useEffect(() => {
+		let storedToken = localStorage.getItem('token');
+
+		if (!token && storedToken) {
+			console.log('Token actualizado desde localStorage');
+			setToken(storedToken);
+		}
+
+		if (!authUser && !storedToken) {
+			toast.error('Tu sesión ha expirado, inicia sesión nuevamente.');
+			navigate('/login');
+		}
+	}, [authUser, token, navigate]);
 
 	useEffect(() => {
 		const fetchProperties = async () => {
@@ -52,18 +68,9 @@ const PropertiesListPage = () => {
 				const data = await res.json();
 
 				console.log(' Propiedades recibidas:', data.properties);
-
-				// Si la API devuelve un array vacío, mostramos un mensaje en la UI
-				if (data.properties.length === 0) {
-					console.warn(
-						` Usuario ${userId} no tiene propiedades registradas.`
-					);
-					setProperties([]);
-				} else {
-					setProperties(data.properties);
-				}
+				setProperties(data.properties.length ? data.properties : []);
 			} catch (error) {
-				console.error(' Error al obtener propiedades:', error.message);
+				console.error('Error al obtener propiedades:', error.message);
 				setError('Error al obtener las propiedades.');
 			} finally {
 				setLoading(false);
@@ -77,12 +84,21 @@ const PropertiesListPage = () => {
 
 	if (loading) return <p>Cargando propiedades...</p>;
 	if (error) return <p className="text-red-500">{error}</p>;
-	
 
 	// Si el usuario no tiene propiedades, mostramos un mensaje amigable en la UI
 	if (properties.length === 0) {
 		return (
-			<p className="text-gray-500">No tienes propiedades registradas.</p>
+			<div className="flex flex-col items-center mt-10">
+				<p className="text-gray-500">
+					No tienes propiedades registradas.
+				</p>
+				<button
+					onClick={() => navigate(-1)}
+					className="mt-4 py-2 px-4 text-white font-bold rounded-full bg-[#ff6666] hover:bg-[#E05555]"
+				>
+					Volver atrás
+				</button>
+			</div>
 		);
 	}
 
@@ -98,22 +114,46 @@ const PropertiesListPage = () => {
 				</button>
 			</div>
 
-			{/* Contenido de la página */}
+			{/* Título */}
 			<h2 className="text-3xl font-bold mb-6">Mis Propiedades</h2>
-		<div className="w-full max-w-lg">
+
+			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
 				{properties.map((property) => (
 					<div
 						key={property.id}
-						className="bg-white p-4 mb-4 rounded-lg shadow-md w-full max-w-lg"
+						className="bg-white p-4 rounded-lg shadow-md"
 					>
-						<h3 className="text-xl font-semibold">
+						{/* Imagen con fallback si no hay imagen */}
+						<img
+							src={
+								property.imageUrl ||
+								'/images/default-property.jpg'
+							}
+							alt={property.propertyTitle}
+							className="w-full h-48 object-cover rounded-lg"
+						/>
+
+						{/* Información de la propiedad */}
+						<h3 className="text-xl font-semibold mt-3">
 							{property.propertyTitle}
 						</h3>
 						<p className="text-gray-600">{property.description}</p>
+
+						{/* Dirección */}
+						<p className="text-gray-500">
+							{property.street || 'Calle desconocida'},{' '}
+							{property.number || 'S/N'},{' '}
+							{property.city || 'Ciudad desconocida'},{' '}
+							{property.zipCode || '00000'}
+						</p>
+
+						{/* Botón de acción */}
 						{Number(userId) === authUser.id ? (
 							<button
 								onClick={() =>
-									navigate(`/properties/${property.id}/update`)
+									navigate(
+										`/properties/${property.id}/update`
+									)
 								}
 								className="mt-3 py-2 px-4 text-white font-bold rounded cursor-pointer bg-[#ff6666] hover:bg-[#E05555]"
 							>
@@ -131,8 +171,8 @@ const PropertiesListPage = () => {
 						)}
 					</div>
 				))}
-				</div>
-				</main>
+			</div>
+		</main>
 	);
 };
 

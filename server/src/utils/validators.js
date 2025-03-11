@@ -65,6 +65,7 @@ export const updatePropertySchema = Joi.object({
 	location: Joi.string()
 		.pattern(/^(-?\d{1,2}(\.\d+)?),\s*(-?\d{1,3}(\.\d+)?)$/)
 		.custom((value, helpers) => {
+			if (!value) return value;
 			const [lat, lon] = value.split(',').map(Number);
 			if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {
 				return helpers.error('any.invalid');

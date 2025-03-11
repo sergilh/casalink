@@ -27,36 +27,48 @@ const ProfilePage = () => {
 			navigate('/login');
 		}
 	}, [authUser, navigate]); // Esto evita el error de hooks condicionales
-		
-		// Obtener propiedades del usuario
-		useEffect(() => {
-			const fetchUserProperties = async () => {
-				try {
-					console.log(' Solicitando propiedades para el userId:', userId);
-					const res = await fetch(
-						`${VITE_API_URL}/api/users/${userId}/properties`,
-						{
-							headers: {
-								Authorization: `Bearer ${token}`,
-							},
-						}
-					);
-					if (!res.ok) {
-						throw new Error('Error al obtener propiedades del usuario');
+
+	// Validar el token y actualizarlo si es necesario
+	useEffect(() => {
+		let storedToken = localStorage.getItem('token');
+
+		if (!authUser && !storedToken) {
+			toast.error('Tu sesión ha expirado, inicia sesión nuevamente.');
+			navigate('/login');
+		}
+
+		if (!token && storedToken) {
+			console.log('Actualizando token desde localStorage');
+			setUserProperties(storedToken);
+		}
+	}, [authUser, token, navigate]);
+
+	// Obtener propiedades del usuario
+	useEffect(() => {
+		const fetchUserProperties = async () => {
+			try {
+				console.log(' Solicitando propiedades para el userId:', userId);
+				const res = await fetch(
+					`${VITE_API_URL}/api/users/${userId}/properties`,
+					{
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
 					}
-					const data = await res.json();
-					console.log('Propiedades del usuario:', data.properties); // Debug
-					setUserProperties(data.properties); // Guardamos las propiedades
-				} catch (error) {
-					console.error(error);
-					toast.error('Error al obtener las propiedades');
+				);
+				if (!res.ok) {
+					throw new Error('Error al obtener propiedades del usuario');
 				}
-			};
-			
-			if (token) {
-				fetchUserProperties();
+				const data = await res.json();
+				console.log('Propiedades del usuario:', data.properties); // Debug
+				setUserProperties(data.properties); // Guardamos las propiedades
+			} catch (error) {
+				console.error(error);
+				toast.error('Error al obtener las propiedades');
 			}
-		}, [userId, token]);
+		}
+			fetchUserProperties()
+		}, [userId, token])
 		const{userInfo,userNotFound,userReviews,userContracts,loading}=useUserReviews(userId,token)
 		
 		return (

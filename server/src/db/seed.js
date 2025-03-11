@@ -335,7 +335,6 @@ const seedUsers = async () => {
 
 		for (const user of users) {
 			if (user.email !== '') {
-				const hashedPhone = await bcrypt.hash(user.phone, 10);
 				const hashedPassword = await bcrypt.hash(user.password, 10);
 
 				const query = `INSERT INTO users (name, lastName, legalId, email, password, phone, bio, role, isEmailVerified, isDocsVerified) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, 1)`;
@@ -345,7 +344,7 @@ const seedUsers = async () => {
 					user.legalId,
 					user.email,
 					hashedPassword,
-					hashedPhone,
+					user.phone,
 					user.bio,
 					user.role,
 				];
