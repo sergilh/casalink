@@ -14,6 +14,7 @@ const PropertyDetailsPage = () => {
 	const [loadingFavorites, setLoadingFavorites] = useState(false);
 	const [property, setProperty] = useState(null);
 	const { propertyId } = useParams();
+
 	const navigate = useNavigate();
 	const [error, setError] = useState(null);
 
@@ -31,7 +32,9 @@ const PropertyDetailsPage = () => {
 				const result = await propertyResponse.json();
 
 				if (result.status === 'ok') {
-					setProperty(result.data.property);
+					//console.log('Result:', result.data);
+
+					setProperty(result.data);
 				} else {
 					setError('No se pudo obtener la propiedad.');
 				}
@@ -197,7 +200,7 @@ const PropertyDetailsPage = () => {
 				<MediaGallery media={property.images} />
 			</div>
 
-			{/* Property Details*/}
+			{/* Property Details */}
 			<header className="container mx-auto p-4 grid grid-cols-8 grid-rows-3 md:grid-rows-2 gap-2">
 				<div className="col-span-6 row-span-2 md:col-span-7 md:row-span-1 flex flex-col gap-2">
 					<h2 className="text-3xl font-bold text-gray-800">
