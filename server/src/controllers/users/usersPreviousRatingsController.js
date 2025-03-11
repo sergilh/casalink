@@ -1,6 +1,5 @@
 import selectUserReviewsModel from '../../models/users/selectUserReviewsModel.js';
 import selectContractsByStatusModel from '../../models/contracts/selectContractByStatusModel.js';
-import selectPropertyByIdModel from '../../models/properties/selectPropertyByIdModel.js';
 
 const usersPreviousRatingController = async (req, res, next) => {
 	try {
