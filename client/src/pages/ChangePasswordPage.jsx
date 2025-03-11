@@ -84,7 +84,7 @@ const ChangePasswordPage = () => {
 
 			fetchEmailData();
 		}
-	}, [formValues.email, hasFetched, addendum, fetchData]);
+	}, [formValues.email, hasFetched, addendum, fetchData, toastLoading]);
 
 	const handleResendCode = (e) => {
 		e.preventDefault();
@@ -182,7 +182,7 @@ const ChangePasswordPage = () => {
 
 					<button
 						type="submit"
-						className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 disabled:opacity-50"
+						className="w-full bg-[#ff6666] text-white py-2 rounded-full hover:[#66ffff] hover:text-[#000033] disabled:opacity-50"
 						disabled={loading}
 					>
 						{loading ? 'Cambiando...' : 'Cambiar Contraseña'}

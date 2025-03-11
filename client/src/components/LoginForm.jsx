@@ -127,7 +127,7 @@ function LoginForm({ formValues, handleChange, handleLoginUser, loading }) {
 				<p className="text-sm text-center text-gray-500">
 					Si necesitas recuperar tu contraseña, puedes hacerlo{' '}
 					<a
-						href={`/change-password?email=${formValues.email}`}
+						href={`/recover-password?email=${formValues.email}`}
 						className="text-blue-500 hover:underline"
 					>
 						aquí
