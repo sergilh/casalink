@@ -386,7 +386,7 @@ const UpdateProductPage = () => {
 							onChange={handleImageChange}
 							className="w-full border px-3 py-2 rounded-lg"
 						/>
-					</label>*/}
+					</label>
 
 					{/* Campo: Certificado Energético */}
 					<label className="mb-4 flex items-center">

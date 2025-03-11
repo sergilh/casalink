@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -12,6 +12,7 @@ const CreateRent = () => {
   const navigate = useNavigate();
   const { fetchData, loading } = useFetch();
 
+  // Estado inicial del formulario (todos como cadenas vacías)
   const [formValues, setFormValues] = useState({
     title: "",
     type: "apartamento",
@@ -21,7 +22,7 @@ const CreateRent = () => {
     number: "",
     floor: "",
     zipCode: "",
-    location: "",
+    location: "", // Este campo se actualizará con la dirección (aunque no se muestra en la UI)
     squareMeters: "",
     bedrooms: "",
     bathrooms: "",
@@ -30,6 +31,28 @@ const CreateRent = () => {
     images: [],
   });
 
+  // Estado para la URL del mapa
+  const [mapSrc, setMapSrc] = useState("");
+
+  // useEffect para actualizar el iframe del mapa en función de los campos de dirección y título.
+  // Si no hay datos, se utiliza una ubicación por defecto (por ejemplo, la dirección de tu empresa).
+  useEffect(() => {
+    const { street, number, locality, zipCode, title } = formValues;
+    if (street && number && locality && zipCode) {
+      const query = `${street} ${number}, ${locality}, ${zipCode}`;
+      const locale = "es";
+      const src = `https://maps.google.com/maps?hl=${locale}&q=${encodeURIComponent(query)}+(${encodeURIComponent(title)})&z=14&ie=UTF8&iwloc=B&output=embed`;
+      setMapSrc(src);
+    } else {
+      // Ubicación por defecto (por ejemplo, la dirección de la empresa en Albacete)
+      const defaultQuery = "Parque Científico y Tecnológico de Albacete Paseo de la Innovación, 3, Albacete, 02006";
+      const locale = "es";
+      const src = `https://maps.google.com/maps?hl=${locale}&q=${encodeURIComponent(defaultQuery)}&z=14&ie=UTF8&iwloc=B&output=embed`;
+      setMapSrc(src);
+    }
+  }, [formValues]);
+
+  // Manejador genérico para inputs de texto y checkbox
   const handleChange = (e) => {
     const { name, type, checked, value } = e.target;
     setFormValues((prev) => ({
@@ -38,6 +61,7 @@ const CreateRent = () => {
     }));
   };
 
+  // Validación para el campo "number"
   const handleNumberChange = (e) => {
     const value = e.target.value;
     if (value === "" || (Number(value) > 0 && Number.isInteger(Number(value)))) {
@@ -45,6 +69,7 @@ const CreateRent = () => {
     }
   };
 
+  // Validación para "price" (se usa input type="text" para eliminar las flechitas)
   const handlePriceChange = (e) => {
     const value = e.target.value;
     if (value === "" || (Number(value) > 0 && !isNaN(value))) {
@@ -52,6 +77,7 @@ const CreateRent = () => {
     }
   };
 
+  // Validación para "squareMeters"
   const handleSquareMetersChange = (e) => {
     const value = e.target.value;
     if (value === "" || (Number(value) > 0 && !isNaN(value))) {
@@ -59,13 +85,14 @@ const CreateRent = () => {
     }
   };
 
+  // Manejo de selección de imágenes, acumulándolas sin reemplazar las anteriores
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setFormValues((prev) => ({
       ...prev,
       images: [...prev.images, ...files],
     }));
-    // Reiniciamos el input para poder seleccionar nuevamente los mismos archivos si fuera necesario
+    // Reinicia el input para permitir re-selección
     e.target.value = null;
   };
 
@@ -77,34 +104,31 @@ const CreateRent = () => {
     }));
   };
 
+  // Envío del formulario
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  const fd = new FormData();
-  Object.entries(formValues).forEach(([key, value]) => {
-    if (key === "images") {
-      value.forEach((file) => fd.append("files", file));
-    } else {
-      fd.append(key, value);
-    }
-  });
-
-  try {
-    const data = await fetchData({
-      url: `${VITE_API_URL}/api/properties`,
-      method: "POST",
-      body: fd,
-      isFormData: true,
-      token: authToken,
+    e.preventDefault();
+    const fd = new FormData();
+    Object.entries(formValues).forEach(([key, value]) => {
+      if (key === "images") {
+        value.forEach((file) => fd.append("files", file));
+      } else {
+        fd.append(key, value);
+      }
     });
-
-    // Muestra el toast de éxito y redirige usando el id de la propiedad creada
-    toast.success("Propiedad creada con exito");
-    navigate(`/properties/${data}:id/update`);
-  } catch (error) {
-    toast.error(error.message || "Error al crear la propiedad");
-  }
-};
-
+    try {
+      const data = await fetchData({
+        url: `${VITE_API_URL}/api/properties`,
+        method: "POST",
+        body: fd,
+        isFormData: true,
+        token: authToken,
+      });
+      toast.success("Propiedad creada con éxito");
+      navigate(`/properties/${data.propertyId}/update`);
+    } catch (error) {
+      toast.error(error.message || "Error al crear la propiedad");
+    }
+  };
 
   return (
     <main className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -119,13 +143,13 @@ const CreateRent = () => {
             <input
               type="text"
               name="title"
+              placeholder="Tu nuevo hogar"
               value={formValues.title}
               onChange={handleChange}
               required
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-
           {/* Campo Tipo */}
           <div className="col-span-2">
             <label className="block text-gray-600 font-medium">Tipo:</label>
@@ -142,8 +166,7 @@ const CreateRent = () => {
               <option value="otro">Otro</option>
             </select>
           </div>
-
-          {/* Otros campos del formulario */}
+          {/* Calle */}
           <div>
             <label className="block text-gray-600 font-medium">Calle:</label>
             <input
@@ -152,10 +175,11 @@ const CreateRent = () => {
               value={formValues.street}
               onChange={handleChange}
               required
+              placeholder="Calle"
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
-
+          {/* Número (opcional) */}
           <div>
             <label className="block text-gray-600 font-medium">Número:</label>
             <input
@@ -163,11 +187,11 @@ const CreateRent = () => {
               name="number"
               value={formValues.number}
               onChange={handleNumberChange}
-              placeholder="Número (opcional)"
+              placeholder="Número o s/n"
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
-
+          {/* Piso */}
           <div>
             <label className="block text-gray-600 font-medium">Piso:</label>
             <input
@@ -176,11 +200,11 @@ const CreateRent = () => {
               value={formValues.floor}
               onChange={handleChange}
               required
-              placeholder="Número de piso"
+              placeholder="Piso"
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
-
+          {/* Localidad */}
           <div>
             <label className="block text-gray-600 font-medium">Localidad:</label>
             <input
@@ -193,7 +217,7 @@ const CreateRent = () => {
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
-
+          {/* Código Postal */}
           <div>
             <label className="block text-gray-600 font-medium">Código Postal:</label>
             <input
@@ -206,20 +230,20 @@ const CreateRent = () => {
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
-          
-          {/* Coordenadas, quizás más adelante si metemos un mapa
-          
-          <div>
-            <label className="block text-gray-600 font-medium">Location (lat,lon):</label>
-            <input
-              type="text"
-              name="location"
-              value={formValues.location}
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg"
-            />
-          </div> */}
-
+          {/* Mapa siempre visible */}
+          <div className="col-span-2">
+            <label className="block text-gray-600 font-medium">
+              Vista del Mapa:
+            </label>
+            <iframe
+              title="Mapa de la propiedad"
+              width="100%"
+              height="300"
+              border="0"
+              src={mapSrc}
+            ></iframe>
+          </div>
+          {/* Precio (input de texto para evitar flechitas) */}
           <div>
             <label className="block text-gray-600 font-medium">Precio (€):</label>
             <input
@@ -229,40 +253,42 @@ const CreateRent = () => {
               onChange={handlePriceChange}
               placeholder="Precio mensual"
               className="w-full p-3 border border-gray-300 rounded-lg"
+              style={{ MozAppearance: "textfield", WebkitAppearance: "none" }}
             />
           </div>
-          
+          {/* Habitaciones */}
           <div>
-          <label className="block text-gray-600 font-medium">Habitaciones:</label>
-          <input
-            type="number"
-            name="bedrooms"
-            value={formValues.bedrooms}
-            onChange={handleChange}
-            required
-            placeholder="Número de habitaciones"
-            min="0"
-            className="w-full p-3 border border-gray-300 rounded-lg"
-          />
-        </div>
-
-        <div>
-          <label className="block text-gray-600 font-medium">Baños:</label>
-          <input
-            type="number"
-            name="bathrooms"
-            value={formValues.bathrooms}
-            onChange={handleChange}
-            required
-            placeholder="Número de baños"
-            min="0"
-            className="w-full p-3 border border-gray-300 rounded-lg"
-          />
-        </div>
-
-
+            <label className="block text-gray-600 font-medium">Habitaciones:</label>
+            <input
+              type="number"
+              name="bedrooms"
+              value={formValues.bedrooms}
+              onChange={handleChange}
+              required
+              placeholder="Número de habitaciones"
+              min="0"
+              className="w-full p-3 border border-gray-300 rounded-lg"
+            />
+          </div>
+          {/* Baños */}
           <div>
-            <label className="block text-gray-600 font-medium">Metros cuadrados:</label>
+            <label className="block text-gray-600 font-medium">Baños:</label>
+            <input
+              type="number"
+              name="bathrooms"
+              value={formValues.bathrooms}
+              onChange={handleChange}
+              required
+              placeholder="Número de baños"
+              min="0"
+              className="w-full p-3 border border-gray-300 rounded-lg"
+            />
+          </div>
+          {/* Metros cuadrados (input de texto para evitar flechitas) */}
+          <div>
+            <label className="block text-gray-600 font-medium">
+              Metros cuadrados:
+            </label>
             <input
               type="text"
               name="squareMeters"
@@ -270,9 +296,10 @@ const CreateRent = () => {
               onChange={handleSquareMetersChange}
               placeholder="Metros cuadrados"
               className="w-full p-3 border border-gray-300 rounded-lg"
+              style={{ MozAppearance: "textfield", WebkitAppearance: "none" }}
             />
           </div>
-
+          {/* Certificado Energético */}
           <div className="col-span-2 flex items-center gap-2">
             <input
               type="checkbox"
@@ -283,9 +310,11 @@ const CreateRent = () => {
             />
             <label className="text-gray-600">Certificado Energético</label>
           </div>
-
+          {/* Descripción */}
           <div className="col-span-2">
-            <label className="block text-gray-600 font-medium">Descripción:</label>
+            <label className="block text-gray-600 font-medium">
+              Descripción:
+            </label>
             <textarea
               name="description"
               value={formValues.description}
@@ -296,7 +325,7 @@ const CreateRent = () => {
               className="w-full p-3 border border-gray-300 rounded-lg resize-none h-32"
             />
           </div>
-
+          {/* Imágenes */}
           <div className="col-span-2">
             <label className="block text-gray-600 font-medium">Imágenes:</label>
             <input
@@ -307,7 +336,7 @@ const CreateRent = () => {
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
-
+          {/* Previsualización de imágenes */}
           {formValues.images.length > 0 && (
             <div className="col-span-2">
               <p className="text-gray-600 font-medium mb-2">
@@ -333,7 +362,7 @@ const CreateRent = () => {
               </div>
             </div>
           )}
-
+          {/* Botón de submit */}
           <button
             type="submit"
             disabled={loading}
