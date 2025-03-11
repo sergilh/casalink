@@ -95,6 +95,7 @@ const getPropertiesController = async (req, res, next) => {
 		const totalPages = Math.ceil(totalProperties / limit);
 
 		// Consulta para obtener las propiedades paginadas
+
 		const propertiesQuery = `
 			SELECT
 				p.id AS propertyId,
@@ -109,6 +110,12 @@ const getPropertiesController = async (req, res, next) => {
 				p.squareMeters,
 				p.addressLocality,
 				p.status,
+				p.propertyType,
+				p.addressLocality,
+				p.addressStreet,
+				p.addressNumber,
+				p.addressFloor,
+				p.location,
 				p.hasEnergyCert,
 				p.createdAt AS propertyCreatedAt,
 				u.name AS ownerName,

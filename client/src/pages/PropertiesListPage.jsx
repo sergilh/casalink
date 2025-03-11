@@ -179,10 +179,10 @@ const PropertiesListPage = () => {
 
 						{/* Dirección */}
 						<p className="text-gray-500">
-							{property.street || 'Calle desconocida'},{' '}
-							{property.number || 'S/N'},{' '}
-							{property.city || 'Ciudad desconocida'},{' '}
-							{property.zipCode || '00000'}
+							{property.addressStreet || 'Calle desconocida'},{' '}
+							{property.addressNumber || 'S/N'},{' '}
+							{property.addressLocality || 'Ciudad desconocida'}.{' '}
+							{property.zipCode || ''}.
 						</p>
 
 						{/* Botón de acción */}
@@ -190,7 +190,7 @@ const PropertiesListPage = () => {
 							<button
 								onClick={() =>
 									navigate(
-										`/properties/${property.id}/update`
+										`/properties/${property.propertyId}/update`
 									)
 								}
 								className="mt-3 py-2 px-4 text-white font-bold rounded cursor-pointer bg-[#ff6666] hover:bg-[#E05555]"
@@ -200,7 +200,9 @@ const PropertiesListPage = () => {
 						) : (
 							<button
 								onClick={() =>
-									navigate(`/properties/${property.id}`)
+									navigate(
+										`/properties/${property.propertyId}`
+									)
 								}
 								className="mt-3 py-2 px-4 text-white font-bold rounded cursor-pointer bg-[#ff6666] hover:bg-[#E05555]"
 							>
