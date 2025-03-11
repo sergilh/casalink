@@ -8,11 +8,11 @@ import useFetch from "../hooks/useFetch";
 const { VITE_API_URL } = import.meta.env;
 
 const CreateRent = () => {
-  const { authToken } = useContext(AuthContext);
+  const { authToken, authUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const { fetchData, loading } = useFetch();
 
-  // Estado inicial del formulario (todos como cadenas vacías)
+  // Estado inicial del formulario
   const [formValues, setFormValues] = useState({
     title: "",
     type: "apartamento",
@@ -22,7 +22,7 @@ const CreateRent = () => {
     number: "",
     floor: "",
     zipCode: "",
-    location: "", // Este campo se actualizará con la dirección (aunque no se muestra en la UI)
+    location: "", // Aunque no se muestre en la interfaz, lo usas si quieres
     squareMeters: "",
     bedrooms: "",
     bathrooms: "",
@@ -31,28 +31,38 @@ const CreateRent = () => {
     images: [],
   });
 
-  // Estado para la URL del mapa
-  const [mapSrc, setMapSrc] = useState("");
+  // Mapa: si no hay dirección, cargamos una localización “fallback”
+  const fallbackSrc =
+    "https://maps.google.com/maps?hl=es&q=Parque%20Cient%C3%ADfico%20y%20Tecnol%C3%B3gico%20de%20Albacete%20Paseo%20de%20la%20Innovaci%C3%B3n,%203,%20Albacete,%2002006&z=14&ie=UTF8&iwloc=B&output=embed";
 
-  // useEffect para actualizar el iframe del mapa en función de los campos de dirección y título.
-  // Si no hay datos, se utiliza una ubicación por defecto (por ejemplo, la dirección de tu empresa).
+  const [mapSrc, setMapSrc] = useState(fallbackSrc);
+
+  // Actualiza el mapa cuando cambian los campos de dirección
   useEffect(() => {
     const { street, number, locality, zipCode, title } = formValues;
+
+    // Si todos están presentes, construimos la query y generamos un mapSrc
     if (street && number && locality && zipCode) {
       const query = `${street} ${number}, ${locality}, ${zipCode}`;
       const locale = "es";
-      const src = `https://maps.google.com/maps?hl=${locale}&q=${encodeURIComponent(query)}+(${encodeURIComponent(title)})&z=14&ie=UTF8&iwloc=B&output=embed`;
-      setMapSrc(src);
+      const newSrc = `https://maps.google.com/maps?hl=${locale}&q=${encodeURIComponent(
+        query
+      )}+(${encodeURIComponent(title)})&z=14&ie=UTF8&iwloc=B&output=embed`;
+      setMapSrc(newSrc);
     } else {
-      // Ubicación por defecto (por ejemplo, la dirección de la empresa en Albacete)
-      const defaultQuery = "Parque Científico y Tecnológico de Albacete Paseo de la Innovación, 3, Albacete, 02006";
-      const locale = "es";
-      const src = `https://maps.google.com/maps?hl=${locale}&q=${encodeURIComponent(defaultQuery)}&z=14&ie=UTF8&iwloc=B&output=embed`;
-      setMapSrc(src);
+      // Si faltan datos, volvemos al mapa fallback
+      setMapSrc(fallbackSrc);
     }
-  }, [formValues]);
+  }, [
+    formValues.street,
+    formValues.number,
+    formValues.locality,
+    formValues.zipCode,
+    formValues.title,
+    fallbackSrc,
+  ]);
 
-  // Manejador genérico para inputs de texto y checkbox
+  // Manejador genérico para inputs
   const handleChange = (e) => {
     const { name, type, checked, value } = e.target;
     setFormValues((prev) => ({
@@ -61,7 +71,7 @@ const CreateRent = () => {
     }));
   };
 
-  // Validación para el campo "number"
+  // Validación para “number” (solo enteros positivos)
   const handleNumberChange = (e) => {
     const value = e.target.value;
     if (value === "" || (Number(value) > 0 && Number.isInteger(Number(value)))) {
@@ -69,7 +79,7 @@ const CreateRent = () => {
     }
   };
 
-  // Validación para "price" (se usa input type="text" para eliminar las flechitas)
+  // Validación para “price”
   const handlePriceChange = (e) => {
     const value = e.target.value;
     if (value === "" || (Number(value) > 0 && !isNaN(value))) {
@@ -77,7 +87,7 @@ const CreateRent = () => {
     }
   };
 
-  // Validación para "squareMeters"
+  // Validación para “squareMeters”
   const handleSquareMetersChange = (e) => {
     const value = e.target.value;
     if (value === "" || (Number(value) > 0 && !isNaN(value))) {
@@ -85,18 +95,17 @@ const CreateRent = () => {
     }
   };
 
-  // Manejo de selección de imágenes, acumulándolas sin reemplazar las anteriores
+  // Manejo de selección de imágenes
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setFormValues((prev) => ({
       ...prev,
       images: [...prev.images, ...files],
     }));
-    // Reinicia el input para permitir re-selección
-    e.target.value = null;
+    e.target.value = null; // Resetea el input
   };
 
-  // Función para eliminar una imagen de la previsualización
+  // Eliminar una imagen de la previsualización
   const removeImage = (indexToRemove) => {
     setFormValues((prev) => ({
       ...prev,
@@ -108,6 +117,8 @@ const CreateRent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const fd = new FormData();
+
+    // Rellenamos el FormData
     Object.entries(formValues).forEach(([key, value]) => {
       if (key === "images") {
         value.forEach((file) => fd.append("files", file));
@@ -115,16 +126,26 @@ const CreateRent = () => {
         fd.append(key, value);
       }
     });
+
     try {
-      const data = await fetchData({
+      // Llamada al backend
+      await fetchData({
         url: `${VITE_API_URL}/api/properties`,
         method: "POST",
         body: fd,
         isFormData: true,
         token: authToken,
       });
+
       toast.success("Propiedad creada con éxito");
-      navigate(`/properties/${data.propertyId}/update`);
+
+      // Navegamos a la lista de propiedades del usuario, si tenemos su ID
+      if (authUser && authUser.id) {
+        navigate(`/properties/user/${authUser.id}`);
+      } else {
+        // Si no hay authUser.id, puedes redirigir a otra parte
+        navigate("/properties");
+      }
     } catch (error) {
       toast.error(error.message || "Error al crear la propiedad");
     }
@@ -136,8 +157,9 @@ const CreateRent = () => {
         <h2 className="text-2xl font-semibold text-gray-700 text-center mb-4">
           Crear Propiedad
         </h2>
+
         <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
-          {/* Campo Título */}
+          {/* Título */}
           <div className="col-span-2">
             <label className="block text-gray-600 font-medium">Título:</label>
             <input
@@ -150,7 +172,8 @@ const CreateRent = () => {
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          {/* Campo Tipo */}
+
+          {/* Tipo */}
           <div className="col-span-2">
             <label className="block text-gray-600 font-medium">Tipo:</label>
             <select
@@ -166,6 +189,7 @@ const CreateRent = () => {
               <option value="otro">Otro</option>
             </select>
           </div>
+
           {/* Calle */}
           <div>
             <label className="block text-gray-600 font-medium">Calle:</label>
@@ -179,7 +203,8 @@ const CreateRent = () => {
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
-          {/* Número (opcional) */}
+
+          {/* Número */}
           <div>
             <label className="block text-gray-600 font-medium">Número:</label>
             <input
@@ -191,6 +216,7 @@ const CreateRent = () => {
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
+
           {/* Piso */}
           <div>
             <label className="block text-gray-600 font-medium">Piso:</label>
@@ -204,6 +230,7 @@ const CreateRent = () => {
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
+
           {/* Localidad */}
           <div>
             <label className="block text-gray-600 font-medium">Localidad:</label>
@@ -217,9 +244,12 @@ const CreateRent = () => {
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
+
           {/* Código Postal */}
           <div>
-            <label className="block text-gray-600 font-medium">Código Postal:</label>
+            <label className="block text-gray-600 font-medium">
+              Código Postal:
+            </label>
             <input
               type="text"
               name="zipCode"
@@ -230,6 +260,7 @@ const CreateRent = () => {
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
+
           {/* Mapa siempre visible */}
           <div className="col-span-2">
             <label className="block text-gray-600 font-medium">
@@ -241,9 +272,10 @@ const CreateRent = () => {
               height="300"
               border="0"
               src={mapSrc}
-            ></iframe>
+            />
           </div>
-          {/* Precio (input de texto para evitar flechitas) */}
+
+          {/* Precio */}
           <div>
             <label className="block text-gray-600 font-medium">Precio (€):</label>
             <input
@@ -256,9 +288,12 @@ const CreateRent = () => {
               style={{ MozAppearance: "textfield", WebkitAppearance: "none" }}
             />
           </div>
+
           {/* Habitaciones */}
           <div>
-            <label className="block text-gray-600 font-medium">Habitaciones:</label>
+            <label className="block text-gray-600 font-medium">
+              Habitaciones:
+            </label>
             <input
               type="number"
               name="bedrooms"
@@ -270,6 +305,7 @@ const CreateRent = () => {
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
+
           {/* Baños */}
           <div>
             <label className="block text-gray-600 font-medium">Baños:</label>
@@ -284,7 +320,8 @@ const CreateRent = () => {
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
-          {/* Metros cuadrados (input de texto para evitar flechitas) */}
+
+          {/* Metros cuadrados */}
           <div>
             <label className="block text-gray-600 font-medium">
               Metros cuadrados:
@@ -299,6 +336,7 @@ const CreateRent = () => {
               style={{ MozAppearance: "textfield", WebkitAppearance: "none" }}
             />
           </div>
+
           {/* Certificado Energético */}
           <div className="col-span-2 flex items-center gap-2">
             <input
@@ -310,6 +348,7 @@ const CreateRent = () => {
             />
             <label className="text-gray-600">Certificado Energético</label>
           </div>
+
           {/* Descripción */}
           <div className="col-span-2">
             <label className="block text-gray-600 font-medium">
@@ -325,6 +364,7 @@ const CreateRent = () => {
               className="w-full p-3 border border-gray-300 rounded-lg resize-none h-32"
             />
           </div>
+
           {/* Imágenes */}
           <div className="col-span-2">
             <label className="block text-gray-600 font-medium">Imágenes:</label>
@@ -336,6 +376,7 @@ const CreateRent = () => {
               className="w-full p-3 border border-gray-300 rounded-lg"
             />
           </div>
+
           {/* Previsualización de imágenes */}
           {formValues.images.length > 0 && (
             <div className="col-span-2">
@@ -362,6 +403,7 @@ const CreateRent = () => {
               </div>
             </div>
           )}
+
           {/* Botón de submit */}
           <button
             type="submit"
