@@ -164,7 +164,7 @@ const Header = () => {
 								)}
 								<div
 									id="notification-circle"
-									className="absolute -top-1 -right-1 h-4 w-4 bg-[#ff6666] rounded-full flex items-center justify-center text-white text-xs"
+									className="absolute -top-1 -right-1 h-4 w-4 bg-[#ff6666] rounded-full flex items-center justify-center text-white text-xs hidden"
 								>
 									<span
 										id="notification-count"

@@ -17,6 +17,11 @@ const PropertyDetailsPage = () => {
 	const navigate = useNavigate();
 	const [error, setError] = useState(null);
 
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [startDate, setStartDate] = useState('');
+	const [duration, setDuration] = useState(12); // duración en meses por defecto
+	const [visitDate, setVisitDate] = useState('');
+
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -67,6 +72,55 @@ const PropertyDetailsPage = () => {
 
 		fetchData();
 	}, [propertyId]);
+
+	const calculateEndDate = () => {
+		if (!startDate) return '';
+		const start = new Date(startDate);
+		start.setMonth(start.getMonth() + duration);
+		return start.toISOString().slice(0, 16);
+	};
+
+	const handleSubmit = async () => {
+		if (!startDate || !visitDate) {
+			toast.error('Por favor, completa todas las fechas.');
+			return;
+		}
+
+		const endDate = calculateEndDate();
+		const token = localStorage.getItem('token');
+
+		if (!token) {
+			navigate('/login');
+			return;
+		}
+
+		try {
+			const response = await fetch(
+				`${VITE_API_URL}/api/contracts/${propertyId}`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `${token}`,
+					},
+					body: JSON.stringify({
+						startDate,
+						endDate,
+						visitDate,
+					}),
+				}
+			);
+
+			if (!response.ok) {
+				throw new Error('No se pudo solicitar la visita.');
+			}
+
+			toast.success('Visita solicitada con éxito.');
+			setIsModalOpen(false);
+		} catch (error) {
+			toast.error(error.message);
+		}
+	};
 
 	const toggleFavorite = async (e) => {
 		e.preventDefault();
@@ -210,18 +264,82 @@ const PropertyDetailsPage = () => {
 
 			{/* Visit button */}
 			<div className="flex justify-center p-4 w-full">
-				<button className="bg-[#ff6666] rounded-full px-4 py-2 hover:bg-[#000033] text-white font-bold text-2xl transition-colors">
+				<button
+					onClick={() => setIsModalOpen(true)}
+					className="bg-[#ff6666] rounded-full px-4 py-2 hover:bg-[#000033] text-white font-bold text-2xl transition-colors"
+				>
 					¡Solicita una visita!
 				</button>
 			</div>
-			<aside className="mx-4 border-t-1 border-b-5 border-gray-200 py-4">
+
+			{/* Modal de selección de fechas */}
+			{isModalOpen && (
+				<div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+					<div className="bg-white p-6 rounded-lg shadow-lg w-96">
+						<h2 className="text-xl font-bold mb-4">
+							Solicitar Visita
+						</h2>
+
+						<label className="block mb-2">
+							Fecha de Inicio del Alquiler:
+						</label>
+						<input
+							type="datetime-local"
+							value={startDate}
+							onChange={(e) => setStartDate(e.target.value)}
+							className="w-full border rounded p-2 mb-4"
+						/>
+
+						<label className="block mb-2">
+							Duración del contrato:
+						</label>
+						<select
+							value={duration}
+							onChange={(e) =>
+								setDuration(Number(e.target.value))
+							}
+							className="w-full border rounded p-2 mb-4"
+						>
+							<option value={6}>6 meses</option>
+							<option value={12}>12 meses</option>
+							<option value={24}>24 meses</option>
+						</select>
+
+						<label className="block mb-2">Fecha de Visita:</label>
+						<input
+							type="datetime-local"
+							value={visitDate}
+							onChange={(e) => setVisitDate(e.target.value)}
+							className="w-full border rounded p-2 mb-4"
+						/>
+
+						<div className="flex justify-end gap-2">
+							<button
+								onClick={() => setIsModalOpen(false)}
+								className="bg-gray-400 px-4 py-2 rounded text-white"
+							>
+								Cancelar
+							</button>
+							<button
+								onClick={handleSubmit}
+								className="bg-[#ff6666] px-4 py-2 rounded text-white"
+							>
+								Enviar solicitud
+							</button>
+						</div>
+					</div>
+				</div>
+			)}
+
+			{/* Description */}
+			<aside className="container mx-auto p-4 border-t-1 border-b-5 border-gray-200 py-4">
 				{property.description}
 			</aside>
 			{/* Map */}
 			{!property.location.x || !property.location.y ? (
-				<p>No hay coordenadas para mostrar el mapa.</p>
+				<p className="container mx-auto p-4 text-center"></p>
 			) : (
-				<div className="mt-4 h-[50vh] bg-gray-100 rounded-md relative overflow-hidden">
+				<div className="container mx-auto p-4 h-[50vh] bg-gray-100 rounded-md relative overflow-hidden">
 					<iframe
 						width="100%"
 						height="100%"

@@ -325,7 +325,7 @@ const SearchResults = () => {
 						</button>
 					</nav>
 
-					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 container mx-auto">
+					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 container mx-auto">
 						{properties.map((property) => (
 							<div
 								key={property.propertyId}
@@ -367,9 +367,9 @@ const SearchResults = () => {
 									</div>
 
 									<div className="p-2 grid grid-cols-12 gap-2">
-										<div className="col-span-2 flex flex-col gap-2 border-2 border-gray-300 rounded-lg h-fit w-full items-center content-center">
-											<p className="text-gray-300 p-2 text-center">
-												<FaStar className="inline-block" />
+										<div className="col-span-2 p-2 flex flex-col gap-2 border-2 border-gray-300 rounded-lg w-full items-center h-fit content-center">
+											<FaStar className="text-gray-300" />
+											<p className="text-gray-300 text-center">
 												{Math.floor(
 													property.ownerInfo
 														.averageRating
@@ -380,7 +380,7 @@ const SearchResults = () => {
 											<h2 className="text-lg font-bold text-gray-900">
 												{property.propertyTitle}
 											</h2>
-											<div className="flex flex-row items-center gap-2 text-xs">
+											<div className="flex flex-row items-center gap-2 text-sm">
 												<span className="text-gray-600">
 													{property.addressLocality}
 												</span>
@@ -391,7 +391,7 @@ const SearchResults = () => {
 											</div>
 										</div>
 										<div className="col-span-2 flex flex-col h-full justify-between items-end">
-											<div className="flex flex-row items-center gap-2 text-xs">
+											<div className="flex flex-row items-center gap-2 text-sm">
 												<span className="text-gray-600 inline-block">
 													🛏️
 												</span>
@@ -399,7 +399,7 @@ const SearchResults = () => {
 													{property.bedrooms}
 												</span>
 											</div>
-											<div className="flex flex-row items-center gap-2 text-xs">
+											<div className="flex flex-row items-center gap-2 text-sm">
 												<span className="text-gray-600 flex-row items-center gap-2">
 													🚽
 												</span>
