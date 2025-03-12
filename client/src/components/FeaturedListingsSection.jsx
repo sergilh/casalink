@@ -19,7 +19,7 @@ const FeaturedListingsSection = () => {
 				);
 
 				const data = await response.json();
-				console.log('Fetched properties:', data);
+				//console.log('Fetched properties:', data);
 
 				if (Array.isArray(data.properties)) {
 					setFeatureProperties(data.properties);
@@ -51,9 +51,9 @@ const FeaturedListingsSection = () => {
 					</p>
 				) : featureProperties.length > 0 ? (
 					<div className="grid md:grid-cols-3 gap-6">
-						{featureProperties.map((property) => (
+						{featureProperties.map((property, index) => (
 							<div
-								key={property.id}
+								key={index}
 								className="bg-white hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02]"
 							>
 								<a href={`/properties/${property.propertyId}`}>
