@@ -35,14 +35,6 @@ const ChangePasswordPage = () => {
 		setRecoveryCodeEditable(!recoveryCodeQuery);
 	}, [recoveryCodeQuery]);
 
-	// Redirección para usuarios sin query params ni autenticación
-	useEffect(() => {
-		if (!emailQuery && !recoveryCodeQuery && !authUser) {
-			toast.error('Por favor accede mediante el enlace de tu correo');
-			navigate('/login', { replace: true });
-		}
-	}, [emailQuery, recoveryCodeQuery, authUser, navigate]);
-
 	// Actualizar recoveryCode cuando cambia la URL
 	useEffect(() => {
 		setFormValues((prev) => ({
