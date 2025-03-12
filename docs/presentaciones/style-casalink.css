@@ -48,7 +48,7 @@
 }
 
 html {
-	font-size: 18px;
+	font-size: 24px;
 }
 
 body {
@@ -82,6 +82,10 @@ h5 {
 	font-family: ArtLab, Montserrat, "Open Sans", sans-serif;
 	font-weight: true;
 	line-height: 1.15;
+}
+
+.remark-slide-content {
+	padding: 0;
 }
 
 .remark-slide-content h1,
@@ -130,47 +134,58 @@ span.first-slide-logo > img {
 }
 
 span.huge-text {
-	font-size: var(--text-size-10xl);
+	font-size: var(--text-size-7xl);
 	font-family: var(--font-family-headings);
 }
 
 /* Two-column layout */
+
+.left-column,
+.right-column {
+	padding: 1rem;
+	padding-top: 2rem;
+	height: 92%;
+}
+
 .left-column {
 	color: var(--casalink-pink);
 	width: 20%;
-	height: 92%;
-	float: left;
+	display: flex;
+	flex-direction: column;
+	background-color: var(--casalink-red);
 }
 
+.right-column {
+	width: 50%;
+	float: none;
+	display: flex;
+	flex-direction: column;
+	padding-left: 3rem;
+}
 .left-column h2,
 .left-column h3 {
 	font-size: var(--text-size-xl);
 	line-height: var(--text-size-2xl);
-}
-
-/*
-.left-column h2:first-of-type,
-.left-column h3:first-of-type,
-.right-column:first-child {
 	margin-top: 0;
 }
-*/
+
+.left-column h2:first-of-type,
+.left-column h3:first-of-type,
+.right-column:first-child,
+.right-column > *:first-child {
+	margin-top: 0;
+}
 
 .left-column h2:last-of-type,
 .left-column h3:last-child {
 	color: var(--casalink-blue);
 }
-.right-column {
-	width: 75%;
-	float: right;
-	padding-top: 1em;
-}
 
 /* Avatares */
 
 .avatar img {
-	border-radius: var(--text-size-10xl);
-	width: var(--text-size-9xl);
+	border-radius: var(--text-size-5xl);
+	width: var(--text-size-7xl);
 	border-color: var(--casalink-red);
 	border-width: var(--text-size-xs);
 	border-style: solid;
@@ -188,4 +203,25 @@ span.huge-text {
 /* Imagenes en tablas*/
 table img {
 	max-height: 60vh;
+}
+
+/* Media ALtura de elementos */
+.media-altura {
+	max-height: 50vh;
+	padding: 0;
+}
+
+/* Media Ancho de elementos */
+.medio-ancho {
+	width: 80%;
+	display: block;
+}
+
+.centrado {
+	text-align: center;
+}
+
+.sin-padding,
+.sin-padding > * {
+	padding: 0;
 }

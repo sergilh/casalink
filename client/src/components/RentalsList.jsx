@@ -1,18 +1,35 @@
 // RentalsList.js
+import { useContext} from 'react';
+
+import { AuthContext } from '../contexts/AuthContext';
+import { useParams } from 'react-router-dom';
+
+import useUserReviews from "../hooks/userReviews";
 import { Link } from 'react-router-dom';
 
-const RentalsList = ({ contracts, loading, navigate }) => {
+const RentalsList = () => {
+  const { authUser } = useContext(AuthContext);
+  const { userId } = useParams();
+	const token = authUser?.token || localStorage.getItem('token'); // Obtener token
+  
+  
+  const{userContracts,loading}=useUserReviews(userId,token)
+  
   if (loading) {
     return <p>Cargando...</p>;
   }
 
-  if (contracts.length === 0) {
+  if (userContracts.contracts.length === 0) {
     return <p className="text-center">No tienes alquileres</p>;
   }
 
   return (
-    <div className="flex gap-3 text-center items-center justify-center">
-      {contracts.map((contract) => (
+    <main className="flex justify-center items-center min-h-screen bg-gray-100">
+			<div className="bg-white shadow-lg rounded-xl p-6 w-full w-full max-w-2xl">
+
+      <h2 className="text-2xl font-semibold text-gray-700 text-center mb-8 mt-8">Mis alquileres</h2>
+    <div className="flex gap-3 text-center items-center justify-center mb-6">
+      {userContracts.contracts.map((contract) => (
         <div
           key={contract.id}
           className="flex flex-col text-center bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition max-w-md flex-1"
@@ -27,7 +44,9 @@ const RentalsList = ({ contracts, loading, navigate }) => {
             Ver Propiedad
         </Link>        </div>
       ))}
-    </div>
+        </div>
+        </div>
+    </main>
   );
 };
 

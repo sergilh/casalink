@@ -54,7 +54,7 @@ const LoginPage = () => {
 			toast.success('Login exitoso');
 
 			//Redirigimos al Perfil del usuario
-			navigate(`/profile/${body.data.user._id}`);
+			navigate(`/dashboard/${body.data.user._id}`);
 		} catch (err) {
 			toast.error(err.message, { id: 'loginPage' });
 		} finally {
@@ -62,7 +62,7 @@ const LoginPage = () => {
 		}
 	};
 
-	if (authUser?.id) return <Navigate to={`/profile/${authUser.id}`} />;
+	if (authUser?.id) return <Navigate to={`/dashboard/${authUser.id}`} />;
 
 	return (
 		<LoginForm

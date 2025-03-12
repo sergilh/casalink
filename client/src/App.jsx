@@ -36,6 +36,7 @@ import PublishReview from './pages/PublishReview';
 import RecoverPasswordPage from './pages/RecoverPasswordPage';
 import RegisterPage from './pages/RegisterPage';
 import RentalRequestsPage from './pages/RentalRequestsPage';
+import RentalsList from './components/RentalsList';
 // S
 import SearchPage from './pages/SearchPage';
 // T
@@ -122,6 +123,11 @@ const App = () => {
 						<Route
 							path="/rental-requests"
 							element={<RentalRequestsPage />}
+						/>
+
+						<Route
+							path="/rentals/:userId"
+							element={<RentalsList />}
 						/>
 						{/* Otras rutas */}
 						<Route path="*" element={<NotFoundPage />} />
