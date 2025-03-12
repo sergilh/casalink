@@ -62,6 +62,7 @@ const resetPasswordController = async (req, res, next) => {
 		);
 
 		return res.status(200).json({
+			status: 'ok',
 			message: 'Contraseña actualizada correctamente.',
 		});
 	} catch (error) {

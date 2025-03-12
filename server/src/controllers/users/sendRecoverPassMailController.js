@@ -21,7 +21,10 @@ const sendRecoverPassMailController = async (req, res, next) => {
 			);
 		}
 
-		if (!resend && user.recovery_code !== null) {
+		console.log('user:', user);
+
+		if (!resend && user.recoveryCode !== null) {
+			console.log('user.recoveryCode:', user.recoveryCode);
 			res.send({
 				status: 'error',
 				message:

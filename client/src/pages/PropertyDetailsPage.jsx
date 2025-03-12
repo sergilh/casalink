@@ -207,9 +207,9 @@ const PropertyDetailsPage = () => {
 						{property.propertyTitle}
 					</h2>
 				</div>
-				<div className="col-span-2 md:col-span-1 gap-2 grid grid-cols-3 max-h-10">
+				<div className="col-span-2 md:col-span-1 gap-2 grid grid-cols-3 lg:gap-4">
 					<div className="col-span-2 border-2 border-gray-300 rounded-lg items-center content-center justify-between">
-						<div className="text-gray-300 text-center items-center justify-evenly gap-1 content-around flex flex-row">
+						<div className="text-gray-300 text-center items-center justify-evenly gap-1 content-around flex flex-row lg:text-2xl">
 							<FaStar className="inline-block" />
 							<span className="inline-block">
 								{Math.floor(property.avgRating)}
