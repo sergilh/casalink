@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { FaAngleRight, FaAngleLeft } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Thumbs, Keyboard } from 'swiper/modules';
+import noImage from '../assets/images/casalink-oscar-garcia-selfie.png';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -46,7 +47,17 @@ const GallerySlider = ({ media }) => {
 		}
 	}, []);
 
-	if (!media || media.length === 0) return <p>No hay medios disponibles.</p>;
+	if (!media || media.length === 0)
+		return (
+			<div className="w-full flex items-center justify-center">
+				<p className="text-center text-gray-600 text-xl"></p>
+				<img
+					src={noImage}
+					alt={'Propiedad sin medios disponibles'}
+					className="aspect-square object-cover max-h-[50vh]"
+				/>
+			</div>
+		);
 
 	return (
 		<div className="container relative w-full max-w-8xl mx-auto">

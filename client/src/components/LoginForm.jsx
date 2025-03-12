@@ -72,7 +72,7 @@ function LoginForm({ formValues, handleChange, handleLoginUser, loading }) {
 	const [showPassword, setShowPassword] = useState(false);
 
 	return (
-		<section className="flex min-h-screen items-center justify-center bg-gray-100 px-4">
+		<section className="flex flex-grow items-center justify-center bg-gray-100 px-4">
 			<article className="w-full max-w-md p-6 space-y-6 bg-white shadow-lg rounded-lg">
 				<h2 className="text-2xl font-bold text-center text-gray-700">
 					Iniciar Sesión
@@ -122,6 +122,17 @@ function LoginForm({ formValues, handleChange, handleLoginUser, loading }) {
 					>
 						Regístrate
 					</a>
+					.
+				</p>
+				<p className="text-sm text-center text-gray-500">
+					Si necesitas recuperar tu contraseña, puedes hacerlo{' '}
+					<a
+						href={`/recover-password?email=${formValues.email}`}
+						className="text-blue-500 hover:underline"
+					>
+						aquí
+					</a>
+					.
 				</p>
 			</article>
 		</section>
