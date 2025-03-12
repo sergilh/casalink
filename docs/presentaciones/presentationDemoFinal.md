@@ -154,13 +154,13 @@ background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
-## Que es
+## Introducción
 
 ## Problema
 
 ## Solución
 
-## Como
+## ¿Cómo?
 
 ]
 
