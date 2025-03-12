@@ -4,6 +4,8 @@ import { FaHeart, FaStar } from 'react-icons/fa';
 import noResultsImage from '../assets/images/casalink-oscar-garcia-buscando.png';
 import noImage from '../assets/images/casalink-oscar-garcia-selfie.png';
 import toast from 'react-hot-toast';
+import SearchBarUni from '../components/SearchBar';
+import { FaSearch } from 'react-icons/fa';
 
 const { VITE_API_URL } = import.meta.env;
 
@@ -175,10 +177,6 @@ const SearchResults = () => {
 
 	return (
 		<section className="min-h-screen bg-gray-100 py-10 px-4 md:px-10">
-			<h1 className="text-3xl font-bold text-gray-800 text-center mb-6">
-				Resultados de Búsqueda
-			</h1>
-
 			{/* Formulario de búsqueda */}
 			<form
 				onSubmit={handleSearch}
@@ -294,11 +292,20 @@ const SearchResults = () => {
 				</select>
 				<button
 					type="submit"
-					className="bg-[#ff6666] text-white px-6 py-2 rounded-full hover:bg-[#000033] transition-all"
+					className="bg-[#ff6666] rounded-full w-fit text-white hover:bg-[#66ffff] hover:text-[#000033] transition-colors transform hover:scale-95 duration-200 py-2 px-4 gap-4 flex flex-row "
 				>
-					🔎 Buscar
+					<span id="search-icon">
+						<FaSearch className="w-full h-full align-[0px]" />
+					</span>
+					Buscar
 				</button>
 			</form>
+
+			<SearchBarUni className="hidden" />
+
+			<h1 className="text-3xl font-bold text-gray-800 text-center mb-6">
+				Resultados de Búsqueda
+			</h1>
 
 			{loading ? (
 				<p className="text-center text-gray-600">Cargando...</p>

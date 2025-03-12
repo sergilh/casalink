@@ -1,14 +1,19 @@
 import { useState, useEffect, useContext } from 'react';
 import casalinkMainLogo from '../assets/images/brand/casalink-logotipo-main-1080x400.svg';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
+import { FaTools } from 'react-icons/fa';
 import AvatarIcon from './AvatarIcon';
+import SearchBar from './SearchBar';
 const { VITE_API_URL } = import.meta.env;
 
 const Header = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const { authUser, authLoginState } = useContext(AuthContext);
+	const location = useLocation(); // Obtiene la ruta actual
 	const navigate = useNavigate(); // Redirige después del login
+	const isHomePage =
+		location.pathname === '/' || location.pathname === '/search';
 
 	// Efecto para cerrar el menú si la pantalla se agranda
 	useEffect(() => {
@@ -125,35 +130,39 @@ const Header = () => {
 							Cerrar sesión
 						</a>
 					</li>
+					<li>
+						{!isHomePage && (
+							<li>
+								<SearchBar
+									onSearchComplete={() => setIsOpen(false)}
+								/>
+							</li>
+						)}
+					</li>
 					{/* Botón para la zona de administración */}
 					{authUser?.role &&
 						(authUser.role === 'admin' ||
 							authUser.role === 'superadmin') && (
-							<li>
-								<Link
-									to="/admin"
-									className="bg-[#000033] md:bg-[#ff6666] md:hover:bg-[#66ffff] transition-all duration-300 w-full text-[#eeeeee] md:hover:text-[#000033] px-6 py-2 rounded-full transform hover:scale-105 text-3xl md:text-base"
-									onClick={() => setIsOpen(!isOpen)}
-								>
-									Admin 🔧
-								</Link>
-							</li>
+							<Link
+								to="/admin"
+								className="bg-[#ff6666] rounded-full aspect-square text-white hover:bg-[#66ffff] hover:text-[#000033] transition-colors transform hover:scale-95 duration-200 p-4"
+								onClick={() => setIsOpen(!isOpen)}
+							>
+								<FaTools className="w-full" />
+							</Link>
 						)}
 					{/* Botón para el dashboard */}
-					{authUser?.role &&
-						authUser.role === 'user' && (
-						
-							<li>
-								<Link
-									to={`/dashboard/${authUser.id}`}
-									className="bg-[#000033] md:bg-[#ff6666] md:hover:bg-[#66ffff] transition-all duration-300 w-full text-[#eeeeee] md:hover:text-[#000033] px-6 py-2 rounded-full transform hover:scale-105 text-3xl md:text-base"
-									onClick={() => setIsOpen(!isOpen)}
-								>
-									Dashboard
-								</Link>
-							</li>
-						)}
-						
+					{authUser?.role && authUser.role === 'user' && (
+						<li>
+							<Link
+								to={`/dashboard/${authUser.id}`}
+								className="bg-[#000033] md:bg-[#ff6666] md:hover:bg-[#66ffff] transition-all duration-300 w-full text-[#eeeeee] md:hover:text-[#000033] px-6 py-2 rounded-full transform hover:scale-105 text-3xl md:text-base"
+								onClick={() => setIsOpen(!isOpen)}
+							>
+								Dashboard
+							</Link>
+						</li>
+					)}
 				</ul>
 				<div
 					id="user-section"
