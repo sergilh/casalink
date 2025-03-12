@@ -1,10 +1,23 @@
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 import oscarGarciaHabla from '../assets/images/casalink-oscar-garcia-hablando.png';
 import oscarGarciaSelfie from '../assets/images/casalink-oscar-garcia-selfie.png';
 import oscarGarciaAjustes from '../assets/images/casalink-oscar-garcia-ajustes.png';
 
 const PublishPropertySection = () => {
 	const navigate = useNavigate();
+	const { authUser } = useContext(AuthContext);
+
+	const handlePublishClick = () => {
+		if (authUser) {
+			// Usuario logueado: redirigir a crear publicación
+			navigate('/create-rent');
+		} else {
+			// Usuario no logueado: redirigir a registro
+			navigate('/registro');
+		}
+	};
 
 	return (
 		<section>
@@ -49,7 +62,7 @@ const PublishPropertySection = () => {
 
 					<div className="flex flex-col items-center w-full">
 						<button
-							onClick={() => navigate('/create-rent')}
+							onClick={handlePublishClick}
 							className="bg-[#000033] hover:bg-[#66ffff] transition-all duration-300 text-[#eeeeee] hover:text-[#000033] px-6 py-2 rounded-full transform hover:scale-105 text-3xl md:text-base"
 						>
 							¡Publica tu anuncio!
