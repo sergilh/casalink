@@ -18,6 +18,7 @@ const getPropertiesController = async (req, res, next) => {
 			limit = 12,
 			page = 1,
 			status = 'available',
+			ownerId = '',
 		} = req.query;
 
 		const offset = (page - 1) * limit;
@@ -43,9 +44,19 @@ const getPropertiesController = async (req, res, next) => {
 		let baseQuery = `FROM properties p
 			JOIN users u ON p.ownerId = u.id
 			LEFT JOIN reviews r ON u.id = r.reviewedId
-			WHERE 1=1 AND p.status = '${status}'`;
+			WHERE 1=1`;
 
 		const values = [];
+
+		if (status !== 'all') {
+			baseQuery += ` AND p.status = ?`;
+			values.push(status);
+		}
+
+		if (ownerId) {
+			baseQuery += ` AND u.id = ?`;
+			values.push(ownerId);
+		}
 
 		// Aplicar filtros dinámicos
 		if (minPrice) {
@@ -84,6 +95,7 @@ const getPropertiesController = async (req, res, next) => {
 		const totalPages = Math.ceil(totalProperties / limit);
 
 		// Consulta para obtener las propiedades paginadas
+
 		const propertiesQuery = `
 			SELECT
 				p.id AS propertyId,
@@ -97,6 +109,13 @@ const getPropertiesController = async (req, res, next) => {
 				p.price,
 				p.squareMeters,
 				p.addressLocality,
+				p.status,
+				p.propertyType,
+				p.addressLocality,
+				p.addressStreet,
+				p.addressNumber,
+				p.addressFloor,
+				p.location,
 				p.hasEnergyCert,
 				p.createdAt AS propertyCreatedAt,
 				u.name AS ownerName,

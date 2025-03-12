@@ -66,6 +66,7 @@ const contractsController = async (req, res, next) => {
 					c.status,
 					c.startDate,
 					c.createdAt,
+					c.propertyId,
 					u.name AS tenantName,
 					p.propertyTitle
 				FROM contracts c

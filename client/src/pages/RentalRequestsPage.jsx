@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 
+const { VITE_API_URL } = import.meta.env;
+console.log(VITE_API_URL);
+
 const RentalRequestsPage = () => {
 	const { authUser } = useContext(AuthContext);
 	const token = authUser?.token || localStorage.getItem('token');
@@ -16,24 +19,21 @@ const RentalRequestsPage = () => {
 			navigate('/login');
 		}
 	}, [authUser, navigate]);
-	const [rentalRequests, setRentalRequests] = useState([]);
+	const [rentalRequestsTenant, setRentalRequestsTenant] = useState([]);
+	const [rentalRequestsOwner, setRentalRequestsOwner] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
 		const fetchRentalRequests = async () => {
 			try {
-				const res = await fetch(
-					`${import.meta.env.VITE_API_URL}/api/contracts/`,
-					{
-						method: 'GET',
-						credentials: 'include',
-						headers: {
-							'Content-Type': 'application/json',
-							Authorization: token ? `Bearer ${token}` : '',
-						},
-					}
-				);
+				const res = await fetch(`${VITE_API_URL}/api/contracts/`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: token ? `Bearer ${token}` : '',
+					},
+				});
 
 				if (!res.ok)
 					throw new Error(
@@ -41,10 +41,8 @@ const RentalRequestsPage = () => {
 					);
 
 				const data = await res.json();
-				setRentalRequests([
-					...(data.contractsAsTenant || []),
-					...(data.contractsAsOwner || []),
-				]);
+				setRentalRequestsTenant([...(data.contractsAsTenant || [])]);
+				setRentalRequestsOwner([...(data.contractsAsOwner || [])]);
 			} catch (err) {
 				setError(err.message);
 			} finally {
@@ -79,7 +77,10 @@ const RentalRequestsPage = () => {
 			{error && <p className="text-red-500">{error}</p>}
 
 			{!loading && !error && (
-				<RequestsList rentalRequests={rentalRequests} />
+				<RequestsList
+					rentalRequestsOwner={rentalRequestsOwner}
+					rentalRequestsTenant={rentalRequestsTenant}
+				/>
 			)}
 		</main>
 	);

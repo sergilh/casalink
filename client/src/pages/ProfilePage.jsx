@@ -6,8 +6,7 @@ import AvatarIconProfile from '../components/AvatarIconProfile';
 import Review from '../components/Review';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import useUserReviews from "../hooks/userReviews";
-
+import useUserReviews from '../hooks/userReviews';
 
 const { VITE_API_URL } = import.meta.env;
 
@@ -26,39 +25,57 @@ const ProfilePage = () => {
 			navigate('/login');
 		}
 	}, [authUser, navigate]); // Esto evita el error de hooks condicionales
-		
-		// Obtener propiedades del usuario
-		useEffect(() => {
-			const fetchUserProperties = async () => {
-				try {
-					console.log(' Solicitando propiedades para el userId:', userId);
-					const res = await fetch(
-						`${VITE_API_URL}/api/users/${userId}/properties`,
-						{
-							headers: {
-								Authorization: `Bearer ${token}`,
-							},
-						}
-					);
-					if (!res.ok) {
-						throw new Error('Error al obtener propiedades del usuario');
+
+	// Validar el token y actualizarlo si es necesario
+	useEffect(() => {
+		let storedToken = localStorage.getItem('token');
+
+		if (!authUser && !storedToken) {
+			toast.error('Tu sesión ha expirado, inicia sesión nuevamente.');
+			navigate('/login');
+		}
+
+		if (!token && storedToken) {
+			console.log('Actualizando token desde localStorage');
+			setUserProperties(storedToken);
+		}
+	}, [authUser, token, navigate]);
+
+	// Obtener propiedades del usuario
+	useEffect(() => {
+		const fetchUserProperties = async () => {
+			try {
+				console.log(' Solicitando propiedades para el userId:', userId);
+				const res = await fetch(
+					`${VITE_API_URL}/api/users/${userId}/properties`,
+					{
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
 					}
-					const data = await res.json();
-					console.log('Propiedades del usuario:', data.properties); // Debug
-					setUserProperties(data.properties); // Guardamos las propiedades
-				} catch (error) {
-					console.error(error);
-					toast.error('Error al obtener las propiedades');
+				);
+				if (!res.ok) {
+					throw new Error('Error al obtener propiedades del usuario');
 				}
-			};
-			
-			if (token) {
-				fetchUserProperties();
+				const data = await res.json();
+				console.log('Propiedades del usuario:', data.properties); // Debug
+				setUserProperties(data.properties); // Guardamos las propiedades
+			} catch (error) {
+				console.error(error);
+				toast.error('Error al obtener las propiedades');
 			}
-		}, [userId, token]);
-		const{userInfo,userNotFound,userReviews,loading}=useUserReviews(userId,token)
-		
-		return (
+		};
+
+		if (token) {
+			fetchUserProperties();
+		}
+	}, [userId, token]);
+	const { userInfo, userNotFound, userReviews, loading } = useUserReviews(
+		userId,
+		token
+	);
+
+	return (
 		<main className="flex justify-center items-center min-h-screen bg-gray-100">
 			<div className="bg-white shadow-lg rounded-xl p-6 w-full w-full min-h-screen">
 				<h2 className="text-2xl font-semibold text-gray-700 text-center mb-8">
@@ -167,14 +184,12 @@ const ProfilePage = () => {
 							>
 								Editar Propiedades
 							</button>
-								</div>
-								
-								{/* BOTÓN DASHBOARD*/}
+						</div>
+
+						{/* BOTÓN DASHBOARD*/}
 						<div className="flex justify-center mt-6">
 							<button
-								onClick={() =>
-									navigate(`/dashboard/${userId}`)
-								}
+								onClick={() => navigate(`/dashboard/${userId}`)}
 								className="py-3 px-4 text-white font-bold rounded cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
 								style={{
 									width: 'auto',
@@ -200,10 +215,13 @@ const ProfilePage = () => {
 									<Review
 										key={review.id}
 										score={review.rating}
-										nameReviewer={<Link to={`/user/${review.reviewerId}`}
-											className="text-white-500 hover:underline transition duration-200">
-											{review.reviewerName}
-										</Link>
+										nameReviewer={
+											<Link
+												to={`/user/${review.reviewerId}`}
+												className="text-white-500 hover:underline transition duration-200"
+											>
+												{review.reviewerName}
+											</Link>
 										}
 										avatar={review.reviewerAvatar || 'null'}
 										reviewText={review.comment}

@@ -1,4 +1,3 @@
-
 // Librerías
 import { Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
@@ -89,11 +88,16 @@ const App = () => {
 							path="/profile/edit"
 							element={<EditProfilePage />}
 						/>
-						<Route path="/user/:userId" element={<UserProfilePage />} />
-						
-						{/* Ruta Dashboard */}
-						<Route path="/dashboard/:userId" element={<DashboardPage />} />
+						<Route
+							path="/user/:userId"
+							element={<UserProfilePage />}
+						/>
 
+						{/* Ruta Dashboard */}
+						<Route
+							path="/dashboard/:userId"
+							element={<DashboardPage />}
+						/>
 
 						{/* ✅ Nueva ruta */}
 						<Route
@@ -133,7 +137,7 @@ const App = () => {
 				{/* Toaster para manejar las notificaciones */}
 				<Toaster
 					position="top-center"
-					toastOptions={{ duration: 10000 }}
+					toastOptions={{ duration: 5000 }}
 				/>
 
 				<Footer />

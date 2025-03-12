@@ -26,6 +26,43 @@ const updatePropertyController = async (req, res, next) => {
 			});
 		}
 
+		// Filtrar solo los campos enviados en req.body
+		const allowedFields = [
+			'title',
+			'type',
+			'description',
+			'locality',
+			'street',
+			'number',
+			'floor',
+			'hasEnergyCert',
+			'zipCode',
+			'location',
+			'squareMeters',
+			'bedrooms',
+			'bathrooms',
+			'price',
+		];
+
+		const updateData = {};
+		Object.keys(req.body).forEach((key) => {
+			if (allowedFields.includes(key) && req.body[key] !== undefined) {
+				updateData[key] = req.body[key];
+			}
+		});
+
+		if (Object.keys(updateData).length === 0) {
+			return res.status(400).json({
+				success: false,
+				message: 'No se enviaron cambios para actualizar.',
+			});
+		}
+
+		await updatePropertyModel(propertyId, {
+			...updateData,
+			status: userRole === 'user' ? 'pending' : 'available',
+		});
+
 		/*
 		YA EXISTEN LOS MIDDLEWARES PARA ESTO
 		const ownerId = property.ownerId;
@@ -39,7 +76,7 @@ const updatePropertyController = async (req, res, next) => {
 				message: 'No tienes permisos para modificar esta propiedad.',
 			});
 		}
-		*/
+		
 
 		// ACTUALIZAR LA PROPIEDAD
 		const {
@@ -59,6 +96,8 @@ const updatePropertyController = async (req, res, next) => {
 			price,
 		} = req.body;
 
+		console.log('Datos recibidos en backend:', req.body);
+
 		await updatePropertyModel(propertyId, {
 			title,
 			type,
@@ -76,7 +115,7 @@ const updatePropertyController = async (req, res, next) => {
 			price,
 			status: userRole === 'user' ? 'pending' : 'available',
 		});
-
+*/
 		return res.status(200).json({
 			success: true,
 			message: `Propiedad ${propertyId} actualizada correctamente.`,

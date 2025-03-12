@@ -5,6 +5,7 @@ const selectPropertyByIdModel = async (propertyId) => {
 	const [properties] = await pool.query(
 		`
 			SELECT p.id,
+			ownerId,
 			p.propertyTitle,
 			p.propertyType,
 			p.description,
@@ -24,6 +25,15 @@ const selectPropertyByIdModel = async (propertyId) => {
 			u.name,
 			u.lastName,
 			u.avatarUrl,
+			JSON_OBJECT(
+					'ownerId', u.id,
+					'ownerName', u.name,
+					'lastName', u.lastName,
+					'avatarUrl', u.avatarUrl,
+					'isDocsVerified', u.isDocsVerified,
+					'averageRating', u.averageRating,
+					'totalReviews', u.totalReviews
+				) AS ownerInfo,
 			COALESCE(AVG(r.rating),0) AS avgRating
 			FROM properties p
 			JOIN users u ON p.ownerId = u.id
@@ -34,7 +44,7 @@ const selectPropertyByIdModel = async (propertyId) => {
 
 	const [images] = await pool.query(
 		`
-			SELECT imageUrl,sortIndex FROM images WHERE propertyId=?
+			SELECT imageUrl,sortIndex,fileType FROM images WHERE propertyId=?
 		`,
 		[propertyId]
 	);
