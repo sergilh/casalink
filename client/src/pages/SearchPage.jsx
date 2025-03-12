@@ -4,6 +4,8 @@ import { FaHeart, FaStar } from 'react-icons/fa';
 import noResultsImage from '../assets/images/casalink-oscar-garcia-buscando.png';
 import noImage from '../assets/images/casalink-oscar-garcia-selfie.png';
 import toast from 'react-hot-toast';
+import SearchBarUni from '../components/SearchBar';
+import { FaSearch } from 'react-icons/fa';
 
 const { VITE_API_URL } = import.meta.env;
 
@@ -176,6 +178,130 @@ const SearchResults = () => {
 	return (
 		<section className="min-h-screen bg-gray-100 py-10 px-4 md:px-10">
 			{/* Formulario de búsqueda */}
+			<form
+				onSubmit={handleSearch}
+				className="bg-white p-4 rounded-lg shadow-md flex flex-wrap items-center justify-center gap-4 mb-6 container mx-auto"
+			>
+				<input
+					type="text"
+					placeholder="Localidad"
+					value={searchParams.locality}
+					onChange={(e) =>
+						setSearchParams({
+							...searchParams,
+							locality: e.target.value,
+						})
+					}
+					className="border border-gray-300 rounded-full px-4 py-2 outline-none focus:ring-2 focus:ring-blue-400"
+				/>
+				<input
+					type="number"
+					placeholder="🚽 Baños"
+					value={searchParams.bathrooms}
+					onChange={(e) =>
+						setSearchParams({
+							...searchParams,
+							bathrooms: e.target.value,
+						})
+					}
+					className="border border-gray-300 rounded-full px-4 py-2 outline-none focus:ring-2 focus:ring-blue-400"
+				/>
+				<input
+					type="number"
+					placeholder="🛏️ Habitaciones"
+					value={searchParams.bedrooms}
+					onChange={(e) =>
+						setSearchParams({
+							...searchParams,
+							bedrooms: e.target.value,
+						})
+					}
+					className="border border-gray-300 rounded-full px-4 py-2 outline-none focus:ring-2 focus:ring-blue-400"
+				/>
+				<input
+					type="number"
+					name="minOwnerRating"
+					value={searchParams.minOwnerRating}
+					onChange={(e) =>
+						setSearchParams({
+							...searchParams,
+							minOwnerRating: e.target.value,
+						})
+					}
+					placeholder="Valoración mínima del propietario"
+					className="border border-gray-300 rounded-full px-4 py-2 outline-none focus:ring-2 focus:ring-blue-400"
+				/>
+				<input
+					type="number"
+					name="minPrice"
+					value={searchParams.minPrice}
+					onChange={(e) =>
+						setSearchParams({
+							...searchParams,
+							minPrice: e.target.value,
+						})
+					}
+					placeholder="Precio mínimo"
+					className="border border-gray-300 rounded-full px-4 py-2 outline-none focus:ring-2 focus:ring-blue-400"
+				/>
+				<input
+					type="number"
+					name="maxPrice"
+					value={searchParams.maxPrice}
+					onChange={(e) =>
+						setSearchParams({
+							...searchParams,
+							maxPrice: e.target.value,
+						})
+					}
+					placeholder="Precio máximo"
+					className="border border-gray-300 rounded-full px-4 py-2 outline-none focus:ring-2 focus:ring-blue-400"
+				/>
+				<select
+					name="orderBy"
+					value={searchParams.orderBy}
+					onChange={(e) =>
+						setSearchParams({
+							...searchParams,
+							orderBy: e.target.value,
+						})
+					}
+					className="border border-gray-300 rounded-full px-4 py-2 outline-none focus:ring-2 focus:ring-blue-400"
+				>
+					<option value="p.updatedAt">Más reciente</option>
+					<option value="p.price">Precio</option>
+					<option value="p.bedrooms">Habitaciones</option>
+					<option value="p.bathrooms">Baños</option>
+					<option value="u.averageRating">
+						Valoración del propietario
+					</option>
+				</select>
+				<select
+					name="order"
+					value={searchParams.order}
+					onChange={(e) =>
+						setSearchParams({
+							...searchParams,
+							order: e.target.value,
+						})
+					}
+					className="border border-gray-300 rounded-full px-4 py-2 outline-none focus:ring-2 focus:ring-blue-400"
+				>
+					<option value="desc">Descendente</option>
+					<option value="asc">Ascendente</option>
+				</select>
+				<button
+					type="submit"
+					className="bg-[#ff6666] rounded-full w-fit text-white hover:bg-[#66ffff] hover:text-[#000033] transition-colors transform hover:scale-95 duration-200 py-2 px-4 gap-4 flex flex-row "
+				>
+					<span id="search-icon">
+						<FaSearch className="w-full h-full align-[0px]" />
+					</span>
+					Buscar
+				</button>
+			</form>
+
+			<SearchBarUni className="hidden" />
 
 			<h1 className="text-3xl font-bold text-gray-800 text-center mb-6">
 				Resultados de Búsqueda

@@ -15,7 +15,7 @@ const PublishPropertySection = () => {
 			navigate('/create-rent');
 		} else {
 			// Usuario no logueado: redirigir a registro
-			navigate('/registro');
+			navigate('/register');
 		}
 	};
 
