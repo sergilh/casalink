@@ -8,7 +8,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse } from '@fortawesome/free-solid-svg-icons';
 import { faFileSignature } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { faHand} from '@fortawesome/free-solid-svg-icons';
+import { faHand } from '@fortawesome/free-solid-svg-icons';
+
+//Imagenes del Dashboard
+import publishProperty from '../assets/images/iconos/publicar-propiedad-icon.svg';
+import myProperties from '../assets/images/iconos/propiedades-icon.svg';
+import myContracts from '../assets/images/iconos/contratos-icon.svg';
+import reviewsIcon from '../assets/images/iconos/write-icon.svg';
+import formFill from '../assets/images/iconos/form-fill-icon.svg';
+
+
+
 
 
 import useUserReviews from "../hooks/userReviews";
@@ -35,7 +45,8 @@ const ProfilePage = () => {
 		const{userInfo,userNotFound,userReviews,loading}=useUserReviews(userId,token)
 		
 		return (
-		<main className="flex justify-center items-center min-h-screen bg-gray-100">
+			<main className="flex justify-center items-center min-h-screen bg-gray-100">
+				
 			<div className="bg-white shadow-lg rounded-xl p-6 w-full min-h-screen">
 				{userNotFound ? (
 					<p>El usuario no existe</p>
@@ -45,7 +56,7 @@ const ProfilePage = () => {
 							<div
 								id="profile-info-container"
 								className="flex-col justify-evenly items-center w-full"
-							>
+							><h2 className='text-3xl font-bold mb-6 text-center'>Dashboard</h2>
 								<div className="flex justify-center items-center gap-4 w-auto h-auto mb-6">
 									{authUser?.avatarUrl ? (
 										<div className="relative overflow-clip w-30 h-30 bg-[#fffff] rounded-full cursor-pointer">
@@ -83,54 +94,54 @@ const ProfilePage = () => {
                                 </section>
                                 </>
                     )}
-                    <div id="dashboard-options" className="flex justify-evenly mt-20">
-						<div className="flex-col items-center justify-center text-center ">
-							<Link to={`/create-rent`}>
-                                                                        <FontAwesomeIcon
-                                                                            icon={faHouse}
-                                                                            size="4x"
-                                                                        />
-								<h2>Crear Propiedad</h2>
+                    <div id="dashboard-options" className="flex justify-evenly mt-20 flex-wrap gap-5 ">
+						<div className="flex-col items-center justify-center text-center w-30  ">
+							<Link to={`/create-rent`} className="flex flex-col items-center">
+								<img src={publishProperty}
+									alt='Crear propiedad'
+									className='w-30 h-30'
+								></img>
+								<h2 className='mt-2 text-2xl font-semibold text-black-1000 text-center' >Crear Propiedad</h2>
 								</Link>
                     </div>
-						<div className="flex-col items-center justify-center text-center ">
-							<Link to={`/properties/user/${userId}`}>
-                                                                        <FontAwesomeIcon
-                                                                            icon={faHouse}
-                                                                            size="4x"
-								/>
+						<div className="flex-col items-center justify-center text-center w-30 ">
+							<Link to={`/properties/user/${userId}`} className="flex flex-col items-center">
+                                <img src={myProperties}
+									alt='Crear propiedad'
+									className='w-30 h-30'
+								></img>
 								</Link>
-							<h2>Mis propiedades</h2>
+							<h2 className='mt-2 text-2xl font-semibold text-black-1000 text-center'>Mis propiedades</h2>
                     </div>
-						<div className="flex-col items-center justify-center text-center ">
-							<Link to={`/rentals/${userId}`}>
+						<div className="flex-col items-center justify-center text-center w-30 ">
+							<Link to={`/rentals/${userId}`} className="flex flex-col items-center">
 							
-                                                                        <FontAwesomeIcon
-                                                                            icon={faHouse}
-                                                                            size="4x"
-                                                                            />
+                                    <img src={myContracts}
+									alt='Crear propiedad'
+									className='w-30 h-30'
+								></img>
                    
 																		
-								<h2>Contratos</h2>
+								<h2 className='mt-2 text-2xl font-semibold text-black-1000 text-center'>Contratos</h2>
 								</Link>
 						</div>
-						<div className='flex-col items-center justify-center text-center '>
-							<Link to={`/review/${userId}`}>
-							<FontAwesomeIcon
-                                                                            icon={faStar}
-                                                                            size="4x"
-                                                                        />
-							<h2>Publicar reseña</h2>
+						<div className='flex-col items-center justify-center text-center w-30 '>
+							<Link to={`/review/${userId}`} className="flex flex-col items-center">
+							<img src={reviewsIcon}
+									alt='Crear propiedad'
+									className='w-30 h-30'
+								></img>
+							<h2 className='mt-2 text-2xl font-semibold text-black-1000 text-center'>Publicar reseña</h2>
 							</Link>
 						</div>
 
-						<div className='flex-col items-center justify-center text-center '>
-							<Link to={`/rental-requests`}>
-							<FontAwesomeIcon
-                                                                            icon={faHand}
-                                                                            size="4x"
-                                                                        />
-							<h2>Solicitudes de alquiler</h2>
+						<div className='flex-col items-center justify-center text-center w-30 '>
+							<Link to={`/rental-requests`} className="flex flex-col items-center">
+							<img src={formFill}
+									alt='Crear propiedad'
+									className='w-30 h-30'
+								></img>
+							<h2 className='mt-2 text-2xl font-semibold text-black-1000 text-center'>Solicitudes de alquiler</h2>
 							</Link>
 						</div>
                         </div>

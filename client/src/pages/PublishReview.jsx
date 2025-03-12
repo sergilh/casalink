@@ -4,6 +4,8 @@ import StarRating from "../components/StarRating"
 import { useNavigate, useParams } from "react-router-dom"
 import toast from "react-hot-toast"
 import useUserReviews from "../hooks/userReviews";
+import { FaArrowLeft } from 'react-icons/fa';
+
 const { VITE_API_URL } = import.meta.env;
 
 
@@ -104,7 +106,15 @@ const PublishReview = () => {
   }
 
     return (
-         <main className="flex justify-center items-center min-h-screen bg-gray-100">
+      <main className="flex justify-center items-center min-h-screen bg-gray-100">
+        <div className="absolute top-24 left-6">
+                        <button
+                          onClick={() => navigate(-1)}
+                          className="flex items-center justify-center w-10 h-10 text-white bg-[#ff6666] hover:bg-[#E05555] rounded-full shadow-md transition duration-300"
+                        >
+                          <FaArrowLeft className="text-xl" />
+                        </button>
+                      </div>
 			<div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-2xl">
                 <h2 className="text-2xl font-semibold text-gray-700 text-center mb-4">Publicar Reseña</h2>
           <form onSubmit={sendReview} className="grid grid-cols-2 gap-4 w-full">

@@ -1,13 +1,16 @@
 // RentalsList.js
-import { useContext} from 'react';
+import { useContext,} from 'react';
 
 import { AuthContext } from '../contexts/AuthContext';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import useUserReviews from "../hooks/userReviews";
 import { Link } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa';
+
 
 const RentalsList = () => {
+  const navigate=useNavigate()
   const { authUser } = useContext(AuthContext);
   const { userId } = useParams();
 	const token = authUser?.token || localStorage.getItem('token'); // Obtener token
@@ -25,9 +28,18 @@ const RentalsList = () => {
 
   return (
     <main className="flex justify-center items-center min-h-screen bg-gray-100">
-			<div className="bg-white shadow-lg rounded-xl p-6 w-full w-full max-w-2xl">
+        <div className="absolute top-24 left-6">
+                <button
+                  onClick={() => navigate(-1)}
+                  className="flex items-center justify-center w-10 h-10 text-white bg-[#ff6666] hover:bg-[#E05555] rounded-full shadow-md transition duration-300"
+                >
+                  <FaArrowLeft className="text-xl" />
+                </button>
+              </div>
 
-      <h2 className="text-2xl font-semibold text-gray-700 text-center mb-8 mt-8">Mis alquileres</h2>
+      <div className="bg-white shadow-lg rounded-xl p-6 w-full w-full max-w-2xl">
+
+      <h2 className="text-3xl text-center font-bold mb-6">Mis alquileres</h2>
     <div className="flex gap-3 text-center items-center justify-center mb-6">
       {userContracts.contracts.map((contract) => (
         <div
