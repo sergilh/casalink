@@ -84,12 +84,14 @@ const ProfilePage = () => {
                                 </>
                     )}
                     <div id="dashboard-options" className="flex justify-evenly mt-20">
-                    <div className="flex-col items-center justify-center text-center ">
+						<div className="flex-col items-center justify-center text-center ">
+							<Link to={`/create-rent`}>
                                                                         <FontAwesomeIcon
                                                                             icon={faHouse}
                                                                             size="4x"
                                                                         />
-                    <h2>Publicar Propiedad</h2>
+								<h2>Crear Propiedad</h2>
+								</Link>
                     </div>
 						<div className="flex-col items-center justify-center text-center ">
 							<Link to={`/properties/user/${userId}`}>
@@ -98,22 +100,19 @@ const ProfilePage = () => {
                                                                             size="4x"
 								/>
 								</Link>
-							<h2>Editar Propiedad</h2>
+							<h2>Mis propiedades</h2>
                     </div>
-                        <div className="flex-col items-center justify-center text-center ">
+						<div className="flex-col items-center justify-center text-center ">
+							<Link to={`/rentals/${userId}`}>
+							
                                                                         <FontAwesomeIcon
                                                                             icon={faHouse}
                                                                             size="4x"
                                                                             />
-                    <h2>Mis propiedades</h2>
-                        </div>
-                        <div className="flex-col items-center justify-center text-center ">
-                                                                        <FontAwesomeIcon
-                                                                            icon={faFileSignature}
-                                                                            size="4x"
-                                                                        />
+                   
 																		
-                    <h2>Contratos</h2>
+								<h2>Contratos</h2>
+								</Link>
 						</div>
 						<div className='flex-col items-center justify-center text-center '>
 							<Link to={`/review/${userId}`}>

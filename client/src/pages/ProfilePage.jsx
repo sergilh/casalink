@@ -139,11 +139,6 @@ const ProfilePage = () => {
 
 							{authUser?.role === 'user' && (
 								<>
-									{/* MOSTRAR ALQUILERES */}
-									<section>
-										<h2 className="text-2xl font-semibold text-gray-700 text-center mb-4 mt-8">Alquileres</h2>
-										<RentalsList contracts={userContracts.contracts} loading={loading} navigate={navigate} />
-										</section>
 										{/* MOSTRAR REVIEWS */}
 
 									<ProfileReviews userReviews={userReviews} loading={loading} VITE_API_URL={VITE_API_URL}/>
