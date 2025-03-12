@@ -62,7 +62,7 @@ const LoginPage = () => {
 		}
 	};
 
-	if (authUser?.id) return <Navigate to={`/profile/${authUser.id}`} />;
+	if (authUser?.id) return <Navigate to={`/dashboard/${authUser.id}`} />;
 
 	return (
 		<LoginForm
