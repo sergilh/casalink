@@ -210,7 +210,7 @@ CasaLink.app es intuitiva y accesible para todos.
 
 ---
 
-## Ejemplo real:
+## Ejemplo real de un inquilino:
 
 --
 
@@ -222,102 +222,91 @@ _"La experiencia fue excelente, el casero respondió rápido a cualquier problem
 
 --
 
-Ahora puedes alquilar con tranquilidad.
+**Ahora puedes alquilar con tranquilidad.**
 
 ---
 
-## Ejemplo real:
+## Ejemplo real dueño :
 
 Del mismo modo, un propietario puede revisar el perfil de un inquilino y ver que tiene valoraciones positivas de alquileres anteriores, asegurándose de que es alguien responsable y puntual con los pagos.
 
+-
+
+_"Extremadamente respetuoso, cuido de mi casa como lo hubiera hecho yo, y siempre pagó un día antes."_.
+
+--
+
+**Ahora pueden alquilar con tranquilidad.**
+
+layout: false
+
+---
+
+layout: true
+
+background-image: url(..//media/casalink_casa-graphic_600x200.png)
+
+.left-column[
+
+## Introducción
+
+## Problema
+
+## Solución
+
+## ¿Cómo?
+
+## Beneficios
+
+]
+
+.right-column[
+
+]
+
+---
+
+### **4. Beneficios Clave 🚀**
+
+💡 **Seguridad y confianza:** Saber con quién estás tratando antes de firmar un contrato.  
+💡 **Opiniones reales y verificadas:** Olvídate de perfiles falsos y estafas.  
+💡 **Ahorro de tiempo y dinero:** Encuentra inquilinos y propietarios que realmente se ajustan a lo que buscas.  
+💡 **Mayor tranquilidad para todos:** Alquilar ya no será una apuesta.
+
+🔍 **¿Qué diferencia a CasaLink.app de otras plataformas?**  
+A diferencia de portales tradicionales donde solo ves anuncios, aquí **tienes información de la experiencia real de otros usuarios**. No más incertidumbre, no más alquileres a ciegas.
+
+---
+
+### **5. Llamado a la Acción 🔥**
+
+📢 **Es hora de revolucionar el mundo del alquiler.**
+
+👉 **Si eres inquilino, encuentra un hogar con total confianza.**  
+👉 **Si eres propietario, alquila sin miedo a lo desconocido.**
+
+💻 **Regístrate ahora en CasaLink.app y sé parte del cambio.**
+
+---
+
 ---
 
 background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .left-column[
 
-## Que es
-
-## Tecnologías
-
-## Estructura
-
-## Instalación
-
 ]
 
 .right-column[
-
-## 🛠 Instalación y Configuración
-
-### 2️⃣ Configurar el backend
-
-```sh
-cd server
-cp .env.example .env # Configurar variables de entorno
-npm install
-npm run dbinit
-npm run dev
-```
 
 ]
 
 ---
-
-background-image: url(..//media/casalink_casa-graphic_600x200.png)
-
-.left-column[
-
-## Que es
-
-## Tecnologías
-
-## Estructura
-
-## Instalación
-
-]
-
-.right-column[
-
-## 🛠 Instalación y Configuración
-
-### 3️⃣ Configurar el frontend
-
-```sh
-cd client
-npm install
-npm start
-```
-
-]
-
----
-
-background-image: url(..//media/casalink_casa-graphic_600x200.png)
-
-.left-column[
-
-## Que es
-
-## Tecnologías
-
-## Estructura
-
-## Instalación
-
-## Equipo
-
-]
-
-.right-column[
 
 ## 👾 Equipo de Desarrollo
 
 .center[
 [.avatar[![David](https://avatars.githubusercontent.com/Dav993)]](https://github.com/Dav993 "@Dav993") [.avatar[![Javi](https://avatars.githubusercontent.com/JaviScavuzzo)]](https://github.com/JaviScavuzzo "@JaviScavuzzo") [.avatar[![Johnatan](https://avatars.githubusercontent.com/johnatanmoran)]](https://github.com/johnatanmoran "@johnatanmoran") [.avatar[![Russel](https://avatars.githubusercontent.com/Ken-Russel)]](https://github.com/Ken-Russel "@Ken-Russel") [.avatar[![Sergi](https://avatars.githubusercontent.com/sergilh)]](https://github.com/sergilh "@sergilh")
-]
-
 ]
 
 ---
@@ -414,28 +403,5 @@ Se diseñó un esquema relacional en MySQL que incluye:
 ---
 
 ---
-
----
-
-### **4. Beneficios Clave 🚀**
-
-💡 **Seguridad y confianza:** Saber con quién estás tratando antes de firmar un contrato.  
-💡 **Opiniones reales y verificadas:** Olvídate de perfiles falsos y estafas.  
-💡 **Ahorro de tiempo y dinero:** Encuentra inquilinos y propietarios que realmente se ajustan a lo que buscas.  
-💡 **Mayor tranquilidad para todos:** Alquilar ya no será una apuesta.
-
-🔍 **¿Qué diferencia a CasaLink.app de otras plataformas?**  
-A diferencia de portales tradicionales donde solo ves anuncios, aquí **tienes información de la experiencia real de otros usuarios**. No más incertidumbre, no más alquileres a ciegas.
-
----
-
-### **5. Llamado a la Acción 🔥**
-
-📢 **Es hora de revolucionar el mundo del alquiler.**
-
-👉 **Si eres inquilino, encuentra un hogar con total confianza.**  
-👉 **Si eres propietario, alquila sin miedo a lo desconocido.**
-
-💻 **Regístrate ahora en CasaLink.app y sé parte del cambio.**
 
 ---
