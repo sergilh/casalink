@@ -214,7 +214,19 @@ CasaLink.app es intuitiva y accesible para todos.
 
 --
 
-Imagina que eres un inquilino buscando un nuevo piso. Antes de decidirte, revisas las opiniones de otros inquilinos sobre el propietario y el estado real de la vivienda. Ves que un usuario comenta: _"La experiencia fue excelente, el casero respondió rápido a cualquier problema y el piso estaba impecable"_. Ahora puedes alquilar con tranquilidad.
+Imagina que eres un inquilino buscando un nuevo piso. Antes de decidirte, revisas las opiniones de otros inquilinos sobre el propietario y el estado real de la vivienda y ves que un usuario comenta:
+
+--
+
+_"La experiencia fue excelente, el casero respondió rápido a cualquier problema y el piso estaba impecable"_.
+
+--
+
+Ahora puedes alquilar con tranquilidad.
+
+---
+
+## Ejemplo real:
 
 Del mismo modo, un propietario puede revisar el perfil de un inquilino y ver que tiene valoraciones positivas de alquileres anteriores, asegurándose de que es alguien responsable y puntual con los pagos.
 
