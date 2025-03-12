@@ -37,7 +37,7 @@ const Header = () => {
 				<Link
 					to="/"
 					className="flex items-center"
-					onClick={() => setIsOpen(!isOpen)}
+					onClick={() => setIsOpen(false)}
 				>
 					<img
 						src={casalinkMainLogo}

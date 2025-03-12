@@ -4,6 +4,7 @@ import FeaturedListingsSection from '../components/FeaturedListingsSection';
 import { FaHeart, FaStar, FaMapMarkerAlt } from 'react-icons/fa';
 import MediaGallery from '../components/MediaGallery.jsx';
 import toast from 'react-hot-toast';
+import OwnersInfo from '../components/OwnersInfo';
 
 const { VITE_API_URL } = import.meta.env;
 
@@ -30,6 +31,8 @@ const PropertyDetailsPage = () => {
 					`${VITE_API_URL}/api/properties/${propertyId}`
 				);
 				const result = await propertyResponse.json();
+
+				console.log('Propiedad de la Pagina:', result);
 
 				if (result.status === 'ok') {
 					//console.log('Result:', result.data);
@@ -207,9 +210,9 @@ const PropertyDetailsPage = () => {
 						{property.propertyTitle}
 					</h2>
 				</div>
-				<div className="col-span-2 md:col-span-1 gap-2 grid grid-cols-3 max-h-10">
+				<div className="col-span-2 md:col-span-1 gap-2 grid grid-cols-3 lg:gap-4">
 					<div className="col-span-2 border-2 border-gray-300 rounded-lg items-center content-center justify-between">
-						<div className="text-gray-300 text-center items-center justify-evenly gap-1 content-around flex flex-row">
+						<div className="text-gray-300 text-center items-center justify-evenly gap-1 content-around flex flex-row lg:text-2xl">
 							<FaStar className="inline-block" />
 							<span className="inline-block">
 								{Math.floor(property.avgRating)}
@@ -265,15 +268,21 @@ const PropertyDetailsPage = () => {
 				</div>
 			</header>
 
-			{/* Visit button */}
-			<div className="flex justify-center p-4 w-full">
-				<button
-					onClick={() => setIsModalOpen(true)}
-					className="bg-[#ff6666] rounded-full px-4 py-2 hover:bg-[#000033] text-white font-bold text-2xl transition-colors"
-				>
-					¡Solicita una visita!
-				</button>
-			</div>
+			<section className="container mx-auto px-4 flex flex-col md:flex-row md:gap-12 md:justify-between lg:px-0">
+				{/* Visit button */}
+				<div className="flex justify-center md:justify-between w-full md:py-6 lg:w-3xl lg:flex-initial">
+					<button
+						onClick={() => setIsModalOpen(true)}
+						className="bg-[#ff6666] rounded-full px-4 py-2 hover:bg-[#000033] text-white font-bold text-2xl transition-colors w-full lg:max-w-[30vw]"
+					>
+						¡Solicita una visita!
+					</button>
+				</div>
+				{/* Owners Info */}
+				<div className="flex justify-center py-4 px-1 w-full lg:justify-end">
+					<OwnersInfo ownerInfo={property.ownerInfo} />
+				</div>
+			</section>
 
 			{/* Modal de selección de fechas */}
 			{isModalOpen && (
