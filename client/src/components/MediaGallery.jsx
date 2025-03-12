@@ -79,7 +79,7 @@ const GallerySlider = ({ media }) => {
 				}}
 				pagination={{ clickable: true }}
 				onSlideChange={handleSlideChange}
-				className="w-full h-[75vh]"
+				className="w-full h-[50vh]"
 			>
 				{media.map((item, index) => (
 					<SwiperSlide key={index}>
