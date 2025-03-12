@@ -139,22 +139,6 @@ const ProfilePage = () => {
 
 							{authUser?.role === 'user' && (
 								<>
-							{/* BOTÓN PARA EDITAR PROPIEDADES */}
-							<div className="flex justify-center mt-6">
-								<button
-									onClick={() =>
-										navigate(`/properties/user/${userId}`)
-									}
-									className="py-3 px-4 text-white font-bold rounded-full cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
-									style={{
-										width: 'auto',
-										minWidth: '200px',
-										maxWidth: '300px',
-									}}
-								>
-									Editar Propiedades
-								</button>
-							</div>
 									{/* MOSTRAR ALQUILERES */}
 									<section>
 										<h2 className="text-2xl font-semibold text-gray-700 text-center mb-4 mt-8">Alquileres</h2>

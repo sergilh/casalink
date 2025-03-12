@@ -1,4 +1,5 @@
 // RentalsList.js
+
 import { Link } from 'react-router-dom';
 
 const RentalsList = ({ contracts, loading, navigate }) => {

@@ -91,6 +91,15 @@ const ProfilePage = () => {
                                                                         />
                     <h2>Publicar Propiedad</h2>
                     </div>
+						<div className="flex-col items-center justify-center text-center ">
+							<Link to={`/properties/user/${userId}`}>
+                                                                        <FontAwesomeIcon
+                                                                            icon={faHouse}
+                                                                            size="4x"
+								/>
+								</Link>
+							<h2>Editar Propiedad</h2>
+                    </div>
                         <div className="flex-col items-center justify-center text-center ">
                                                                         <FontAwesomeIcon
                                                                             icon={faHouse}
@@ -103,6 +112,7 @@ const ProfilePage = () => {
                                                                             icon={faFileSignature}
                                                                             size="4x"
                                                                         />
+																		
                     <h2>Contratos</h2>
 						</div>
 						<div className='flex-col items-center justify-center text-center '>
