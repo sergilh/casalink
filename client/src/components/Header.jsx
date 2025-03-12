@@ -3,6 +3,7 @@ import casalinkMainLogo from '../assets/images/brand/casalink-logotipo-main-1080
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import AvatarIcon from './AvatarIcon';
+import SearchBar from './SearchBar';
 const { VITE_API_URL } = import.meta.env;
 
 const Header = () => {
@@ -72,6 +73,9 @@ const Header = () => {
 					md:opacity-100 md:pointer-events-auto md:flex md:relative md:space-x-6 md:bg-transparent md:text-1 md:p-0`}
 				>
 					<li>
+						<SearchBar />
+					</li>
+					<li>
 						<Link
 							to="/about"
 							className="text-[#000033] hover:underline transition-all duration-300"
@@ -140,20 +144,17 @@ const Header = () => {
 							</li>
 						)}
 					{/* Botón para el dashboard */}
-					{authUser?.role &&
-						authUser.role === 'user' && (
-						
-							<li>
-								<Link
-									to={`/dashboard/${authUser.id}`}
-									className="bg-[#000033] md:bg-[#ff6666] md:hover:bg-[#66ffff] transition-all duration-300 w-full text-[#eeeeee] md:hover:text-[#000033] px-6 py-2 rounded-full transform hover:scale-105 text-3xl md:text-base"
-									onClick={() => setIsOpen(!isOpen)}
-								>
-									Dashboard
-								</Link>
-							</li>
-						)}
-						
+					{authUser?.role && authUser.role === 'user' && (
+						<li>
+							<Link
+								to={`/dashboard/${authUser.id}`}
+								className="bg-[#000033] md:bg-[#ff6666] md:hover:bg-[#66ffff] transition-all duration-300 w-full text-[#eeeeee] md:hover:text-[#000033] px-6 py-2 rounded-full transform hover:scale-105 text-3xl md:text-base"
+								onClick={() => setIsOpen(!isOpen)}
+							>
+								Dashboard
+							</Link>
+						</li>
+					)}
 				</ul>
 				<div
 					id="user-section"
