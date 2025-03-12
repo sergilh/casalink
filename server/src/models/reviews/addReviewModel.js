@@ -16,9 +16,22 @@ const addReviewModel = async (
 		[contractId]
 	);
 
-	if (!contract.length || contract[0].status !== 'approved') {
+	if (!contract.length || contract[0].status !== 'finished') {
 		throw generateErrorUtil(
 			'Solo puedes valorar después de que el contrato sea aprobado',
+			403
+		);
+	}
+
+	// Verificar si el usuario ya ha dejado una reseña para este contrato
+	const [existingReview] = await pool.query(
+		'SELECT * FROM reviews WHERE reviewerId = ? AND contractId = ?',
+		[reviewerId, contractId]
+	);
+
+	if (existingReview.length > 0) {
+		throw generateErrorUtil(
+			'Ya has dejado una reseña para este contrato.',
 			403
 		);
 	}

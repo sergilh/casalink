@@ -53,6 +53,7 @@ router.put(
 	changePasswordController
 );
 
+// 09 GET	/api/users/:id/reviews	Histórico de reseñas y alquileres
 // 08b Endpoint para resetear contraseña
 router.put('/users/reset-password/', resetPasswordController);
 
