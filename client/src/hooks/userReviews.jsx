@@ -12,6 +12,9 @@ const useUserReviews = (userId, token) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!userId) {
+        return;
+      }
     const getUserReviews = async () => {
       try {
         const res = await fetch(

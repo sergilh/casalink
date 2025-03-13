@@ -100,7 +100,7 @@ const App = () => {
 
 						{/* Ruta Dashboard */}
 						<Route
-							path="/dashboard/:userId"
+							path="/dashboard"
 							element={<DashboardPage />}
 						/>
 

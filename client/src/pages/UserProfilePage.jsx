@@ -1,13 +1,10 @@
-import { useParams, useNavigate,Link } from "react-router-dom"
+import { useParams, useNavigate} from "react-router-dom"
 import { useEffect, useContext, useState } from "react";
 import toast from "react-hot-toast";
 import AvatarIconProfile from '../components/AvatarIconProfile';
 import { AuthContext } from '../contexts/AuthContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
 import useUserReviews from "../hooks/userReviews";
 import { FaArrowLeft } from 'react-icons/fa';
-import RentalsList from "../components/RentalsList";
 import ProfileReviews from '../components/ProfileReviews';
 import RatingAverageIcon from '../components/RatingAverageIcon';
 
@@ -32,7 +29,7 @@ const UserProfilePage =  () => {
             }
         }, [authUser, navigate]); // Esto evita el error de hooks condicionales
     
-    const{userReviews,userNotFound,userContracts,setUserNotFound,loading,setLoading}=useUserReviews(userId,token)
+    const{userReviews,userNotFound,setUserNotFound,loading,setLoading}=useUserReviews(userId,token)
     useEffect(() => {
 		const getUserInfo = async () => {
 			try {
