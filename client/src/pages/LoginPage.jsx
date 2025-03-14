@@ -1,5 +1,5 @@
-import { useState, useContext } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import toast from 'react-hot-toast';
 
@@ -53,16 +53,19 @@ const LoginPage = () => {
 
 			toast.success('Login exitoso');
 
-			//Redirigimos al Perfil del usuario
-			navigate(`/dashboard/${body.data.user._id}`);
+		
 		} catch (err) {
 			toast.error(err.message, { id: 'loginPage' });
 		} finally {
 			setLoading(false);
 		}
 	};
-
-	if (authUser?.id) return <Navigate to={`/dashboard/${authUser.id}`} />;
+	useEffect(() => {
+		console.log('authUser',authUser);
+		
+		if (authUser?.id){ navigate(`/dashboard`);
+		}
+	}, [authUser, navigate]);
 
 	return (
 		<LoginForm

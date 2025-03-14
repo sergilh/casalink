@@ -1,14 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../contexts/AuthContext';
 import AvatarIconProfile from '../components/AvatarIconProfile';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
 import useUserReviews from '../hooks/userReviews';
-import RentalsList from '../components/RentalsList';
 import ProfileReviews from '../components/ProfileReviews';
 import RatingAverageIcon from '../components/RatingAverageIcon';
+import EditProfileButton from '../components/EditProfileButton';
 
 const { VITE_API_URL } = import.meta.env;
 
@@ -30,21 +28,15 @@ const ProfilePage = () => {
 
 	// Validar el token y actualizarlo si es necesario
 	useEffect(() => {
-		let storedToken = localStorage.getItem('token');
-
-		if (!authUser && !storedToken) {
+		if (!authUser) {
 			toast.error('Tu sesión ha expirado, inicia sesión nuevamente.');
 			navigate('/login');
-		}
-
-		if (!token && storedToken) {
-			console.log('Actualizando token desde localStorage');
-			setUserProperties(storedToken);
 		}
 	}, [authUser, token, navigate]);
 
 	// Obtener propiedades del usuario
 	useEffect(() => {
+		if (!token) return;
 		const fetchUserProperties = async () => {
 			try {
 				console.log(' Solicitando propiedades para el userId:', userId);
@@ -69,8 +61,11 @@ const ProfilePage = () => {
 		};
 		fetchUserProperties();
 	}, [userId, token]);
-	const { userInfo, userNotFound, userReviews, userContracts, loading } =
-		useUserReviews(userId, token);
+
+	const { userInfo, userNotFound, userReviews, loading } = useUserReviews(
+		userId,
+		token
+	);
 
 	return (
 		<main className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -81,6 +76,10 @@ const ProfilePage = () => {
 
 				{userNotFound ? (
 					<p>El usuario no existe</p>
+				) : loading ? (
+					<p className="text-center text-gray-500">
+						Cargando perfil...
+					</p>
 				) : (
 					<>
 						<section id="profile-info-section" className="m-4">
@@ -105,39 +104,42 @@ const ProfilePage = () => {
 									</h2>
 
 									{/* BOTÓN PARA Modificar el perfil */}
-									<div className="flex justify-center ml-4">
-										<button
-											onClick={() =>
-												navigate('/profile/edit')
-											}
-											className="py-3 px-4 text-white font-bold rounded-full cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
-											style={{
-												width: 'auto',
-												minWidth: '200px',
-												maxWidth: '300px',
-											}}
-										>
-											Editar perfil
-										</button>
-									</div>
+									<EditProfileButton />
 								</div>
 
-								<div className="flex gap-6 items-center justify-center">
-									{userReviews.length > 0 && (
-										<>
-											<RatingAverageIcon
-												averageRating={
-													userInfo.averageRating
-												}
-											/>
-										</>
-									)}
-									{userInfo.bio && (
-										<div className="flex items-center justify-center border-2 border-[#eeeeee] border-opacity-100 rounded-xl p-2">
-											<p>{userInfo.bio}</p>
-										</div>
-									)}
+								{/* BOTÓN PARA Modificar el perfil */}
+								<div className="flex justify-center ml-4">
+									<button
+										onClick={() =>
+											navigate('/profile/edit')
+										}
+										className="py-3 px-4 text-white font-bold rounded-full cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
+										style={{
+											width: 'auto',
+											minWidth: '200px',
+											maxWidth: '300px',
+										}}
+									>
+										Editar perfil
+									</button>
 								</div>
+							</div>
+
+							<div className="flex gap-6 items-center justify-center">
+								{userReviews.length > 0 && (
+									<>
+										<RatingAverageIcon
+											averageRating={
+												userInfo.averageRating
+											}
+										/>
+									</>
+								)}
+								{userInfo.bio && (
+									<div className="flex items-center justify-center border-2 border-[#eeeeee] border-opacity-100 rounded-xl p-2">
+										<p>{userInfo.bio}</p>
+									</div>
+								)}
 							</div>
 						</section>
 

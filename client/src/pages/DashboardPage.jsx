@@ -1,14 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import { useContext, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import AvatarIconProfile from '../components/AvatarIconProfile';
-import Review from '../components/Review';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse } from '@fortawesome/free-solid-svg-icons';
-import { faFileSignature } from '@fortawesome/free-solid-svg-icons';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { faHand } from '@fortawesome/free-solid-svg-icons';
+import EditProfileButton from '../components/EditProfileButton';
 
 //Imagenes del Dashboard
 import publishProperty from '../assets/images/iconos/publicar-propiedad-icon.svg';
@@ -21,12 +15,27 @@ import useUserReviews from '../hooks/userReviews';
 
 const { VITE_API_URL } = import.meta.env;
 
-const ProfilePage = () => {
-	const { userId } = useParams();
+const DashboardPage = () => {
 	const { authUser } = useContext(AuthContext);
+	const userId = authUser?.id;
 	const navigate = useNavigate();
 	const token = authUser?.token || localStorage.getItem('token'); // Obtener token
 
+	const dashboardOptions = [
+		{ to: '/create-rent', img: publishProperty, text: 'Crear Propiedad' },
+		{
+			to: `/properties/user/${userId}`,
+			img: myProperties,
+			text: 'Mis propiedades',
+		},
+		{ to: `/rentals/${userId}`, img: myContracts, text: 'Contratos' },
+		{ to: `/review/${userId}`, img: reviewsIcon, text: 'Publicar reseña' },
+		{
+			to: '/rental-requests',
+			img: formFill,
+			text: 'Solicitudes de alquiler',
+		},
+	];
 	console.log('userId recibido desde useParams():', userId);
 
 	// Redirigir al usuario al login si no está autenticado
@@ -36,13 +45,9 @@ const ProfilePage = () => {
 		}
 	}, [authUser, navigate]); // Esto evita el error de hooks condicionales
 
-	const { userInfo, userNotFound, userReviews, loading } = useUserReviews(
-		userId,
-		token
-	);
-
+	const { userInfo, userNotFound } = useUserReviews(userId, token);
 	return (
-		<div className="flex justify-center items-center flex-grow bg-gray-100">
+		<main className="flex justify-center items-center flex-grow bg-gray-100">
 			<div className="bg-white shadow-lg rounded-xl p-6 w-full min-h-screen">
 				{userNotFound ? (
 					<p>El usuario no existe</p>
@@ -71,38 +76,11 @@ const ProfilePage = () => {
 										)}
 									</Link>
 									<h2 className="font-bold text-gray-700">
-										{`Hola ${userInfo.fullName}!`}
+										{`Hola ${userInfo?.fullName}!`}
 									</h2>
 
 									{/* BOTÓN PARA Modificar el perfil */}
-									<div className="flex justify-center ml-4">
-										<button
-											onClick={() =>
-												navigate('/profile/edit')
-											}
-											className="py-3 px-4 text-white font-bold rounded-full cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
-											style={{
-												width: 'auto',
-												minWidth: '100px',
-												maxWidth: '200px',
-											}}
-										>
-											Editar perfil
-										</button>
-										<button
-											onClick={() =>
-												navigate(`/user/${authUser.id}`)
-											}
-											className="ml-4 py-3 px-4 text-white font-bold rounded-full cursor-pointer transition duration-300 bg-[#ff6666] hover:bg-[#E05555]"
-											style={{
-												width: 'auto',
-												minWidth: '100px',
-												maxWidth: '200px',
-											}}
-										>
-											Ver mi perfil
-										</button>
-									</div>
+									<EditProfileButton />
 								</div>
 							</div>
 						</section>
@@ -110,89 +88,33 @@ const ProfilePage = () => {
 				)}
 				<div
 					id="dashboard-options"
-					className="flex justify-evenly mt-20 flex-wrap gap-5 "
+					className="flex justify-evenly mt-20 flex-wrap gap-5"
 				>
-					<div className="flex-col items-center justify-center text-center w-30  ">
-						<Link
-							to={`/create-rent`}
-							className="flex flex-col items-center"
+					{dashboardOptions.map(({ to, img, text }, index) => (
+						<div
+							key={index}
+							className="flex-col items-center justify-center text-center w-30"
 						>
-							<img
-								src={publishProperty}
-								alt="Crear propiedad"
-								className="w-30 h-30"
-							></img>
-							<h2 className="mt-2 text-2xl font-semibold text-black-1000 text-center">
-								Crear Propiedad
-							</h2>
-						</Link>
-					</div>
-					<div className="flex-col items-center justify-center text-center w-30 ">
-						<Link
-							to={`/properties/user/${userId}`}
-							className="flex flex-col items-center"
-						>
-							<img
-								src={myProperties}
-								alt="Crear propiedad"
-								className="w-30 h-30"
-							></img>
-						</Link>
-						<h2 className="mt-2 text-2xl font-semibold text-black-1000 text-center">
-							Mis propiedades
-						</h2>
-					</div>
-					<div className="flex-col items-center justify-center text-center w-30 ">
-						<Link
-							to={`/rentals/${userId}`}
-							className="flex flex-col items-center"
-						>
-							<img
-								src={myContracts}
-								alt="Crear propiedad"
-								className="w-30 h-30"
-							></img>
-
-							<h2 className="mt-2 text-2xl font-semibold text-black-1000 text-center">
-								Contratos
-							</h2>
-						</Link>
-					</div>
-					<div className="flex-col items-center justify-center text-center w-30 ">
-						<Link
-							to={`/review/${userId}`}
-							className="flex flex-col items-center"
-						>
-							<img
-								src={reviewsIcon}
-								alt="Crear propiedad"
-								className="w-30 h-30"
-							></img>
-							<h2 className="mt-2 text-2xl font-semibold text-black-1000 text-center">
-								Publicar reseña
-							</h2>
-						</Link>
-					</div>
-
-					<div className="flex-col items-center justify-center text-center w-30 ">
-						<Link
-							to={`/rental-requests`}
-							className="flex flex-col items-center"
-						>
-							<img
-								src={formFill}
-								alt="Crear propiedad"
-								className="w-30 h-30"
-							></img>
-							<h2 className="mt-2 text-2xl font-semibold text-black-1000 text-center">
-								Solicitudes de alquiler
-							</h2>
-						</Link>
-					</div>
+							<Link
+								to={to}
+								className="flex flex-col items-center"
+							>
+								<img
+									src={img}
+									alt={text}
+									className="w-30 h-30"
+								/>
+								<h2 className="mt-2 text-2xl font-semibold text-black-1000 text-center">
+									{text}
+								</h2>
+							</Link>
+						</div>
+					))}
 				</div>
+				;
 			</div>
-		</div>
+		</main>
 	);
 };
 
-export default ProfilePage;
+export default DashboardPage;
