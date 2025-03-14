@@ -43,11 +43,11 @@ const RentalsList = () => {
 				<h2 className="text-3xl text-center font-bold mb-6">
 					Mis alquileres
 				</h2>
-				<div className="flex gap-3 text-center items-center justify-center mb-6">
+				<div className="flex gap-3 text-center items-center justify-center mb-6 flex-wrap">
 					{userContracts.contracts.map((contract) => (
 						<div
 							key={contract.id}
-							className="flex flex-col text-center bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition max-w-md flex-1"
+							className="flex flex-col text-center bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition w-full max-w-[250px]  "
 						>
 							<h3 className="text-lg font-semibold mt-2">
 								{contract.propertyTitle}
