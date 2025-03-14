@@ -9,7 +9,7 @@ const usersPreviousRatingController = async (req, res, next) => {
 
 		const userContractsInfo = await selectContractsByStatusModel({
 			userId: id,
-			statusFilter: ['finished'],
+			statusFilter: ['finished', 'approved'],
 			page: 1,
 			limit: 10,
 		});
