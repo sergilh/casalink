@@ -153,7 +153,7 @@ const Header = () => {
 						)}
 					{/* Botón para el dashboard */}
 					{authUser?.role && authUser.role === 'user' && (
-						<li>
+						<li className="hidden">
 							<Link
 								to={`/dashboard/${authUser.id}`}
 								className="bg-[#000033] md:bg-[#ff6666] md:hover:bg-[#66ffff] transition-all duration-300 w-full text-[#eeeeee] md:hover:text-[#000033] px-6 py-2 rounded-full transform hover:scale-105 text-3xl md:text-base"
@@ -166,10 +166,10 @@ const Header = () => {
 				</ul>
 				<div
 					id="user-section"
-					className={`${authUser ? 'relative ml-8' : 'hidden'}`}
+					className={`${authUser ? 'relative' : 'hidden'}`}
 				>
 					{authUser && (
-						<Link to={`/profile/${authUser.id}`}>
+						<Link to={`/dashboard/${authUser.id}`}>
 							<div
 								id="user-avatar"
 								className="flex items-center justify-center"

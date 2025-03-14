@@ -1185,3 +1185,10 @@ class: center, middle, red-bg
 background-image: url(..//media/casalink_casa-graphic_600x200.png)
 
 .huge-text[**GRACIAS**]
+
+---
+
+class: center, middle, red-bg
+background-image: url(..// )
+
+.huge-text[**GRACIAS**]

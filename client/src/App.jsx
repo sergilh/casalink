@@ -96,7 +96,10 @@ const App = () => {
 						/>
 
 						{/* Ruta Publicar review */}
-						<Route path="/review/:userId" element={<PublishReview />} />
+						<Route
+							path="/review/:userId"
+							element={<PublishReview />}
+						/>
 
 						{/* Ruta Dashboard */}
 						<Route
