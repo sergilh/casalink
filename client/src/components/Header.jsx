@@ -58,6 +58,7 @@ const Header = () => {
 					/>
 				</Link>
 			</h1>
+<<<<<<< HEAD
 			<section>
 				{!isHomePage && (
 					<SearchBar onSearchComplete={() => setIsOpen(false)} />
@@ -84,6 +85,49 @@ const Header = () => {
 					></span>
 				</button>
 				{/* Menu General */}
+=======
+			<nav className="flex items-center">
+				{/* Contenedor de avatar + menú hamburguesa en móvil */}
+				<div className="flex items-center space-x-3 md:hidden">
+					{/* Avatar SOLO en móvil */}
+					{authUser && (
+						<Link
+							to={`/profile/${authUser.id}`}
+							className="flex items-center"
+						>
+							{authUser?.avatarUrl ? (
+								<img
+									src={`${VITE_API_URL}/static/uploads/avatars/${authUser.avatarUrl}`}
+									alt="Avatar del usuario"
+									className="size-10 rounded-full object-cover"
+								/>
+							) : (
+								<AvatarIcon className="size-12" />
+							)}
+						</Link>
+					)}
+					{/* Botón hamburguesa */}
+					<button
+						className="md:hidden flex flex-col space-y-1"
+						onClick={() => setIsOpen(!isOpen)}
+					>
+						<span
+							className={`block w-8 h-1 bg-[#000033] transition-transform ${
+								isOpen ? 'rotate-45 translate-y-2' : ''
+							}`}
+						></span>
+						<span
+							className={`block w-8 h-1 bg-[#000033] ${isOpen ? 'opacity-0' : ''}`}
+						></span>
+						<span
+							className={`block w-8 h-1 bg-[#000033] transition-transform ${
+								isOpen ? '-rotate-45 -translate-y-2' : ''
+							}`}
+						></span>
+					</button>
+				</div>
+				{/* Menú de navegación */}
+>>>>>>> 22c519075305c161d269a93bf1628da9f2036cae
 				<ul
 					className={`space-y-8 items-center md:space-y-0 md:text-sm md:top-0 absolute left-0 w-full text-center p-8 transition-all duration-300 ease-in-out z-50
 					${isOpen ? 'opacity-100 text-2xl bg-[#ff6666] top-20 h-full' : 'opacity-0 pointer-events-none'}
@@ -171,12 +215,42 @@ const Header = () => {
 							>
 								Dashboard
 							</Link>
+<<<<<<< HEAD
 						)}
 					</li>
 					<li>
 						{/* A perfil del usuario*/}
 						{authUser && (
 							<Link to={`/user/${authUser.id}`}>
+=======
+						</li>
+					)}
+				</ul>
+				<div
+					id="user-section"
+					className={`${authUser ? 'relative ml-8' : 'hidden'}`}
+				>
+					{authUser && (
+						<Link to={`/profile/${authUser.id}`}>
+							<div
+								id="user-avatar"
+								className="hidden md:flex items-center justify-center"
+							>
+								{authUser?.avatarUrl ? (
+									<div
+										id="avatar-wrapper"
+										className="relative overflow-clip size-12 bg-[#e6dada] rounded-full cursor-pointer"
+									>
+										<img
+											src={`${VITE_API_URL}/static/uploads/avatars/${authUser.avatarUrl}`}
+											alt="Avatar del usuario"
+											className="size-12 rounded-full object-cover"
+										/>
+									</div>
+								) : (
+									<AvatarIcon />
+								)}
+>>>>>>> 22c519075305c161d269a93bf1628da9f2036cae
 								<div
 									id="user-avatar"
 									className="flex items-center justify-center"
