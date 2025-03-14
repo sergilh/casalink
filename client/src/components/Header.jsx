@@ -1,10 +1,17 @@
+// Dependencias
 import { useState, useEffect, useContext } from 'react';
-import casalinkMainLogo from '../assets/images/brand/casalink-logotipo-main-1080x400.svg';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext';
+
+// Componentes Externos0
 import { FaTools } from 'react-icons/fa';
+
+// Componentes propoios
+import { AuthContext } from '../contexts/AuthContext';
 import AvatarIcon from './AvatarIcon';
+import casalinkMainLogo from '../assets/images/brand/casalink-logotipo-main-1080x400.svg';
 import SearchBar from './SearchBar';
+
+// Variables de entorno
 const { VITE_API_URL } = import.meta.env;
 
 const Header = () => {
@@ -51,7 +58,12 @@ const Header = () => {
 					/>
 				</Link>
 			</h1>
-			<nav className="flex items-center">
+			<section>
+				{!isHomePage && (
+					<SearchBar onSearchComplete={() => setIsOpen(false)} />
+				)}
+			</section>
+			<nav id="main-nav" className="flex items-center">
 				{/* Botón hamburguesa */}
 				<button
 					className="md:hidden flex flex-col space-y-1"
@@ -71,6 +83,7 @@ const Header = () => {
 						}`}
 					></span>
 				</button>
+				{/* Menu General */}
 				<ul
 					className={`space-y-8 items-center md:space-y-0 md:text-sm md:top-0 absolute left-0 w-full text-center p-8 transition-all duration-300 ease-in-out z-50
 					${isOpen ? 'opacity-100 text-2xl bg-[#ff6666] top-20 h-full' : 'opacity-0 pointer-events-none'}
@@ -113,6 +126,7 @@ const Header = () => {
 							Login
 						</Link>
 					</li>
+
 					<li className={`${authUser ? 'hidden' : ''}`}>
 						<Link
 							to="/register"
@@ -122,22 +136,18 @@ const Header = () => {
 							Registro
 						</Link>
 					</li>
-					<li className={`${authUser ? '' : 'hidden'}`}>
+				</ul>
+				<ul
+					id="user-section"
+					className={`${authUser ? 'relative' : 'hidden'} flex flex-row items-center text-center`}
+				>
+					<li>
 						<a
 							onClick={logout}
 							className="text-[#000033] hover:underline transition-all duration-300 cursor-pointer"
 						>
 							Cerrar sesión
 						</a>
-					</li>
-					<li>
-						{!isHomePage && (
-							<li>
-								<SearchBar
-									onSearchComplete={() => setIsOpen(false)}
-								/>
-							</li>
-						)}
 					</li>
 					{/* Botón para la zona de administración */}
 					{authUser?.role &&
@@ -151,9 +161,9 @@ const Header = () => {
 								<FaTools className="w-full" />
 							</Link>
 						)}
-					{/* Botón para el dashboard */}
-					{authUser?.role && authUser.role === 'user' && (
-						<li className="hidden">
+					<li>
+						{/* Botón para el dashboard */}
+						{authUser?.role && authUser.role === 'user' && (
 							<Link
 								to={`/dashboard`}
 								className="bg-[#000033] md:bg-[#ff6666] md:hover:bg-[#66ffff] transition-all duration-300 w-full text-[#eeeeee] md:hover:text-[#000033] px-6 py-2 rounded-full transform hover:scale-105 text-3xl md:text-base"
@@ -161,48 +171,48 @@ const Header = () => {
 							>
 								Dashboard
 							</Link>
-						</li>
-					)}
-				</ul>
-				<div
-					id="user-section"
-					className={`${authUser ? 'relative' : 'hidden'}`}
-				>
-					{authUser && (
-						<Link to={`/dashboard/${authUser.id}`}>
-							<div
-								id="user-avatar"
-								className="flex items-center justify-center"
-							>
-								{authUser?.avatarUrl ? (
-									<div
-										id="avatar-wrapper"
-										className="relative overflow-clip size-12 bg-[#e6dada] rounded-full cursor-pointer"
-									>
-										<img
-											src={`${VITE_API_URL}/static/uploads/avatars/${authUser.avatarUrl}`}
-											alt="Avatar del usuario"
-											className="size-12 rounded-full object-cover"
-										/>
-									</div>
-								) : (
-									<AvatarIcon />
-								)}
+						)}
+					</li>
+					<li>
+						{/* A perfil del usuario*/}
+						{authUser && (
+							<Link to={`/user/${authUser.id}`}>
 								<div
-									id="notification-circle"
-									className="absolute -top-1 -right-1 h-4 w-4 bg-[#ff6666] rounded-full flex items-center justify-center text-white text-xs hidden"
+									id="user-avatar"
+									className="flex items-center justify-center"
 								>
-									<span
-										id="notification-count"
-										className="text-white block font-bold text-center text-xs"
+									{authUser?.avatarUrl ? (
+										<div
+											id="avatar-wrapper"
+											className="relative overflow-clip size-12 bg-[#e6dada] rounded-full cursor-pointer"
+										>
+											<img
+												src={`${VITE_API_URL}/static/uploads/avatars/${authUser.avatarUrl}`}
+												alt="Avatar del usuario"
+												className="size-12 rounded-full object-cover"
+											/>
+										</div>
+									) : (
+										<AvatarIcon />
+									)}
+									<div
+										id="notification-circle"
+										className="absolute -top-1 -right-1 h-4 w-4 bg-[#ff6666] rounded-full flex items-center justify-center text-white text-xs hidden"
 									>
-										?
-									</span>
+										<span
+											id="notification-count"
+											className="text-white block font-bold text-center text-xs"
+										>
+											?
+										</span>
+									</div>
 								</div>
-							</div>
-						</Link>
-					)}
-				</div>
+							</Link>
+						)}
+					</li>
+					<li></li>
+					<li></li>
+				</ul>
 			</nav>
 		</header>
 	);
