@@ -61,7 +61,7 @@ const DashboardPage = () => {
 								<h2 className="text-3xl font-bold mb-6 text-center">
 									Dashboard
 								</h2>
-								<div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-auto h-auto mb-6">
+								<div className="flex justify-center items-center gap-4 w-auto h-auto mb-6">
 									{userInfo?.avatarUrl ? (
 										<div className="relative overflow-clip w-30 h-30 bg-[#fffff] rounded-full cursor-pointer">
 											<img
@@ -86,37 +86,30 @@ const DashboardPage = () => {
 				)}
 				<div
 					id="dashboard-options"
-					className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 
-               gap-6 lg:gap-10 w-full max-w-4xl mx-auto mt-8 px-4 sm:px-0 
-               justify-items-center"
+					className="flex justify-evenly mt-20 flex-wrap gap-5"
 				>
 					{dashboardOptions.map(({ to, img, text }, index) => (
-						<Link
+						<div
 							key={index}
-							to={to}
-							className="w-full max-w-[140px] sm:max-w-[160px] md:max-w-[180px]"
+							className="flex-col items-center justify-center text-center w-30"
 						>
-							<div
-								className="bg-white p-6 rounded-lg shadow-md flex flex-col 
-                           items-center justify-center w-full h-32 sm:h-45 
-                           transition-all duration-300 transform hover:scale-105"
+							<Link
+								to={to}
+								className="flex flex-col items-center"
 							>
 								<img
 									src={img}
 									alt={text}
-									className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 
-                               transition-all duration-300"
+									className="w-30 h-30"
 								/>
-								<h2
-									className="mt-3 text-sm sm:text-base md:text-lg 
-                               font-semibold text-gray-700"
-								>
+								<h2 className="mt-2 text-2xl font-semibold text-black-1000 text-center">
 									{text}
 								</h2>
-							</div>
-						</Link>
+							</Link>
+						</div>
 					))}
 				</div>
+				;
 			</div>
 		</main>
 	);

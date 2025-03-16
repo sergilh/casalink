@@ -96,13 +96,13 @@ const App = () => {
 						/>
 
 						{/* Ruta Publicar review */}
-						<Route path="/review/:userId" element={<PublishReview />} />
+						<Route
+							path="/review/:userId"
+							element={<PublishReview />}
+						/>
 
 						{/* Ruta Dashboard */}
-						<Route
-							path="/dashboard"
-							element={<DashboardPage />}
-						/>
+						<Route path="/dashboard" element={<DashboardPage />} />
 
 						{/* ✅ Nueva ruta */}
 						<Route
