@@ -76,7 +76,7 @@ const SearchBar = ({ onSearchComplete, className = '' }) => {
 					</div>
 
 					{/* Rating Range */}
-					{/* Price Range */}
+					{/* Price Range  /}
 					<PriceSlider />
 					{/* Order By */}
 					{/* Up or Down */}
