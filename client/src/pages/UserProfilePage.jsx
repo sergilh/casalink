@@ -20,12 +20,14 @@ const UserProfilePage = () => {
 
 	console.log('userId recibido desde useParams():', userId);
 
+	/*
 	// Redirigir al usuario al login si no está autenticado
 	useEffect(() => {
 		if (!authUser) {
 			navigate('/login');
 		}
 	}, [authUser, navigate]); // Esto evita el error de hooks condicionales
+	*/
 
 	const { userReviews, userNotFound, setUserNotFound, loading, setLoading } =
 		useUserReviews(userId, token);
