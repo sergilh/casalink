@@ -47,7 +47,7 @@ const DashboardPage = () => {
 
 	const { userInfo, userNotFound } = useUserReviews(userId, token);
 	return (
-		<main className="flex justify-center items-center flex-grow bg-gray-100">
+		<main className="flex justify-center items-center min-h-screen bg-gray-100">
 			<div className="bg-white shadow-lg rounded-xl p-6 w-full min-h-screen">
 				{userNotFound ? (
 					<p>El usuario no existe</p>
@@ -62,19 +62,17 @@ const DashboardPage = () => {
 									Dashboard
 								</h2>
 								<div className="flex justify-center items-center gap-4 w-auto h-auto mb-6">
-									<Link to={`/user/${authUser.id}`}>
-										{authUser?.avatarUrl ? (
-											<div className="relative overflow-clip w-30 h-30 bg-[#fffff] rounded-full cursor-pointer">
-												<img
-													src={`${VITE_API_URL}/static/uploads/avatars/${authUser.avatarUrl}`}
-													alt="avatar"
-													className="w-full h-full object-cover rounded-full"
-												/>
-											</div>
-										) : (
-											<AvatarIconProfile />
-										)}
-									</Link>
+									{userInfo?.avatarUrl ? (
+										<div className="relative overflow-clip w-30 h-30 bg-[#fffff] rounded-full cursor-pointer">
+											<img
+												src={`${VITE_API_URL}/static/uploads/avatars/${userInfo?.avatarUrl}`}
+												alt="avatar"
+												className="w-full h-full object-cover rounded-full"
+											/>
+										</div>
+									) : (
+										<AvatarIconProfile />
+									)}
 									<h2 className="font-bold text-gray-700">
 										{`Hola ${userInfo?.fullName}!`}
 									</h2>

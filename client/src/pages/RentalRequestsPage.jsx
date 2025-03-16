@@ -60,17 +60,21 @@ const RentalRequestsPage = () => {
 
 	return (
 		<main className="min-h-screen bg-gray-100 flex flex-col items-center py-10 px-4 relative">
-			<div className="fixed top left-4 z-40">
-				<button
-					onClick={() => navigate(-1)}
-					className="flex items-center justify-center w-10 h-10 text-white bg-[#ff6666] hover:bg-[#E05555] rounded-full shadow-md transition duration-300"
-				>
-					<FaArrowLeft className="text-lg" /> {/* Icono de flecha */}
-				</button>
-			</div>
-			<h2 className="text-3xl font-bold text-gray-800 mb-6">
+			{/* Botón de Volver */}
+			<button
+				onClick={() => navigate(-1)}
+				className="absolute sm:fixed top-2 sm:top-25 left-4 bg-[#ff6666] text-white 
+                w-10 h-10 flex items-center justify-center rounded-full 
+                shadow-md hover:bg-[#E05555] transition duration-300 z-10"
+			>
+				<FaArrowLeft className="text-lg" />
+			</button>
+
+			{/* Título con margen en mobile */}
+			<h2 className="text-3xl font-bold text-gray-800 mb-6 text-center mt-12 sm:mt-0">
 				Lista de Solicitudes de Alquiler
 			</h2>
+
 			{loading && (
 				<p className="text-gray-600">Cargando solicitudes...</p>
 			)}
