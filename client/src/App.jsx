@@ -102,10 +102,7 @@ const App = () => {
 						/>
 
 						{/* Ruta Dashboard */}
-						<Route
-							path="/dashboard"
-							element={<DashboardPage />}
-						/>
+						<Route path="/dashboard" element={<DashboardPage />} />
 
 						{/* ✅ Nueva ruta */}
 						<Route

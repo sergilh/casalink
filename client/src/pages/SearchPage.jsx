@@ -4,8 +4,9 @@ import { FaHeart, FaStar } from 'react-icons/fa';
 import noResultsImage from '../assets/images/casalink-oscar-garcia-buscando.png';
 import noImage from '../assets/images/casalink-oscar-garcia-selfie.png';
 import toast from 'react-hot-toast';
-import SearchBarUni from '../components/SearchBar';
 import { FaSearch } from 'react-icons/fa';
+import SearchBar from '../components/SearchBar';
+import SearchBarUni from '../components/SearchBarUni';
 
 const { VITE_API_URL } = import.meta.env;
 
@@ -301,7 +302,9 @@ const SearchResults = () => {
 				</button>
 			</form>
 
-			<SearchBarUni className="hidden" />
+			<SearchBar />
+			<br />
+			<SearchBarUni />
 
 			<h1 className="text-3xl font-bold text-gray-800 text-center mb-6">
 				Resultados de Búsqueda
