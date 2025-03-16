@@ -33,7 +33,7 @@ export default function HelpPage() {
 				¿Necesitas ayuda?
 			</h1>
 
-			{/* Barra de búsqueda */}
+			{/* Barra de búsqueda * /}
 			<div className="flex items-center border rounded-lg p-2 shadow-sm mb-6">
 				<FaSearch className="text-gray-400 ml-2" />
 				<input
@@ -42,6 +42,7 @@ export default function HelpPage() {
 					className="w-full p-2 outline-none"
 				/>
 			</div>
+			/*}
 
 			{/* Sección de FAQ */}
 			<div className="mx-auto container">
