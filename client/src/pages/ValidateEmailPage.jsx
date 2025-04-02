@@ -40,7 +40,7 @@ const ValidateEmailPage = () => {
 				setMessage('Correo validado exitosamente. Redirigiendo...');
 				toast.success('Correo validado correctamente');
 
-				setTimeout(() => navigate('/login'), 3000); // Redirige después de 3s
+				navigate('/login'); // Redirige después de 3s
 			} catch (error) {
 				setMessage(error.message);
 				toast.error(error.message);

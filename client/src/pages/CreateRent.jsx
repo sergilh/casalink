@@ -116,6 +116,22 @@ const CreateRent = () => {
   // Envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
+     if (
+    !formValues.title ||
+    !formValues.type ||
+    !formValues.street ||
+    !formValues.number ||
+    !formValues.locality ||
+    !formValues.zipCode ||
+    !formValues.price ||
+    !formValues.bedrooms ||
+    !formValues.bathrooms ||
+    !formValues.squareMeters ||
+    !formValues.description
+  ) {
+    toast.error("Por favor, completa todos los campos obligatorios.");
+    return;
+  }
     const fd = new FormData();
 
     // Rellenamos el FormData
@@ -129,13 +145,15 @@ const CreateRent = () => {
 
     try {
       // Llamada al backend
-      await fetchData({
+      const response=await fetchData({
         url: `${VITE_API_URL}/api/properties`,
         method: "POST",
         body: fd,
         isFormData: true,
         token: authToken,
       });
+      console.log(response);
+      
 
       toast.success("Propiedad creada con éxito");
 
@@ -266,6 +284,7 @@ const CreateRent = () => {
             <label className="block text-gray-600 font-medium">
               Vista del Mapa:
             </label>
+            {formValues.street && formValues.locality && formValues.zipCode ? (
             <iframe
               title="Mapa de la propiedad"
               width="100%"
@@ -273,6 +292,9 @@ const CreateRent = () => {
               border="0"
               src={mapSrc}
             />
+          ) : (
+            <p className="text-red-500 text-sm">Completa los campos de dirección para ver el mapa.</p>
+          )}
           </div>
 
           {/* Precio */}

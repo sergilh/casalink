@@ -98,6 +98,7 @@ const PublishReview = () => {
         }
       console.log(body);
       toast.success('Se ha enviado la valoración');
+      navigate('/dashboard');
     } catch (error) {
       toast.error(error.message, {
           id:'review',

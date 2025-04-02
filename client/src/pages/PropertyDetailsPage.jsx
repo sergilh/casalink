@@ -215,7 +215,7 @@ const PropertyDetailsPage = () => {
 						<div className="text-gray-300 text-center items-center justify-evenly gap-1 content-around flex flex-row lg:text-2xl">
 							<FaStar className="inline-block" />
 							<span className="inline-block">
-								{Math.floor(property.avgRating)}
+								{property.avgRating ? Math.floor(property.avgRating) : 'No rating'}
 							</span>
 						</div>
 					</div>

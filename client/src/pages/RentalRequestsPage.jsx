@@ -81,10 +81,16 @@ const RentalRequestsPage = () => {
 			{error && <p className="text-red-500">{error}</p>}
 
 			{!loading && !error && (
-				<RequestsList
-					rentalRequestsOwner={rentalRequestsOwner}
-					rentalRequestsTenant={rentalRequestsTenant}
-				/>
+				<>
+					{(rentalRequestsTenant.length === 0 && rentalRequestsOwner.length === 0) ? (
+						<p className="text-gray-600">No tienes solicitudes de alquiler.</p>
+					) : (
+						<RequestsList
+							rentalRequestsOwner={rentalRequestsOwner}
+							rentalRequestsTenant={rentalRequestsTenant}
+						/>
+					)}
+				</>
 			)}
 		</main>
 	);

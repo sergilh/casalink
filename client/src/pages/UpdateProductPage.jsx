@@ -352,16 +352,16 @@ const UpdateProductPage = () => {
 						<span className="block font-semibold">Estado:</span>
 						<select
 							name="status"
-							value={property?.status || 'disponible'}
+							value={property?.status || 'available'}
 							onChange={handleChange}
 							className="w-full border px-3 py-2 rounded-lg"
 						>
-							<option value="disponible">Disponible</option>
-							<option value="no disponible">No Disponible</option>
+							<option value="available">Disponible</option>
+							<option value="unavailable">No Disponible</option>
 						</select>
 					</label>
 
-					{/* Imagen actual 
+					
 					{property?.imageUrl && (
 						<div className="block">
 							<span className="block font-semibold">
@@ -375,7 +375,7 @@ const UpdateProductPage = () => {
 						</div>
 					)}
 
-					{/* Subir nueva imagen 
+				
 					<label className="block">
 						<span className="block font-semibold">
 							Subir nueva imagen:

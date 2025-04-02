@@ -77,7 +77,7 @@ const ContactPage = () => {
 			/>
 			<ReCAPTCHA
 				sitekey={REACT_APP_RECAPTCHA_SITE_KEY}
-				onChange={captchaValue}
+				onChange={setCaptchaValue}
 			/>
 			<button type="submit">Enviar</button>
 		</form>

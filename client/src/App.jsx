@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
 // Componentes
-import ErrorBoundary from './components/ErrorBoundary';
 import Footer from './components/Footer';
 import Header from './components/Header';
 
@@ -57,7 +56,6 @@ const App = () => {
 			<div className="flex min-h-screen flex-col">
 				<Header />
 
-				<ErrorBoundary>
 					<Routes>
 						{/* Rutas de inicio */}
 						<Route
@@ -81,11 +79,7 @@ const App = () => {
 							path="/contracts/:contractId"
 							element={<ContractDetailPage />}
 						/>
-						{/* ✅ Ruta de Perfil */}
-						<Route
-							path="/profile/:userId"
-							element={<ProfilePage />}
-						/>
+				
 						<Route
 							path="/profile/edit"
 							element={<EditProfilePage />}
@@ -142,7 +136,6 @@ const App = () => {
 						{/* Rutas de administración */}
 						<Route path="/admin" element={<AdminPage />} />
 					</Routes>
-				</ErrorBoundary>
 
 				{/* Toaster para manejar las notificaciones */}
 				<Toaster

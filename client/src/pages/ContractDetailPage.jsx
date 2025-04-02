@@ -29,6 +29,8 @@ const ContractDetailPage = () => {
 	if (loading) return <p className="text-center text-gray-600">Cargando detalles...</p>;
 	if (!contract) return <p className="text-center text-red-500">No se encontró el alquiler.</p>;
 
+	
+
 	return (
 		<section className="container mx-auto p-6">
 			<div className="bg-white shadow-md rounded-lg p-6">
