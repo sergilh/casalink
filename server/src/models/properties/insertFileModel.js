@@ -15,7 +15,6 @@ const insertFileModel = async (
 			[propertyId, fileUrl, fileType, sortIndex]
 		);
 	} catch (err) {
-		console.error('Error en insertFileModel:', err);
 		throw new Error(
 			`Error al insertar el archivo en la base de datos: ${err.message}`
 		);

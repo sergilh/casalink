@@ -12,14 +12,6 @@ const staticResourcesMiddleware = (app) => {
 		'/videos',
 		express.static(path.join(process.cwd(), 'public/videos'))
 	);
-
-	// Middleware para manejar rutas no encontradas (404)
-	app.use((req, res) => {
-		res.status(404).json({
-			status: 'error',
-			message: 'Ruta no encontrada',
-		});
-	});
 };
 
 export default staticResourcesMiddleware;

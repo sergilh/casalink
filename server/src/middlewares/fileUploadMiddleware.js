@@ -1,5 +1,6 @@
 import multer from 'multer';
 import path from 'path';
+import generateErrorUtil from '../utils/generateErrorUtil.js';
 
 const storage = multer.memoryStorage();
 
@@ -31,7 +32,7 @@ export const fileUploadMiddleware = (req, res, next) => {
 	upload.array('files', 10)(req, res, (err) => {
 		console.log('📂 Archivos recibidos en el middleware:', req.files);
 		if (err) {
-			return res.status(400).json({ error: err.message });
+			return next(generateErrorUtil(400, err.message));
 		}
 
 		console.log(

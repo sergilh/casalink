@@ -27,6 +27,25 @@ const propertyController = async (req, res, next) => {
 			req.files
 		);
 
+		// 🛑 Validar que los campos obligatorios no estén vacíos o sean nulos
+		if (
+			!title ||
+			!type ||
+			!description ||
+			!locality ||
+			!street ||
+			!number ||
+			!zipCode ||
+			!squareMeters ||
+			!bedrooms ||
+			!bathrooms ||
+			!price
+		) {
+			return res.status(400).json({
+				error: 'Todos los campos son obligatorios.',
+			});
+		}
+
 		// Convertir hasEnergyCert a 0 o 1 comparando con la cadena "true"
 		const certValue = hasEnergyCert === 'true' ? 1 : 0;
 

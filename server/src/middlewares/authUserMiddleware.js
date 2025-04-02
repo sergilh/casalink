@@ -10,7 +10,7 @@ const authUserMiddleware = async (req, res, next) => {
 		// Si no hay token, lanza un error
 		if (!authorization) {
 			return next(
-				generateErrorUtil('Falta la cabecera de autorización', 401)
+				generateErrorUtil(401, 'Falta la cabecera de autorización')
 			);
 		}
 
@@ -26,7 +26,7 @@ const authUserMiddleware = async (req, res, next) => {
 
 			console.log('información del usuario', req.user); // Mostrar la información del usuario en la consola
 
-			next();
+			return next();
 		} catch (err) {
 			console.error('Error verificando el token:', err);
 			return next(generateErrorUtil('Token inválido', 403));

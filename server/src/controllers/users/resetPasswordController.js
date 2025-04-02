@@ -29,19 +29,11 @@ const resetPasswordController = async (req, res, next) => {
 		console.log('user:', user);
 
 		if (!user.length) {
-			res.send({
-				status: 'error',
-				message: 'Usuario no encontrado.',
-			});
 			generateErrorUtil('Usuario no encontrado.', 404);
 			//return res.status(404).json({ message: 'Usuario no encontrado.' });
 		}
 
 		if (recoveryCode !== user[0].recoveryCode) {
-			res.send({
-				status: 'error',
-				message: 'El código de recuperación es incorrecto.',
-			});
 			generateErrorUtil(
 				'El usuario ya ha solicitado una nueva contraseña. Por favor, solicita un nuevo correo si necesitas cambiar tu contraseña.',
 				401

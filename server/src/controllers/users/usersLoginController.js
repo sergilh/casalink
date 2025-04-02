@@ -27,7 +27,7 @@ const usersLoginController = async (req, res, next) => {
 
 		//Aquí ya tenemos claro que existe y está logueado, generamos el token
 		if (!user.isEmailVerified) {
-			generateErrorUtil('Usuario pendiente de verificación');
+			generateErrorUtil('Usuario pendiente de verificación', 403);
 		}
 
 		const tokenInfo = {

@@ -21,7 +21,6 @@ const usersController = async (req, res) => {
 			users,
 		});
 	} catch (error) {
-		console.error('Error en usersController:', error);
 		res.status(500).json({
 			error: 'Error al obtener la lista de usuarios',
 			details: error.message,

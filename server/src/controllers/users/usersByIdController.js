@@ -50,11 +50,11 @@ const usersByIdController = async (req, res, next) => {
 				.filter((p) => p.propertyId) // Filtrar filas con propiedad
 				.map((p) => ({
 					id: p.propertyId,
-					title: p.title,
+					title: p.propertyTitle,
 					price: p.price,
 					rooms: p.rooms,
 					bathrooms: p.bathrooms,
-					energyCertificate: p.energyCertificate,
+					energyCertificate: p.hasEnergyCert,
 					mainImage: p.mainImage || null,
 				})),
 		};
