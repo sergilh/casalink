@@ -1,4 +1,6 @@
 import mysql from 'mysql2/promise';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Desestructuramos las variables de entorno necesarias.
 const { MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_DB, MYSQL_PORT } =
@@ -31,6 +33,7 @@ const getPool = async () => {
 				database: MYSQL_DB,
 				port: MYSQL_PORT,
 				timezone: 'Z',
+				connectTimeout: 10000,
 			});
 		}
 		// Retornamos el pool ya configurado.
