@@ -29,6 +29,7 @@ const getPool = async () => {
 				user: MYSQL_USER,
 				password: MYSQL_PASS,
 				database: MYSQL_DB,
+				port: MYSQL_PORT,
 				timezone: 'Z',
 			});
 		}
