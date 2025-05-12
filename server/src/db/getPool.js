@@ -1,7 +1,8 @@
 import mysql from 'mysql2/promise';
 
 // Desestructuramos las variables de entorno necesarias.
-const { MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_DB } = process.env;
+const { MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_DB, MYSQL_PORT } =
+	process.env;
 
 let pool;
 
@@ -27,6 +28,7 @@ const getPool = async () => {
 				user: MYSQL_USER,
 				password: MYSQL_PASS,
 				database: MYSQL_DB,
+				port: MYSQL_PORT,
 				timezone: 'Z',
 			});
 		}
