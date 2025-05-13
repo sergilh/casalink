@@ -25,7 +25,7 @@ const ImageGallery = ({ images }) => {
 			<div className="relative md:h-[50vh]">
 				<div className="h-full flex flex-col items-center bg-gray-100">
 					<img
-						src={`${VITE_API_URL}/static/uploads/images/${images[currentIndex].imageUrl}`}
+						src={`https://casalink-production.up.railway.app/static/uploads/images/${images[currentIndex].imageUrl}`}
 						alt={`Imagen ${currentIndex + 1}`}
 						className="w-auto h-full object-cover overflow-clip "
 					/>
