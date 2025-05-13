@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react"
 import { AuthContext } from "../contexts/AuthContext"
-import StarRating from "../components/StarRating.jsx"
+import StarRating from "../components/StarRating"
 import { useNavigate, useParams } from "react-router-dom"
 import toast from "react-hot-toast"
 import useUserReviews from "../hooks/userReviews";
