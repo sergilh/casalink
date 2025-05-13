@@ -27,6 +27,7 @@ const corsOptions = {
 
 // Middleware
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 app.use('/static', express.static(path.join(process.cwd(), 'public')));
 
 // ⚠️ NO aplicar express.json() antes de Multer, podría bloquear la subida de archivos
