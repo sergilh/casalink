@@ -62,7 +62,7 @@ const FeaturedListingsSection = () => {
 											src={
 												property.mainImage
 													? VITE_API_URL +
-														'/static/uploads/images/' +
+														'/uploads/images/' +
 														property.mainImage
 													: noImage
 											}
