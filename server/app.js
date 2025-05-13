@@ -17,7 +17,7 @@ import notFoundMiddleware from './src/middlewares/notFoundMiddleware.js';
 
 // variables
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 const corsOptions = {
 	origin: '*', // Asegúrate de que esta es la URL correcta de tu frontend
