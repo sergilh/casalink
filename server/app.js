@@ -34,10 +34,7 @@ app.use(
 	})
 );
 app.options('*', cors());
-app.use(
-	'/uploads/images',
-	express.static(path.join(__dirname, 'uploads', 'images'))
-);
+app.use('/static', express.static(path.join(process.cwd(), 'public')));
 
 // ⚠️ NO aplicar express.json() antes de Multer, podría bloquear la subida de archivos
 app.use(express.json());
