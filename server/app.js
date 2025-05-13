@@ -20,7 +20,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 const allowedOrigins = [
-	'https://frontend-casalink-kwt34w27g-sergi-lopez-hernandezs-projects.vercel.app',
+	'frontend-casalink-bjvn3oxkk-sergi-lopez-hernandezs-projects.vercel.app',
 ];
 app.use(
 	cors({
