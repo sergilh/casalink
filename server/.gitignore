@@ -2,7 +2,6 @@ node_modules
 .env
 hashPassword.js
 
-# Imágenes cargadas
-public/uploads/
+
 
 public/seed/
