@@ -18,7 +18,6 @@ const getPool = async () => {
 				database: MYSQL_DB,
 				port: Number(MYSQL_PORT),
 				timezone: 'Z',
-				connectTimeout: 10000,
 			});
 		}
 		// Retornamos el pool ya configurado.
