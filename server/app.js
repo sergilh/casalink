@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 8080;
 // Middleware
 app.use(
 	cors({
-		origin: 'https://frontend-casalink-fcqse3ezm-sergi-lopez-hernandezs-projects.vercel.app',
+		origin: 'https://frontend-casalink-6v45ibs39-sergi-lopez-hernandezs-projects.vercel.app',
 	})
 );
 app.options('*', cors());
