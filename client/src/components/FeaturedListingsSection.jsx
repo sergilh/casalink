@@ -61,10 +61,8 @@ const FeaturedListingsSection = () => {
 										<img
 											src={
 												property.mainImage
-													? VITE_API_URL +
-														'/static/uploads/images/' +
-														property.mainImage
-													: noImage
+													? 'https://casalink-production.up.railway.app/static/uploads/images/' + property.mainImage
+            : noImage
 											}
 											alt={property.propertyTitle}
 											className="w-full aspect-square object-cover bg-[#e6dada]"
