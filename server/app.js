@@ -19,15 +19,9 @@ import notFoundMiddleware from './src/middlewares/notFoundMiddleware.js';
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-const corsOptions = {
-	origin: 'https://casalink-frontend-two.vercel.app', // Asegúrate de que esta es la URL correcta de tu frontend
-	methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
-	allowedHeaders: ['Content-Type', 'Authorization'], // Cabeceras permitidas
-};
-
 // Middleware
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+app.use(cors({ origin: 'https://casalink-frontend-two.vercel.app' }));
+app.options('*', cors());
 app.use('/static', express.static(path.join(process.cwd(), 'public')));
 
 // ⚠️ NO aplicar express.json() antes de Multer, podría bloquear la subida de archivos
