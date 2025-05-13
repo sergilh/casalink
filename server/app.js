@@ -20,7 +20,11 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // Middleware
-app.use(cors({ origin: 'https://casalink-frontend-two.vercel.app' }));
+app.use(
+	cors({
+		origin: 'https://frontend-casalink-fcqse3ezm-sergi-lopez-hernandezs-projects.vercel.app',
+	})
+);
 app.options('*', cors());
 app.use('/static', express.static(path.join(process.cwd(), 'public')));
 
@@ -45,16 +49,6 @@ app.use((err, req, res, next) => {
 		status: 'error',
 		message: err.message,
 	});
-});
-
-app.use((req, res, next) => {
-	res.header(
-		'Access-Control-Allow-Origin',
-		'https://casalink-frontend-two.vercel.app'
-	);
-	res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-	res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-	next();
 });
 
 // Iniciar servidor
