@@ -19,12 +19,22 @@ import notFoundMiddleware from './src/middlewares/notFoundMiddleware.js';
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// Middleware
+const allowedOrigins = [
+	'https://frontend-casalink-kwt34w27g-sergi-lopez-hernandezs-projects.vercel.app',
+];
 app.use(
 	cors({
-		origin: 'https://frontend-casalink-6v45ibs39-sergi-lopez-hernandezs-projects.vercel.app',
+		origin: (origin, callback) => {
+			if (!origin || allowedOrigins.includes(origin)) {
+				callback(null, true);
+			} else {
+				callback(new Error('Not allowed by CORS'));
+			}
+		},
+		credentials: true,
 	})
 );
+
 app.options('*', cors());
 app.use('/static', express.static(path.join(process.cwd(), 'public')));
 
