@@ -63,3 +63,50 @@ client/
 ```bash
 npm test
 ```
+
+## 📸 Capturas de pantalla
+
+### Página principal
+
+![Página principal](/public/1.PNG)
+![Página principal](/public/2.PNG)
+
+### Detalles de propiedad
+
+![Detalle de propiedad](/public/3.PNG)
+
+### Función de búsqueda
+
+![Función de búsqueda](/public/4.PNG)
+
+### Página de ayuda
+
+![Página de ayuda](/public/5.PNG)
+
+### Publicar reseña
+
+![Publicar reseña](/public/7.PNG)
+
+### Panel de administración
+
+![Panel de administración](/public/8.PNG)
+
+### Dashboard
+
+![Dashboard](/public/9.PNG)
+
+### Sección "Mis alquileres"
+
+![Sección "Mis alquileres"](/public/10.PNG)
+
+### Sección "Mis propiedades"
+
+![Sección "Mis propiedades"](/public/11.PNG)
+
+### Lista de solicitudes de alquiler
+
+![Lista de solicitudes de alquiler](/public/12.PNG)
+
+### Crear propiedad
+
+![Crear propiedad](/public/14.PNG)

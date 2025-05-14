@@ -159,8 +159,8 @@ const PropertiesListPage = () => {
 						<img
 							src={
 								property.mainImage
-									? 
-										'https://casalink-production.up.railway.app/static/uploads/images/' +
+									? VITE_API_URL +
+										'/static/uploads/images/' +
 										property.mainImage
 									: noImage
 							}

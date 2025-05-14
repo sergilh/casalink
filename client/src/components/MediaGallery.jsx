@@ -86,7 +86,7 @@ const GallerySlider = ({ media }) => {
 						{item.fileType === 'video' ? (
 							<video
 								ref={(el) => (videoRefs.current[index] = el)}
-								src={`https://casalink-production.up.railway.app/static/uploads/videos/${item.imageUrl}`}
+								src={`${VITE_API_URL}/static/uploads/videos/${item.imageUrl}`}
 								className="w-full h-full object-cover"
 								muted
 								loop
